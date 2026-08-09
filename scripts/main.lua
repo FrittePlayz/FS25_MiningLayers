@@ -15,7 +15,7 @@
 
 MiningLayers = {}
 
-MiningLayers.VERSION = '1.2.2.0'
+MiningLayers.VERSION = '1.3.0.0'
 MiningLayers.LOG_PREFIX = '[MiningLayers] '
 
 MiningLayers.MOD_NAME = g_currentModName
@@ -197,10 +197,17 @@ function MiningLayers:deleteMap()
         end)
     end
 
-    -- Seite aus dem Ingame-Menue nehmen, sonst haengt beim naechsten
-    -- Spielstart eine Leiche in der Reiterleiste.
-    pcall(MiningLayers.removeMenuPage, MiningLayers)
-    pcall(MiningLayers.removeAllSigns, MiningLayers)
+    -- ⚠️ Hier wird die Menueseite NICHT mehr entfernt. Das hat beim Beenden des
+    -- Spiels eine Fehlerflut ausgeloest (PagingElement lief ueber einen
+    -- nil-Eintrag, danach schlug jeder Frame fehl und das Beenden zog sich).
+    -- Das Ingame-Menue wird ohnehin mit abgebaut; TerraFarm laesst seine Seite
+    -- aus demselben Grund stehen. Beim naechsten loadMap erkennt
+    -- ensureMenuPage die vorhandene Seite und laesst sie in Ruhe.
+    --
+    -- Schilder ebenso: die Szenenknoten gehoeren zur Karte und werden mit ihr
+    -- abgeraeumt. Ein delete() auf einen schon zerstoerten Knoten waere ein
+    -- Risiko ohne Gegenwert - wir vergessen sie nur.
+    MiningLayers.signNodes = {}
 
     MiningLayers.active = false
 end

@@ -49,6 +49,15 @@
         <text name="ml_edTargetDefault" text="Alle Bereiche (Standard)" />
         <text name="ml_edScopeArea" text="Diese Schichten gelten nur für &quot;%s&quot;. Alle anderen Bereiche behalten den Standard. Wechselst du oben auf Alle Bereiche, bearbeitest du wieder den Standard." />
         <text name="ml_edSavedArea" text="Schichten für &quot;%s&quot; gespeichert. Sie gelten nur für diesen Bereich." />
+        <text name="ml_edActive" text="Dieser Bereich" />
+        <text name="ml_edActiveOn" text="Mining Layers (Schichten)" />
+        <text name="ml_edActiveOff" text="Normales TerraFarm (keine Schichten)" />
+        <text name="ml_edSavedOff" text="Für &quot;%s&quot; sind die Schichten aus. Dort gilt wieder normales TerraFarm." />
+        <text name="ml_helpQsBothWaysTitle" text="Zwei Wege — du entscheidest je Bereich" />
+        <text name="ml_helpQsBothWays1" text="Lässt du die Materialfelder im TerraFarm-Bereich LEER, arbeitet Mining Layers: Was in der Schaufel landet, hängt an der Grabtiefe. Das ist der Normalfall für eine Grube." />
+        <text name="ml_helpQsBothWays2" text="Trägst du dagegen ein Material im Bereich EIN, läuft ganz normales TerraFarm ohne Schichten. Genau richtig für Baustellen, Straßenbau, Planieren — überall, wo du einfach nur Erde bewegen willst und immer dasselbe Material brauchst." />
+        <text name="ml_helpQsBothWays3" text="Denselben Effekt bekommst du auf dem Reiter Schichten: dort einen Bereich auswählen und auf &quot;Normales TerraFarm&quot; stellen. Beides führt zum gleichen Ergebnis, such dir aus, was dir lieber ist." />
+        <text name="ml_edForeign" text="⚠ Diese Zone wurde von Hand in der miningLayers.xml gebaut und lässt sich hier nur vereinfacht darstellen. Speichern schreibt sie in das Editor-Schema um; Sonderangaben wie eigene Bodentexturen oder feste Bezugshöhen gehen dabei verloren." />
         <text name="ml_edLayerSection" text="Abraum-Schichten" />
         <text name="ml_edLayer" text="Schicht" />
         <text name="ml_edMaterial" text="Material" />
@@ -73,7 +82,7 @@
         <text name="ml_helpQsDisplayB2" text="Verschieben kannst du sie über displayPosX und displayPosY in der miningLayers.xml, abschalten über showHeightDisplay." />
 
         <text name="ml_helpQsLayersTitle" text="Eigene Schichten festlegen" />
-        <text name="ml_helpQsLayers1" text="Ab Werk gilt: Mutterboden, darunter Kies, darunter das Paydirt-Flöz, ganz unten Fels. Willst du andere Abraum-Schichten, führt dich der Assistent durch: je Schicht Material und Untergrenze in Metern. Das Flöz und den Fels setzt der Mod selbst dahinter." />
+        <text name="ml_helpQsLayers1" text="Ab Werk gilt: Mutterboden, darunter Kies, darunter das Paydirt-Flöz, ganz unten Fels. Das passt für die allermeisten Gruben, du musst nichts einstellen." />
         <text name="ml_helpQsWizardButton" text="Schichten einrichten" />
         <text name="ml_helpQsWizardHint" text="Musst du aber nicht: Wenn du nichts machst, gilt unser Standard, und der passt für die allermeisten Gruben. Willst du es anders, geh auf den Reiter Schichten — dort baust du dir dein Profil selbst zusammen und siehst sofort, wie es aussieht." />
 

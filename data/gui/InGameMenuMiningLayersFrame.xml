@@ -74,26 +74,31 @@
                     <MultiTextOption profile="mlEditor_option" id="targetOption" onClick="onTargetChanged" />
                 </GuiElement>
 
-                <Text profile="mlEditor_sectionHeader" position="0px -124px" text="$l10n_ml_edLayerSection" />
+                <GuiElement profile="mlEditor_optionRow" position="0px -114px">
+                    <Text profile="mlEditor_optionLabel" text="$l10n_ml_edActive" />
+                    <MultiTextOption profile="mlEditor_option" id="activeOption" onClick="onActiveChanged" />
+                </GuiElement>
 
-                <GuiElement profile="mlEditor_optionRow" position="0px -176px">
+                <Text profile="mlEditor_sectionHeader" position="0px -186px" text="$l10n_ml_edLayerSection" />
+
+                <GuiElement profile="mlEditor_optionRow" position="0px -238px">
                     <Text profile="mlEditor_optionLabel" text="$l10n_ml_edLayer" />
                     <MultiTextOption profile="mlEditor_option" id="layerOption" onClick="onLayerChanged" />
                 </GuiElement>
 
-                <GuiElement profile="mlEditor_optionRow" position="0px -238px">
+                <GuiElement profile="mlEditor_optionRow" position="0px -300px">
                     <Text profile="mlEditor_optionLabel" text="$l10n_ml_edMaterial" />
                     <MultiTextOption profile="mlEditor_option" id="materialOption" onClick="onMaterialChanged" />
                 </GuiElement>
 
-                <GuiElement profile="mlEditor_optionRow" position="0px -300px">
+                <GuiElement profile="mlEditor_optionRow" position="0px -362px">
                     <Text profile="mlEditor_optionLabel" text="$l10n_ml_edThickness" />
                     <MultiTextOption profile="mlEditor_option" id="thicknessOption" onClick="onThicknessChanged" />
                 </GuiElement>
 
-                <Text profile="mlEditor_sectionHeader" position="0px -376px" text="$l10n_ml_edSummarySection" />
-                <Text profile="mlEditor_summary" id="editorSummary" position="0px -428px" text="" />
-                <Text profile="mlEditor_scope" id="editorScope" position="0px -574px" text="" />
+                <Text profile="mlEditor_sectionHeader" position="0px -438px" text="$l10n_ml_edSummarySection" />
+                <Text profile="mlEditor_summary" id="editorSummary" position="0px -490px" text="" />
+                <Text profile="mlEditor_scope" id="editorScope" position="0px -652px" text="" />
             </GuiElement>
         </GuiElement>
 
@@ -110,7 +115,10 @@
 
     <ThreePartBitmap profile="fs25_sliderDockedBg" handleFocus="false" position="-125px 20px">
         <ThreePartBitmap profile="fs25_sliderDockedBox">
-            <Slider profile="fs25_sliderDocked" id="listSlider" dataElementId="contentLayout[1]" />
+            <!-- Kein dataElementId: das Lua haengt den Schieber beim Reiterwechsel
+                 an das jeweilige Layout. Eine ID mit Index wird hier nicht
+                 zuverlaessig aufgeloest. -->
+            <Slider profile="fs25_sliderDocked" id="listSlider" />
         </ThreePartBitmap>
     </ThreePartBitmap>
 
@@ -131,6 +139,12 @@
             <imageColor value="0 0 0 0" />
             <flowDirection value="vertical" />
             <alignmentX value="left" />
+            <!-- Wie TerraFarms tfMenuFrame_contentLayout: ohne elementSpacing
+                 kleben die geklonten Eintraege aneinander, und ohne
+                 fitFlowToElements bekommt der angedockte Schieber keine
+                 Scroll-Laenge. -->
+            <elementSpacing value="6px" />
+            <fitFlowToElements value="true" />
         </Profile>
 
         <!-- Vorlagen-Container: unsichtbar, dient nur als Halter im XML. -->
@@ -162,7 +176,10 @@
 
         <Profile name="mlFrame_bullet" extends="mlFrame_paragraph">
             <size value="1180px 66px" />
-            <position value="24px 0px" />
+            <!-- Einzug MUSS ueber margin laufen. In einem ScrollingLayout
+                 vergibt das Layout die Zellenposition selbst; ein position im
+                 Profil wird dabei ueberschrieben und der Einzug bliebe aus. -->
+            <margin value="24px 0px 0px 0px" />
             <textColor value="1 1 1 0.75" />
             <textMaxNumLines value="3" />
         </Profile>
@@ -208,7 +225,7 @@
         </Profile>
 
         <Profile name="mlEditor_controls" extends="baseReference" with="anchorTopLeft">
-            <size value="760px 700px" />
+            <size value="760px 760px" />
             <position value="720px -40px" />
             <imageColor value="0 0 0 0" />
         </Profile>
@@ -259,7 +276,9 @@
             <textColor value="1 1 1 0.7" />
             <textAlignment value="left" />
             <textVerticalAlignment value="top" />
-            <textMaxNumLines value="6" />
+            <!-- 6 Abraum-Schichten + Floez + Sohle = 8 Zeilen. Mit 6 wurden ab
+                 der fuenften Schicht Floez und Sohle abgeschnitten. -->
+            <textMaxNumLines value="8" />
             <textAutoWidth value="false" />
         </Profile>
 

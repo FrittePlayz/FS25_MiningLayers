@@ -42,6 +42,10 @@ MiningLayers.SIGN_MIN_AREA_SIZE = 10.0
 ---Ein Schild pro Bereich: uniqueId -> Szenenknoten.
 MiningLayers.signNodes = {}
 
+---Dazu die Anforderungs-Nummer aus loadSharedI3DFile. Ohne sie laesst sich der
+---Eintrag im I3D-Manager nicht freigeben; delete() raeumt nur den Szenenknoten.
+MiningLayers.signRequests = {}
+
 ---Schalter aus der miningLayers.xml.
 MiningLayers.sponsorSign = true
 
@@ -194,16 +198,25 @@ local function areaCenter(area)
     local minX, maxX = math.huge, -math.huge
     local minZ, maxZ = math.huge, -math.huge
 
+    local count = 0
+
     for _, p in ipairs(points) do
         -- Bereichspunkte sind Weltkoordinaten: [1] = X, [3] = Z.
-        local x, z = p[1], p[3]
+        -- Geprueft wird wie ueberall sonst im Mod (computeSurfaceY & Co.) -
+        -- ohne die Pruefung wirft ein unvollstaendiger Punkt mitten heraus.
+        if type(p) == 'table' and type(p[1]) == 'number' and type(p[3]) == 'number' then
+            local x, z = p[1], p[3]
 
-        sumX, sumZ = sumX + x, sumZ + z
-        minX, maxX = math.min(minX, x), math.max(maxX, x)
-        minZ, maxZ = math.min(minZ, z), math.max(maxZ, z)
+            count = count + 1
+            sumX, sumZ = sumX + x, sumZ + z
+            minX, maxX = math.min(minX, x), math.max(maxX, x)
+            minZ, maxZ = math.min(minZ, z), math.max(maxZ, z)
+        end
     end
 
-    local count = #points
+    if count < 3 then
+        return nil, nil, 0
+    end
 
     return sumX / count, sumZ / count, math.max(maxX - minX, maxZ - minZ)
 end
@@ -235,21 +248,56 @@ end
 ---@param area table
 ---@return boolean
 function MiningLayers:spawnSign(area)
-    if not MiningLayers.sponsorSign or g_client == nil or MiningLayers.signLoadFailed then
+    -- ⚠️ Jeder Ausstieg wird geloggt. Beim ersten Testlauf stand im log.txt zum
+    -- Schild GAR NICHTS - weder Erfolg noch Fehler -, weil alle Abbruchpfade
+    -- stumm waren. Ein stiller Abbruch ist beim Suchen wertlos.
+    if not MiningLayers.sponsorSign then
+        MiningLayers.log('Schild: uebersprungen, sponsorSign steht auf false.')
+        return false
+    end
+
+    if g_client == nil then
+        return false
+    end
+
+    if MiningLayers.signLoadFailed then
         return false
     end
 
     local id = area ~= nil and area.uniqueId or nil
 
-    if id == nil or MiningLayers.signNodes[id] ~= nil then
+    if id == nil then
+        MiningLayers.log('Schild: Bereich ohne uniqueId, uebersprungen.')
+        return false
+    end
+
+    if MiningLayers.signNodes[id] ~= nil then
         return false
     end
 
     local centerX, centerZ, size = areaCenter(area)
 
-    if centerX == nil or size < MiningLayers.SIGN_MIN_AREA_SIZE then
+    if centerX == nil then
+        -- Beim Anlegen meldet TerraFarm den Bereich, bevor der Spieler die Ecken
+        -- gezogen hat. Das ist normal und kein Fehler: das UPDATE danach bringt
+        -- uns wieder her, dann stehen die Punkte.
+        local count = type(area.points) == 'table' and #area.points or 0
+
+        if count > 0 then
+            MiningLayers.log('Schild: Bereich %s hat %d Punkte, aber keine brauchbaren Koordinaten.',
+                tostring(id), count)
+        end
+
         return false
     end
+
+    if size < MiningLayers.SIGN_MIN_AREA_SIZE then
+        MiningLayers.log('Schild: Bereich %s ist mit %.1f m zu klein (Mindestmass %.1f m).',
+            tostring(id), size, MiningLayers.SIGN_MIN_AREA_SIZE)
+        return false
+    end
+
+    MiningLayers.log('Schild: baue fuer Bereich %s (Kantenlaenge %.1f m).', tostring(id), size)
 
     local corner = area.points[1]
     local cornerX, cornerZ = corner[1], corner[3]
@@ -274,48 +322,99 @@ function MiningLayers:spawnSign(area)
 
     local node
 
-    local loaded = MiningLayers.protectedCall('loadSignI3D', function()
-        local root = g_i3DManager:loadSharedI3DFile(MiningLayers.SIGN_I3D, false, false)
+    -- Bodenhoehe VOR dem Laden bestimmen: ohne sie brauchen wir gar nicht erst
+    -- ein Modell in die Szene zu haengen. y=0 waere Meereshoehe und damit auf
+    -- den meisten Karten tief im Berg.
+    local terrainNode = g_terrainNode
+
+    if terrainNode == nil and g_currentMission ~= nil then
+        terrainNode = g_currentMission.terrainRootNode
+    end
+
+    if terrainNode == nil or not MiningLayers.isCallable(getTerrainHeightAtWorldPos) then
+        MiningLayers.log('Schild: kein Terrain-Knoten verfuegbar, Bereich %s uebersprungen.', tostring(id))
+        return false
+    end
+
+    local y = getTerrainHeightAtWorldPos(terrainNode, x, 0, z)
+
+    if type(y) ~= 'number' then
+        MiningLayers.log('Schild: keine Gelaendehoehe bei x=%.1f z=%.1f, Bereich %s uebersprungen.', x, z, tostring(id))
+        return false
+    end
+
+    ---★ Alles ab hier in EINEM geschuetzten Block, und der Knoten wird sofort
+    ---nach dem Verlinken in signNodes eingetragen. Vorher stand er zwischen
+    ---link() und der Registrierung fuer einen Moment "herrenlos" in der Welt:
+    ---brach etwas dazwischen ab, blieb ein unsichtbar gewordenes Schild stehen,
+    ---die Duplikatsperre kannte es nicht, und der naechste Versuch stellte ein
+    ---zweites an dieselbe Stelle.
+    local node
+    local requestId
+
+    local ok = MiningLayers.protectedCall('loadSignI3D', function()
+        local root, request = g_i3DManager:loadSharedI3DFile(MiningLayers.SIGN_I3D, false, false)
+
+        requestId = request
 
         if root == nil or root == 0 then
             return
         end
 
-        node = getChildAt(root, 0)
+        local child = getChildAt(root, 0)
 
-        if node ~= nil and node ~= 0 then
-            link(getRootNode(), node)
+        if child ~= nil and child ~= 0 then
+            link(getRootNode(), child)
+
+            -- Ab jetzt kennt removeSign den Knoten, egal was danach schiefgeht.
+            node = child
+            MiningLayers.signNodes[id] = child
+            MiningLayers.signRequests[id] = requestId
         end
 
         delete(root)
     end)
 
-    if not loaded or node == nil or node == 0 then
-        MiningLayers.signLoadFailed = true
-        MiningLayers.log('Schild: %s liess sich nicht laden - Feature bleibt aus.', MiningLayers.SIGN_I3D)
+    local function abort(reason, hard)
+        MiningLayers:removeSign(id)
+
+        if requestId ~= nil and node == nil and MiningLayers.isCallable(releaseSharedI3D) then
+            pcall(releaseSharedI3D, requestId)
+        end
+
+        if hard then
+            MiningLayers.signLoadFailed = true
+        end
+
+        MiningLayers.log('Schild: %s', reason)
+
         return false
+    end
+
+    if not ok or node == nil then
+        -- Dateibezogener Fehler: das trifft jeden Bereich gleich, also einmal
+        -- merken und Ruhe geben.
+        return abort(string.format('%s liess sich nicht laden - Feature bleibt aus.',
+            MiningLayers.SIGN_I3D), true)
     end
 
     -- Lieber kein Schild als eins mit dem fremden Logo der Vorlage.
     if not applyLogoTexture(node) then
-        pcall(delete, node)
-        MiningLayers.signLoadFailed = true
-        MiningLayers.log('Schild: Logo liess sich nicht setzen - Feature bleibt aus.')
-        return false
+        return abort('Logo liess sich nicht setzen - Feature bleibt aus.', true)
     end
 
-    local y = 0
+    local placed = MiningLayers.protectedCall('placeSign', function()
+        setTranslation(node, x, y, z)
+        -- Blick zurueck zur Grubenmitte.
+        setRotation(node, 0, math.atan2(-dx, -dz), 0)
+    end)
 
-    if g_currentMission ~= nil and MiningLayers.isCallable(getTerrainHeightAtWorldPos) then
-        y = getTerrainHeightAtWorldPos(g_currentMission.terrainRootNode, x, 0, z)
+    if not placed then
+        -- Nur dieser Bereich ist betroffen, nicht das Feature.
+        return abort(string.format('Bereich %s liess sich nicht platzieren.', tostring(id)), false)
     end
 
-    setTranslation(node, x, y, z)
-
-    -- Blick zurueck zur Grubenmitte.
-    setRotation(node, 0, math.atan2(-dx, -dz), 0)
-
-    MiningLayers.signNodes[id] = node
+    MiningLayers.log('Schild: steht bei x=%.1f z=%.1f (Bereich %s).', x, z, tostring(id))
 
     return true
 end
@@ -323,14 +422,20 @@ end
 ---@param id string|number
 function MiningLayers:removeSign(id)
     local node = MiningLayers.signNodes[id]
-
-    if node == nil then
-        return
-    end
+    local request = MiningLayers.signRequests[id]
 
     MiningLayers.signNodes[id] = nil
+    MiningLayers.signRequests[id] = nil
 
-    pcall(delete, node)
+    if node ~= nil then
+        pcall(delete, node)
+    end
+
+    -- Das geteilte i3d im Manager mit freigeben, sonst sammelt sich bei jedem
+    -- Neusetzen eine weitere Referenz an.
+    if request ~= nil and MiningLayers.isCallable(releaseSharedI3D) then
+        pcall(releaseSharedI3D, request)
+    end
 end
 
 function MiningLayers:removeAllSigns()
@@ -339,6 +444,7 @@ function MiningLayers:removeAllSigns()
     end
 
     MiningLayers.signNodes = {}
+    MiningLayers.signRequests = {}
 end
 
 ---Setzt Schilder fuer alle bekannten Bereiche - fuer den Fall, dass der

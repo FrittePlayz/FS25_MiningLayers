@@ -111,7 +111,10 @@ function MiningLayers:checkConfiguredMaterials(blocked)
     end
 
     local function inspect(zone, label)
-        if zone == nil then
+        -- ⚠️ Eine abgeschaltete Zone ist eine Marker-Tabelle OHNE layers-Feld.
+        -- Ohne diese Pruefung lief ipairs(nil) in den protectedCall von loadMap
+        -- und die gesamte Materialpruefung fiel still aus.
+        if zone == nil or type(zone.layers) ~= 'table' then
             return
         end
 

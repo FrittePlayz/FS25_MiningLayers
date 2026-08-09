@@ -18,7 +18,7 @@ MiningLayers.frameSourced = false
 MiningLayers.menuPageInstalled = false
 
 ---Nach so vielen vergeblichen Versuchen geben wir auf und sagen es im Log.
----Bei 60 Frames sind das gut zwei Sekunden - laenger braucht kein Menueaufbau.
+---Bei 60 Bildern je Sekunde sind das rund zehn Sekunden.
 MiningLayers.MENU_PAGE_MAX_ATTEMPTS = 600
 MiningLayers.menuPageAttempts = 0
 MiningLayers.menuPageGaveUp = false
@@ -135,7 +135,10 @@ function MiningLayers:ensureMenuPage()
     local pageName = InGameMenuMiningLayersFrame.MENU_PAGE_NAME
 
     if g_inGameMenu[pageName] ~= nil then
-        -- Schon vorhanden, etwa nach einem GUI-Reload.
+        -- Schon vorhanden, etwa nach einem Kartenwechsel. Den Verweis mit
+        -- uebernehmen: ohne ihn haelt removeMenuPage die Seite spaeter fuer
+        -- entfernt und steigt aus, ohne sie anzufassen.
+        MiningLayers.menuPage = g_inGameMenu[pageName]
         MiningLayers.menuPageInstalled = true
         return
     end
@@ -180,8 +183,16 @@ function MiningLayers:ensureMenuPage()
     MiningLayers.log('Menueseite eingehaengt.')
 end
 
----Nimmt die Seite wieder heraus. Wird beim Verlassen der Karte gerufen, damit
----beim naechsten Spielstart keine Leiche im Menue haengt.
+---Nimmt die Seite wieder heraus.
+---
+---⚠️ **Wird bewusst NICHT beim Verlassen der Karte gerufen.** Genau das hat beim
+---Beenden des Spiels eine Fehlerflut ausgeloest
+---(`PagingElement.lua:249: attempt to index nil with 'disabled'`, danach in jedem
+---Frame `mouseEvent`/`update`/`draw`), weil die Seitenzuordnung des Menues nach
+---dem Entfernen nicht mehr stimmte. TerraFarm raeumt seine Seite ebenfalls nicht
+---beim Kartenende ab - das Menue wird ohnehin mit abgebaut.
+---Bleibt fuer den Fall, dass die Seite doch einmal von Hand weg muss; die
+---Reihenfolge folgt jetzt exakt TerraFarms `deleteMenuFrame`/`deleteFrames`.
 function MiningLayers:removeMenuPage()
     if not MiningLayers.menuPageInstalled then
         return
@@ -197,6 +208,10 @@ function MiningLayers:removeMenuPage()
 
     if pageController == nil or g_inGameMenu == nil then
         return
+    end
+
+    if MiningLayers.isCallable(g_inGameMenu.setPageEnabled) then
+        pcall(g_inGameMenu.setPageEnabled, g_inGameMenu, pageController, false)
     end
 
     if MiningLayers.isCallable(g_inGameMenu.unregisterPage) then
@@ -216,12 +231,21 @@ function MiningLayers:removeMenuPage()
     end
 
     if FocusManager ~= nil and MiningLayers.isCallable(FocusManager.deleteGuiFocusData) then
-        FocusManager:deleteGuiFocusData(InGameMenuMiningLayersFrame.CLASS_NAME)
+        -- Die Fokusdaten liegen unter dem GUI-Namen aus loadGui, nicht unter
+        -- dem Klassennamen. Mit CLASS_NAME war der Aufruf wirkungslos.
+        FocusManager:deleteGuiFocusData(InGameMenuMiningLayersFrame.MENU_PAGE_NAME)
     end
 
     g_inGameMenu[pageName] = nil
 
     if MiningLayers.isCallable(g_inGameMenu.rebuildTabList) then
         g_inGameMenu:rebuildTabList()
+    end
+
+    -- ★ Der vergessene Aufruf. Ohne ihn behaelt das Paging-Element einen
+    -- Eintrag auf die entfernte Seite und faellt bei jedem Frame ueber nil.
+    if g_inGameMenu.pagingElement ~= nil
+        and MiningLayers.isCallable(g_inGameMenu.pagingElement.updatePageMapping) then
+        g_inGameMenu.pagingElement:updatePageMapping()
     end
 end

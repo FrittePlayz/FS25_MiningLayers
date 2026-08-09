@@ -823,6 +823,16 @@ function MiningLayers:getResolvedForArea(area)
         MiningLayers:maybeSetPitFloor(area, resolved, surfaceY, label, plane)
     end)
 
+    -- Zweites Netz fuers Sponsorschild (Percys Vorschlag): spaetestens wenn ein
+    -- Bereich wirklich aufgeloest wird, existiert er samt Ecken. Falls das
+    -- REGISTER-Ereignis zu frueh kam und kein UPDATE folgte, greift es hier.
+    -- spawnSign steigt sofort aus, wenn fuer den Bereich schon ein Schild steht.
+    if MiningLayers.isCallable(MiningLayers.spawnSign) then
+        MiningLayers.protectedCall('spawnSignOnResolve', function()
+            MiningLayers:spawnSign(area)
+        end)
+    end
+
     return resolved, surfaceY, nil, plane
 end
 

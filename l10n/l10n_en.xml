@@ -49,6 +49,15 @@
         <text name="ml_edTargetDefault" text="All areas (default)" />
         <text name="ml_edScopeArea" text="These layers apply to &quot;%s&quot; only. Every other area keeps the default. Switch back to All areas above and you are editing the default again." />
         <text name="ml_edSavedArea" text="Layers saved for &quot;%s&quot;. They apply to this area only." />
+        <text name="ml_edActive" text="This area" />
+        <text name="ml_edActiveOn" text="Mining Layers (layered)" />
+        <text name="ml_edActiveOff" text="Plain TerraFarm (no layers)" />
+        <text name="ml_edSavedOff" text="Layers are off for &quot;%s&quot;. Plain TerraFarm applies there again." />
+        <text name="ml_helpQsBothWaysTitle" text="Two ways — you decide per area" />
+        <text name="ml_helpQsBothWays1" text="Leave the material fields on the TerraFarm area EMPTY and Mining Layers does its job: what ends up in the bucket depends on how deep you dig. That is the normal case for a pit." />
+        <text name="ml_helpQsBothWays2" text="Enter a material on the area instead and you get plain TerraFarm without layers. Exactly right for construction sites, road building and levelling — anywhere you just want to move soil and always need the same material." />
+        <text name="ml_helpQsBothWays3" text="You get the same result from the Layers tab: pick an area there and set it to &quot;Plain TerraFarm&quot;. Both routes lead to the same place, take whichever you prefer." />
+        <text name="ml_edForeign" text="⚠ This zone was hand-written in miningLayers.xml and can only be shown here in simplified form. Saving rewrites it in the editor’s own scheme; extras such as custom ground textures or a fixed reference height are lost." />
         <text name="ml_edLayerSection" text="Overburden layers" />
         <text name="ml_edLayer" text="Layer" />
         <text name="ml_edMaterial" text="Material" />
@@ -71,7 +80,7 @@
         <text name="ml_helpQsDisplayB2" text="Move it with displayPosX and displayPosY in miningLayers.xml, or switch it off with showHeightDisplay." />
 
         <text name="ml_helpQsLayersTitle" text="Setting your own layers" />
-        <text name="ml_helpQsLayers1" text="Out of the box: topsoil, gravel below it, then paydirt, rock at the bottom. Want different overburden? The wizard asks you for a material and a lower boundary in metres per layer. The paydirt and the rock go underneath on their own." />
+        <text name="ml_helpQsLayers1" text="Out of the box: topsoil, gravel below it, then paydirt, rock at the bottom. That fits almost any pit, so there is nothing you have to set up." />
         <text name="ml_helpQsWizardButton" text="Set up layers" />
         <text name="ml_helpQsWizardHint" text="You do not have to, though. Do nothing and our default applies, which fits almost any pit. Want it different? Go to the Layers tab, build your own profile there and watch it take shape as you go." />
 

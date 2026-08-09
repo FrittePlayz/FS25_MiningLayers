@@ -25,10 +25,10 @@ InGameMenuMiningLayersFrame.IMAGE_EXTENSIONS = { '.dds', '.png' }
 ---section (Ueberschrift), paragraph (Fliesstext), bullet (eingerueckt),
 ---warning (gelb), image (Screenshot), spacer (Abstand).
 ---
----Der Schichten-Assistent haengt bewusst NICHT als Knopf im Fliesstext, sondern
----unten in der Menueleiste (MENU_EXTRA_1). Ein dorthin geklonter Knopf muesste
----seinen Klick-Empfaenger selbst verdrahten; die Menueleiste ist der Weg, den
----das Spiel und TerraFarm ohnehin gehen, und sie funktioniert am Gamepad mit.
+---Der alte Dialog-Assistent ist seit 1.2.3.0 raus; Schichten baut man auf dem
+---Reiter "Schichten" zusammen. Knoepfe gehoeren generell in die Menueleiste
+---unten, nicht als Klon in den Fliesstext - ein geklonter Knopf muesste seinen
+---Klick-Empfaenger selbst verdrahten.
 InGameMenuMiningLayersFrame.CONTENT = {
     -- ------------------------------------------------------------------
     -- Reiter 1: Schnellstart
@@ -40,6 +40,12 @@ InGameMenuMiningLayersFrame.CONTENT = {
         { type = 'paragraph', text = 'ml_helpQsStockNote' },
         { type = 'image',     file = 'ml_help_01_area' },
         { type = 'paragraph', text = 'ml_helpQsSetup2' },
+        { type = 'spacer' },
+
+        { type = 'section',   text = 'ml_helpQsBothWaysTitle' },
+        { type = 'paragraph', text = 'ml_helpQsBothWays1' },
+        { type = 'paragraph', text = 'ml_helpQsBothWays2' },
+        { type = 'paragraph', text = 'ml_helpQsBothWays3' },
         { type = 'spacer' },
 
         { type = 'section',   text = 'ml_helpQsDisplayTitle' },
@@ -69,6 +75,8 @@ InGameMenuMiningLayersFrame.CONTENT = {
         { type = 'section',   text = 'ml_helpManWhatTitle' },
         { type = 'paragraph', text = 'ml_helpManWhat1' },
         { type = 'paragraph', text = 'ml_helpManWhat2' },
+        { type = 'paragraph', text = 'ml_helpQsBothWays1' },
+        { type = 'paragraph', text = 'ml_helpQsBothWays2' },
         { type = 'spacer' },
 
         { type = 'section',   text = 'ml_helpManLayersTitle' },
@@ -213,14 +221,6 @@ function InGameMenuMiningLayersFrame:initialize()
         callback = self.onPagePrevious
     }
 
-    self.wizardButtonInfo = {
-        inputAction = InputAction.MENU_EXTRA_1,
-        text = MiningLayers.getText('ml_helpQsWizardButton', 'Set up layers'),
-        callback = function()
-            self:onClickStartWizard()
-        end
-    }
-
     self.saveLayersButtonInfo = {
         inputAction = InputAction.MENU_ACCEPT,
         text = MiningLayers.getText('ml_edSave', 'Save'),
@@ -260,6 +260,13 @@ function InGameMenuMiningLayersFrame:initialize()
         self.addLayerButtonInfo,
         self.removeLayerButtonInfo,
     }
+
+    -- Die Blaetter-Knoepfe waren gebaut, hingen aber in keiner Leiste: ohne sie
+    -- kommt man mit den Schultertasten nicht durch die vier Reiter.
+    table.insert(self.docMenuButtonInfo, self.prevPageButtonInfo)
+    table.insert(self.docMenuButtonInfo, self.nextPageButtonInfo)
+    table.insert(self.editorMenuButtonInfo, self.prevPageButtonInfo)
+    table.insert(self.editorMenuButtonInfo, self.nextPageButtonInfo)
 
     self.menuButtonInfo = self.docMenuButtonInfo
 
@@ -418,13 +425,21 @@ function InGameMenuMiningLayersFrame:updateSubCategoryPages(subCategoryIndex)
     end
 
     local layout = self.contentLayout ~= nil and self.contentLayout[subCategoryIndex] or nil
-
-    if layout ~= nil and self.listSlider ~= nil then
-        self.listSlider:setDataElement(layout)
-    end
-
-    -- Der Editor hat keinen Fliesstext, der Slider bleibt dort ohne Aufgabe.
     local isEditor = subCategoryIndex == InGameMenuMiningLayersFrame.EDITOR_PAGE
+
+    -- ⚠️ Auf dem Editor-Reiter gibt es kein Layout zum Scrollen. Ohne das
+    -- Ausblenden blieb der Schieber sichtbar und weiter an Reiter 3 gebunden.
+    if self.listSlider ~= nil then
+        if layout ~= nil then
+            self.listSlider:setDataElement(layout)
+        end
+
+        local box = self.listSlider.parent ~= nil and self.listSlider.parent.parent or nil
+
+        if box ~= nil and MiningLayers.isCallable(box.setVisible) then
+            box:setVisible(not isEditor)
+        end
+    end
 
     self.menuButtonInfo = isEditor and self.editorMenuButtonInfo or self.docMenuButtonInfo
 
@@ -455,23 +470,6 @@ end
 
 function InGameMenuMiningLayersFrame:onClickTabEditor()
     self.subCategoryPaging:setState(InGameMenuMiningLayersFrame.EDITOR_PAGE, true)
-end
-
----Startet den bestehenden Schichten-Assistenten. Uebergangsloesung, bis der
----grafische Editor auf dieser Seite steht.
-function InGameMenuMiningLayersFrame:onClickStartWizard()
-    if not MiningLayers.isCallable(MiningLayers.startLayerWizard) then
-        return
-    end
-
-    -- Das Ingame-Menue muss zu sein, sonst liegen die Dialoge dahinter.
-    if g_gui ~= nil then
-        g_gui:showGui(nil)
-    end
-
-    MiningLayers.protectedCall('startLayerWizard', function()
-        MiningLayers:startLayerWizard()
-    end)
 end
 
 function InGameMenuMiningLayersFrame:getMenuButtonInfo()
@@ -561,25 +559,85 @@ function InGameMenuMiningLayersFrame:loadEditorFromConfig()
 
     -- Hat der Bereich keine eigene Zone, dient der Standard als Vorlage. Eine
     -- eigene Zone entsteht erst beim Speichern.
-    local zone = self:getTargetZone() or MiningLayers.defaultZone
+    local ownZone = self:getTargetZone()
+
+    -- Ein Bereich kann komplett ohne Schichten laufen (normales TerraFarm).
+    -- Dafuer gibt es in der Konfiguration die disabled-Zone.
+    self.editActive = not (ownZone ~= nil and ownZone.disabled == true)
+
+    local zone = ownZone or MiningLayers.defaultZone
+    local layers = zone ~= nil and type(zone.layers) == 'table' and zone.layers or {}
+
+    -- ★ Floez und Sohle werden an der STRUKTUR erkannt, nicht am Materialnamen.
+    -- Vorher wurde jede Schicht namens STONE weggefiltert - und STONE ist ein
+    -- gueltiges Abraum-Material und sogar die Vorgabe fuer neue Schichten.
+    -- Folge: Wer eine Schicht anlegte und speicherte, fand sie beim naechsten
+    -- Oeffnen nicht mehr vor, und das Floez rutschte jedes Mal hoeher.
+    --
+    -- Der Mod schreibt immer: Abraum..., PAYDIRT (mit depth), Sohle (ohne depth).
+    -- Also: letzte Schicht ohne depth = Sohle, die davor = Floez, wenn PAYDIRT.
+    local lastIndex = #layers
+
+    if lastIndex > 0 and layers[lastIndex].depth == nil then
+        lastIndex = lastIndex - 1
+    end
+
+    if lastIndex > 0 and layers[lastIndex].fillTypeName == 'PAYDIRT' then
+        lastIndex = lastIndex - 1
+    end
+
+    -- Passt die Zone nicht in unser Schema, wird das Speichern sie umschreiben.
+    -- Das sagen wir, statt es still zu tun.
+    self.editorForeign = false
+
     local previousDepth = 0
 
-    if zone ~= nil and type(zone.layers) == 'table' then
-        for _, layer in ipairs(zone.layers) do
-            local name = layer.fillTypeName
+    for i = 1, lastIndex do
+        local layer = layers[i]
+        local name = layer ~= nil and layer.fillTypeName or nil
 
-            if name ~= 'PAYDIRT' and name ~= 'STONE' and layer.depth ~= nil then
-                local thickness = layer.depth - previousDepth
+        if name == nil or layer.depth == nil then
+            -- Absolute Hoehen (aboveY) oder Luecken kann der Editor nicht
+            -- abbilden. Nicht anfassen, aber warnen.
+            self.editorForeign = true
+        else
+            local thickness = layer.depth - previousDepth
+            previousDepth = layer.depth
 
-                if thickness >= InGameMenuMiningLayersFrame.MIN_THICKNESS then
-                    table.insert(self.editLayers, {
-                        fillTypeName = name,
-                        thickness = thickness,
-                    })
-
-                    previousDepth = layer.depth
-                end
+            if thickness < InGameMenuMiningLayersFrame.MIN_THICKNESS then
+                -- Zu duenn fuer die Auswahl: auf das Mindestmass heben, statt
+                -- die Schicht verschwinden zu lassen.
+                thickness = InGameMenuMiningLayersFrame.MIN_THICKNESS
+                self.editorForeign = true
+            elseif thickness > InGameMenuMiningLayersFrame.MAX_THICKNESS then
+                thickness = InGameMenuMiningLayersFrame.MAX_THICKNESS
+                self.editorForeign = true
             end
+
+            table.insert(self.editLayers, {
+                fillTypeName = name,
+                thickness = thickness,
+            })
+        end
+    end
+
+    -- Mehr Schichten als der Editor anlegen laesst: die Obergrenze gilt auch
+    -- fuer von Hand gebaute Zonen, sonst waere sie umgehbar.
+    while #self.editLayers > InGameMenuMiningLayersFrame.MAX_LAYERS do
+        table.remove(self.editLayers)
+        self.editorForeign = true
+    end
+
+    -- Etwas anderes als Abraum/Floez/Sohle in der Zone? Dann ist sie von Hand
+    -- gebaut und Speichern wuerde sie vereinheitlichen.
+    if zone ~= nil and (zone.surfaceY ~= nil) then
+        self.editorForeign = true
+    end
+
+    for _, layer in ipairs(layers) do
+        if layer.paintLayerName ~= nil or layer.aboveY ~= nil then
+            self.editorForeign = true
+            break
         end
     end
 
@@ -660,12 +718,36 @@ function InGameMenuMiningLayersFrame:updateEditorOptions()
         self.targetOption:setState(self.targetIndex, false)
     end
 
+    if self.activeOption ~= nil then
+        self.activeOption:setTexts({
+            MiningLayers.getText('ml_edActiveOn', 'Mining Layers'),
+            MiningLayers.getText('ml_edActiveOff', 'plain TerraFarm'),
+        })
+        self.activeOption:setState(self.editActive and 1 or 2, false)
+
+        -- Fuer alle Bereiche laesst sich das nicht abschalten; dafuer gibt es
+        -- den globalen Schalter enabled in der miningLayers.xml.
+        local target = self.targets and self.targets[self.targetIndex] or nil
+
+        if MiningLayers.isCallable(self.activeOption.setDisabled) then
+            self.activeOption:setDisabled(target == nil or target.key == nil)
+        end
+    end
+
     self.layerOption:setTexts(layerTexts)
     self.layerOption:setState(self.editIndex, false)
 
     self.materialOption:setTexts(InGameMenuMiningLayersFrame.MATERIALS)
 
     local current = self.editLayers[self.editIndex]
+
+    -- Ohne Schicht gibt es nichts einzustellen. Kann nur ueber einen kuenftigen
+    -- Pfad passieren, waere dann aber ein nil-Zugriff mitten in der GUI.
+    if current == nil then
+        self.updatingEditor = false
+        return
+    end
+
     local materialIndex = 1
 
     for index, name in ipairs(InGameMenuMiningLayersFrame.MATERIALS) do
@@ -722,13 +804,23 @@ function InGameMenuMiningLayersFrame:updateEditorSummary()
         local target = self.targets and self.targets[self.targetIndex] or nil
         local key = target ~= nil and target.key or nil
 
+        local text
+
         if key == nil then
-            self.editorScope:setText(MiningLayers.getText('ml_edScope', ''))
+            text = MiningLayers.getText('ml_edScope', '')
         else
-            local text = MiningLayers.getText('ml_edScopeArea', '')
-            local ok, formatted = pcall(string.format, text, target.label)
-            self.editorScope:setText(ok and formatted or text)
+            local template = MiningLayers.getText('ml_edScopeArea', '')
+            local ok, formatted = pcall(string.format, template, target.label)
+            text = ok and formatted or template
         end
+
+        -- Zonen, die von Hand gebaut wurden, kann der Editor nur vereinfacht
+        -- abbilden. Das sagen wir, bevor jemand ahnungslos speichert.
+        if self.editorForeign then
+            text = text .. '\n\n' .. MiningLayers.getText('ml_edForeign', '')
+        end
+
+        self.editorScope:setText(text)
     end
 end
 
@@ -747,6 +839,17 @@ function InGameMenuMiningLayersFrame:onTargetChanged(state)
         self.targetIndex = math.max(1, math.min(keep, #self.targets))
         self:updateEditorOptions()
     end)
+end
+
+function InGameMenuMiningLayersFrame:onActiveChanged(state)
+    if self.updatingEditor then
+        return
+    end
+
+    self.editActive = state == 1
+    self.editorDirty = true
+
+    self:updateEditorSummary()
 end
 
 function InGameMenuMiningLayersFrame:onLayerChanged(state)
@@ -826,6 +929,8 @@ function InGameMenuMiningLayersFrame:onClickSaveLayers()
     local layers = {}
     local depth = 0
 
+    local skipped = {}
+
     for _, layer in ipairs(self.editLayers) do
         local fillType = g_fillTypeManager:getFillTypeByName(layer.fillTypeName)
 
@@ -837,7 +942,16 @@ function InGameMenuMiningLayersFrame:onClickSaveLayers()
                 fillTypeIndex = fillType.index,
                 depth = depth,
             })
+        else
+            -- Material auf dieser Karte nicht registriert. Frueher fiel die
+            -- Schicht lautlos raus und das Floez rutschte nach oben.
+            table.insert(skipped, layer.fillTypeName)
         end
+    end
+
+    if #skipped > 0 then
+        MiningLayers.log('Editor: %d Schicht(en) nicht gespeichert, Material unbekannt: %s',
+            #skipped, table.concat(skipped, ', '))
     end
 
     if #layers == 0 then
@@ -877,6 +991,14 @@ function InGameMenuMiningLayersFrame:onClickSaveLayers()
             enabled = true,
             layers = layers,
         }
+    elseif not self.editActive then
+        -- Bereich ausdruecklich ohne Schichten: dieselbe Marker-Zone, die auch
+        -- die Konfigurationsdatei kennt. Sie hat bewusst KEIN layers-Feld.
+        MiningLayers.zonesByKey[key] = {
+            kind = 'area',
+            area = target.label,
+            disabled = true,
+        }
     else
         MiningLayers.zonesByKey[key] = {
             kind = 'area',
@@ -901,6 +1023,10 @@ function InGameMenuMiningLayersFrame:onClickSaveLayers()
 
         if key == nil then
             message = MiningLayers.getText('ml_edSaved', 'Layers saved.')
+        elseif not self.editActive then
+            local template = MiningLayers.getText('ml_edSavedOff', 'Layers are off for %s.')
+            local ok, formatted = pcall(string.format, template, target.label)
+            message = ok and formatted or template
         else
             local template = MiningLayers.getText('ml_edSavedArea', 'Layers saved for %s.')
             local ok, formatted = pcall(string.format, template, target.label)
