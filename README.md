@@ -112,6 +112,17 @@ In game this shows as a small sign at the pit edge. Don't want it? Set `sponsorS
 - A **FrittePlayz** project (YouTube)
 - Built on **[TerraFarm](https://github.com/scfmod/FS25_TerraFarm)** by scfmod (required, install separately) — unofficial add-on, no affiliation with scfmod or GIANTS Software.
 
+## Roadmap
+
+Where this mod is headed. These are **intentions, not promises** — no dates, and anything here can change or be dropped.
+
+1. **True depth** — remember the original terrain height per point instead of working with fixed height bands. Layers would then hold up on slopes, in valleys, and even without drawing an area at all.
+2. **Material hardness & the right tool** — rock should not dig like soil: slower, or only after ripping/hammering it loose. Worth knowing: neither TerraFarm nor the base game has any notion of material hardness (the `hardness` value in the engine brush is edge softness, not rock strength), so this one is built from scratch.
+3. **Yield** — a lean overburden and a rich seam: more or fewer liters per cubic meter depending on the layer you are in.
+4. **Caprock** — a hard band sitting on top of the paydirt seam, combining 1 and 2.
+
+Got an opinion on the order, or an idea that's missing? [Open a discussion or issue](../../issues) — this list is not set in stone.
+
 ## Bugs & questions
 
 Found a bug? [Open an issue](../../issues) — include your `log.txt` and the map you play on. Ideas for features are welcome in the same place.

@@ -112,6 +112,17 @@ Im Spiel zeigt sich das als kleines Schild am Grubenrand. Nicht gewünscht? `spo
 - Ein **FrittePlayz**-Projekt (YouTube)
 - Baut auf **[TerraFarm](https://github.com/scfmod/FS25_TerraFarm)** von scfmod auf (wird benötigt, separat installieren) — inoffizielles Addon, keine Verbindung zu scfmod oder GIANTS Software.
 
+## Roadmap
+
+Wohin der Mod geht. Das sind **Vorhaben, keine Versprechen** — keine Termine, und alles hier kann sich ändern oder wegfallen.
+
+1. **Echte Tiefe** — die ursprüngliche Geländehöhe pro Punkt merken, statt mit festen Höhenbändern zu arbeiten. Schichten würden dann am Hang, im Tal und sogar ganz ohne gezogenen Bereich sauber sitzen.
+2. **Materialhärte & passendes Werkzeug** — Fels soll sich nicht wie Erde graben: langsamer, oder erst nach Aufreißen/Hämmern. Zum Einordnen: Weder TerraFarm noch das Basisspiel kennen so etwas wie Materialhärte (der `hardness`-Wert des Engine-Pinsels ist die Randschärfe, nicht die Festigkeit) — das wird also kompletter Eigenbau.
+3. **Ergiebigkeit** — magere Deckschicht, ergiebige Nutzschicht: mehr oder weniger Liter pro Kubikmeter, je nach Schicht.
+4. **Deckgestein** — eine harte Zwischenschicht über dem Paydirt-Flöz, Kombination aus 1 und 2.
+
+Andere Meinung zur Reihenfolge oder eine Idee, die fehlt? [Diskussion oder Issue aufmachen](../../issues) — die Liste ist nicht in Stein gemeißelt.
+
 ## Fehler & Fragen
 
 Fehler gefunden? [Issue aufmachen](../../issues) — bitte mit `log.txt` und der gespielten Karte. Feature-Ideen sind an derselben Stelle willkommen.
