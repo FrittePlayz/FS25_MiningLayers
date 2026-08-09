@@ -46,7 +46,7 @@ Nach dem Start findest du eine neue Seite **Mining Layers** im ESC-Menü — mit
 
 ![Tiefer — Kies, gleich Paydirt](docs/images/05_display_paydirt.jpg)
 
-**4. Eigene Schichten festlegen.** ESC-Menü → Mining Layers → Reiter Schichten: Material und Dicke je Schicht einstellen, links siehst du das entstehende Profil sofort. ⚠️ Was du hier festlegst, ist der **Standard für ALLE deine Bereiche** — auch für die, die schon stehen. Eine einzelne Grube mit abweichenden Schichten geht ebenfalls, die trägst du aber von Hand in die `miningLayers.xml` ein:
+**4. Eigene Schichten festlegen — pro Grube.** ESC-Menü → Mining Layers → Reiter Schichten. Unter *Gilt für* wählst du das Ziel: alle Bereiche als Standard oder eine bestimmte Grube — und ob diese Grube überhaupt mit Schichten arbeitet. Darunter stellst du Material und Dicke je Schicht ein, links siehst du das entstehende Profil sofort:
 
 ![Schichten-Editor](docs/images/02_layer_editor.jpg)
 
@@ -68,7 +68,7 @@ Der häufigste Verwirrungspunkt überhaupt. Im TerraFarm-Menü → **Landscaping
 
 1. **Beide Felder auf „Not set"** → Mining Layers arbeitet: Was in der Schaufel landet, hängt an der Grabtiefe. **Das ist der Auslieferungszustand eines frisch gezogenen Bereichs** — du musst nichts tun.
 2. **Beim *Terraformen* ein Material eintragen** → der Bereich läuft als ganz normale TerraFarm-Polygon-Area ohne Schichten. Genau richtig für Baustellen, Straßenbau, Planieren — überall, wo du immer dasselbe Material brauchst.
-3. Lieber per Datei? In `modSettings/FS25_MiningLayers/miningLayers.xml` lassen sich Schichten ebenfalls je Bereich abschalten — gleiches Ergebnis.
+3. Dasselbe geht über den **Reiter Schichten** von Mining Layers: unter *Gilt für* den Bereich wählen und auf „Normales TerraFarm" stellen.
 4. **Pfad-Bereiche sind komplett ausgenommen** — Schichten gibt es ausschließlich in Polygon-Bereichen. Ein Pfad-Bereich verhält sich immer wie normales TerraFarm, egal was eingestellt ist.
 
 Das ist **kein Defekt und kein Mod-Konflikt — es ist die vorgesehene Umschaltung.** Liefert eine Zone „das falsche Material", zuerst die Materialfelder des Bereichs prüfen.
@@ -76,8 +76,8 @@ Das ist **kein Defekt und kein Mod-Konflikt — es ist die vorgesehene Umschaltu
 ## Features
 
 - **Material nach Grabtiefe** — Schichtgrenzen in Metern unter der ursprünglichen Oberfläche
-- **Schichtaufbau je Bereich** — eine einzelne Grube kann ihre eigene Geologie haben (verschiedene Gruben, verschiedene Materialien, eine Karte). Der Ingame-Editor setzt den Standard für alle Bereiche; ein abweichender Aufbau für eine Grube wird von Hand in die `miningLayers.xml` geschrieben
-- **Normales TerraFarm je Bereich** — jeder Bereich mit gesetztem Material verhält sich wie gewohnt, ohne Schichten
+- **Geologie pro Grube** — jeder Bereich kann seinen eigenen Schichtaufbau haben, direkt im Ingame-Editor einstellbar (verschiedene Gruben, verschiedene Materialien, eine Karte)
+- **Pro Grube: Schichten oder normales TerraFarm** — Zielbereich im Editor wählen und je Grube einzeln entscheiden
 - **Halden-Gedächtnis** — was du abkippst, nimmst du auch wieder auf. Kein Material-Cheaten: Wer eine Halde unter ihre Basis durchgräbt, trifft wieder auf Geologie (Krater-Cheat-Sperre inklusive)
 - **Automatischer Grubenboden** — Zieltiefe = unterste Schichtgrenze, zieht bei Bereichs-Änderungen nach
 - **Hang- und Wasser-Behandlung** — geneigte Bezugsfläche am Hang, Grubenboden klemmt an der Wasserlinie
