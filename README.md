@@ -109,6 +109,12 @@ Where this mod is headed. These are **intentions, not promises** — no dates, a
 3. **Yield** — a lean overburden and a rich seam: more or fewer liters per cubic meter depending on the layer you are in.
 4. **Caprock** — a hard band sitting on top of the paydirt seam, combining 1 and 2.
 
+### Companion project (separate mod, planned)
+
+**TerraFarm machine configurations** — a configuration add-on that makes vehicles, excavators and attachments TerraFarm-capable: buckets, ripper teeth, grading blades, dozer plates, whatever earns its place on a dig site. The plan is to cover the machines people actually use for mining but that ship without a TerraFarm config, so you don't have to edit mods yourself.
+
+This will be its own repository, not part of Mining Layers. Suggestions for machines that should be in it are welcome in the issues.
+
 Got an opinion on the order, or an idea that's missing? [Open a discussion or issue](../../issues) — this list is not set in stone.
 
 ## Sponsor

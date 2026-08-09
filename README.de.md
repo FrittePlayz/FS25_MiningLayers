@@ -109,6 +109,12 @@ Wohin der Mod geht. Das sind **Vorhaben, keine Versprechen** — keine Termine, 
 3. **Ergiebigkeit** — magere Deckschicht, ergiebige Nutzschicht: mehr oder weniger Liter pro Kubikmeter, je nach Schicht.
 4. **Deckgestein** — eine harte Zwischenschicht über dem Paydirt-Flöz, Kombination aus 1 und 2.
 
+### Begleitprojekt (eigener Mod, geplant)
+
+**TerraFarm-Maschinenkonfigurationen** — ein Konfigurations-Addon, das Fahrzeuge, Bagger und Werkzeuge TerraFarm-fähig macht: Schaufeln, Reißzähne, Planierschilde, Dozer-Blätter, alles was auf einer Baustelle Sinn ergibt. Ziel sind die Maschinen, die man tatsächlich zum Graben nimmt, die aber ohne TerraFarm-Config ausgeliefert werden — damit niemand mehr fremde Mods selbst editieren muss.
+
+Das wird ein eigenes Repository, kein Teil von Mining Layers. Vorschläge, welche Maschinen rein sollen, gern in den Issues.
+
 Andere Meinung zur Reihenfolge oder eine Idee, die fehlt? [Diskussion oder Issue aufmachen](../../issues) — die Liste ist nicht in Stein gemeißelt.
 
 ## Sponsor
