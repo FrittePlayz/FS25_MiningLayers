@@ -25,12 +25,39 @@ Ein inoffizielles Addon, **powered by [TerraFarm](https://github.com/scfmod/FS25
 3. Sicherstellen, dass [TerraFarm](https://github.com/scfmod/FS25_TerraFarm) (`FS25_0_TerraFarm`) im selben Ordner liegt.
 4. Spiel starten und **beide Mods** in der Mod-Auswahl des Spielstands anhaken.
 
-## Schnellstart
+Nach dem Start findest du eine neue Seite **Mining Layers** im ESC-Menü — mit der kompletten Anleitung direkt im Spiel:
 
-1. Installieren wie oben — erst TerraFarm, dann Mining Layers.
-2. Im Spiel einen **TerraFarm-Bereich** (Polygon) um die geplante Grube ziehen. Fertig — die Bezugshöhe holt sich der Mod automatisch vom Gelände am Bereichsrand.
-3. Graben: Mutterboden → Kies → Paydirt → Fels. Die Anzeige links zeigt Tiefe und nächste Schicht.
-4. Schichten ändern über **ESC-Menü → Mining Layers** (grafischer Editor, pro Grube) — oder von Hand in `modSettings/FS25_MiningLayers/miningLayers.xml`.
+![Mining-Layers-Menüseite](docs/images/01_menu_after_install.jpg)
+
+## Schritt für Schritt: deine erste Grube
+
+**1. TerraFarm-Bereich (Polygon) um die geplante Grube ziehen.** Das ist die ganze Einrichtung — die Bezugshöhe holt sich der Mod automatisch vom Gelände am Bereichsrand:
+
+![Bereich ziehen](docs/images/03_draw_area.jpg)
+
+**2. Losgraben.** Das Mining-Layers-Panel links zeigt Zone, aktuelle Schicht, Tiefe — und wie weit es bis zur nächsten Schicht ist:
+
+![Erster Stich — Mutterboden](docs/images/04_display_first_dig.jpg)
+
+**3. Tiefer graben: Mutterboden → Kies → Paydirt → Fels.** Der Grubenboden stoppt automatisch unter der letzten Schicht:
+
+![Tiefer — Kies, gleich Paydirt](docs/images/05_display_paydirt.jpg)
+
+**4. Eigene Schichten festlegen — pro Grube.** ESC-Menü → Mining Layers → Reiter Schichten: Material und Tiefe je Bereich einzeln wählen (oder für alle gemeinsam):
+
+![Schichten-Editor](docs/images/02_layer_editor.jpg)
+
+**5. Halden merken sich ihr Material.** Kies abkippen, Kies wiederaufnehmen — auch an den Flanken. Das Panel sagt dir, wenn das Halden-Gedächtnis greift. Kein Material-Cheaten: unter der Haldenbasis ist wieder Geologie:
+
+![Halden-Gedächtnis](docs/images/07_mound_gravel.jpg)
+
+**6. Bergbau am Berg lohnt sich.** Am Steilhang liegt Paydirt oberflächennah — die Belohnung für die Anfahrt:
+
+![Bergbau am Berg](docs/images/10_mountain_paydirt.jpg)
+
+**7. Die Grenzen kennen.** Gruben an der Wasserlinie laufen optisch voll (perfekt fürs Goldwaschen-Gefühl); manche Karten sperren Flussbett und Kartenrand komplett:
+
+![Flussbett-Grenze](docs/images/12_riverbed_limit.jpg)
 
 ## Features
 
@@ -44,14 +71,6 @@ Ein inoffizielles Addon, **powered by [TerraFarm](https://github.com/scfmod/FS25
 - **Material-Check beim Start** — warnt vor der 63-Materialien-Grenze der Engine
 - **Berg-Bonus** — am Steilhang liegt Paydirt oberflächennah: Wer die Anfahrt auf sich nimmt, wird belohnt
 - Multiplayer-freundliches Sponsorschild (siehe unten), kein Sync-Verkehr
-
-## So sieht es aus
-
-| | |
-|---|---|
-| ![Bereich ziehen](data/help/ml_help_01_area.png) *TerraFarm-Bereich ziehen — fertig* | ![Tiefenanzeige](data/help/ml_help_02_display.png) *Anzeige: Schicht, Tiefe, was kommt* |
-| ![Schichten in der Wand](data/help/ml_help_03_wall.png) *Schichten sichtbar in der Grubenwand* | ![Halden](data/help/ml_help_04_mounds.png) *Halden merken sich ihr Material* |
-| ![Berg-Bergbau](data/help/ml_help_06_mountain.png) *Berg-Bonus: Paydirt oberflächennah* | ![Unter Wasser](data/help/ml_help_07_water.png) *Graben unter der Wasserlinie funktioniert* |
 
 ## Fallstricke, die man kennen sollte
 

@@ -25,12 +25,39 @@ An unofficial add-on **powered by [TerraFarm](https://github.com/scfmod/FS25_Ter
 3. Make sure [TerraFarm](https://github.com/scfmod/FS25_TerraFarm) (`FS25_0_TerraFarm`) is in the same folder.
 4. Start the game and enable **both mods** in the mod selection of your savegame.
 
-## Quick start
+After starting, you'll find a new **Mining Layers** page in the ESC menu — with the full manual in-game:
 
-1. Install as above — TerraFarm first, then Mining Layers.
-2. In game: draw a **TerraFarm area** (polygon) around your future pit. That's it — the mod takes the reference height automatically from the terrain at the area's edge.
-3. Start digging: topsoil → gravel → paydirt → rock. The layer display on the left shows current depth and what comes next.
-4. Change the layers via the **ESC menu → Mining Layers** (graphical editor, per pit) — or edit `modSettings/FS25_MiningLayers/miningLayers.xml` by hand.
+![Mining Layers menu page](docs/images/01_menu_after_install.jpg)
+
+## Step-by-step: your first pit
+
+**1. Draw a TerraFarm area (polygon) around your future pit.** That's the whole setup — the mod takes the reference height automatically from the terrain at the area's edge:
+
+![Draw an area](docs/images/03_draw_area.jpg)
+
+**2. Start digging.** The Mining Layers panel on the left shows your zone, the current layer, your depth — and how far to the next layer:
+
+![First dig — topsoil](docs/images/04_display_first_dig.jpg)
+
+**3. Dig deeper: topsoil → gravel → paydirt → rock.** The pit floor stops automatically below the last layer:
+
+![Deeper — gravel, paydirt next](docs/images/05_display_paydirt.jpg)
+
+**4. Set your own layers — per pit.** ESC menu → Mining Layers → Layers tab: pick materials and depths for each area separately (or for all at once):
+
+![Layer editor](docs/images/02_layer_editor.jpg)
+
+**5. Spoil piles remember their material.** Dump gravel, pick up gravel — even from the flanks. The panel tells you when pile memory is active. No material cheating: below the pile's base you're back in geology:
+
+![Spoil pile memory](docs/images/07_mound_gravel.jpg)
+
+**6. Mountain mining pays off.** On steep slopes paydirt sits near the surface — the reward for hauling up the mountain:
+
+![Mountain mining](docs/images/10_mountain_paydirt.jpg)
+
+**7. Know the limits.** Pits at the waterline flood visually (great for placer mining); some maps block digging at riverbeds and map edges entirely:
+
+![Riverbed limit](docs/images/12_riverbed_limit.jpg)
 
 ## Features
 
@@ -44,14 +71,6 @@ An unofficial add-on **powered by [TerraFarm](https://github.com/scfmod/FS25_Ter
 - **Material check at startup** — warns about the engine's 63 terrain material limit
 - **Mountain bonus** — on steep slopes paydirt sits near the surface: hauling up the mountain gets rewarded
 - Multiplayer-friendly sponsor sign (see below), no sync traffic
-
-## How it looks
-
-| | |
-|---|---|
-| ![Draw an area](data/help/ml_help_01_area.png) *Draw a TerraFarm area — done* | ![Depth display](data/help/ml_help_02_display.png) *Depth display: layer, depth, what's next* |
-| ![Layers in the wall](data/help/ml_help_03_wall.png) *Layers visible in the pit wall* | ![Spoil piles](data/help/ml_help_04_mounds.png) *Spoil piles remember their material* |
-| ![Mountain mining](data/help/ml_help_06_mountain.png) *Mountain bonus: paydirt near the surface* | ![Under water](data/help/ml_help_07_water.png) *Digging below the waterline works* |
 
 ## Pitfalls worth knowing
 
