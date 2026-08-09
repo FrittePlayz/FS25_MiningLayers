@@ -100,18 +100,6 @@ Das ist **kein Defekt und kein Mod-Konflikt — es ist die vorgesehene Umschaltu
 
 `modSettings/FS25_MiningLayers/miningLayers.xml` — wird beim ersten Start aus der Vorlage angelegt und überlebt Mod-Updates. Schichtaufbau (Material + Tiefe, pro Bereich), Anzeige-Optionen und der Sponsorschild-Schalter stehen hier. Alles auch über das Ingame-Menü editierbar.
 
-## Sponsor
-
-Mining Layers wird unterstützt von **[farmersingles.de](https://farmersingles.de)** — der Singlebörse für Landwirte. 🚜❤️
-Im Spiel zeigt sich das als kleines Schild am Grubenrand. Nicht gewünscht? `sponsorSign="false"` in der Config — das Schild verschwindet sofort, ohne Neustart.
-
-## Credits
-
-- **Autor:** Tommy Honold — [seeside.ai](https://seeside.ai)
-- **Sponsor:** [farmersingles.de](https://farmersingles.de) — die Singlebörse für Landwirte
-- Ein **FrittePlayz**-Projekt (YouTube)
-- Baut auf **[TerraFarm](https://github.com/scfmod/FS25_TerraFarm)** von scfmod auf (wird benötigt, separat installieren) — inoffizielles Addon, keine Verbindung zu scfmod oder GIANTS Software.
-
 ## Roadmap
 
 Wohin der Mod geht. Das sind **Vorhaben, keine Versprechen** — keine Termine, und alles hier kann sich ändern oder wegfallen.
@@ -122,6 +110,11 @@ Wohin der Mod geht. Das sind **Vorhaben, keine Versprechen** — keine Termine, 
 4. **Deckgestein** — eine harte Zwischenschicht über dem Paydirt-Flöz, Kombination aus 1 und 2.
 
 Andere Meinung zur Reihenfolge oder eine Idee, die fehlt? [Diskussion oder Issue aufmachen](../../issues) — die Liste ist nicht in Stein gemeißelt.
+
+## Sponsor
+
+Mining Layers wird unterstützt von **[farmersingles.de](https://farmersingles.de)** — der Singlebörse für Landwirte. 🚜❤️
+Im Spiel zeigt sich das als kleines Schild am Grubenrand. Nicht gewünscht? `sponsorSign="false"` in der Config — das Schild verschwindet sofort, ohne Neustart.
 
 ## Fehler & Fragen
 
@@ -138,3 +131,10 @@ Mining Layers ist kostenlos und bleibt es — keine Paywall, keine Vorabversione
 Dahinter stecken viele Abende: TerraFarms Quelltext lesen, Testgruben ausheben und Fehler jagen, die erst beim fünften Neuladen auftauchen. Wenn dir der Mod einen guten Nachmittag in der Grube gemacht hat, **[spendier mir eine Portion Pommes](https://buymeacoffee.com/fritteplayz)** — die fließt direkt in Testzeit und neue Features.
 
 Nicht dein Ding? Ein ⭐ auf dieses Repo, ein Fehlerbericht oder eine Empfehlung an einen Kumpel helfen genauso. Danke fürs Spielen!
+
+## Credits
+
+- **Autor:** Tommy Honold — [seeside.ai](https://seeside.ai)
+- **Sponsor:** [farmersingles.de](https://farmersingles.de) — die Singlebörse für Landwirte
+- Ein **FrittePlayz**-Projekt (YouTube)
+- Baut auf **[TerraFarm](https://github.com/scfmod/FS25_TerraFarm)** von scfmod auf (wird benötigt, separat installieren) — inoffizielles Addon, keine Verbindung zu scfmod oder GIANTS Software.

@@ -100,18 +100,6 @@ This is **not a defect and not a mod conflict — it's the intended switch.** If
 
 `modSettings/FS25_MiningLayers/miningLayers.xml` — created from the template on first start, survives mod updates. Layer stacks (material + depth, per area), display options, and the sponsor sign toggle live here. Everything can also be edited from the in-game menu.
 
-## Sponsor
-
-Mining Layers is supported by **[farmersingles.de](https://farmersingles.de)** — the dating site for farmers. 🚜❤️
-In game this shows as a small sign at the pit edge. Don't want it? Set `sponsorSign="false"` in the config — it disappears immediately, no restart needed.
-
-## Credits
-
-- **Author:** Tommy Honold — [seeside.ai](https://seeside.ai)
-- **Sponsor:** [farmersingles.de](https://farmersingles.de) — the dating site for farmers
-- A **FrittePlayz** project (YouTube)
-- Built on **[TerraFarm](https://github.com/scfmod/FS25_TerraFarm)** by scfmod (required, install separately) — unofficial add-on, no affiliation with scfmod or GIANTS Software.
-
 ## Roadmap
 
 Where this mod is headed. These are **intentions, not promises** — no dates, and anything here can change or be dropped.
@@ -122,6 +110,11 @@ Where this mod is headed. These are **intentions, not promises** — no dates, a
 4. **Caprock** — a hard band sitting on top of the paydirt seam, combining 1 and 2.
 
 Got an opinion on the order, or an idea that's missing? [Open a discussion or issue](../../issues) — this list is not set in stone.
+
+## Sponsor
+
+Mining Layers is supported by **[farmersingles.de](https://farmersingles.de)** — the dating site for farmers. 🚜❤️
+In game this shows as a small sign at the pit edge. Don't want it? Set `sponsorSign="false"` in the config — it disappears immediately, no restart needed.
 
 ## Bugs & questions
 
@@ -138,3 +131,10 @@ Mining Layers is free and stays free — no paywalled early access, no ads, no s
 Behind it are a lot of evenings: reading TerraFarm's source, digging test pits, and hunting bugs that only show up after the fifth reload. If the mod gave you a good afternoon in the pit, **[buy me a portion of fries](https://buymeacoffee.com/fritteplayz)** — every one of them goes straight back into testing hours and new features.
 
 Not your thing? A ⭐ on this repo, a bug report, or telling a friend about the mod helps just as much. Thanks for playing!
+
+## Credits
+
+- **Author:** Tommy Honold — [seeside.ai](https://seeside.ai)
+- **Sponsor:** [farmersingles.de](https://farmersingles.de) — the dating site for farmers
+- A **FrittePlayz** project (YouTube)
+- Built on **[TerraFarm](https://github.com/scfmod/FS25_TerraFarm)** by scfmod (required, install separately) — unofficial add-on, no affiliation with scfmod or GIANTS Software.
