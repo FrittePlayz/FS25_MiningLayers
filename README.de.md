@@ -111,7 +111,7 @@ Wohin der Mod geht. Das sind **Vorhaben, keine Versprechen** — keine Termine, 
 
 ### Begleitprojekt (eigener Mod, geplant)
 
-**TerraFarm-Maschinenkonfigurationen** — ein Konfigurations-Addon, das Fahrzeuge, Bagger und Werkzeuge TerraFarm-fähig macht: Schaufeln, Reißzähne, Planierschilde, Dozer-Blätter, alles was auf einer Baustelle Sinn ergibt. Ziel sind die Maschinen, die man tatsächlich zum Graben nimmt, die aber ohne TerraFarm-Config ausgeliefert werden — damit niemand mehr fremde Mods selbst editieren muss.
+**TerraFarm-Konfigurationen für die Basisspiel-Maschinen** — wer heute mit TerraFarm anfangen will, muss sich erst Mod-Bagger besorgen: Das offizielle Machines-Addon deckt Fremd-Mods ab, die Community-Packs ebenso. Niemand deckt ab, was das Spiel ohnehin mitbringt. Geplant ist ein Konfigurations-Addon für die Basisspiel-Flotte — Radlader, Teleskoplader, Frontlader samt Schaufeln, Schilden und Reißzähnen — damit jeder TerraFarm mit den Maschinen ausprobieren kann, die schon in der Halle stehen.
 
 Das wird ein eigenes Repository, kein Teil von Mining Layers. Vorschläge, welche Maschinen rein sollen, gern in den Issues.
 

@@ -111,7 +111,7 @@ Where this mod is headed. These are **intentions, not promises** — no dates, a
 
 ### Companion project (separate mod, planned)
 
-**TerraFarm machine configurations** — a configuration add-on that makes vehicles, excavators and attachments TerraFarm-capable: buckets, ripper teeth, grading blades, dozer plates, whatever earns its place on a dig site. The plan is to cover the machines people actually use for mining but that ship without a TerraFarm config, so you don't have to edit mods yourself.
+**TerraFarm configs for the base game machines** — right now, getting started with TerraFarm means hunting down modded excavators first: the official machines add-on covers third-party mods, and so do the community packs. Nobody covers what the game already gives you. The plan is a config add-on for the base game fleet — wheel loaders, telehandlers, front loaders and their buckets, blades and ripper attachments — so anyone can try TerraFarm with the machines already parked in their shed.
 
 This will be its own repository, not part of Mining Layers. Suggestions for machines that should be in it are welcome in the issues.
 
