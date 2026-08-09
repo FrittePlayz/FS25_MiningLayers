@@ -46,7 +46,7 @@ After starting, you'll find a new **Mining Layers** page in the ESC menu — wit
 
 ![Deeper — gravel, paydirt next](docs/images/05_display_paydirt.jpg)
 
-**4. Set your own layers — per pit.** ESC menu → Mining Layers → Layers tab: pick materials and depths for each area separately (or for all at once):
+**4. Set your own layers — per pit.** ESC menu → Mining Layers → Layers tab. Under *Applies to* you pick the target: all areas or one specific pit — and whether that pit uses layers at all. Below that you set material and thickness per layer, and the preview shows the resulting profile live:
 
 ![Layer editor](docs/images/02_layer_editor.jpg)
 

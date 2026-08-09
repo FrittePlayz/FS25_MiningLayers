@@ -46,7 +46,7 @@ Nach dem Start findest du eine neue Seite **Mining Layers** im ESC-Menü — mit
 
 ![Tiefer — Kies, gleich Paydirt](docs/images/05_display_paydirt.jpg)
 
-**4. Eigene Schichten festlegen — pro Grube.** ESC-Menü → Mining Layers → Reiter Schichten: Material und Tiefe je Bereich einzeln wählen (oder für alle gemeinsam):
+**4. Eigene Schichten festlegen — pro Grube.** ESC-Menü → Mining Layers → Reiter Schichten. Unter *Gilt für* wählst du das Ziel: alle Bereiche oder eine bestimmte Grube — und ob diese Grube überhaupt mit Schichten arbeitet. Darunter stellst du Material und Dicke je Schicht ein, links siehst du das entstehende Profil sofort:
 
 ![Schichten-Editor](docs/images/02_layer_editor.jpg)
 
