@@ -59,6 +59,16 @@ After starting, you'll find a new **Mining Layers** page in the ESC menu — wit
 
 ![Riverbed limit](docs/images/12_riverbed_limit.jpg)
 
+## ⚠️ Two ways per area — read this before you judge the mod
+
+The single most common point of confusion:
+
+1. **Leave the material fields on the TerraFarm area EMPTY** and Mining Layers does its job: what ends up in the bucket depends on how deep you dig. That is the normal case for a pit.
+2. **Enter a material on the area instead** and you get plain TerraFarm without layers. Exactly right for construction sites, road building and levelling — anywhere you just want to move soil and always need the same material.
+3. You get the same result from the **Layers tab**: pick an area there and set it to "Plain TerraFarm". Both routes lead to the same place, take whichever you prefer.
+
+So: if a zone gives you "the wrong material", it's not broken — check whether a material is set on the area.
+
 ## Features
 
 - **Material by digging depth** — layer boundaries in meters below the original surface

@@ -59,6 +59,16 @@ Nach dem Start findest du eine neue Seite **Mining Layers** im ESC-Menü — mit
 
 ![Flussbett-Grenze](docs/images/12_riverbed_limit.jpg)
 
+## ⚠️ Zwei Wege je Bereich — lesen, bevor du den Mod für kaputt hältst
+
+Der häufigste Verwirrungspunkt überhaupt:
+
+1. **Materialfelder im TerraFarm-Bereich LEER lassen** → Mining Layers arbeitet: Was in der Schaufel landet, hängt an der Grabtiefe. Das ist der Normalfall für eine Grube.
+2. **Ein Material im Bereich EINTRAGEN** → ganz normales TerraFarm ohne Schichten. Genau richtig für Baustellen, Straßenbau, Planieren — überall, wo du einfach nur Erde bewegen willst und immer dasselbe Material brauchst.
+3. Denselben Effekt gibt es auf dem **Reiter Schichten**: dort einen Bereich auswählen und auf „Normales TerraFarm" stellen. Beides führt zum gleichen Ergebnis, such dir aus, was dir lieber ist.
+
+Heißt: Liefert eine Zone „das falsche Material", ist nichts kaputt — erst prüfen, ob im Bereich ein Material gesetzt ist.
+
 ## Features
 
 - **Material nach Grabtiefe** — Schichtgrenzen in Metern unter der ursprünglichen Oberfläche
