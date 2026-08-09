@@ -16,9 +16,18 @@ An unofficial add-on **powered by [TerraFarm](https://github.com/scfmod/FS25_Ter
 2. **At least one machine with a TerraFarm config** — TerraFarm only works with machines that have a machine configuration.
 3. Recommended (not required): a mining map like **Yukon (RGC)**. Mining Layers turns *any* map into a mining map, including stock maps.
 
+## Installation
+
+1. Download the latest `FS25_MiningLayers.zip` from [Releases](../../releases).
+2. Put the **ZIP file as-is** (do not unpack!) into your mods folder:
+   - **Windows:** `Documents\My Games\FarmingSimulator2025\mods\`
+   - **Steam on Linux (Proton):** inside the Proton prefix — `steamapps/compatdata/<FS25-AppID>/pfx/drive_c/users/steamuser/Documents/My Games/FarmingSimulator2025/mods/`
+3. Make sure [TerraFarm](https://github.com/scfmod/FS25_TerraFarm) (`FS25_0_TerraFarm`) is in the same folder.
+4. Start the game and enable **both mods** in the mod selection of your savegame.
+
 ## Quick start
 
-1. Download the latest `FS25_MiningLayers.zip` from [Releases](../../releases) and drop it into your `mods` folder.
+1. Install as above — TerraFarm first, then Mining Layers.
 2. In game: draw a **TerraFarm area** (polygon) around your future pit. That's it — the mod takes the reference height automatically from the terrain at the area's edge.
 3. Start digging: topsoil → gravel → paydirt → rock. The layer display on the left shows current depth and what comes next.
 4. Change the layers via the **ESC menu → Mining Layers** (graphical editor, per pit) — or edit `modSettings/FS25_MiningLayers/miningLayers.xml` by hand.
@@ -35,6 +44,14 @@ An unofficial add-on **powered by [TerraFarm](https://github.com/scfmod/FS25_Ter
 - **Material check at startup** — warns about the engine's 63 terrain material limit
 - **Mountain bonus** — on steep slopes paydirt sits near the surface: hauling up the mountain gets rewarded
 - Multiplayer-friendly sponsor sign (see below), no sync traffic
+
+## How it looks
+
+| | |
+|---|---|
+| ![Draw an area](data/help/ml_help_01_area.png) *Draw a TerraFarm area — done* | ![Depth display](data/help/ml_help_02_display.png) *Depth display: layer, depth, what's next* |
+| ![Layers in the wall](data/help/ml_help_03_wall.png) *Layers visible in the pit wall* | ![Spoil piles](data/help/ml_help_04_mounds.png) *Spoil piles remember their material* |
+| ![Mountain mining](data/help/ml_help_06_mountain.png) *Mountain bonus: paydirt near the surface* | ![Under water](data/help/ml_help_07_water.png) *Digging below the waterline works* |
 
 ## Pitfalls worth knowing
 

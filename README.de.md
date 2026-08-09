@@ -16,9 +16,18 @@ Ein inoffizielles Addon, **powered by [TerraFarm](https://github.com/scfmod/FS25
 2. **Mindestens eine Maschine mit TerraFarm-Config** — TerraFarm arbeitet nur mit Maschinen, die eine Machine-Konfiguration haben.
 3. Empfohlen (kein Muss): eine Bergbau-Karte wie **Yukon (RGC)**. Mining Layers macht aber *jede* Karte zur Mining-Karte, auch Standard-Maps.
 
+## Installation
+
+1. Neuestes `FS25_MiningLayers.zip` aus den [Releases](../../releases) laden.
+2. Die **ZIP-Datei unverändert** (nicht entpacken!) in den Mods-Ordner legen:
+   - **Windows:** `Dokumente\My Games\FarmingSimulator2025\mods\`
+   - **Steam unter Linux (Proton):** im Proton-Prefix — `steamapps/compatdata/<FS25-AppID>/pfx/drive_c/users/steamuser/Documents/My Games/FarmingSimulator2025/mods/`
+3. Sicherstellen, dass [TerraFarm](https://github.com/scfmod/FS25_TerraFarm) (`FS25_0_TerraFarm`) im selben Ordner liegt.
+4. Spiel starten und **beide Mods** in der Mod-Auswahl des Spielstands anhaken.
+
 ## Schnellstart
 
-1. Neuestes `FS25_MiningLayers.zip` aus den [Releases](../../releases) laden und in den `mods`-Ordner legen.
+1. Installieren wie oben — erst TerraFarm, dann Mining Layers.
 2. Im Spiel einen **TerraFarm-Bereich** (Polygon) um die geplante Grube ziehen. Fertig — die Bezugshöhe holt sich der Mod automatisch vom Gelände am Bereichsrand.
 3. Graben: Mutterboden → Kies → Paydirt → Fels. Die Anzeige links zeigt Tiefe und nächste Schicht.
 4. Schichten ändern über **ESC-Menü → Mining Layers** (grafischer Editor, pro Grube) — oder von Hand in `modSettings/FS25_MiningLayers/miningLayers.xml`.
@@ -35,6 +44,14 @@ Ein inoffizielles Addon, **powered by [TerraFarm](https://github.com/scfmod/FS25
 - **Material-Check beim Start** — warnt vor der 63-Materialien-Grenze der Engine
 - **Berg-Bonus** — am Steilhang liegt Paydirt oberflächennah: Wer die Anfahrt auf sich nimmt, wird belohnt
 - Multiplayer-freundliches Sponsorschild (siehe unten), kein Sync-Verkehr
+
+## So sieht es aus
+
+| | |
+|---|---|
+| ![Bereich ziehen](data/help/ml_help_01_area.png) *TerraFarm-Bereich ziehen — fertig* | ![Tiefenanzeige](data/help/ml_help_02_display.png) *Anzeige: Schicht, Tiefe, was kommt* |
+| ![Schichten in der Wand](data/help/ml_help_03_wall.png) *Schichten sichtbar in der Grubenwand* | ![Halden](data/help/ml_help_04_mounds.png) *Halden merken sich ihr Material* |
+| ![Berg-Bergbau](data/help/ml_help_06_mountain.png) *Berg-Bonus: Paydirt oberflächennah* | ![Unter Wasser](data/help/ml_help_07_water.png) *Graben unter der Wasserlinie funktioniert* |
 
 ## Fallstricke, die man kennen sollte
 
