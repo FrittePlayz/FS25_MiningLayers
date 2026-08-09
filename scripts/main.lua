@@ -15,7 +15,7 @@
 
 MiningLayers = {}
 
-MiningLayers.VERSION = '1.3.0.0'
+MiningLayers.VERSION = '1.3.1.0'
 MiningLayers.LOG_PREFIX = '[MiningLayers] '
 
 MiningLayers.MOD_NAME = g_currentModName

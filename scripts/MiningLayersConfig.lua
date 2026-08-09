@@ -1066,12 +1066,33 @@ function MiningLayers:subscribeAreaUpdates()
         return
     end
 
-    local function invalidate(areaOrId)
-        local id = areaOrId
+    ---★★ g_messageCenter ruft den Empfaenger als callback(target, ...) auf.
+    ---Mit MiningLayers als target kam bisher die Mod-Tabelle als erstes Argument
+    ---an, nicht der Bereich - die Cache-Invalidierung lief also nie, und das
+    ---Sponsorschild wurde nie gesetzt. TerraFarm uebergibt darum ueberall
+    ---Methode + self (z.B. MachineSettingsAreaFrame.lua:90).
+    ---Wir nehmen den Bereich aus den Argumenten heraus, egal an welcher Stelle
+    ---er steht - das haelt auch, falls sich die Aufrufform je aendert.
+    ---@return table? area
+    ---@return any id
+    local function pickArea(...)
+        for i = 1, select('#', ...) do
+            local value = select(i, ...)
 
-        if type(areaOrId) == 'table' then
-            id = areaOrId.uniqueId
+            if type(value) == 'table' and value.uniqueId ~= nil then
+                return value, value.uniqueId
+            end
+
+            if type(value) == 'string' or type(value) == 'number' then
+                return nil, value
+            end
         end
+
+        return nil, nil
+    end
+
+    local function invalidate(...)
+        local _, id = pickArea(...)
 
         if id ~= nil then
             MiningLayers.resolvedByArea[id] = nil
@@ -1081,16 +1102,20 @@ function MiningLayers:subscribeAreaUpdates()
     -- Bereich neu angelegt oder verschoben: Schild setzen bzw. neu setzen.
     -- ⚠️ Ohne dieses Abo kam beim Anlegen einer Area gar kein Schild - es wurde
     -- nur beim Kartenstart fuer bereits bestehende Bereiche aufgestellt.
-    local function onAreaChanged(areaOrId)
-        invalidate(areaOrId)
+    local function onAreaChanged(...)
+        local area, id = pickArea(...)
 
-        if type(areaOrId) ~= 'table' or areaOrId.uniqueId == nil then
+        if id ~= nil then
+            MiningLayers.resolvedByArea[id] = nil
+        end
+
+        if area == nil then
             return
         end
 
         MiningLayers.protectedCall('refreshSign', function()
-            MiningLayers:removeSign(areaOrId.uniqueId)
-            MiningLayers:spawnSign(areaOrId)
+            MiningLayers:removeSign(area.uniqueId)
+            MiningLayers:spawnSign(area)
         end)
     end
 
@@ -1103,21 +1128,28 @@ function MiningLayers:subscribeAreaUpdates()
     end
 
     -- Bereich geloescht: Schild sofort mit entfernen, nicht erst beim Neuladen.
-    local function onAreaDeleted(areaOrId)
-        invalidate(areaOrId)
+    local function onAreaDeleted(...)
+        local _, id = pickArea(...)
 
-        local id = type(areaOrId) == 'table' and areaOrId.uniqueId or areaOrId
-
-        if id ~= nil and MiningLayers.isCallable(MiningLayers.removeSign) then
-            MiningLayers.protectedCall('removeSign', function()
-                MiningLayers:removeSign(id)
-            end)
+        if id == nil then
+            return
         end
+
+        MiningLayers.resolvedByArea[id] = nil
+
+        MiningLayers.protectedCall('removeSign', function()
+            MiningLayers:removeSign(id)
+        end)
     end
 
     if ModMessageType.LANDSCAPING_AREA_DELETE ~= nil then
         g_messageCenter:subscribe(ModMessageType.LANDSCAPING_AREA_DELETE, onAreaDeleted, MiningLayers)
     end
+
+    MiningLayers.log('Bereichs-Ereignisse abonniert (register=%s, update=%s, delete=%s).',
+        tostring(ModMessageType.LANDSCAPING_AREA_REGISTER ~= nil),
+        tostring(ModMessageType.LANDSCAPING_AREA_UPDATE ~= nil),
+        tostring(ModMessageType.LANDSCAPING_AREA_DELETE ~= nil))
 end
 
 --------------------------------------------------------------------------------
