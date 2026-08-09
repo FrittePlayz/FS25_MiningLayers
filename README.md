@@ -69,6 +69,7 @@ The single most common point of confusion. In the TerraFarm menu → **Landscapi
 1. **Both fields on "Not set"** → Mining Layers works: what ends up in the bucket depends on how deep you dig. **This is the delivery state of a freshly drawn area** — you don't have to do anything.
 2. **Set a material on *Terraform*** → that area runs as a completely normal TerraFarm polygon area, no layers. Exactly right for construction sites, road building and levelling — anywhere you always need the same material.
 3. Same result from Mining Layers' **Layers tab**: pick the area and set it to "Plain TerraFarm". Both routes lead to the same place.
+4. **Path areas are excluded entirely** — layers only ever apply to polygon areas. A path area always behaves like plain TerraFarm, no matter what you configure.
 
 This is **not a defect and not a mod conflict — it's the intended switch.** If a zone gives you "the wrong material", check the area's material fields first.
 
