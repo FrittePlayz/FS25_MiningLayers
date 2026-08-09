@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!--
+    Eigene Seite im ESC-Ingame-Menue.
+
+    Aufbau nach dem Muster von TerraFarms InGameMenuTerraFarmFrame.xml:
+    Header, Tab-Leiste, je Tab ein Container. Der Inhalt der Tabs wird NICHT
+    hier ausgeschrieben, sondern im Lua aus einer Tabelle gebaut - dadurch
+    laesst sich die Doku aendern, ohne XML anzufassen, und Bilder koennen
+    uebersprungen werden, solange keine Datei vorliegt.
+
+    Die Templates unten (name="tpl...") sind Vorlagen zum Klonen und werden
+    im Frame beim Initialisieren aus dem Layout entfernt.
+-->
+<GUI name="ingameMenuMiningLayers">
+    <GuiElement profile="fs25_menuContainer" position="-77px 80px">
+        <GuiElement profile="fs25_menuHeaderPanel" position="1px 92px">
+            <Bitmap profile="fs25_menuHeaderIconBg">
+                <Bitmap profile="mlFrame_menuHeaderIcon" id="menuHeaderIcon" />
+            </Bitmap>
+            <Text profile="fs25_menuHeaderTitle" text="$l10n_ml_pageTitle" />
+        </GuiElement>
+
+        <BoxLayout profile="fs25_subCategorySelectorTabbedBox" id="subCategoryBox">
+            <Button profile="fs25_subCategorySelectorTabbedTab" id="subCategoryTabs[1]" text="$l10n_ml_tabQuickstart" onClick="onClickTabQuickstart">
+                <ThreePartBitmap profile="fs25_subCategorySelectorTabbedTabBg" name="background" />
+            </Button>
+            <Button profile="fs25_subCategorySelectorTabbedTab" id="subCategoryTabs[2]" text="$l10n_ml_tabManual" onClick="onClickTabManual">
+                <ThreePartBitmap profile="fs25_subCategorySelectorTabbedTabBg" name="background" />
+            </Button>
+            <Button profile="fs25_subCategorySelectorTabbedTab" id="subCategoryTabs[3]" text="$l10n_ml_tabTips" onClick="onClickTabTips">
+                <ThreePartBitmap profile="fs25_subCategorySelectorTabbedTabBg" name="background" />
+            </Button>
+            <Button profile="fs25_subCategorySelectorTabbedTab" id="subCategoryTabs[4]" text="$l10n_ml_tabEditor" onClick="onClickTabEditor">
+                <ThreePartBitmap profile="fs25_subCategorySelectorTabbedTabBg" name="background" />
+            </Button>
+        </BoxLayout>
+
+        <ThreePartBitmap profile="fs25_lineSeparatorTopHighlighted" position="0px -57px" />
+        <MultiTextOption profile="fs25_subCategorySelectorTabbed" id="subCategoryPaging" position="0px -10px" onClick="updateSubCategoryPages" />
+
+        <GuiElement profile="fs25_subCategorySelectorTabbedContainer" id="subCategoryPages[1]">
+            <ScrollingLayout profile="mlFrame_layout" id="contentLayout[1]" />
+        </GuiElement>
+        <GuiElement profile="fs25_subCategorySelectorTabbedContainer" id="subCategoryPages[2]">
+            <ScrollingLayout profile="mlFrame_layout" id="contentLayout[2]" />
+        </GuiElement>
+        <GuiElement profile="fs25_subCategorySelectorTabbedContainer" id="subCategoryPages[3]">
+            <ScrollingLayout profile="mlFrame_layout" id="contentLayout[3]" />
+        </GuiElement>
+
+        <!--
+            Reiter 4: grafischer Schichten-Editor.
+            Links ein leerer Rahmen als Zeichenflaeche - der Querschnitt wird im
+            Lua per drawFilledRect/renderText hineingemalt (dieselbe Technik, die
+            die Hoehenanzeige im Spiel benutzt). Rechts die Bedienung ueber
+            Standard-Elemente, damit Maus und Gamepad ohne Eigenbau funktionieren.
+        -->
+        <GuiElement profile="fs25_subCategorySelectorTabbedContainer" id="subCategoryPages[4]">
+            <Bitmap profile="mlEditor_canvas" id="editorCanvas" />
+
+            <Text profile="mlEditor_hint" id="editorHint" text="" />
+
+            <!--
+                ⚠️ mlEditor_controls ist ein einfacher Container, KEIN Layout. Ohne
+                eigene position landen alle Kinder auf 0,0 und liegen uebereinander -
+                genau das war der Fehler im ersten Testlauf. Jede Zeile bekommt
+                deshalb ihre y-Position ausdruecklich, Zeilenhoehe 62px.
+            -->
+            <GuiElement profile="mlEditor_controls">
+                <Text profile="mlEditor_sectionHeader" position="0px 0px" text="$l10n_ml_edTargetSection" />
+
+                <GuiElement profile="mlEditor_optionRow" position="0px -52px">
+                    <Text profile="mlEditor_optionLabel" text="$l10n_ml_edTarget" />
+                    <MultiTextOption profile="mlEditor_option" id="targetOption" onClick="onTargetChanged" />
+                </GuiElement>
+
+                <Text profile="mlEditor_sectionHeader" position="0px -124px" text="$l10n_ml_edLayerSection" />
+
+                <GuiElement profile="mlEditor_optionRow" position="0px -176px">
+                    <Text profile="mlEditor_optionLabel" text="$l10n_ml_edLayer" />
+                    <MultiTextOption profile="mlEditor_option" id="layerOption" onClick="onLayerChanged" />
+                </GuiElement>
+
+                <GuiElement profile="mlEditor_optionRow" position="0px -238px">
+                    <Text profile="mlEditor_optionLabel" text="$l10n_ml_edMaterial" />
+                    <MultiTextOption profile="mlEditor_option" id="materialOption" onClick="onMaterialChanged" />
+                </GuiElement>
+
+                <GuiElement profile="mlEditor_optionRow" position="0px -300px">
+                    <Text profile="mlEditor_optionLabel" text="$l10n_ml_edThickness" />
+                    <MultiTextOption profile="mlEditor_option" id="thicknessOption" onClick="onThicknessChanged" />
+                </GuiElement>
+
+                <Text profile="mlEditor_sectionHeader" position="0px -376px" text="$l10n_ml_edSummarySection" />
+                <Text profile="mlEditor_summary" id="editorSummary" position="0px -428px" text="" />
+                <Text profile="mlEditor_scope" id="editorScope" position="0px -574px" text="" />
+            </GuiElement>
+        </GuiElement>
+
+        <!-- Vorlagen zum Klonen. Werden im Lua eingesammelt und ausgehaengt. -->
+        <GuiElement profile="mlFrame_templateBox" id="templateBox">
+            <Text profile="mlFrame_sectionHeader" name="tplSection" text="" />
+            <Text profile="mlFrame_paragraph" name="tplParagraph" text="" />
+            <Text profile="mlFrame_bullet" name="tplBullet" text="" />
+            <Text profile="mlFrame_warning" name="tplWarning" text="" />
+            <Bitmap profile="mlFrame_image" name="tplImage" />
+            <Bitmap profile="mlFrame_spacer" name="tplSpacer" />
+        </GuiElement>
+    </GuiElement>
+
+    <ThreePartBitmap profile="fs25_sliderDockedBg" handleFocus="false" position="-125px 20px">
+        <ThreePartBitmap profile="fs25_sliderDockedBox">
+            <Slider profile="fs25_sliderDocked" id="listSlider" dataElementId="contentLayout[1]" />
+        </ThreePartBitmap>
+    </ThreePartBitmap>
+
+    <GuiProfiles>
+        <!--
+            Eigenes Reiter-Symbol (Bodenprofil), damit der Reiter nicht wie
+            TerraFarms Bagger aussieht. Der Katalog wird vor dem Laden der Seite
+            registriert; klappt das nicht, setzt das Lua auf TerraFarms Symbol
+            zurueck, damit der Reiter nicht leer bleibt.
+        -->
+        <Profile name="mlFrame_menuHeaderIcon" extends="fs25_menuHeaderIcon">
+            <imageSliceId value="miningLayers.icon_layers" />
+        </Profile>
+
+        <Profile name="mlFrame_layout" extends="baseReference" with="anchorTopLeft">
+            <size value="1500px 740px" />
+            <position value="0px -34px" />
+            <imageColor value="0 0 0 0" />
+            <flowDirection value="vertical" />
+            <alignmentX value="left" />
+        </Profile>
+
+        <!-- Vorlagen-Container: unsichtbar, dient nur als Halter im XML. -->
+        <Profile name="mlFrame_templateBox" extends="baseReference">
+            <size value="0px 0px" />
+            <visible value="false" />
+        </Profile>
+
+        <Profile name="mlFrame_sectionHeader" extends="textDefault" with="anchorTopLeft">
+            <size value="1440px 46px" />
+            <textSize value="21px" />
+            <textBold value="true" />
+            <textColor value="$preset_fs25_colorGreen" />
+            <textAlignment value="left" />
+            <textVerticalAlignment value="bottom" />
+            <textMaxNumLines value="1" />
+            <textAutoWidth value="false" />
+        </Profile>
+
+        <Profile name="mlFrame_paragraph" extends="textDefault" with="anchorTopLeft">
+            <size value="1180px 88px" />
+            <textSize value="16px" />
+            <textColor value="1 1 1 0.85" />
+            <textAlignment value="left" />
+            <textVerticalAlignment value="top" />
+            <textMaxNumLines value="4" />
+            <textAutoWidth value="false" />
+        </Profile>
+
+        <Profile name="mlFrame_bullet" extends="mlFrame_paragraph">
+            <size value="1180px 66px" />
+            <position value="24px 0px" />
+            <textColor value="1 1 1 0.75" />
+            <textMaxNumLines value="3" />
+        </Profile>
+
+        <Profile name="mlFrame_warning" extends="mlFrame_paragraph">
+            <size value="1180px 66px" />
+            <textColor value="0.9 0.72 0.15 1" />
+            <textMaxNumLines value="3" />
+        </Profile>
+
+        <!--
+            2:1, passend zu den Doku-Bildern (1024x512). Die Aufnahmen sind aus
+            dem Ultrawide auf die linken 2880x1440 beschnitten: Anzeige links
+            bleibt drin, das TerraFarm-HUD rechts faellt weg.
+            ⚠️ Bildmasse muessen Zweierpotenzen sein, sonst rechnet das Spiel die
+            Mipmaps auf der CPU und schreibt eine Performance-Warnung ins Log.
+        -->
+        <Profile name="mlFrame_image" extends="baseReference" with="anchorTopLeft">
+            <size value="700px 350px" />
+            <imageColor value="1 1 1 1" />
+            <imageSliceId value="noSlice" />
+        </Profile>
+
+        <!-- ========== Reiter 4: Schichten-Editor ========== -->
+
+        <!-- Zeichenflaeche. Bleibt leer; das Lua liest absPosition/absSize und malt hinein. -->
+        <Profile name="mlEditor_canvas" extends="baseReference" with="anchorTopLeft">
+            <size value="620px 660px" />
+            <position value="40px -40px" />
+            <imageColor value="0 0 0 0.25" />
+            <imageSliceId value="gui.colorPreset" />
+        </Profile>
+
+        <Profile name="mlEditor_hint" extends="textDefault" with="anchorTopLeft">
+            <size value="620px 60px" />
+            <position value="40px -710px" />
+            <textSize value="14px" />
+            <textColor value="1 1 1 0.6" />
+            <textAlignment value="left" />
+            <textVerticalAlignment value="top" />
+            <textMaxNumLines value="3" />
+            <textAutoWidth value="false" />
+        </Profile>
+
+        <Profile name="mlEditor_controls" extends="baseReference" with="anchorTopLeft">
+            <size value="760px 700px" />
+            <position value="720px -40px" />
+            <imageColor value="0 0 0 0" />
+        </Profile>
+
+        <Profile name="mlEditor_sectionHeader" extends="textDefault" with="anchorTopLeft">
+            <size value="720px 44px" />
+            <textSize value="20px" />
+            <textBold value="true" />
+            <textColor value="$preset_fs25_colorGreen" />
+            <textAlignment value="left" />
+            <textVerticalAlignment value="bottom" />
+            <textMaxNumLines value="1" />
+            <textAutoWidth value="false" />
+        </Profile>
+
+        <Profile name="mlEditor_optionRow" extends="baseReference" with="anchorTopLeft">
+            <size value="720px 62px" />
+            <imageColor value="0 0 0 0" />
+        </Profile>
+
+        <Profile name="mlEditor_optionLabel" extends="textDefault" with="anchorMiddleLeft">
+            <size value="240px 40px" />
+            <textSize value="16px" />
+            <textColor value="1 1 1 0.85" />
+            <textAlignment value="left" />
+            <textMaxNumLines value="1" />
+            <textAutoWidth value="false" />
+        </Profile>
+
+        <Profile name="mlEditor_option" extends="fs25_settingsMultiTextOption" with="anchorMiddleLeft">
+            <position value="250px 0px" />
+            <size value="440px 44px" />
+        </Profile>
+
+        <Profile name="mlEditor_scope" extends="textDefault" with="anchorTopLeft">
+            <size value="720px 96px" />
+            <textSize value="15px" />
+            <textColor value="0.9 0.72 0.15 1" />
+            <textAlignment value="left" />
+            <textVerticalAlignment value="top" />
+            <textMaxNumLines value="4" />
+            <textAutoWidth value="false" />
+        </Profile>
+
+        <Profile name="mlEditor_summary" extends="textDefault" with="anchorTopLeft">
+            <size value="720px 150px" />
+            <textSize value="15px" />
+            <textColor value="1 1 1 0.7" />
+            <textAlignment value="left" />
+            <textVerticalAlignment value="top" />
+            <textMaxNumLines value="6" />
+            <textAutoWidth value="false" />
+        </Profile>
+
+        <Profile name="mlFrame_spacer" extends="baseReference" with="anchorTopLeft">
+            <size value="10px 18px" />
+            <imageColor value="0 0 0 0" />
+        </Profile>
+    </GuiProfiles>
+</GUI>

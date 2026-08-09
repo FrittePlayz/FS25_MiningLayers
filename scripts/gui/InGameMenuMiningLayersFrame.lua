@@ -1,0 +1,1034 @@
+--
+-- Eigene Seite im ESC-Ingame-Menue: Schnellstart, Anleitung, Tipps.
+--
+-- Aufbau nach dem Muster von TerraFarms InGameMenuTerraFarmFrame. Der Inhalt
+-- steht als Tabelle in CONTENT und wird beim ersten Oeffnen in die drei
+-- ScrollingLayouts geklont. Das haelt das GUI-XML klein und erlaubt es,
+-- Bilder zu ueberspringen, solange keine Datei vorliegt.
+--
+
+---@diagnostic disable: lowercase-global, undefined-global
+
+InGameMenuMiningLayersFrame = {}
+
+InGameMenuMiningLayersFrame.CLASS_NAME = 'InGameMenuMiningLayersFrame'
+InGameMenuMiningLayersFrame.MENU_PAGE_NAME = 'ingameMenuMiningLayers'
+InGameMenuMiningLayersFrame.MENU_ICON_SLICE_ID = 'miningLayers.icon_layers'
+InGameMenuMiningLayersFrame.XML_FILENAME = MiningLayers.MOD_DIRECTORY .. 'data/gui/InGameMenuMiningLayersFrame.xml'
+
+---Unterordner fuer die Doku-Screenshots. Fehlt eine Datei, faellt der Bildplatz
+---stillschweigend weg - der Text steht auch ohne Bild.
+InGameMenuMiningLayersFrame.IMAGE_DIRECTORY = MiningLayers.MOD_DIRECTORY .. 'data/help/'
+InGameMenuMiningLayersFrame.IMAGE_EXTENSIONS = { '.dds', '.png' }
+
+---Inhalt der drei Reiter. type steuert, welche Vorlage geklont wird:
+---section (Ueberschrift), paragraph (Fliesstext), bullet (eingerueckt),
+---warning (gelb), image (Screenshot), spacer (Abstand).
+---
+---Der Schichten-Assistent haengt bewusst NICHT als Knopf im Fliesstext, sondern
+---unten in der Menueleiste (MENU_EXTRA_1). Ein dorthin geklonter Knopf muesste
+---seinen Klick-Empfaenger selbst verdrahten; die Menueleiste ist der Weg, den
+---das Spiel und TerraFarm ohnehin gehen, und sie funktioniert am Gamepad mit.
+InGameMenuMiningLayersFrame.CONTENT = {
+    -- ------------------------------------------------------------------
+    -- Reiter 1: Schnellstart
+    -- ------------------------------------------------------------------
+    {
+        { type = 'paragraph', text = 'ml_credits' },
+        { type = 'section',   text = 'ml_helpQsSetupTitle' },
+        { type = 'paragraph', text = 'ml_helpQsSetup1' },
+        { type = 'paragraph', text = 'ml_helpQsStockNote' },
+        { type = 'image',     file = 'ml_help_01_area' },
+        { type = 'paragraph', text = 'ml_helpQsSetup2' },
+        { type = 'spacer' },
+
+        { type = 'section',   text = 'ml_helpQsDisplayTitle' },
+        { type = 'paragraph', text = 'ml_helpQsDisplay1' },
+        { type = 'image',     file = 'ml_help_02_display' },
+        { type = 'bullet',    text = 'ml_helpQsDisplayB1' },
+        { type = 'bullet',    text = 'ml_helpQsDisplayB2' },
+        { type = 'spacer' },
+
+        { type = 'section',   text = 'ml_helpQsLayersTitle' },
+        { type = 'paragraph', text = 'ml_helpQsLayers1' },
+        { type = 'paragraph', text = 'ml_helpQsWizardHint' },
+        { type = 'spacer' },
+
+        { type = 'section',   text = 'ml_helpQsMistakesTitle' },
+        { type = 'warning',   text = 'ml_helpQsWarnWater' },
+        { type = 'warning',   text = 'ml_helpQsWarnRidge' },
+        { type = 'image',     file = 'ml_help_06_mountain' },
+        { type = 'paragraph', text = 'ml_helpQsRidgeCaption' },
+        { type = 'warning',   text = 'ml_helpQsWarnRiver' },
+    },
+
+    -- ------------------------------------------------------------------
+    -- Reiter 2: Anleitung
+    -- ------------------------------------------------------------------
+    {
+        { type = 'section',   text = 'ml_helpManWhatTitle' },
+        { type = 'paragraph', text = 'ml_helpManWhat1' },
+        { type = 'paragraph', text = 'ml_helpManWhat2' },
+        { type = 'spacer' },
+
+        { type = 'section',   text = 'ml_helpManLayersTitle' },
+        { type = 'paragraph', text = 'ml_helpManLayers1' },
+        { type = 'paragraph', text = 'ml_helpQsStockNote' },
+        { type = 'image',     file = 'ml_help_03_wall' },
+        { type = 'bullet',    text = 'ml_helpManLayersB1' },
+        { type = 'bullet',    text = 'ml_helpManLayersB2' },
+        { type = 'bullet',    text = 'ml_helpManLayersB3' },
+        { type = 'paragraph', text = 'ml_helpManLayers2' },
+        { type = 'spacer' },
+
+        { type = 'section',   text = 'ml_helpManMoundTitle' },
+        { type = 'paragraph', text = 'ml_helpManMound1' },
+        { type = 'image',     file = 'ml_help_04_mounds' },
+        { type = 'bullet',    text = 'ml_helpManMoundB1' },
+        { type = 'bullet',    text = 'ml_helpManMoundB2' },
+        { type = 'bullet',    text = 'ml_helpManMoundB3' },
+        { type = 'spacer' },
+
+        { type = 'section',   text = 'ml_helpManEditorTitle' },
+        { type = 'paragraph', text = 'ml_helpManEditor1' },
+        { type = 'paragraph', text = 'ml_helpManEditor4' },
+        { type = 'paragraph', text = 'ml_helpManEditor3' },
+        { type = 'paragraph', text = 'ml_helpManEditor2' },
+        { type = 'spacer' },
+
+        { type = 'section',   text = 'ml_helpManFloorTitle' },
+        { type = 'paragraph', text = 'ml_helpManFloor1' },
+        { type = 'image',     file = 'ml_help_07_water' },
+        { type = 'paragraph', text = 'ml_helpManFloor2' },
+        { type = 'spacer' },
+
+        { type = 'section',   text = 'ml_helpManConfigTitle' },
+        { type = 'paragraph', text = 'ml_helpManConfig1' },
+        { type = 'paragraph', text = 'ml_helpManConfig2' },
+    },
+
+    -- ------------------------------------------------------------------
+    -- Reiter 3: Tipps und Fahrzeuge
+    -- ------------------------------------------------------------------
+    {
+        { type = 'section',   text = 'ml_helpTipsTfTitle' },
+        { type = 'bullet',    text = 'ml_helpTipsTfB1' },
+        { type = 'bullet',    text = 'ml_helpTipsTfB2' },
+        { type = 'bullet',    text = 'ml_helpTipsTfB3' },
+        { type = 'bullet',    text = 'ml_helpTipsTfB4' },
+        { type = 'bullet',    text = 'ml_helpTipsTfB5' },
+        { type = 'image',     file = 'ml_help_05_ramp' },
+        { type = 'spacer' },
+
+        { type = 'section',   text = 'ml_helpTipsVehTitle' },
+        { type = 'paragraph', text = 'ml_helpTipsVeh1' },
+        { type = 'bullet',    text = 'ml_helpTipsVehB1' },
+        { type = 'bullet',    text = 'ml_helpTipsVehB2' },
+        { type = 'bullet',    text = 'ml_helpTipsVehB3' },
+        { type = 'paragraph', text = 'ml_helpTipsVeh2' },
+        { type = 'spacer' },
+
+        { type = 'section',   text = 'ml_helpTipsMapTitle' },
+        { type = 'bullet',    text = 'ml_helpTipsMapB1' },
+        { type = 'bullet',    text = 'ml_helpTipsMapB2' },
+        { type = 'bullet',    text = 'ml_helpTipsMapB3' },
+        { type = 'image',     file = 'ml_help_08_riverbed' },
+        { type = 'spacer' },
+
+        { type = 'section',   text = 'ml_helpSponsorTitle' },
+        { type = 'paragraph', text = 'ml_helpSponsor1' },
+        { type = 'paragraph', text = 'ml_helpSponsor2' },
+        { type = 'spacer' },
+
+        { type = 'section',   text = 'ml_helpTipsAboutTitle' },
+        { type = 'paragraph', text = 'ml_helpTipsAbout1' },
+        { type = 'paragraph', text = 'ml_credits' },
+        { type = 'paragraph', text = 'ml_helpTipsAbout2' },
+    },
+}
+
+local InGameMenuMiningLayersFrame_mt = Class(InGameMenuMiningLayersFrame, TabbedMenuFrameElement)
+
+---@return table
+function InGameMenuMiningLayersFrame.new()
+    local self = TabbedMenuFrameElement.new(nil, InGameMenuMiningLayersFrame_mt)
+
+    self.isOpen = false
+    self.contentBuilt = false
+    self.hasCustomMenuButtons = true
+
+    return self
+end
+
+function InGameMenuMiningLayersFrame:delete()
+    self:superClass().delete(self)
+
+    if g_messageCenter ~= nil then
+        g_messageCenter:unsubscribeAll(self)
+    end
+
+    FocusManager.guiFocusData[InGameMenuMiningLayersFrame.MENU_PAGE_NAME] = {
+        idToElementMapping = {}
+    }
+end
+
+function InGameMenuMiningLayersFrame:onGuiSetupFinished()
+    self:superClass().onGuiSetupFinished(self)
+
+    self:initialize()
+end
+
+function InGameMenuMiningLayersFrame:initialize()
+    self:superClass().initialize(self)
+
+    -- Reiter-Knoepfe zeigen ihren Zustand ueber das Paging-Element an,
+    -- exakt wie in TerraFarms Frame.
+    for index, button in pairs(self.subCategoryTabs) do
+        local background = button:getDescendantByName('background')
+
+        if background ~= nil then
+            background.getIsSelected = function()
+                return index == self.subCategoryPaging:getState()
+            end
+        end
+
+        function button.getIsSelected()
+            return index == self.subCategoryPaging:getState()
+        end
+    end
+
+    self.backButtonInfo = {
+        inputAction = InputAction.MENU_BACK
+    }
+
+    self.nextPageButtonInfo = {
+        inputAction = InputAction.MENU_PAGE_NEXT,
+        text = g_i18n:getText('ui_ingameMenuNext'),
+        callback = self.onPageNext
+    }
+
+    self.prevPageButtonInfo = {
+        inputAction = InputAction.MENU_PAGE_PREV,
+        text = g_i18n:getText('ui_ingameMenuPrev'),
+        callback = self.onPagePrevious
+    }
+
+    self.wizardButtonInfo = {
+        inputAction = InputAction.MENU_EXTRA_1,
+        text = MiningLayers.getText('ml_helpQsWizardButton', 'Set up layers'),
+        callback = function()
+            self:onClickStartWizard()
+        end
+    }
+
+    self.saveLayersButtonInfo = {
+        inputAction = InputAction.MENU_ACCEPT,
+        text = MiningLayers.getText('ml_edSave', 'Save'),
+        callback = function()
+            self:onClickSaveLayers()
+        end
+    }
+
+    self.addLayerButtonInfo = {
+        inputAction = InputAction.MENU_EXTRA_1,
+        text = MiningLayers.getText('ml_edAdd', 'Add layer'),
+        callback = function()
+            self:onClickAddLayer()
+        end
+    }
+
+    self.removeLayerButtonInfo = {
+        inputAction = InputAction.MENU_EXTRA_2,
+        text = MiningLayers.getText('ml_edRemove', 'Remove layer'),
+        callback = function()
+            self:onClickRemoveLayer()
+        end
+    }
+
+    -- Auf den Doku-Reitern liegt der Assistent auf EXTRA_1, im Editor brauchen
+    -- wir denselben Platz fuer "Schicht hinzufuegen". Deshalb wird die Leiste
+    -- beim Reiterwechsel umgehaengt statt fest verdrahtet.
+    -- Auf den Doku-Reitern nur Zurueck. Der alte Dialog-Assistent ist raus,
+    -- Schichten baut man auf dem Reiter "Schichten" zusammen.
+    self.docMenuButtonInfo = {
+        self.backButtonInfo,
+    }
+
+    self.editorMenuButtonInfo = {
+        self.backButtonInfo,
+        self.saveLayersButtonInfo,
+        self.addLayerButtonInfo,
+        self.removeLayerButtonInfo,
+    }
+
+    self.menuButtonInfo = self.docMenuButtonInfo
+
+    self.subCategoryPaging:setState(1)
+end
+
+---Sammelt die Vorlagen ein und haengt den Halter aus, damit er nicht mitlayoutet.
+function InGameMenuMiningLayersFrame:collectTemplates()
+    if self.templates ~= nil then
+        return
+    end
+
+    self.templates = {}
+
+    if self.templateBox == nil then
+        return
+    end
+
+    local names = {
+        section   = 'tplSection',
+        paragraph = 'tplParagraph',
+        bullet    = 'tplBullet',
+        warning   = 'tplWarning',
+        image     = 'tplImage',
+        spacer    = 'tplSpacer',
+    }
+
+    for kind, elementName in pairs(names) do
+        self.templates[kind] = self.templateBox:getDescendantByName(elementName)
+    end
+end
+
+---Sucht die erste vorhandene Bilddatei zu einem Namen (dds vor png).
+---@param baseName string
+---@return string?
+function InGameMenuMiningLayersFrame.findImageFile(baseName)
+    if not MiningLayers.isCallable(fileExists) then
+        return nil
+    end
+
+    for _, extension in ipairs(InGameMenuMiningLayersFrame.IMAGE_EXTENSIONS) do
+        local path = InGameMenuMiningLayersFrame.IMAGE_DIRECTORY .. baseName .. extension
+
+        if fileExists(path) then
+            return path
+        end
+    end
+
+    return nil
+end
+
+---Baut einen einzelnen Eintrag in ein Layout.
+---@param layout table
+---@param entry table
+function InGameMenuMiningLayersFrame:buildEntry(layout, entry)
+    local template = self.templates[entry.type]
+
+    if template == nil then
+        return
+    end
+
+    -- Bilder nur einbauen, wenn die Datei wirklich vorliegt.
+    local imagePath
+
+    if entry.type == 'image' then
+        imagePath = InGameMenuMiningLayersFrame.findImageFile(entry.file)
+
+        if imagePath == nil then
+            return
+        end
+    end
+
+    local element = template:clone(layout)
+
+    if element == nil then
+        return
+    end
+
+    element:setVisible(true)
+
+    if entry.type == 'image' then
+        if MiningLayers.isCallable(element.setImageFilename) then
+            element:setImageFilename(imagePath)
+        end
+    elseif entry.type == 'spacer' then
+        -- nur Abstand, kein Inhalt
+    else
+        element:setText(MiningLayers.getText(entry.text, entry.text))
+    end
+end
+
+---Fuellt die drei Layouts. Laeuft genau einmal.
+function InGameMenuMiningLayersFrame:buildContent()
+    if self.contentBuilt then
+        return
+    end
+
+    self:collectTemplates()
+
+    if self.templates == nil or self.contentLayout == nil then
+        return
+    end
+
+    for pageIndex, entries in ipairs(InGameMenuMiningLayersFrame.CONTENT) do
+        local layout = self.contentLayout[pageIndex]
+
+        if layout ~= nil then
+            for _, entry in ipairs(entries) do
+                MiningLayers.protectedCall('buildEntry', function()
+                    self:buildEntry(layout, entry)
+                end)
+            end
+
+            layout:invalidateLayout()
+        end
+    end
+
+    -- Der Halter darf nach dem Klonen weg, sonst reserviert er Platz.
+    if self.templateBox ~= nil then
+        self.templateBox:setVisible(false)
+    end
+
+    self.contentBuilt = true
+end
+
+function InGameMenuMiningLayersFrame:onFrameOpen()
+    self:superClass().onFrameOpen(self)
+
+    self.isOpen = true
+
+    MiningLayers.protectedCall('buildContent', function()
+        self:buildContent()
+    end)
+
+    MiningLayers.protectedCall('loadEditorFromConfig', function()
+        self:loadEditorFromConfig()
+        self:updateEditorOptions()
+    end)
+
+    self.subCategoryBox:invalidateLayout()
+    self.subCategoryPaging:setTexts({ '1', '2', '3', '4' })
+    self.subCategoryPaging:setSize(self.subCategoryBox.maxFlowSize + 140 * g_pixelSizeScaledX)
+
+    self:updateSubCategoryPages(self.subCategoryPaging:getState())
+end
+
+function InGameMenuMiningLayersFrame:onFrameClose()
+    self:superClass().onFrameClose(self)
+
+    self.isOpen = false
+end
+
+function InGameMenuMiningLayersFrame:updateSubCategoryPages(subCategoryIndex)
+    for index, page in pairs(self.subCategoryPages) do
+        page:setVisible(index == subCategoryIndex)
+    end
+
+    local layout = self.contentLayout ~= nil and self.contentLayout[subCategoryIndex] or nil
+
+    if layout ~= nil and self.listSlider ~= nil then
+        self.listSlider:setDataElement(layout)
+    end
+
+    -- Der Editor hat keinen Fliesstext, der Slider bleibt dort ohne Aufgabe.
+    local isEditor = subCategoryIndex == InGameMenuMiningLayersFrame.EDITOR_PAGE
+
+    self.menuButtonInfo = isEditor and self.editorMenuButtonInfo or self.docMenuButtonInfo
+
+    FocusManager:setFocus(self.subCategoryPaging)
+
+    -- ⚠️ updateMenuButtons() gibt es auf TabbedMenuFrameElement nicht - der
+    -- Aufruf hat bei jedem Reiterwechsel eine Fehlerzeile ins Log geschrieben.
+    -- Die Leiste erneuert das Ingame-Menue selbst; wir stossen es nur an,
+    -- falls es dafuer eine Methode gibt.
+    if MiningLayers.isCallable(self.setMenuButtonInfoDirty) then
+        self:setMenuButtonInfoDirty()
+    elseif g_inGameMenu ~= nil and MiningLayers.isCallable(g_inGameMenu.updateButtonsPanel) then
+        g_inGameMenu:updateButtonsPanel(self)
+    end
+end
+
+function InGameMenuMiningLayersFrame:onClickTabQuickstart()
+    self.subCategoryPaging:setState(1, true)
+end
+
+function InGameMenuMiningLayersFrame:onClickTabManual()
+    self.subCategoryPaging:setState(2, true)
+end
+
+function InGameMenuMiningLayersFrame:onClickTabTips()
+    self.subCategoryPaging:setState(3, true)
+end
+
+function InGameMenuMiningLayersFrame:onClickTabEditor()
+    self.subCategoryPaging:setState(InGameMenuMiningLayersFrame.EDITOR_PAGE, true)
+end
+
+---Startet den bestehenden Schichten-Assistenten. Uebergangsloesung, bis der
+---grafische Editor auf dieser Seite steht.
+function InGameMenuMiningLayersFrame:onClickStartWizard()
+    if not MiningLayers.isCallable(MiningLayers.startLayerWizard) then
+        return
+    end
+
+    -- Das Ingame-Menue muss zu sein, sonst liegen die Dialoge dahinter.
+    if g_gui ~= nil then
+        g_gui:showGui(nil)
+    end
+
+    MiningLayers.protectedCall('startLayerWizard', function()
+        MiningLayers:startLayerWizard()
+    end)
+end
+
+function InGameMenuMiningLayersFrame:getMenuButtonInfo()
+    return self.menuButtonInfo
+end
+
+-- ======================================================================
+-- Reiter 4: grafischer Schichten-Editor
+--
+-- Ersetzt die Dialog-Kette des alten Assistenten. Links ein Querschnitt,
+-- der sich bei jeder Aenderung sofort neu zeichnet, rechts drei Auswahlen.
+-- Gezeichnet wird mit drawFilledRect/renderText - dieselbe Technik wie bei
+-- der Hoehenanzeige im Spiel, also ohne neues GUI-Element.
+-- ======================================================================
+
+InGameMenuMiningLayersFrame.EDITOR_PAGE = 4
+
+---Reihenfolge bewusst fest verdrahtet: `pairs()` ueber EDITOR_MATERIALS haette
+---in Lua keine festgelegte Reihenfolge, die Auswahl saehe je Start anders aus.
+InGameMenuMiningLayersFrame.MATERIALS = {
+    'DIRT', 'SOIL', 'GRAVEL', 'SAND', 'STONE', 'COAL', 'LIMESTONE',
+}
+
+---Farben fuer den Querschnitt. PAYDIRT und STONE hoeren zum Unterbau, den der
+---Mod selbst setzt; sie stehen mit drin, damit man das Ganze sieht.
+InGameMenuMiningLayersFrame.MATERIAL_COLORS = {
+    DIRT      = { 0.42, 0.29, 0.16 },
+    SOIL      = { 0.30, 0.21, 0.12 },
+    GRAVEL    = { 0.55, 0.55, 0.56 },
+    SAND      = { 0.80, 0.72, 0.48 },
+    STONE     = { 0.32, 0.33, 0.35 },
+    COAL      = { 0.12, 0.12, 0.13 },
+    LIMESTONE = { 0.72, 0.72, 0.68 },
+    PAYDIRT   = { 0.85, 0.68, 0.20 },
+}
+
+InGameMenuMiningLayersFrame.MIN_THICKNESS = 0.5
+InGameMenuMiningLayersFrame.MAX_THICKNESS = 20.0
+InGameMenuMiningLayersFrame.THICKNESS_STEP = 0.5
+InGameMenuMiningLayersFrame.MAX_LAYERS = 6
+
+---@return number
+local function paydirtThickness()
+    return MiningLayers.PAYDIRT_SEAM_THICKNESS or 6
+end
+
+---Liest die aktuelle Standardzone in eine Arbeitskopie aus Abraum-Schichten.
+---PAYDIRT und STONE werden dabei weggelassen: die haengt der Mod beim Speichern
+---selbst wieder an, genau wie der alte Assistent.
+---Baut die Liste der Ziele: Standard plus jeder Polygon-Bereich der Karte.
+function InGameMenuMiningLayersFrame:buildTargetList()
+    self.targets = {
+        { key = nil, label = MiningLayers.getText('ml_edTargetDefault', 'All areas (default)') },
+    }
+
+    for _, area in pairs(MiningLayers.getLandscapingAreas()) do
+        -- Pfad-Bereiche haben eine Breite und bekommen nie Schichten.
+        if area ~= nil and area.width == nil and area.name ~= nil then
+            table.insert(self.targets, { key = area.name:lower(), label = area.name })
+        end
+    end
+
+    table.sort(self.targets, function(a, b)
+        if a.key == nil then return true end
+        if b.key == nil then return false end
+        return a.label < b.label
+    end)
+
+    self.targetIndex = math.max(1, math.min(self.targetIndex or 1, #self.targets))
+end
+
+---@return table? zone
+function InGameMenuMiningLayersFrame:getTargetZone()
+    local target = self.targets and self.targets[self.targetIndex] or nil
+
+    if target == nil or target.key == nil then
+        return MiningLayers.defaultZone
+    end
+
+    return MiningLayers.zonesByKey[target.key]
+end
+
+function InGameMenuMiningLayersFrame:loadEditorFromConfig()
+    self.editLayers = {}
+
+    self:buildTargetList()
+
+    -- Hat der Bereich keine eigene Zone, dient der Standard als Vorlage. Eine
+    -- eigene Zone entsteht erst beim Speichern.
+    local zone = self:getTargetZone() or MiningLayers.defaultZone
+    local previousDepth = 0
+
+    if zone ~= nil and type(zone.layers) == 'table' then
+        for _, layer in ipairs(zone.layers) do
+            local name = layer.fillTypeName
+
+            if name ~= 'PAYDIRT' and name ~= 'STONE' and layer.depth ~= nil then
+                local thickness = layer.depth - previousDepth
+
+                if thickness >= InGameMenuMiningLayersFrame.MIN_THICKNESS then
+                    table.insert(self.editLayers, {
+                        fillTypeName = name,
+                        thickness = thickness,
+                    })
+
+                    previousDepth = layer.depth
+                end
+            end
+        end
+    end
+
+    -- Nichts brauchbares gefunden? Dann mit dem Auslieferungszustand starten.
+    if #self.editLayers == 0 then
+        self.editLayers = {
+            { fillTypeName = 'DIRT',   thickness = 2 },
+            { fillTypeName = 'GRAVEL', thickness = 4 },
+        }
+    end
+
+    self.editIndex = 1
+    self.editorDirty = false
+end
+
+---Baut die Auswahlliste der Dicken einmalig auf.
+function InGameMenuMiningLayersFrame:buildThicknessTexts()
+    if self.thicknessTexts ~= nil then
+        return
+    end
+
+    self.thicknessTexts = {}
+    self.thicknessValues = {}
+
+    local value = InGameMenuMiningLayersFrame.MIN_THICKNESS
+
+    while value <= InGameMenuMiningLayersFrame.MAX_THICKNESS + 0.001 do
+        table.insert(self.thicknessValues, value)
+        table.insert(self.thicknessTexts, string.format('%s m', MiningLayers.formatNumber(value)))
+        value = value + InGameMenuMiningLayersFrame.THICKNESS_STEP
+    end
+end
+
+---@param thickness number
+---@return number index
+function InGameMenuMiningLayersFrame:thicknessToIndex(thickness)
+    local best, bestDiff = 1, math.huge
+
+    for index, value in ipairs(self.thicknessValues) do
+        local diff = math.abs(value - thickness)
+
+        if diff < bestDiff then
+            best, bestDiff = index, diff
+        end
+    end
+
+    return best
+end
+
+---Schreibt den Zustand der Arbeitskopie in die drei Auswahlfelder.
+function InGameMenuMiningLayersFrame:updateEditorOptions()
+    if self.layerOption == nil or self.editLayers == nil then
+        return
+    end
+
+    self:buildThicknessTexts()
+
+    -- Der Nutzer soll nicht raten muessen, welche Zeile welche ist: die
+    -- Auswahl zeigt Nummer und Material zusammen.
+    local layerTexts = {}
+
+    for index, layer in ipairs(self.editLayers) do
+        table.insert(layerTexts, string.format('%d. %s', index, layer.fillTypeName))
+    end
+
+    self.editIndex = math.max(1, math.min(self.editIndex or 1, #self.editLayers))
+
+    self.updatingEditor = true
+
+    if self.targetOption ~= nil and self.targets ~= nil then
+        local targetTexts = {}
+
+        for _, t in ipairs(self.targets) do
+            table.insert(targetTexts, t.label)
+        end
+
+        self.targetOption:setTexts(targetTexts)
+        self.targetOption:setState(self.targetIndex, false)
+    end
+
+    self.layerOption:setTexts(layerTexts)
+    self.layerOption:setState(self.editIndex, false)
+
+    self.materialOption:setTexts(InGameMenuMiningLayersFrame.MATERIALS)
+
+    local current = self.editLayers[self.editIndex]
+    local materialIndex = 1
+
+    for index, name in ipairs(InGameMenuMiningLayersFrame.MATERIALS) do
+        if name == current.fillTypeName then
+            materialIndex = index
+            break
+        end
+    end
+
+    self.materialOption:setState(materialIndex, false)
+
+    self.thicknessOption:setTexts(self.thicknessTexts)
+    self.thicknessOption:setState(self:thicknessToIndex(current.thickness), false)
+
+    self.updatingEditor = false
+
+    self:updateEditorSummary()
+end
+
+---Textzusammenfassung unter den Auswahlfeldern.
+function InGameMenuMiningLayersFrame:updateEditorSummary()
+    if self.editorSummary == nil then
+        return
+    end
+
+    local parts = {}
+    local depth = 0
+
+    for _, layer in ipairs(self.editLayers) do
+        local from = depth
+        depth = depth + layer.thickness
+        table.insert(parts, string.format('%s %s-%s m',
+            layer.fillTypeName,
+            MiningLayers.formatNumber(from),
+            MiningLayers.formatNumber(depth)))
+    end
+
+    local seamEnd = depth + paydirtThickness()
+
+    table.insert(parts, string.format('PAYDIRT %s-%s m',
+        MiningLayers.formatNumber(depth),
+        MiningLayers.formatNumber(seamEnd)))
+    table.insert(parts, string.format('STONE %s %s m',
+        MiningLayers.getText('ml_uiBelow', 'below'),
+        MiningLayers.formatNumber(seamEnd)))
+
+    self.editorSummary:setText(table.concat(parts, '\n'))
+
+    if self.editorHint ~= nil then
+        self.editorHint:setText(MiningLayers.getText('ml_edHint', ''))
+    end
+
+    if self.editorScope ~= nil then
+        local target = self.targets and self.targets[self.targetIndex] or nil
+        local key = target ~= nil and target.key or nil
+
+        if key == nil then
+            self.editorScope:setText(MiningLayers.getText('ml_edScope', ''))
+        else
+            local text = MiningLayers.getText('ml_edScopeArea', '')
+            local ok, formatted = pcall(string.format, text, target.label)
+            self.editorScope:setText(ok and formatted or text)
+        end
+    end
+end
+
+---Ziel gewechselt: Schichten des neuen Ziels laden. Ungespeichertes am alten
+---Ziel ist damit weg - genau wie beim Verlassen der Seite.
+function InGameMenuMiningLayersFrame:onTargetChanged(state)
+    if self.updatingEditor then
+        return
+    end
+
+    self.targetIndex = state
+
+    MiningLayers.protectedCall('loadEditorForTarget', function()
+        local keep = self.targetIndex
+        self:loadEditorFromConfig()
+        self.targetIndex = math.max(1, math.min(keep, #self.targets))
+        self:updateEditorOptions()
+    end)
+end
+
+function InGameMenuMiningLayersFrame:onLayerChanged(state)
+    if self.updatingEditor then
+        return
+    end
+
+    self.editIndex = state
+    self:updateEditorOptions()
+end
+
+function InGameMenuMiningLayersFrame:onMaterialChanged(state)
+    if self.updatingEditor or self.editLayers == nil then
+        return
+    end
+
+    local name = InGameMenuMiningLayersFrame.MATERIALS[state]
+
+    if name ~= nil and self.editLayers[self.editIndex] ~= nil then
+        self.editLayers[self.editIndex].fillTypeName = name
+        self.editorDirty = true
+        self:updateEditorOptions()
+    end
+end
+
+function InGameMenuMiningLayersFrame:onThicknessChanged(state)
+    if self.updatingEditor or self.editLayers == nil then
+        return
+    end
+
+    local value = self.thicknessValues[state]
+
+    if value ~= nil and self.editLayers[self.editIndex] ~= nil then
+        self.editLayers[self.editIndex].thickness = value
+        self.editorDirty = true
+        self:updateEditorSummary()
+    end
+end
+
+function InGameMenuMiningLayersFrame:onClickAddLayer()
+    if self.editLayers == nil then
+        return
+    end
+
+    if #self.editLayers >= InGameMenuMiningLayersFrame.MAX_LAYERS then
+        return
+    end
+
+    table.insert(self.editLayers, { fillTypeName = 'STONE', thickness = 2 })
+
+    self.editIndex = #self.editLayers
+    self.editorDirty = true
+
+    self:updateEditorOptions()
+end
+
+function InGameMenuMiningLayersFrame:onClickRemoveLayer()
+    if self.editLayers == nil or #self.editLayers <= 1 then
+        return
+    end
+
+    table.remove(self.editLayers, self.editIndex)
+
+    self.editIndex = math.max(1, self.editIndex - 1)
+    self.editorDirty = true
+
+    self:updateEditorOptions()
+end
+
+---Uebernimmt die Arbeitskopie: Floez und Fels anhaengen, Standardzone ersetzen,
+---Cache leeren, Datei schreiben. Reihenfolge wie in finishLayerWizard.
+function InGameMenuMiningLayersFrame:onClickSaveLayers()
+    if self.editLayers == nil or g_fillTypeManager == nil then
+        return
+    end
+
+    local layers = {}
+    local depth = 0
+
+    for _, layer in ipairs(self.editLayers) do
+        local fillType = g_fillTypeManager:getFillTypeByName(layer.fillTypeName)
+
+        if fillType ~= nil then
+            depth = depth + layer.thickness
+
+            table.insert(layers, {
+                fillTypeName = layer.fillTypeName,
+                fillTypeIndex = fillType.index,
+                depth = depth,
+            })
+        end
+    end
+
+    if #layers == 0 then
+        return
+    end
+
+    local paydirt = g_fillTypeManager:getFillTypeByName('PAYDIRT')
+    local stone = g_fillTypeManager:getFillTypeByName('STONE')
+
+    if paydirt ~= nil then
+        depth = depth + paydirtThickness()
+
+        table.insert(layers, {
+            fillTypeName = 'PAYDIRT',
+            fillTypeIndex = paydirt.index,
+            depth = depth,
+        })
+    end
+
+    if stone ~= nil then
+        -- Ohne depth: Bodenschicht, reicht endlos nach unten.
+        table.insert(layers, {
+            fillTypeName = 'STONE',
+            fillTypeIndex = stone.index,
+        })
+    end
+
+    -- In die gewaehlte Zone schreiben: entweder den Standard fuer alle, oder
+    -- eine eigene Zone fuer genau diesen Bereich. Der Schluessel ist der
+    -- kleingeschriebene Bereichsname - so schlaegt getResolvedForArea nach.
+    local target = self.targets and self.targets[self.targetIndex] or nil
+    local key = target ~= nil and target.key or nil
+
+    if key == nil then
+        MiningLayers.defaultZone = {
+            kind = 'default',
+            enabled = true,
+            layers = layers,
+        }
+    else
+        MiningLayers.zonesByKey[key] = {
+            kind = 'area',
+            area = target.label,
+            enabled = true,
+            layers = layers,
+        }
+    end
+
+    -- Aufgeloeste Bereiche verwerfen, sonst greift die Aenderung erst nach
+    -- einem Neustart.
+    MiningLayers.resolvedByArea = {}
+
+    MiningLayers.protectedCall('saveConfigFile', function()
+        MiningLayers:saveConfigFile()
+    end)
+
+    self.editorDirty = false
+
+    if InfoDialog ~= nil and MiningLayers.isCallable(InfoDialog.show) then
+        local message
+
+        if key == nil then
+            message = MiningLayers.getText('ml_edSaved', 'Layers saved.')
+        else
+            local template = MiningLayers.getText('ml_edSavedArea', 'Layers saved for %s.')
+            local ok, formatted = pcall(string.format, template, target.label)
+            message = ok and formatted or template
+        end
+
+        InfoDialog.show(message)
+    end
+
+    self:updateEditorSummary()
+end
+
+---Malt den Querschnitt in die Flaeche von editorCanvas.
+function InGameMenuMiningLayersFrame:drawLayerGraph()
+    local canvas = self.editorCanvas
+
+    if canvas == nil or self.editLayers == nil then
+        return
+    end
+
+    if not MiningLayers.isCallable(drawFilledRect) or not MiningLayers.isCallable(renderText) then
+        return
+    end
+
+    local x, y = canvas.absPosition[1], canvas.absPosition[2]
+    local width, height = canvas.absSize[1], canvas.absSize[2]
+
+    if width <= 0 or height <= 0 then
+        return
+    end
+
+    -- Gesamttiefe: Abraum, Floez, und ein Stueck Fels als Sockel, damit man
+    -- sieht, dass darunter Schluss ist.
+    local overburden = 0
+
+    for _, layer in ipairs(self.editLayers) do
+        overburden = overburden + layer.thickness
+    end
+
+    local seam = paydirtThickness()
+    local stoneShown = math.max(2, (overburden + seam) * 0.2)
+    local total = overburden + seam + stoneShown
+
+    if total <= 0 then
+        return
+    end
+
+    local padding = width * 0.03
+    local barLeft = x + padding
+    local barWidth = width * 0.42
+    local textLeft = barLeft + barWidth + padding
+    local top = y + height
+
+    -- Reihenfolge von oben nach unten: Abraum, dann Floez, dann Fels.
+    local drawList = {}
+
+    for index, layer in ipairs(self.editLayers) do
+        table.insert(drawList, {
+            name = layer.fillTypeName,
+            thickness = layer.thickness,
+            active = index == self.editIndex,
+        })
+    end
+
+    table.insert(drawList, { name = 'PAYDIRT', thickness = seam, fixed = true })
+    table.insert(drawList, { name = 'STONE', thickness = stoneShown, fixed = true, openEnded = true })
+
+    setTextAlignment(RenderText.ALIGN_LEFT)
+    setTextBold(false)
+
+    local depth = 0
+    local textSize = height * 0.038
+
+    for _, entry in ipairs(drawList) do
+        local barHeight = height * (entry.thickness / total)
+        local barTop = top - height * (depth / total)
+        local barBottom = barTop - barHeight
+
+        local color = InGameMenuMiningLayersFrame.MATERIAL_COLORS[entry.name] or { 0.5, 0.5, 0.5 }
+        local alpha = entry.fixed and 0.75 or 1
+
+        drawFilledRect(barLeft, barBottom, barWidth, barHeight, color[1], color[2], color[3], alpha)
+
+        -- Die gewaehlte Schicht bekommt einen hellen Rand.
+        if entry.active then
+            local edge = math.max(height * 0.004, 0.0015)
+
+            drawFilledRect(barLeft, barBottom, barWidth, edge, 1, 1, 1, 0.9)
+            drawFilledRect(barLeft, barTop - edge, barWidth, edge, 1, 1, 1, 0.9)
+            drawFilledRect(barLeft, barBottom, edge * 0.5, barHeight, 1, 1, 1, 0.9)
+            drawFilledRect(barLeft + barWidth - edge * 0.5, barBottom, edge * 0.5, barHeight, 1, 1, 1, 0.9)
+        end
+
+        local from = depth
+        depth = depth + entry.thickness
+
+        local label
+
+        if entry.openEnded then
+            label = string.format('%s  %s %s m', entry.name,
+                MiningLayers.getText('ml_uiBelow', 'below'),
+                MiningLayers.formatNumber(from))
+        else
+            label = string.format('%s  %s-%s m', entry.name,
+                MiningLayers.formatNumber(from),
+                MiningLayers.formatNumber(depth))
+        end
+
+        local textY = barTop - barHeight * 0.5 - textSize * 0.35
+
+        setTextBold(entry.active == true)
+        setTextColor(0, 0, 0, 0.7)
+        renderText(textLeft + 0.0012, textY - 0.0012, textSize, label)
+        setTextColor(1, 1, 1, entry.fixed and 0.8 or 1)
+        renderText(textLeft, textY, textSize, label)
+    end
+
+    setTextBold(false)
+    setTextColor(1, 1, 1, 1)
+end
+
+function InGameMenuMiningLayersFrame:draw()
+    self:superClass().draw(self)
+
+    if self.subCategoryPaging ~= nil
+        and self.subCategoryPaging:getState() == InGameMenuMiningLayersFrame.EDITOR_PAGE then
+        MiningLayers.protectedCall('drawLayerGraph', function()
+            self:drawLayerGraph()
+        end)
+    end
+end

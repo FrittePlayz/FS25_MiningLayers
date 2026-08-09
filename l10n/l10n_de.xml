@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<l10n>
+    <texts>
+        <text name="ml_decimalSeparator" text="," />
+        <text name="ml_heightHere" text="Höhe hier" />
+        <text name="ml_zone" text="Zone" />
+        <text name="ml_layer" text="Schicht" />
+        <text name="ml_depth" text="Tiefe" />
+        <text name="ml_until" text="bis" />
+        <text name="ml_stillNeeded" text="noch" />
+        <text name="ml_noLayers" text="keine Schichten an dieser Stelle" />
+        <text name="ml_above" text="liegt" />
+        <text name="ml_aboveRef" text="über der Bezugshöhe" />
+        <text name="ml_overrideHint" text="TerraFarm-Material %s gilt hier nicht - die Schicht bestimmt" />
+        <text name="ml_manualArea" text="Material im Bereich gesetzt = normales TerraFarm, dieser Bereich hat KEINE Schichten" />
+        <text name="ml_zoneOff" text="Schichten für diesen Bereich abgeschaltet" />
+        <text name="ml_spoil" text="aufgeschüttet (über Bezugshöhe) - TerraFarm-Auswahl gilt" />
+        <text name="ml_pathArea" text="Pfad-Bereich = normales TerraFarm, Schichten gibt es nur in Polygon-Bereichen" />
+        <text name="ml_moundKnown" text="Halde erkannt - es kommt das abgekippte Material" />
+        <text name="ml_tip1" text="Bereich ziehen, Felder leer lassen - den Grubenboden setzt der Mod" />
+        <text name="ml_tip2" text="Material im Bereich eintragen = normales TerraFarm ohne Schichten (Baustellen)" />
+        <text name="ml_tip3" text="Löffel vor dem Schichtwechsel leeren - ein Löffel, ein Material" />
+        <text name="ml_tip4" text="Halden merkt sich der Mod - aufgenommen wird, was abgekippt wurde" />
+        <text name="ml_tip5" text="Linienfarbe = Material, das ab dort beginnt; rot = Grubenboden" />
+        <text name="ml_tip6" text="Die Anzeige zeigt, wie weit es noch bis zur nächsten Schicht ist" />
+
+        <text name="ml_uiLayers" text="Schichten" />
+        <text name="ml_uiNoLayers" text="keine Schichten" />
+        <text name="ml_uiBelow" text="ab" />
+        <text name="ml_uiIntro" text="Abraum-Schichten neu festlegen? Aktuell: %s - Der Editor fragt je Schicht Material und Untergrenze in Metern ab. Darunter setzt der Mod automatisch das PAYDIRT-Flöz und Fels (STONE): für echtes Bergbau-Gameplay, Cheaten unterstützen wir nicht." />
+        <text name="ml_uiDepthTitle" text="%s: Untergrenze in m unter der Oberfläche" />
+        <text name="ml_uiDone" text="Neue Schichten: %s - Gilt sofort für alle Bereiche ohne eigene Zone." />
+        <text name="ml_uiMore" text="Noch eine Abraum-Schicht darunter? Nein = fertig, PAYDIRT-Flöz und Fels setzt der Mod automatisch." />
+        <text name="ml_uiNoPaydirt" text="PAYDIRT vergibt der Mod selbst, das Flöz liegt unter dem Abraum. Wir wollen echtes Bergbau-Gameplay erzeugen und unterstützen kein Cheaten. Wer es anders will, passt die miningLayers.xml von Hand an." />
+        <text name="ml_uiNotAllowed" text="%s ist kein Abraum-Material. Zur Wahl stehen: DIRT, SOIL, GRAVEL, SAND, STONE, COAL, LIMESTONE." />
+
+        <!-- ===================== Menueseite: Reiter ===================== -->
+        <text name="ml_tabQuickstart" text="Schnellstart" />
+        <text name="ml_tabManual" text="Anleitung" />
+        <text name="ml_tabTips" text="Tipps und Fahrzeuge" />
+        <text name="ml_tabEditor" text="Schichten" />
+
+        <!-- ===================== Reiter 4: Schichten-Editor ===================== -->
+        <text name="ml_edSummarySection" text="Ergibt dieses Profil" />
+        <text name="ml_edScope" text="Achtung: Was du hier festlegst, gilt für ALLE deine Bereiche — auch für die, die schon stehen. Ein einzelner Bereich mit abweichenden Schichten geht weiterhin, den trägst du aber von Hand in der miningLayers.xml ein." />
+        <text name="ml_helpManEditor4" text="Ein Profil für alles: Was du auf dem Reiter Schichten speicherst, gilt für jeden Bereich, den du anlegst, und rückwirkend auch für die bestehenden. Es gibt also nicht pro Grube ein eigenes Profil, sondern einen Standard für alle. Wenn eine einzelne Grube etwas anderes haben soll, trägst du dafür in der miningLayers.xml eine eigene Zone mit dem Bereichsnamen ein." />
+        <text name="ml_edTargetSection" text="Gilt für" />
+        <text name="ml_edTarget" text="Bereich" />
+        <text name="ml_edTargetDefault" text="Alle Bereiche (Standard)" />
+        <text name="ml_edScopeArea" text="Diese Schichten gelten nur für &quot;%s&quot;. Alle anderen Bereiche behalten den Standard. Wechselst du oben auf Alle Bereiche, bearbeitest du wieder den Standard." />
+        <text name="ml_edSavedArea" text="Schichten für &quot;%s&quot; gespeichert. Sie gelten nur für diesen Bereich." />
+        <text name="ml_edLayerSection" text="Abraum-Schichten" />
+        <text name="ml_edLayer" text="Schicht" />
+        <text name="ml_edMaterial" text="Material" />
+        <text name="ml_edThickness" text="Dicke" />
+        <text name="ml_edSave" text="Speichern" />
+        <text name="ml_edAdd" text="Schicht hinzufügen" />
+        <text name="ml_edRemove" text="Schicht entfernen" />
+        <text name="ml_edSaved" text="Schichten gespeichert. Sie gelten sofort für alle Bereiche ohne eigene Zone." />
+        <text name="ml_edHint" text="Die helle Umrandung ist die Schicht, die du gerade bearbeitest. Paydirt und Fels setzt der Mod selbst darunter. Speichern nicht vergessen: mit ESC oder Zurück verlässt du die Seite, und alles seit dem letzten Speichern ist verworfen." />
+
+        <!-- ===================== Reiter 1: Schnellstart ===================== -->
+        <text name="ml_helpQsSetupTitle" text="Eingerichtet in einem Schritt" />
+        <text name="ml_helpQsSetup1" text="Zieh einen TerraFarm-Bereich um deine Grube und lass die Felder darin leer. Das war die ganze Einrichtung. Sobald du im Bereich gräbst, kommt das Material aus der Tiefe statt aus der Fahrzeugeinstellung." />
+        <text name="ml_helpQsSetup2" text="Die Bezugshöhe misst der Mod selbst: er nimmt die Geländehöhen an den Eckpunkten deines Bereichs und rechnet daraus die Oberkante. Du musst nichts ablesen und nichts eintragen. Trägst du dagegen ein Material im Bereich ein, gilt normales TerraFarm ohne Schichten - praktisch für Baustellen." />
+
+        <text name="ml_pageTitle" text="Mining Layers" />
+        <text name="ml_credits" text="Mining Layers von Tommy Honold, Farmersingles.de. Ein FrittePlayz-Projekt." />
+        <text name="ml_helpQsStockNote" text="Alle Bilder hier zeigen den Auslieferungszustand: Mutterboden, Kies, Paydirt-Flöz, Fels - ohne dass jemand Schichten von Hand angelegt hat. Genau das bekommst du, sobald der Bereich steht. Eigene Schichten sind eine Möglichkeit, keine Voraussetzung." />
+        <text name="ml_helpQsDisplayTitle" text="Die Anzeige links" />
+        <text name="ml_helpQsDisplay1" text="Solange eine Maschine aktiv ist, steht links im Bild, wo du gerade bist: aktuelle Höhe, welche Schicht du abbaust und wie viele Meter noch bis zur nächsten kommen." />
+        <text name="ml_helpQsDisplayB1" text="Die Anzeige ist maßgeblich, nicht TerraFarms Materialfeld. Das Fahrzeug zeigt weiter seine eigene Einstellung an und wird erst im Moment des Grabens überschrieben." />
+        <text name="ml_helpQsDisplayB2" text="Verschieben kannst du sie über displayPosX und displayPosY in der miningLayers.xml, abschalten über showHeightDisplay." />
+
+        <text name="ml_helpQsLayersTitle" text="Eigene Schichten festlegen" />
+        <text name="ml_helpQsLayers1" text="Ab Werk gilt: Mutterboden, darunter Kies, darunter das Paydirt-Flöz, ganz unten Fels. Willst du andere Abraum-Schichten, führt dich der Assistent durch: je Schicht Material und Untergrenze in Metern. Das Flöz und den Fels setzt der Mod selbst dahinter." />
+        <text name="ml_helpQsWizardButton" text="Schichten einrichten" />
+        <text name="ml_helpQsWizardHint" text="Musst du aber nicht: Wenn du nichts machst, gilt unser Standard, und der passt für die allermeisten Gruben. Willst du es anders, geh auf den Reiter Schichten — dort baust du dir dein Profil selbst zusammen und siehst sofort, wie es aussieht." />
+
+        <text name="ml_helpQsMistakesTitle" text="Die drei Fehler beim Bereich ziehen" />
+        <text name="ml_helpQsWarnWater" text="See oder Ufer: Liegen Eckpunkte im Wasser, messen sie den Grund. Die Bezugsfläche kippt und am Ufer steht plötzlich Fels an. Zieh den Bereich überwiegend an Land." />
+        <text name="ml_helpQsWarnRidge" text="Bergkamm: Ein Bereich über den Rücken hinweg macht die Bezugsfläche zur Sehne, das Paydirt rückt an die Oberfläche. Am abgelegenen Steilhang ist das der gewollte Berg-Bonus, am Hofhügel nicht. Zieh Hang-Bereiche auf EINE Flanke." />
+        <text name="ml_helpQsRidgeCaption" text="Am Steilhang liest sich das so: die Anzeige meldet Schicht GRAVEL auf 15,7 m Höhe und nur noch 2,3 m bis zum Paydirt. Wer den Weg zum Berg auf sich nimmt, kommt schneller ans Flöz - das ist so gewollt." />
+        <text name="ml_helpQsWarnRiver" text="Fluss quer: Liegen die Ecken auf beiden Ufern, sackt das Flussbett in der Mitte tief unter die Bezugsfläche und der Grubenboden landet unter der Sohle - die Grube läuft voll. Bereiche längs am Fluss ziehen, nie quer darüber." />
+
+        <!-- ===================== Reiter 2: Anleitung ===================== -->
+        <text name="ml_helpManWhatTitle" text="Was der Mod ändert" />
+        <text name="ml_helpManWhat1" text="Im FS25 stellst du am Fahrzeug ein, was deine Schaufel fördert - egal wie tief du gräbst. Dieser Mod gibt dem Boden stattdessen Schichten: was du bekommst, hängt davon ab, wie tief unter der Oberkante dein Grabpunkt liegt." />
+        <text name="ml_helpManWhat2" text="Das ist ein reiner Laufzeit-Aufsatz auf TerraFarm. Es wird keine TerraFarm-Datei verändert und keine Zeile fremden Codes mitgeliefert. Ohne TerraFarm bleibt der Mod still." />
+
+        <text name="ml_helpManLayersTitle" text="Die Schichten" />
+        <text name="ml_helpManLayers1" text="Standard von oben nach unten: DIRT, dann GRAVEL, dann das PAYDIRT-Flöz, darunter STONE. Am Fels ist Schluss - das ist Absicht und kein fehlendes Feature." />
+        <text name="ml_helpManLayersB1" text="Tiefen gibst du als Untergrenze in Metern unter der Oberkante an, nicht als absolute Höhe über dem Meeresspiegel." />
+        <text name="ml_helpManLayersB2" text="Die unterste Schicht braucht keine Grenze, sie reicht endlos nach unten." />
+        <text name="ml_helpManLayersB3" text="Jede Schicht bekommt eine passende Bodentextur, damit du im Loch siehst, wo du bist. Über paintLayer kannst du sie je Schicht selbst setzen." />
+        <text name="ml_helpManLayers2" text="Schichten gelten pro Bereich. Ein Bereich ohne eigene Zone erbt die Standardschichten, ein Bereich mit eingetragenem Material bekommt gar keine." />
+
+        <text name="ml_helpManMoundTitle" text="Halden und Verfüllen" />
+        <text name="ml_helpManMound1" text="Der Mod merkt sich, was du wo abkippst. Nimmst du eine Halde wieder auf, kommt genau das zurück, was drin liegt - nicht die Geologie darunter. Das gilt überall auf der Karte, bis die Halde abgetragen ist." />
+        <text name="ml_helpManMoundB1" text="Verfüllst du dein Loch, holst du das Verfüllte zuerst wieder heraus. Erst darunter greifen wieder die Schichten." />
+        <text name="ml_helpManMoundB2" text="Gräbst du dich unter die Basis einer Halde, ist die Halde an dieser Stelle durch und es kommt wieder Geologie. Das verhindert, dass man sich aus einem Krater endlos Material nachschaufelt." />
+        <text name="ml_helpManMoundB3" text="Leer den Löffel vor dem Schichtwechsel. Ein Behälter hält nur einen Materialtyp, mit altem Inhalt nimmt die Schaufel das neue Material nicht auf." />
+
+        <text name="ml_helpManEditorTitle" text="Schichten selbst festlegen" />
+        <text name="ml_helpManEditor1" text="Auf dem Reiter Schichten baust du dir dein eigenes Profil. Links siehst du den Bodenquerschnitt, rechts wählst du Schicht, Material und Dicke. Höchstens sechs Abraum-Schichten, zur Wahl stehen DIRT, SOIL, GRAVEL, SAND, STONE, COAL und LIMESTONE." />
+        <text name="ml_helpManEditor3" text="Die Seite verlässt du mit ESC oder der Zurück-Schaltfläche. Achtung: Geändert ist noch nicht gespeichert. Erst die Schaltfläche Speichern schreibt dein Profil in die miningLayers.xml und lässt es sofort für alle Bereiche ohne eigene Zone gelten. Wer vorher rausgeht, findet beim nächsten Öffnen wieder den alten Stand vor." />
+        <text name="ml_helpManEditor2" text="PAYDIRT kannst du nicht selbst als Abraum setzen - das Flöz vergibt der Mod. Das ist eine bewusste Entscheidung für echtes Bergbau-Gameplay statt Materialdruck per Knopfdruck. Wer es anders will, passt die miningLayers.xml von Hand an." />
+
+        <text name="ml_helpManFloorTitle" text="Der Grubenboden" />
+        <text name="ml_helpManFloor1" text="Der Mod setzt die Zielhöhe des Bereichs automatisch auf die Unterkante deiner tiefsten Schicht, damit du beim Ebnen nicht ins Bodenlose gräbst. Vergrößerst du den Bereich, zieht der Boden in derselben Sitzung nach. Nach einem Neuladen des Spielstands passiert das nicht mehr." />
+        <text name="ml_helpManFloor2" text="Deshalb gräbst du dich auch am Wasser nicht endlos nach unten: unter der tiefsten Schicht ist Schluss. Ohne Bereich fehlt diese Grenze - dann ist die Zielhöhe der Meeresspiegel." />
+
+        <text name="ml_helpManConfigTitle" text="Konfiguration von Hand" />
+        <text name="ml_helpManConfig1" text="Alles steht in modSettings/FS25_MiningLayers/miningLayers.xml. Die Datei wird beim ersten Start angelegt und überlebt Mod-Updates. Vor dem ersten Speichern durch den Assistenten legt der Mod einmal je Sitzung eine .bak daneben." />
+        <text name="ml_helpManConfig2" text="Dort schaltest du auch die Anzeige, die Tiefenlinien, den automatischen Grubenboden und die Bodentextur beim Abladen. Zonen lassen sich einzeln abschalten oder je Bereich mit eigenen Schichten versehen." />
+
+        <!-- ===================== Reiter 3: Tipps und Fahrzeuge ===================== -->
+        <text name="ml_helpTipsTfTitle" text="TerraFarm-Stolpersteine" />
+        <text name="ml_helpTipsTfB1" text="Schalte defaultEnabled aus, sonst gräbt jedes TerraFarm-Fahrzeug schon beim Fahren den Hof um." />
+        <text name="ml_helpTipsTfB2" text="Absenken wirkt nur innerhalb des Polygons, wenn Restrict area gesetzt ist. Ebnen geht auch außerhalb. Geht nichts, stehst du meist auf der falschen Seite der Linie - oder der Boden ist schon auf Zielhöhe." />
+        <text name="ml_helpTipsTfB3" text="Ein Radlader schafft nur etwa 30 bis 40 Zentimeter pro Ansatz. Fahr eine Rampe. Das Werkzeug für Tiefe ist der Bagger." />
+        <text name="ml_helpTipsTfB4" text="Die Tasten liegen auf dem Ziffernblock, Num 9 öffnet die globalen Einstellungen. Nach dem Ändern kann ein sauberes Beenden und Neustarten nötig sein, bevor sie greifen." />
+        <text name="ml_helpTipsTfB5" text="Ohne Bereich hat Absenken keine Untergrenze - die Zielhöhe ist dann der Meeresspiegel. Das Loch entsteht zwar nur so tief, wie du gräbst, aber ein Bereich gibt dir einen definierten Boden." />
+
+        <text name="ml_helpTipsVehTitle" text="Wenn ein Fahrzeug nicht gräbt" />
+        <text name="ml_helpTipsVeh1" text="Damit ein Fahrzeug überhaupt graben darf, braucht TerraFarm eine Maschinen-Konfiguration dafür. Fehlt sie, passiert gar nichts - das liegt dann weder an TerraFarm noch an diesem Mod." />
+        <text name="ml_helpTipsVehB1" text="Installier eine Machines-Konfiguration, etwa das offizielle FS25_TerraFarmMachines von scfmod." />
+        <text name="ml_helpTipsVehB2" text="Viele Bergbau-Fahrzeugpakete bringen eigene Maschinen-Einträge mit. Doppelte Einträge machen es nicht besser, sondern schlechter - nimm einen davon." />
+        <text name="ml_helpTipsVehB3" text="Zeigt eine Schaufel die Pfeile, trägt aber nichts ab, liegt es an dieser Schaufel. Probier eine andere am selben Bagger: geht die, ist der Eintrag des Werkzeugs schuld und nicht dein Setup." />
+        <text name="ml_helpTipsVeh2" text="An einem eigenen Konfigurationspaket für die gängigen Bergbau-Maschinen wird gearbeitet. Es kommt getrennt von diesem Mod." />
+
+        <text name="ml_helpTipsMapTitle" text="Karten-Besonderheiten" />
+        <text name="ml_helpTipsMapB1" text="FS25 verkraftet nur 63 Materialtypen. Mit vielen Mods fallen welche hinten raus und lassen sich nicht mehr ablegen. Der Mod prüft das beim Start und schreibt betroffene Materialien ins Log." />
+        <text name="ml_helpTipsMapB2" text="Die Namen der Bodentexturen sind auf jeder Karte anders. Beim ersten Grabvorgang schreibt der Mod die Liste deiner Karte ins Log - daraus nimmst du die Werte für paintLayer." />
+        <text name="ml_helpTipsMapB3" text="Manche Karten sperren Flussbetten gegen Verformung. Das ist eine Sperrkarte der Karte selbst und hat nichts mit Besitz oder mit diesem Mod zu tun." />
+
+        <text name="ml_helpSponsorTitle" text="Unterstützt von farmersingles.de" />
+        <text name="ml_helpSponsor1" text="Dieser Mod wird von farmersingles.de unterstützt, der Singlebörse für Landwirte. Deshalb steht an einer Ecke jedes Bereichs ein kleines Schild mit deren Logo. Das sagen wir offen, statt es zu verstecken." />
+        <text name="ml_helpSponsor2" text="Das Schild steht immer außerhalb des Abbaubereichs und blockiert keine Maschine. Wenn du es nicht willst: sponsorSign=false in der miningLayers.xml, dann ist es sofort weg. Am Mod ändert sich dadurch nichts, und wir fragen auch nicht nach." />
+        <text name="ml_helpTipsAboutTitle" text="Über diesen Mod" />
+        <text name="ml_helpTipsAbout1" text="Mining Layers ist ein inoffizielles Addon für TerraFarm von scfmod. Es besteht keine Verbindung zu scfmod, und es werden keine TerraFarm-Dateien mitgeliefert. TerraFarm gibt es auf GitHub, nicht im ModHub." />
+        <text name="ml_helpTipsAbout2" text="Der Mod ist und bleibt kostenlos." />
+    </texts>
+</l10n>

@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+
+<!--
+    TerraFarm Mining Layers - Einstellungen
+    TerraFarm Mining Layers - settings
+
+    ============================================================================
+    KURZ:  Zieh einen TerraFarm-Bereich um die Grube. Mehr ist nicht noetig.
+           Die Bezugshoehe holt sich der Mod aus der Umrandung.
+    SHORT: Draw a TerraFarm area around your pit. That is all.
+           The reference height is taken from the outline automatically.
+    ============================================================================
+
+    Alle Tiefen sind METER UNTER DER GELAENDEOBERKANTE, keine absoluten Hoehen.
+    depth="2" heisst: die obersten zwei Meter. In FS graebt man 5 bis 15 Meter -
+    ein duenner Abraum und eine dicke Nutzschicht spielen sich am besten.
+
+    All depths are METRES BELOW THE SURFACE, not absolute heights.
+-->
+
+<!--
+    ============================================================================
+    NORMALE BEREICHE (Baustelle, Rohrgraben, Aufschuetten) NEBEN DER GRUBE:
+    Im Bereich einfach ein MATERIAL eintragen - dann laesst dieser Mod den Bereich
+    komplett in Ruhe und TerraFarm arbeitet wie immer (Handbetrieb).
+    Feld leer = Schichten an. Material gesetzt = Schichten aus. Das ist alles.
+
+    NORMAL AREAS (construction, pipes) NEXT TO YOUR PIT: just set a MATERIAL on
+    the area - this mod then leaves it alone entirely. Empty field = layers on.
+
+    Dauerhaft per Datei geht auch / permanent per file also works:
+        <zone area="baustelle" enabled="false" />
+    ============================================================================
+
+    matchOutputTexture: setzt beim Abladen die Bodentextur passend zum Material aus
+    der Schaufel, damit ein Abraumhaufen anders aussieht als eine Paydirt-Halde.
+    Ein Bereich mit forceOutputLayer hat weiterhin Vorrang. Auf "false", wenn du die
+    Abladetextur lieber selbst mit Num 8 steuerst.
+
+    autoTargetHeight: setzt den Grubenboden (Target Height) eines Schicht-Bereichs
+    automatisch tief genug fuer alle Schichten, wenn er noch auf dem Auto-Wert des
+    Editors steht (= Gelaendehoehe, das hiesse "grab nichts"). Ein von Hand gesetzter
+    Boden bleibt unangetastet. Auf "false", wenn du das selbst steuern willst.
+
+    autoTargetHeight: automatically sets the pit floor of a layered area deep
+    enough for all layers if it is still at the editor's default (= surface height,
+    which would mean "dig nothing"). A manually set floor is never touched.
+
+    showDepthLines: zeichnet die Schichtgrenzen als farbige Linien entlang der
+    Bereichs-Umrandung (Farbe = Material, das ab dort beginnt) und den Grubenboden
+    in Rot. / draws layer boundaries as coloured lines along the area outline.
+
+    syncVehicleMaterial: TerraFarms Fahrzeug-Auswahl (HUD rechts) springt beim Graben
+    automatisch auf die Schicht um. Auf Halden und im Handbetrieb bleibt die Auswahl
+    unangetastet. / TerraFarm's vehicle material selection follows the layer while
+    digging. Piles and manual areas are never touched.
+
+    displayPosX / displayPosY: Lage der Hoehenanzeige (0,0 = links unten).
+    TerraFarms eigenes HUD sitzt oben rechts.
+
+    sponsorSign: Stellt an einem Eckpunkt jedes Bereichs ein kleines Schild mit dem
+    Logo von farmersingles.de auf - dem Sponsor, der die Arbeit an diesem Mod
+    moeglich macht. Das Schild steht immer AUSSERHALB des Abbaubereichs und
+    blockiert keine Maschine. Auf sponsorSign="false" verschwindet es sofort;
+    der Mod funktioniert dadurch in keiner Weise anders. Kein Zwang, kein Nachhaken.
+    / places a small farmersingles.de sign at one corner of each area, always
+    OUTSIDE the digging area. Set to "false" and it is gone right away - nothing
+    else about the mod changes.
+-->
+
+<miningLayers enabled="true"
+              showHeightDisplay="true"
+              checkMaterials="true"
+              matchOutputTexture="true"
+              autoTargetHeight="true"
+              showDepthLines="true"
+              syncVehicleMaterial="true"
+              sponsorSign="true"
+              displayPosX="0.012"
+              displayPosY="0.55">
+
+    <!--
+        Gilt fuer JEDEN TerraFarm-Bereich, der unten keine eigene <zone> hat.
+        Die Bezugshoehe wird fuer jeden Bereich einzeln aus seinem Rand bestimmt,
+        deshalb funktioniert das im Tal genauso wie am Hang.
+
+        Applies to EVERY TerraFarm area without its own <zone> below.
+    -->
+    <defaultZone enabled="true">
+        <layer depth="2"  fillType="DIRT" />     <!-- oberste 2 m   / top 2 m      -->
+        <layer depth="6"  fillType="GRAVEL" />   <!-- 2 bis 6 m     / 2 to 6 m     -->
+        <layer depth="12" fillType="PAYDIRT" />  <!-- 6 bis 12 m: das Floez / the pay seam -->
+        <layer            fillType="STONE" />    <!-- darunter taubes Gestein - hier ist Schluss
+                                                      below: barren rock, digging ends here -->
+    </defaultZone>
+
+    <!--
+        BODENTEXTUR pro Schicht.
+
+        Ohne Angabe sucht der Mod eine Textur, die so heisst wie der fillType
+        (DIRT -> "DIRT"). Findet er keine, bleibt die Textur des Fahrzeugs stehen -
+        dann sehen alle Schichten gleich aus.
+
+        Welche Namen deine Karte kennt, steht beim Start im log.txt:
+            [TerraFarmMiningLayers] Bodentexturen dieser Karte (...)
+
+        Von dort abschreiben und so eintragen:
+            <layer depth="2" fillType="DIRT" paintLayer="dirt" />
+
+        Ground texture per layer. Defaults to a terrain layer named like the fillType.
+        Available names are listed in log.txt on startup.
+    -->
+
+    <!--
+        Einzelne Bereiche abweichend einstellen.
+        "area" ist der Name des Bereichs aus dem TerraFarm-Editor
+        (die uniqueId geht auch). Gross- und Kleinschreibung egal.
+
+        Per-area override. "area" is the area name from the TerraFarm editor.
+
+    <zone area="grube-nord">
+        <layer depth="3" fillType="DIRT" />
+        <layer           fillType="PAYDIRT" />
+    </zone>
+
+    <zone area="kiesgrube" surfaceY="71.0">
+        <layer depth="1" fillType="DIRT" />
+        <layer           fillType="GRAVEL" />
+    </zone>
+
+    Bereich dauerhaft OHNE Schichten (faellt dann nicht auf die defaultZone zurueck):
+    Area permanently WITHOUT layers (does not fall back to the defaultZone):
+
+    <zone area="baustelle" enabled="false" />
+    -->
+
+    <!--
+        TESTZONE - normalerweise AUS lassen.
+
+        Sie gilt auf der GANZEN KARTE, auch ohne Bereich, mit einer einzigen
+        Bezugshoehe. In huegeligem Gelaende ist das unbrauchbar: im Tal liegt dann
+        ueberall Paydirt direkt unter der Grasnarbe, am Hang greifen die Schichten
+        nie. Nur zum Pruefen, ob der Mod ueberhaupt anspringt.
+
+        surfaceY muss hier von Hand gesetzt werden - ohne Bereich gibt es nichts,
+        woraus der Mod sie ableiten koennte. Wert aus der Hoehenanzeige ablesen.
+
+        TEST ZONE - keep this off. Applies to the WHOLE MAP with one single
+        reference height. Only useful to verify the mod is running at all.
+    -->
+    <globalZone enabled="false" surfaceY="64.3">
+        <layer depth="2" fillType="DIRT" />
+        <layer           fillType="PAYDIRT" />
+    </globalZone>
+
+</miningLayers>
+
+<!--
+    Materialien, die sich auf der Karte auch wirklich ablegen lassen, stehen beim
+    Start im log.txt. Typisch tragfaehig sind: DIRT, PAYDIRT, SAND, GRAVEL, STONE,
+    COAL, LIMESTONE, SOIL, CONCRETE, LIME.
+
+    Kies-Sorten mit Zusatz (GRAVEL_FINE, GRAVEL_COARSE, ...) sind meist Brecher-Ware
+    und lassen sich nicht auf den Boden kippen - der Mod warnt, wenn so etwas als
+    Schichtmaterial eingetragen ist.
+-->

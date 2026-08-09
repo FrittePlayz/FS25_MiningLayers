@@ -1,0 +1,10 @@
+<texture>
+    <meta>
+        <filename>ui_elements.png</filename>
+        <size width="128" height="128" />
+    </meta>
+
+    <slices>
+        <slice id="icon_layers" uvs="0px 0px 128px 128px" />
+    </slices>
+</texture>

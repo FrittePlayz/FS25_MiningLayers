@@ -1,0 +1,1619 @@
+--
+-- Konfiguration, Zonen und Schichtermittlung.
+--
+-- Eine Zone haelt nur die Schichtdicken. Die Bezugshoehe kommt pro Bereich dazu und
+-- wird aus dessen Umrandung ermittelt, sofern sie nicht fest eingetragen ist.
+--
+
+---@diagnostic disable: lowercase-global, undefined-global
+
+MiningLayers.CONFIG_FILENAME = 'miningLayers.xml'
+
+MiningLayers.enabled = true
+MiningLayers.showHeightDisplay = true
+MiningLayers.checkMaterials = true
+-- Beim Abladen die Bodentextur zum Material aus der Schaufel setzen.
+MiningLayers.matchOutputTexture = true
+-- Grubenboden (targetY) automatisch setzen, wenn er noch auf dem nutzlosen
+-- Editor-Auto-Wert steht (= Gelaendehoehe, "grab nichts").
+MiningLayers.autoTargetHeight = true
+-- Oberhalb von Bezugshoehe + Toleranz gilt das Gelaende als aufgeschuettet (Halde).
+-- Dort entscheidet die TerraFarm-Auswahl, nicht die oberste Schicht - sonst wird
+-- aus jeder GRAVEL-Halde beim Wiederaufnehmen DIRT. Die Toleranz faengt natuerliche
+-- Bodenwellen im Bereich ab (der Median glaettet nicht alles).
+-- Nur noch Rueckfall fuer UNBEKANNTE Halden: bekannte laufen ueber das Gedaechtnis,
+-- das an der Ursprungshoehe der Zelle haengt, nicht an der Bezugshoehe.
+MiningLayers.SPOIL_TOLERANCE = 0.5
+-- Eine gemerkte Halde gilt als aufgebraucht, sobald das Gelaende ihrer Zelle bis auf
+-- diese Toleranz auf die Ursprungshoehe (baseY) zurueckgegraben ist. Dann fliegt die
+-- Zelle aus dem Gedaechtnis und darunter gelten wieder die Schichten.
+MiningLayers.MOUND_DEPLETE_TOLERANCE = 0.1
+-- Schonfrist nach dem letzten Abwurf in eine Zelle: solange wird sie nicht auf
+-- "aufgebraucht" geprueft. Waehrend des Kippens ist der Haufen noch flach und die
+-- Pruefung wuerde die frische Zelle loeschen (Live-Log 2026-08-08 21:41: dieselbe
+-- Zelle 19x pro Sekunde geloescht und mit steigender Basis neu angelegt).
+MiningLayers.MOUND_DELETE_GRACE_MS = 20000
+-- Haldenmaterial gibt es nur, solange der GRABPUNKT ueber der Haldenbasis liegt -
+-- mit dieser Gnade nach unten, damit duenne Raender nicht die Schaufel mit
+-- Schichtmaterial vergiften. Klar UNTER der Basis kommt sofort die Geologie.
+-- Ohne diese Regel: Krater-Cheat (Tommys Befund 2026-08-09 01:1x, unter Wasser) -
+-- mitten in der Zelle tiefer graben liess die Zellwaende "leben" und lieferte
+-- endlos GRAVEL aus einer einzigen abgekippten Schaufel.
+MiningLayers.MOUND_BELOW_BASE_TOLERANCE = 0.15
+-- Schichtgrenzen als Linien entlang der Bereichs-Umrandung zeichnen.
+MiningLayers.showDepthLines = true
+-- TerraFarms Fahrzeug-Auswahl (HUD rechts) springt beim Graben auf die Schicht um.
+MiningLayers.syncVehicleMaterial = true
+
+MiningLayers.displayPosX = 0.012
+MiningLayers.displayPosY = 0.55
+
+---@type table<string, table> Zonen mit ausdruecklichem Bereichsbezug, Schluessel kleingeschrieben
+MiningLayers.zonesByKey = {}
+---@type table? Vorgabe fuer jeden Bereich ohne eigene Zone
+MiningLayers.defaultZone = nil
+---@type table? Testzone, gilt auch ohne Bereich
+MiningLayers.globalZone = nil
+
+---@type table<string, table> Cache der aufgeloesten Schichten je Bereich (uniqueId)
+MiningLayers.resolvedByArea = {}
+---Zuletzt automatisch gesetzter Grubenboden je Bereich (uniqueId -> targetY).
+---Damit erkennt der Mod nach einer Bereichs-Aenderung seinen EIGENEN Wert wieder
+---und zieht den Boden zu den neuen Schichten nach - ein Handwert saehe genauso
+---"tief unter der Bezugsflaeche" aus und bliebe sonst faelschlich stehen.
+---Nur fuer die laufende Session: nach einem Neuladen ist der gespeicherte targetY
+---nicht mehr von einem Handwert zu unterscheiden und bleibt dann stehen.
+---@type table<string, number>
+MiningLayers.autoFloorByArea = {}
+---@type table? Aufgeloeste Schichten der Testzone
+MiningLayers.resolvedGlobal = nil
+
+---Halden-Gedaechtnis: 2-m-Rasterzelle -> { f = Materialname, b = Ursprungshoehe }.
+---Beim Abkippen gefuellt, beim Graben VOR allem anderen abgefragt - damit aus einer
+---GRAVEL-Halde nie per Auswahl PAYDIRT wird. Die Ursprungshoehe (baseY) wird beim
+---ERSTEN Abwurf in eine Zelle festgehalten, bevor der Abwurf das Gelaende anhebt:
+---die Halde gilt von ihrer Basis bis zur Spitze, egal ob sie ueber oder unter der
+---Bezugshoehe des Bereichs steht (Halde am Hang, Verfuellung in der Grube).
+---Zurueckgegraben bis baseY -> Zelle wird geloescht, darunter gelten die Schichten.
+---Gespeichert pro Spielstand unter modSettings.
+---@type table<string, table>
+MiningLayers.moundMemory = {}
+MiningLayers.moundMemoryDirty = false
+MiningLayers.moundMemoryWrites = 0
+---Gemeinsame Eintraege fuer erkannte Halden (ein Eintrag je Material, damit die
+---Texturaufloesung gecacht bleibt).
+---@type table<string, table>
+MiningLayers.spoilEntries = {}
+
+-- Verhindert, dass ein wiederkehrender Fehler das Log flutet.
+MiningLayers.hookErrorReported = false
+MiningLayers.outputHookErrorReported = false
+
+-- Die Texturliste der Karte wird nur einmal protokolliert.
+MiningLayers.terrainLayersLogged = false
+
+--------------------------------------------------------------------------------
+-- XML-Zugriff
+--
+-- Bewusst nur ueber getString und hasProperty: beide sind belegt auch ohne
+-- XML-Schema nutzbar (TerraFarm liest seine userSettings.xml genauso).
+-- getFloat/getValue leiten den Typ sonst aus einem Schema ab, das wir nicht haben.
+--------------------------------------------------------------------------------
+
+---@param xmlFile table
+---@param key string
+---@return number?
+function MiningLayers.getXmlNumber(xmlFile, key)
+    local raw = xmlFile:getString(key)
+
+    if raw == nil then
+        return nil
+    end
+
+    -- Dezimalkomma verzeihen: "2,5" wird auch akzeptiert.
+    return tonumber((raw:gsub(',', '.')))
+end
+
+---@param xmlFile table
+---@param key string
+---@param default boolean
+---@return boolean
+function MiningLayers.getXmlBool(xmlFile, key, default)
+    local raw = xmlFile:getString(key)
+
+    if raw == nil then
+        return default
+    end
+
+    raw = raw:lower()
+
+    if raw == 'true' or raw == '1' or raw == 'yes' then
+        return true
+    elseif raw == 'false' or raw == '0' or raw == 'no' then
+        return false
+    end
+
+    return default
+end
+
+--------------------------------------------------------------------------------
+-- Laden
+--------------------------------------------------------------------------------
+
+---Legt beim ersten Start eine bearbeitbare Kopie der Vorlage unter modSettings an.
+---@return string? path
+function MiningLayers:prepareConfigFile()
+    local templatePath = MiningLayers.MOD_DIRECTORY .. 'xml/' .. MiningLayers.CONFIG_FILENAME
+    local settingsDir = MiningLayers.SETTINGS_DIRECTORY
+
+    if settingsDir == nil then
+        MiningLayers.log('modSettings-Verzeichnis unbekannt - benutze die Vorlage im Mod.')
+        return templatePath
+    end
+
+    local targetPath = settingsDir .. MiningLayers.CONFIG_FILENAME
+
+    if MiningLayers.isCallable(fileExists) and fileExists(targetPath) then
+        return targetPath
+    end
+
+    if MiningLayers.isCallable(createFolder) then
+        pcall(createFolder, settingsDir)
+    end
+
+    if MiningLayers.isCallable(copyFile) then
+        local ok = pcall(copyFile, templatePath, targetPath, true)
+
+        if ok and MiningLayers.isCallable(fileExists) and fileExists(targetPath) then
+            MiningLayers.log('Vorlage nach modSettings kopiert: %s', targetPath)
+            return targetPath
+        end
+    end
+
+    MiningLayers.log('Konnte keine Kopie unter modSettings anlegen - benutze die Vorlage im Mod.')
+    return templatePath
+end
+
+---@param xmlFile table
+---@param key string
+---@param kind string
+---@return table? zone
+function MiningLayers:loadZone(xmlFile, key, kind)
+    local zone = {
+        kind = kind,
+        area = xmlFile:getString(key .. '#area'),
+        enabled = MiningLayers.getXmlBool(xmlFile, key .. '#enabled', true),
+        surfaceY = MiningLayers.getXmlNumber(xmlFile, key .. '#surfaceY'),
+        layers = {}
+    }
+
+    local i = 0
+
+    while true do
+        local layerKey = string.format('%s.layer(%d)', key, i)
+
+        if not xmlFile:hasProperty(layerKey) then
+            break
+        end
+
+        local fillTypeName = xmlFile:getString(layerKey .. '#fillType')
+        local depth = MiningLayers.getXmlNumber(xmlFile, layerKey .. '#depth')
+        local aboveY = MiningLayers.getXmlNumber(xmlFile, layerKey .. '#aboveY')
+
+        if fillTypeName == nil then
+            MiningLayers.log('WARNUNG %s: Eintrag ohne fillType - uebersprungen.', layerKey)
+        else
+            fillTypeName = fillTypeName:upper()
+
+            local fillType = g_fillTypeManager:getFillTypeByName(fillTypeName)
+
+            if fillType == nil then
+                MiningLayers.log('WARNUNG %s: fillType "%s" ist unbekannt - uebersprungen.', layerKey, fillTypeName)
+            else
+                table.insert(zone.layers, {
+                    fillTypeName = fillTypeName,
+                    fillTypeIndex = fillType.index,
+                    depth = depth,
+                    aboveY = aboveY,
+                    -- Bodentextur: ausdruecklich gesetzt, sonst spaeter automatisch
+                    -- aus dem fillType-Namen abgeleitet.
+                    paintLayerName = xmlFile:getString(layerKey .. '#paintLayer')
+                })
+            end
+        end
+
+        i = i + 1
+    end
+
+    if #zone.layers == 0 then
+        return nil
+    end
+
+    return zone
+end
+
+function MiningLayers:loadConfig()
+    self.zonesByKey = {}
+    self.defaultZone = nil
+    self.globalZone = nil
+    self.resolvedByArea = {}
+    self.resolvedGlobal = nil
+
+    local path = self:prepareConfigFile()
+    local xmlFile = XMLFile.loadIfExists('miningLayersConfig', path)
+
+    if xmlFile == nil then
+        MiningLayers.log('Keine Konfiguration gefunden (%s) - Schichten bleiben aus.', tostring(path))
+        return
+    end
+
+    self.enabled = MiningLayers.getXmlBool(xmlFile, 'miningLayers#enabled', true)
+    self.showHeightDisplay = MiningLayers.getXmlBool(xmlFile, 'miningLayers#showHeightDisplay', true)
+    self.checkMaterials = MiningLayers.getXmlBool(xmlFile, 'miningLayers#checkMaterials', true)
+    self.matchOutputTexture = MiningLayers.getXmlBool(xmlFile, 'miningLayers#matchOutputTexture', true)
+    self.autoTargetHeight = MiningLayers.getXmlBool(xmlFile, 'miningLayers#autoTargetHeight', true)
+    self.showDepthLines = MiningLayers.getXmlBool(xmlFile, 'miningLayers#showDepthLines', true)
+    self.syncVehicleMaterial = MiningLayers.getXmlBool(xmlFile, 'miningLayers#syncVehicleMaterial', true)
+    self.sponsorSign = MiningLayers.getXmlBool(xmlFile, 'miningLayers#sponsorSign', true)
+    self.displayPosX = MiningLayers.getXmlNumber(xmlFile, 'miningLayers#displayPosX') or self.displayPosX
+    self.displayPosY = MiningLayers.getXmlNumber(xmlFile, 'miningLayers#displayPosY') or self.displayPosY
+
+    if xmlFile:hasProperty('miningLayers.defaultZone') then
+        local zone = self:loadZone(xmlFile, 'miningLayers.defaultZone', 'default')
+
+        if zone ~= nil and zone.enabled then
+            self.defaultZone = zone
+        end
+    end
+
+    if xmlFile:hasProperty('miningLayers.globalZone') then
+        local zone = self:loadZone(xmlFile, 'miningLayers.globalZone', 'global')
+
+        if zone ~= nil and zone.enabled then
+            if zone.surfaceY == nil then
+                MiningLayers.log('WARNUNG globalZone: kein surfaceY angegeben und ohne Bereich nicht ermittelbar - uebersprungen.')
+            else
+                self.globalZone = zone
+                self.resolvedGlobal = self:resolveZone(zone, zone.surfaceY, 'globalZone')
+
+                MiningLayers.log('WARNUNG: globalZone aktiv - gilt auf der ganzen Karte, auch ohne Bereich.')
+                MiningLayers.log('  Nur zum Testen. Fuer den Dauerbetrieb einen Bereich anlegen.')
+            end
+        end
+    end
+
+    local i = 0
+    local namedCount = 0
+
+    while true do
+        local key = string.format('miningLayers.zone(%d)', i)
+
+        if not xmlFile:hasProperty(key) then
+            break
+        end
+
+        local areaName = xmlFile:getString(key .. '#area')
+        local zoneEnabled = MiningLayers.getXmlBool(xmlFile, key .. '#enabled', true)
+
+        if areaName ~= nil and not zoneEnabled then
+            -- Ausdruecklich abgeschaltet: Marker statt Weglassen, damit der Bereich
+            -- NICHT auf die defaultZone zurueckfaellt. So nimmt man Baustellen und
+            -- Rohrgraeben dauerhaft von den Schichten aus.
+            self.zonesByKey[areaName:lower()] = { kind = 'area', area = areaName, disabled = true }
+            namedCount = namedCount + 1
+        else
+            local zone = self:loadZone(xmlFile, key, 'area')
+
+            if zone ~= nil and zone.enabled then
+                if zone.area == nil then
+                    MiningLayers.log('WARNUNG %s: kein area-Attribut - uebersprungen.', key)
+                else
+                    self.zonesByKey[zone.area:lower()] = zone
+                    namedCount = namedCount + 1
+                end
+            end
+        end
+
+        i = i + 1
+    end
+
+    xmlFile:delete()
+
+    MiningLayers.log('Konfiguration: %d benannte Zone(n), defaultZone %s, globalZone %s.',
+        namedCount,
+        self.defaultZone ~= nil and 'aktiv' or 'aus',
+        self.resolvedGlobal ~= nil and 'AKTIV' or 'aus')
+
+    if not self.enabled then
+        MiningLayers.log('Schichten sind in der Konfiguration abgeschaltet (enabled="false").')
+    elseif namedCount == 0 and self.defaultZone == nil and self.resolvedGlobal == nil then
+        MiningLayers.log('Keine aktive Zone - Graben verhaelt sich wie ohne Addon.')
+    end
+end
+
+--------------------------------------------------------------------------------
+-- Bezugshoehe aus der Bereichsumrandung
+--------------------------------------------------------------------------------
+
+---Maximale Neigung der Bezugsflaeche (tan 45 Grad). Steiler ist kein Hang mehr,
+---sondern ein kaputter Fit - dann Rueckfall auf den Median.
+MiningLayers.MAX_PLANE_SLOPE = 1.0
+
+---Hoehe der Bezugsflaeche an einem Punkt.
+---@param plane table { x0, z0, y0, sx, sz }
+---@param x number
+---@param z number
+---@return number
+function MiningLayers.planeAt(plane, x, z)
+    return plane.y0 + plane.sx * (x - plane.x0) + plane.sz * (z - plane.z0)
+end
+
+---Bezugsflaeche aus den Eckpunkten des Bereichs.
+---
+---Ebene durch die Randpunkte (kleinste Quadrate) statt einer einzigen Zahl: am Hang
+---folgen Schichtgrenzen und Spoil-Schwelle damit dem Gelaende. Mit nur einem Wert
+---(Median) gilt die Bergseite als "aufgeschuettet" und die Talseite bekommt die
+---Schichten zu hoch (Tommys Ansage 2026-08-08: Berg muss auch gehen).
+---Auf ebenem Boden degeneriert der Fit zur Konstanten und ist mit dem Median
+---identisch. Rueckfall auf den Median, wenn der Fit nicht traegt: unter 3 Punkte,
+---kollineare Punkte, Neigung ueber 45 Grad.
+---
+---Der Median wird weiter mitgeliefert - als Rueckfall und fuer Log/Vergleiche.
+---Die Streuung ist bei tragendem Fit der RESTFEHLER zur Ebene (gekruemmter Hang
+---ist keine Ebene), sonst wie bisher die rohe Hoehenspanne.
+---@param area table
+---@return number? median
+---@return number? spread
+---@return number count
+---@return table? plane  nil, wenn der Fit nicht traegt
+function MiningLayers:computeSurfaceY(area)
+    if area == nil or area.points == nil then
+        return nil, nil, 0, nil
+    end
+
+    local samples = {}
+    local heights = {}
+
+    for i = 1, #area.points do
+        local point = area.points[i]
+
+        if type(point) == 'table' and point[1] ~= nil and point[3] ~= nil then
+            local y = getTerrainHeightAtWorldPos(g_terrainNode, point[1], 0, point[3])
+
+            if y ~= nil then
+                table.insert(samples, { x = point[1], z = point[3], y = y })
+                table.insert(heights, y)
+            end
+        end
+    end
+
+    local count = #heights
+
+    if count == 0 then
+        return nil, nil, 0, nil
+    end
+
+    table.sort(heights)
+
+    local median
+
+    if count % 2 == 1 then
+        median = heights[(count + 1) / 2]
+    else
+        median = (heights[count / 2] + heights[count / 2 + 1]) * 0.5
+    end
+
+    local rawSpread = heights[count] - heights[1]
+
+    if count < 3 then
+        return median, rawSpread, count, nil
+    end
+
+    -- Kleinste Quadrate um den Schwerpunkt: y = ym + sx*(x-xm) + sz*(z-zm).
+    -- Zentriert, damit die Normalgleichungen bei Weltkoordinaten im Kilometerbereich
+    -- nicht an Ausloeschung sterben.
+    local xm, zm, ym = 0, 0, 0
+
+    for _, s in ipairs(samples) do
+        xm = xm + s.x
+        zm = zm + s.z
+        ym = ym + s.y
+    end
+
+    xm = xm / count
+    zm = zm / count
+    ym = ym / count
+
+    local sxx, szz, sxz, sxy, szy = 0, 0, 0, 0, 0
+
+    for _, s in ipairs(samples) do
+        local dx = s.x - xm
+        local dz = s.z - zm
+        local dy = s.y - ym
+
+        sxx = sxx + dx * dx
+        szz = szz + dz * dz
+        sxz = sxz + dx * dz
+        sxy = sxy + dx * dy
+        szy = szy + dz * dy
+    end
+
+    local det = sxx * szz - sxz * sxz
+
+    -- Kollinear (alle Punkte auf einer Linie): det verschwindet gegen die Streuung
+    -- der Koordinaten. Relativer Test, absolute Schwellen taugen bei Metern nicht.
+    if det <= 1e-6 * math.max(sxx * szz, 1) then
+        return median, rawSpread, count, nil
+    end
+
+    local slopeX = (sxy * szz - szy * sxz) / det
+    local slopeZ = (szy * sxx - sxy * sxz) / det
+
+    if math.sqrt(slopeX * slopeX + slopeZ * slopeZ) > MiningLayers.MAX_PLANE_SLOPE then
+        return median, rawSpread, count, nil
+    end
+
+    local plane = { x0 = xm, z0 = zm, y0 = ym, sx = slopeX, sz = slopeZ }
+
+    -- Restfehler: was die Ebene NICHT erklaert. Nur der zaehlt fuer die Warnung -
+    -- ein sauberer Hang ist kein Grund zu warnen.
+    local minResidual, maxResidual = nil, nil
+
+    for _, s in ipairs(samples) do
+        local residual = s.y - MiningLayers.planeAt(plane, s.x, s.z)
+
+        if minResidual == nil or residual < minResidual then
+            minResidual = residual
+        end
+
+        if maxResidual == nil or residual > maxResidual then
+            maxResidual = residual
+        end
+    end
+
+    return median, maxResidual - minResidual, count, plane
+end
+
+---Rechnet die Schichtdicken in absolute Hoehen um und sortiert absteigend.
+---Die Schicht ohne depth/aboveY ist die Bodenschicht und landet immer zuletzt.
+---Vorschlaege fuer die Bodentextur je Material, in der Reihenfolge des Vorzugs.
+---
+---Karten benennen ihre Terrain-Layer fast nie wie die fillTypes: Yukon Back Country
+---hat weder "DIRT" noch "PAYDIRT", sondern mudDark, mudGravel, gravelSmall, rock …
+---Das sind GIANTS-Standardnamen und kommen auf den meisten Karten vor, deshalb trifft
+---diese Tabelle in der Regel. Wer es anders will, setzt paintLayer="…" an der Schicht.
+---⚠️ Die Namen werden SCHREIBUNGSUNABHAENGIG verglichen. TerraFarm liefert sie ueber
+---getTerrainLayerName() gross und mit Unterstrichen (MUD, DIRT_GRAVEL, MOUNTAINROCK),
+---waehrend sie in der map.i3d klein und anders heissen (mudDark, gravel01). Wer sich
+---auf die i3d verlaesst, sucht Namen, die es zur Laufzeit nicht gibt.
+MiningLayers.PAINT_LAYER_CANDIDATES = {
+    DIRT             = { 'DIRT', 'MUD', 'MUDLIGHT', 'MUD_TRACKS', 'DIRT_GRAVEL' },
+    PAYDIRT          = { 'PAYDIRT', 'DIRT_GRAVEL', 'GRAVELSMALL', 'MUD_PEBBLES', 'RGC_RIVER_BOTTOM', 'GRAVEL' },
+    SOIL             = { 'SOIL', 'MUD', 'MUDLIGHT' },
+    TOPSOIL          = { 'TOPSOIL', 'MUD', 'MUDLIGHT' },
+    GRAVEL           = { 'GRAVEL', 'GRAVELSMALL', 'DIRT_GRAVEL', 'MUD_PEBBLES' },
+    SAND             = { 'SAND', 'CONCRETE_GRAVEL', 'GRAVELSMALL' },
+    STONE            = { 'STONE', 'MOUNTAINROCK', 'ROCK', 'FOREST_ROCK', 'MOSS_ROCKS' },
+    LIMESTONE        = { 'LIMESTONE', 'MOUNTAINROCK', 'ROCK', 'GRAVEL' },
+    IRON             = { 'IRON', 'MOUNTAINROCK', 'ROCK', 'DIRT_GRAVEL' },
+    COAL             = { 'COAL', 'RGC_COAL', 'MUD' },
+    COKINGCOAL       = { 'COAL', 'RGC_COAL', 'MUD' },
+    CONCRETE         = { 'CONCRETE', 'CONCRETE_DIRT' },
+    LIME             = { 'LIME', 'SAND', 'GRAVELSMALL' },
+    SNOW             = { 'SNOW' },
+    COMPOST          = { 'COMPOST', 'MUD', 'MUD_LEAVES' },
+    ORGANICWASTE     = { 'MUD', 'MUD_LEAVES' },
+    COARSETAILINGS   = { 'GRAVELSMALL', 'DIRT_GRAVEL', 'MUD_PEBBLES' },
+    FINETAILINGS     = { 'SAND', 'MUDLIGHT_PEBBLES', 'MUDLIGHT' },
+    REFINEDWOODCHIPS = { 'FOREST_LEAVES', 'MUD_LEAVES' },
+}
+
+---Sucht die Bodentextur zu einer Schicht.
+---
+---Ohne eigene Textur sehen alle Schichten gleich aus - man graebt sich durch drei
+---Materialien und sieht nur die Textur, die am Fahrzeug eingestellt ist.
+---
+---Reihenfolge: ausdrueckliches paintLayer, dann der fillType-Name selbst, dann die
+---Vorschlagsliste oben. Greift nichts, bleibt die Fahrzeugeinstellung unangetastet.
+---@param layer table
+---@return number? terrainLayerId
+---@return string? name
+function MiningLayers:resolvePaintLayer(layer)
+    local landscapingManager = MiningLayers.tf('g_landscapingManager')
+
+    if type(landscapingManager) ~= 'table' or not MiningLayers.isCallable(landscapingManager.getTerrainLayerByName) then
+        return nil, nil
+    end
+
+    local candidates = {}
+
+    if layer.paintLayerName ~= nil then
+        table.insert(candidates, layer.paintLayerName)
+    end
+
+    table.insert(candidates, layer.fillTypeName)
+
+    for _, name in ipairs(MiningLayers.PAINT_LAYER_CANDIDATES[layer.fillTypeName] or {}) do
+        table.insert(candidates, name)
+    end
+
+    -- Alle Layer der Karte einmal in Grossschreibung indizieren. getTerrainLayerByName
+    -- vergleicht exakt, und die Schreibweise unterscheidet sich je Karte.
+    local byUpperName = {}
+
+    if MiningLayers.isCallable(landscapingManager.getTerrainLayers) then
+        for _, terrainLayer in ipairs(landscapingManager:getTerrainLayers()) do
+            if terrainLayer.name ~= nil then
+                byUpperName[terrainLayer.name:upper()] = terrainLayer
+            end
+        end
+    end
+
+    local function lookup(name)
+        local terrainLayer = byUpperName[name:upper()]
+
+        if terrainLayer == nil and MiningLayers.isCallable(landscapingManager.getTerrainLayerByName) then
+            terrainLayer = landscapingManager:getTerrainLayerByName(name)
+        end
+
+        if terrainLayer ~= nil and terrainLayer.id ~= nil then
+            return terrainLayer
+        end
+    end
+
+    for _, name in ipairs(candidates) do
+        local terrainLayer = lookup(name)
+
+        if terrainLayer ~= nil then
+            return terrainLayer.id, terrainLayer.name
+        end
+    end
+
+    -- Letzter Versuch: ein Layer, der den Materialnamen enthaelt (GRAVEL -> GRAVELSMALL).
+    -- pairs() hat in Lua keine feste Reihenfolge - deshalb alle Treffer sammeln und
+    -- deterministisch waehlen: kuerzester Name zuerst (naechster an der Grundform),
+    -- bei Gleichstand alphabetisch. Sonst wechselt das Ergebnis von Start zu Start.
+    local needle = layer.fillTypeName:upper()
+    local matches = {}
+
+    for upperName, terrainLayer in pairs(byUpperName) do
+        if upperName:find(needle, 1, true) ~= nil then
+            table.insert(matches, { name = upperName, terrainLayer = terrainLayer })
+        end
+    end
+
+    if #matches > 0 then
+        table.sort(matches, function(a, b)
+            if #a.name ~= #b.name then
+                return #a.name < #b.name
+            end
+
+            return a.name < b.name
+        end)
+
+        return matches[1].terrainLayer.id, matches[1].terrainLayer.name
+    end
+
+    if layer.paintLayerName ~= nil then
+        MiningLayers.log('WARNUNG: Bodentextur "%s" gibt es auf dieser Karte nicht.', tostring(layer.paintLayerName))
+    end
+
+    MiningLayers.log('Fuer "%s" keine passende Bodentextur gefunden - Textur bleibt unveraendert.', layer.fillTypeName)
+    MiningLayers.log('  Passenden Namen aus der Liste oben waehlen und als paintLayer="..." eintragen.')
+
+    return nil, nil
+end
+
+---@type table<string, number|false> Textur je Material, fuer den Ausgabe-Pfad
+MiningLayers.outputLayerCache = {}
+
+---Liefert die Bodentextur zu einem Material (fuer das Abladen).
+---Gleiche Suche wie bei den Schichten, nur ueber den Materialnamen statt ueber eine
+---Schicht - beim Abladen gibt es keine Schicht, das Material kommt aus der Schaufel.
+---@param fillTypeName string
+---@return number? terrainLayerId
+function MiningLayers:getTerrainLayerForFillType(fillTypeName)
+    local cached = self.outputLayerCache[fillTypeName]
+
+    if cached ~= nil then
+        return cached or nil
+    end
+
+    if not MiningLayers.terrainLayersLogged then
+        MiningLayers.terrainLayersLogged = true
+        self:logTerrainLayers()
+    end
+
+    local id, name = self:resolvePaintLayer({ fillTypeName = fillTypeName })
+
+    self.outputLayerCache[fillTypeName] = id or false
+
+    if id ~= nil then
+        MiningLayers.log('Abladen von %s -> Bodentextur "%s".', fillTypeName, tostring(name))
+    end
+
+    return id
+end
+
+---Liefert die Textur-ID einer Schicht und merkt sie sich.
+---
+---Lazy, weil TerraFarms Terrain-Layer erst bei onTerrainInit befuellt werden - zum
+---Zeitpunkt von loadMap ist die Liste noch leer.
+---@param entry table
+---@return number? terrainLayerId
+function MiningLayers:getTerrainLayerFor(entry)
+    if entry.terrainLayerResolved then
+        return entry.terrainLayerId
+    end
+
+    -- Beim allerersten Auflösen einmal die Texturen der Karte protokollieren.
+    if not MiningLayers.terrainLayersLogged then
+        MiningLayers.terrainLayersLogged = true
+        self:logTerrainLayers()
+    end
+
+    local id, name = self:resolvePaintLayer(entry)
+
+    entry.terrainLayerId = id
+    entry.terrainLayerName = name
+    entry.terrainLayerResolved = true
+
+    if id ~= nil then
+        MiningLayers.log('Schicht %s -> Bodentextur "%s".', entry.fillTypeName, tostring(name))
+    end
+
+    return id
+end
+
+---@param zone table
+---@param surfaceY number
+---@param label string
+---@return table resolved
+function MiningLayers:resolveZone(zone, surfaceY, label)
+    local resolved = {}
+
+    for _, layer in ipairs(zone.layers) do
+        local boundary
+
+        if layer.aboveY ~= nil then
+            boundary = layer.aboveY
+        elseif layer.depth ~= nil then
+            boundary = surfaceY - layer.depth
+        end
+
+        -- Textur hier NICHT aufloesen: TerraFarms Terrain-Layer werden erst bei
+        -- onTerrainInit befuellt, und das kommt nach loadMap. Passiert lazy beim
+        -- ersten Grabvorgang (getTerrainLayerFor).
+        -- boundary ist die Grenze an der BEZUGSHOEHE (Median) - fuers Sortieren und
+        -- Log. Am Punkt selbst wird die Grenze ueber depth/aboveY gegen die geneigte
+        -- Bezugsflaeche ausgewertet (entryBoundaryAt), sonst laegen die Schichten
+        -- am Hang waagerecht.
+        table.insert(resolved, {
+            boundary = boundary,
+            fillTypeName = layer.fillTypeName,
+            fillTypeIndex = layer.fillTypeIndex,
+            depth = layer.depth,
+            aboveY = layer.aboveY,
+            paintLayerName = layer.paintLayerName,
+            terrainLayerId = nil,
+            terrainLayerResolved = false
+        })
+    end
+
+    table.sort(resolved, function(a, b)
+        if a.boundary == nil then
+            return false
+        elseif b.boundary == nil then
+            return true
+        end
+
+        return a.boundary > b.boundary
+    end)
+
+    local parts = {}
+
+    for _, entry in ipairs(resolved) do
+        if entry.boundary ~= nil then
+            table.insert(parts, string.format('%s ab %.1f m', entry.fillTypeName, entry.boundary))
+        else
+            table.insert(parts, string.format('%s darunter', entry.fillTypeName))
+        end
+    end
+
+    MiningLayers.log('%s: surfaceY %.1f m -> %s', label, surfaceY, table.concat(parts, ', '))
+
+    return resolved
+end
+
+---Liefert die aufgeloesten Schichten fuer einen Bereich, berechnet sie bei Bedarf.
+---@param area table
+---@return table|false|nil resolved
+---@return number? surfaceY  Bezugshoehe (Median) - Punktwerte ueber die Ebene holen
+---@return boolean? isOff  true = Bereich ist ausdruecklich von den Schichten ausgenommen
+---@return table? plane  geneigte Bezugsflaeche, nil = eben/Fit traegt nicht
+function MiningLayers:getResolvedForArea(area)
+    if area == nil or area.uniqueId == nil then
+        return nil, nil, nil, nil
+    end
+
+    -- Pfad-Bereiche bekommen keine Schichten und vor allem keinen automatischen
+    -- Grubenboden - ihr targetY gehoert der Pfad-Geometrie.
+    if area.width ~= nil then
+        return nil, nil, nil, nil
+    end
+
+    local cached = self.resolvedByArea[area.uniqueId]
+
+    if cached ~= nil then
+        return cached.resolved, cached.surfaceY, cached.off, cached.plane
+    end
+
+    local zone = nil
+
+    if area.name ~= nil then
+        zone = self.zonesByKey[area.name:lower()]
+    end
+
+    if zone == nil then
+        zone = self.zonesByKey[area.uniqueId:lower()]
+    end
+
+    if zone ~= nil and zone.disabled then
+        -- Per XML abgeschaltet: kein Rueckfall auf die defaultZone.
+        self.resolvedByArea[area.uniqueId] = { resolved = false, surfaceY = nil, off = true }
+        return nil, nil, true
+    end
+
+    if zone == nil then
+        zone = self.defaultZone
+    end
+
+    if zone == nil then
+        self.resolvedByArea[area.uniqueId] = { resolved = false, surfaceY = nil }
+        return nil, nil, nil
+    end
+
+    local label = string.format('Zone %s', tostring(area.name or area.uniqueId))
+    local surfaceY = zone.surfaceY
+    local spread, count, plane
+
+    if surfaceY == nil then
+        surfaceY, spread, count, plane = self:computeSurfaceY(area)
+
+        if surfaceY == nil then
+            MiningLayers.log('WARNUNG %s: Bezugshoehe nicht ermittelbar (keine Punkte) - uebersprungen.', label)
+            self.resolvedByArea[area.uniqueId] = { resolved = false, surfaceY = nil }
+            return nil, nil
+        end
+
+        MiningLayers.log('%s: surfaceY %.1f m (Median aus %d Randpunkten)', label, surfaceY, count)
+
+        if plane ~= nil then
+            local slope = math.sqrt(plane.sx * plane.sx + plane.sz * plane.sz)
+
+            -- Nur melden, wenn wirklich Neigung im Spiel ist - auf ebenem Boden
+            -- waere die Zeile Rauschen.
+            if slope > 0.02 then
+                MiningLayers.log('%s: geneigte Bezugsflaeche, Neigung %.0f %% - Schichten folgen dem Hang.',
+                    label, slope * 100)
+            end
+        end
+
+        -- Streuung melden: bei stark schwankendem Rand liegen die Schichten schief.
+        local topThickness = nil
+
+        for _, layer in ipairs(zone.layers) do
+            if layer.depth ~= nil and (topThickness == nil or layer.depth < topThickness) then
+                topThickness = layer.depth
+            end
+        end
+
+        if spread ~= nil and topThickness ~= nil and spread > topThickness then
+            MiningLayers.log('WARNUNG %s: Randhoehen schwanken um %.1f m, oberste Schicht ist nur %.1f m dick.',
+                label, spread, topThickness)
+            MiningLayers.log('  Schichten werden ungleichmaessig. Bereich kleiner ziehen oder surfaceY fest eintragen.')
+        end
+    end
+
+    local resolved = self:resolveZone(zone, surfaceY, label)
+
+    self.resolvedByArea[area.uniqueId] = { resolved = resolved, surfaceY = surfaceY, plane = plane }
+
+    MiningLayers.protectedCall('maybeSetPitFloor', function()
+        MiningLayers:maybeSetPitFloor(area, resolved, surfaceY, label, plane)
+    end)
+
+    return resolved, surfaceY, nil, plane
+end
+
+---Setzt den Grubenboden (targetY) des Bereichs, wenn er noch auf dem Auto-Wert des
+---Editors steht. Der Editor fuellt targetY mit der Gelaendehoehe - das bedeutet
+---"grab nichts", und tiefer stellen ist im Editor kaum moeglich (Zahlenfeld verliert
+---gegen die Polygon-Geometrie, Punkte nur horizontal beweglich).
+---
+---Ersetzt wird NUR der Auto-Wert (targetY etwa auf Bezugshoehe). Ein bewusst
+---gesetzter Boden - mehr als 1 m daneben - bleibt unangetastet. Bereiche im
+---Handbetrieb (Material gesetzt) kommen hier nie an, die steigen frueher aus.
+---Wasserspiegel defensiv lesen. Die Kandidaten unterscheiden sich je Karte/Version,
+---deshalb alle der Reihe nach und alles per pcall/Typpruefung abgesichert.
+---Werte unter -100 m sind "kein Wasser hier"-Sentinels der Engine.
+---@param x number
+---@param z number
+---@return number? waterY
+function MiningLayers.getWaterYAt(x, z)
+    local candidates = {}
+
+    if g_currentMission ~= nil then
+        if type(g_currentMission.waterY) == 'number' then
+            table.insert(candidates, g_currentMission.waterY)
+        end
+
+        if MiningLayers.isCallable(g_currentMission.getWaterYAtWorldPosition) then
+            local ok, result = pcall(g_currentMission.getWaterYAtWorldPosition, g_currentMission, x, 0, z)
+
+            if ok and type(result) == 'number' then
+                table.insert(candidates, result)
+            end
+        end
+    end
+
+    if MiningLayers.isCallable(getWaterYAtWorldPosition) then
+        local ok, result = pcall(getWaterYAtWorldPosition, x, 0, z)
+
+        if ok and type(result) == 'number' then
+            table.insert(candidates, result)
+        end
+    end
+
+    for _, waterY in ipairs(candidates) do
+        if waterY > -100 then
+            return waterY
+        end
+    end
+
+    return nil
+end
+
+---@param area table
+---@param resolved table
+---@param surfaceY number
+---@param label string
+---@param plane table?
+function MiningLayers:maybeSetPitFloor(area, resolved, surfaceY, label, plane)
+    if not self.autoTargetHeight or area == nil or type(area.targetY) ~= 'number' then
+        return
+    end
+
+    -- Auto-Wert erkennen: der Editor fuellt targetY mit einer Gelaendehoehe des
+    -- Bereichs. Am Hang kann die vom Median weit abweichen - deshalb gegen die
+    -- Spanne der Bezugsflaeche an den Randpunkten pruefen, nicht gegen eine Zahl.
+    local minSurface, maxSurface = surfaceY, surfaceY
+
+    if plane ~= nil and area.points ~= nil then
+        minSurface, maxSurface = nil, nil
+
+        for i = 1, #area.points do
+            local point = area.points[i]
+
+            if type(point) == 'table' and point[1] ~= nil and point[3] ~= nil then
+                local y = MiningLayers.planeAt(plane, point[1], point[3])
+
+                if minSurface == nil or y < minSurface then
+                    minSurface = y
+                end
+
+                if maxSurface == nil or y > maxSurface then
+                    maxSurface = y
+                end
+            end
+        end
+
+        if minSurface == nil then
+            minSurface, maxSurface = surfaceY, surfaceY
+        end
+    end
+
+    -- Zwei Wege gelten als "Auto-Wert": (a) targetY liegt noch auf dem nutzlosen
+    -- Editorwert (~ Gelaendehoehe), (b) targetY ist exakt der Boden, den DIESER Mod
+    -- in dieser Session selbst gesetzt hat - dann darf er nach einer Bereichs-
+    -- Aenderung auch nachgezogen werden (Tommys Frage: Nutzer vergroessern das
+    -- Feld nachtraeglich).
+    local storedAuto = self.autoFloorByArea[area.uniqueId]
+    local isReauto = storedAuto ~= nil and math.abs(area.targetY - storedAuto) < 0.05
+
+    if not isReauto and (area.targetY < minSurface - 1.0 or area.targetY > maxSurface + 1.0) then
+        -- Bewusst gesetzter Boden - bleibt unangetastet.
+        return
+    end
+
+    -- Tiefste Schichtgrenze: depth zaehlt ab der Bezugsflaeche - am Hang ab deren
+    -- TIEFSTEM Punkt, damit die unterste Schicht auch talseitig erreichbar ist.
+    -- aboveY ist absolut und geht unveraendert ein.
+    local deepestBoundary = nil
+
+    for _, entry in ipairs(resolved) do
+        local boundary = nil
+
+        if entry.aboveY ~= nil then
+            boundary = entry.aboveY
+        elseif entry.depth ~= nil then
+            boundary = minSurface - entry.depth
+        end
+
+        if boundary ~= nil and (deepestBoundary == nil or boundary < deepestBoundary) then
+            deepestBoundary = boundary
+        end
+    end
+
+    if deepestBoundary == nil then
+        return
+    end
+
+    local oldY = area.targetY
+    local newY = deepestBoundary - 2.0
+
+    -- Wasserlinien-Klemme (Tommys Ansage: Wasser muss auch gehen): der AUTOMATISCHE
+    -- Grubenboden bleibt knapp ueber dem Wasserspiegel, sonst flutet die Grube von
+    -- selbst. Ein von Hand gesetzter Boden kommt hier nie an - bewusstes Fluten
+    -- bleibt erlaubt.
+    local waterY = MiningLayers.getWaterYAt(area.points ~= nil and type(area.points[1]) == 'table'
+        and area.points[1][1] or 0, area.points ~= nil and type(area.points[1]) == 'table'
+        and area.points[1][3] or 0)
+
+    if waterY ~= nil and newY < waterY + 0.2 then
+        newY = waterY + 0.2
+
+        MiningLayers.log('%s: Grubenboden auf %.1f m begrenzt - Wasserlinie (%.1f m).', label, newY, waterY)
+    end
+
+    if isReauto then
+        -- Eigener Wert: in beide Richtungen nachziehen (der Boden folgt den
+        -- Schichten), aber nicht wegen Rundungsrauschen loggen.
+        if math.abs(newY - oldY) < 0.05 then
+            return
+        end
+    elseif newY >= oldY then
+        -- Klemme wuerde den Editorwert anheben statt absenken - dann lieber nichts tun.
+        return
+    end
+
+    area.targetY = newY
+    self.autoFloorByArea[area.uniqueId] = newY
+
+    if isReauto then
+        MiningLayers.log('%s: Bereich geaendert - Grubenboden nachgezogen auf %.1f m (war %.1f m).',
+            label, newY, oldY)
+    else
+        MiningLayers.log('%s: Grubenboden automatisch auf %.1f m gesetzt (war %.1f m = Gelaendehoehe, "grab nichts").',
+            label, area.targetY, oldY)
+        MiningLayers.log('  Tief genug fuer alle Schichten. Abschaltbar: autoTargetHeight="false".')
+    end
+end
+
+---Schreibt die Bodentexturen dieser Karte ins Log.
+---Ohne diese Liste muesste man die Namen fuer paintLayer raten - sie sind je Karte anders.
+function MiningLayers:logTerrainLayers()
+    local landscapingManager = MiningLayers.tf('g_landscapingManager')
+
+    if type(landscapingManager) ~= 'table' or not MiningLayers.isCallable(landscapingManager.getTerrainLayers) then
+        return
+    end
+
+    local layers = landscapingManager:getTerrainLayers()
+    local names = {}
+
+    for _, layer in ipairs(layers) do
+        if layer.name ~= nil then
+            table.insert(names, layer.name)
+        end
+    end
+
+    if #names == 0 then
+        return
+    end
+
+    MiningLayers.log('Bodentexturen dieser Karte (%d) - Namen fuer paintLayer:', #names)
+
+    -- In Bloecken ausgeben, sonst wird die Zeile im Log unlesbar lang.
+    for i = 1, #names, 8 do
+        MiningLayers.log('  %s', table.concat(names, ', ', i, math.min(i + 7, #names)))
+    end
+end
+
+---Meldet beim Kartenstart nur den Bereichs-Bestand.
+---
+---Bewusst KEINE Vorab-Aufloesung mehr: beim Kartenstart sind TerraFarms Bereiche
+---oft noch gar nicht geladen (belegt 2026-08-08: getAreas() leer, die Bereiche kamen
+---erst nach loadMap), und Gelaendehoehen sind zu diesem Zeitpunkt nicht verlaesslich -
+---ein hier gecachtes surfaceY waere Muell. Aufgeloest wird lazy beim ersten Zugriff,
+---zur Grabzeit stimmen die Hoehen.
+function MiningLayers:resolveAllAreas()
+    if not self.enabled then
+        return
+    end
+
+    local landscapingManager = MiningLayers.tf('g_landscapingManager')
+
+    if type(landscapingManager) ~= 'table' or not MiningLayers.isCallable(landscapingManager.getAreas) then
+        return
+    end
+
+    local areas = landscapingManager:getAreas()
+
+    if #areas == 0 then
+        MiningLayers.log('Kein Bereich vorhanden (oder noch nicht geladen). Einen TerraFarm-Bereich')
+        MiningLayers.log('  um die Grube ziehen, dann greift die defaultZone dort automatisch.')
+    else
+        MiningLayers.log('%d Bereich(e) vorhanden - Schichten werden beim ersten Graben aufgeloest.', #areas)
+    end
+end
+
+---Verwirft den Cache eines Bereichs, wenn er im Editor geaendert wurde.
+function MiningLayers:subscribeAreaUpdates()
+    local ModMessageType = MiningLayers.tf('ModMessageType')
+
+    if g_messageCenter == nil or type(ModMessageType) ~= 'table' then
+        return
+    end
+
+    local function invalidate(areaOrId)
+        local id = areaOrId
+
+        if type(areaOrId) == 'table' then
+            id = areaOrId.uniqueId
+        end
+
+        if id ~= nil then
+            MiningLayers.resolvedByArea[id] = nil
+        end
+    end
+
+    -- Bereich neu angelegt oder verschoben: Schild setzen bzw. neu setzen.
+    -- ⚠️ Ohne dieses Abo kam beim Anlegen einer Area gar kein Schild - es wurde
+    -- nur beim Kartenstart fuer bereits bestehende Bereiche aufgestellt.
+    local function onAreaChanged(areaOrId)
+        invalidate(areaOrId)
+
+        if type(areaOrId) ~= 'table' or areaOrId.uniqueId == nil then
+            return
+        end
+
+        MiningLayers.protectedCall('refreshSign', function()
+            MiningLayers:removeSign(areaOrId.uniqueId)
+            MiningLayers:spawnSign(areaOrId)
+        end)
+    end
+
+    if ModMessageType.LANDSCAPING_AREA_REGISTER ~= nil then
+        g_messageCenter:subscribe(ModMessageType.LANDSCAPING_AREA_REGISTER, onAreaChanged, MiningLayers)
+    end
+
+    if ModMessageType.LANDSCAPING_AREA_UPDATE ~= nil then
+        g_messageCenter:subscribe(ModMessageType.LANDSCAPING_AREA_UPDATE, onAreaChanged, MiningLayers)
+    end
+
+    -- Bereich geloescht: Schild sofort mit entfernen, nicht erst beim Neuladen.
+    local function onAreaDeleted(areaOrId)
+        invalidate(areaOrId)
+
+        local id = type(areaOrId) == 'table' and areaOrId.uniqueId or areaOrId
+
+        if id ~= nil and MiningLayers.isCallable(MiningLayers.removeSign) then
+            MiningLayers.protectedCall('removeSign', function()
+                MiningLayers:removeSign(id)
+            end)
+        end
+    end
+
+    if ModMessageType.LANDSCAPING_AREA_DELETE ~= nil then
+        g_messageCenter:subscribe(ModMessageType.LANDSCAPING_AREA_DELETE, onAreaDeleted, MiningLayers)
+    end
+end
+
+--------------------------------------------------------------------------------
+-- Schicht an einer Stelle
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+-- Halden-Gedaechtnis
+--------------------------------------------------------------------------------
+
+---@param x number
+---@param z number
+---@return string
+function MiningLayers.moundCellKey(x, z)
+    return math.floor(x / 2) .. '_' .. math.floor(z / 2)
+end
+
+---Niedrigster Gelaendepunkt einer Zelle (Mitte + vier Viertelpunkte + optional
+---ein Zusatzpunkt). Das ist die ehrlichste Ursprungshoehe: waehrend eines laufenden
+---Abwurfs ist ein Teil der Zelle schon angehoben - der tiefste Punkt ist der Boden.
+---@param cellX number
+---@param cellZ number
+---@param extraX number? Zusatzpunkt (z. B. exakte Abwurfstelle)
+---@param extraZ number?
+---@return number? minY
+function MiningLayers.getMoundCellFloor(cellX, cellZ, extraX, extraZ)
+    local x0 = cellX * 2
+    local z0 = cellZ * 2
+
+    local offsets = {
+        { 1.0, 1.0 },
+        { 0.5, 0.5 }, { 0.5, 1.5 }, { 1.5, 0.5 }, { 1.5, 1.5 }
+    }
+
+    local minY = nil
+
+    for _, offset in ipairs(offsets) do
+        local y = getTerrainHeightAtWorldPos(g_terrainNode, x0 + offset[1], 0, z0 + offset[2])
+
+        if type(y) == 'number' and (minY == nil or y < minY) then
+            minY = y
+        end
+    end
+
+    if extraX ~= nil and extraZ ~= nil then
+        local y = getTerrainHeightAtWorldPos(g_terrainNode, extraX, 0, extraZ)
+
+        if type(y) == 'number' and (minY == nil or y < minY) then
+            minY = y
+        end
+    end
+
+    return minY
+end
+
+---Merkt sich, welches Material an dieser Stelle abgekippt wurde.
+---
+---Ursprungshoehe (baseY) beim Anlegen der Zelle = NIEDRIGSTER Punkt der Zelle,
+---NICHT die Hoehe an der Abwurfstelle: beim Abladen sitzt der Messpunkt oben auf
+---der wachsenden Halde. Die Vorversion nahm diese Hoehe als Basis - die Basis
+---kletterte mit dem Haufen (Live-Log 2026-08-08 21:41: Basis 17,0 -> 18,3 m in
+---einer Sekunde) und lag am Ende UEBER der Spitze -> Zelle galt sofort als
+---aufgebraucht. Weitere Abwuerfe behalten baseY, der letzte Abwurf stellt das
+---Material; jeder Abwurf stempelt die Zelle frisch (Schonfrist, siehe
+---getMoundFillTypeAt).
+---@param x number
+---@param z number
+---@param fillTypeName string
+function MiningLayers:recordMound(x, z, fillTypeName)
+    local key = MiningLayers.moundCellKey(x, z)
+    local cell = self.moundMemory[key]
+    local now = type(g_time) == 'number' and g_time or nil
+
+    if cell == nil then
+        local baseY = MiningLayers.getMoundCellFloor(math.floor(x / 2), math.floor(z / 2), x, z)
+
+        if baseY == nil then
+            -- Ohne Ursprungshoehe ist die Zelle wertlos (siehe getMoundFillTypeAt).
+            return
+        end
+
+        cell = { f = fillTypeName, b = baseY, t = now }
+        self.moundMemory[key] = cell
+        self.moundMemoryDirty = true
+    elseif cell.f ~= fillTypeName then
+        cell.f = fillTypeName
+        cell.t = now
+        self.moundMemoryDirty = true
+    else
+        -- Nur den Frische-Stempel erneuern: solange gekippt wird, bleibt die
+        -- Zelle in der Schonfrist. Kein dirty - auf Platte aendert sich nichts.
+        cell.t = now
+        return
+    end
+
+    self.moundMemoryWrites = self.moundMemoryWrites + 1
+
+    -- Gelegentlich wegschreiben, damit ein Absturz nicht die ganze Session kostet.
+    if self.moundMemoryWrites % 25 == 0 then
+        pcall(MiningLayers.saveMoundMemory, MiningLayers)
+    end
+end
+
+---Lebt diese Halden-Zelle noch? Massgeblich ist der HOECHSTE Gelaendepunkt der
+---Zelle (Mitte + vier Viertelpunkte), nicht ein zufaelliger Abfragepunkt.
+---
+---Grund (Tommys Befund 2026-08-08 spaetabends, per moundMemory1.xml belegt): die
+---Vorversion verglich am Abfragepunkt - der liegt beim Heranfahren zwangslaeufig
+---irgendwann am Haldenrand, wo das Gelaende naturgemaess auf Ursprungshoehe ist.
+---Ein einziger solcher Frame (die Anzeige fragt jeden Frame!) loeschte die Zelle,
+---und eine grosse Halde steckt oft in genau EINER Zelle -> GRAVEL- und
+---PAYDIRT-Zellen verschwanden, uebrig blieb DIRT aus Schicht/Auswahl.
+---Loeschen ist unumkehrbar - im Zweifel muss die Zelle leben: zu lange Halde
+---heilt sich beim Abtragen selbst, eine geloeschte Halde nie.
+---Viertelpunkte statt Ecken, damit kein Nachbar-Haufen die Messung anhebt.
+---@param cellX number Zellindex X (floor(welt/2))
+---@param cellZ number Zellindex Z
+---@param baseY number Ursprungshoehe der Zelle
+---@return boolean
+function MiningLayers.isMoundCellAlive(cellX, cellZ, baseY)
+    local x0 = cellX * 2
+    local z0 = cellZ * 2
+
+    local offsets = {
+        { 1.0, 1.0 },
+        { 0.5, 0.5 }, { 0.5, 1.5 }, { 1.5, 0.5 }, { 1.5, 1.5 }
+    }
+
+    for _, offset in ipairs(offsets) do
+        local y = getTerrainHeightAtWorldPos(g_terrainNode, x0 + offset[1], 0, z0 + offset[2])
+
+        if type(y) == 'number' and y > baseY + MiningLayers.MOUND_DEPLETE_TOLERANCE then
+            return true
+        end
+    end
+
+    return false
+end
+
+---Welches Material liegt hier aufgeschuettet? Prueft die Zelle und ihre Nachbarn
+---(deckt 6 x 6 m ab - eine Halde ist breiter als eine Rasterzelle), naechstliegende
+---zuerst. Tote Zellen (ganze Zelle zurueck auf Ursprungshoehe) werden dabei
+---geloescht - darunter gelten wieder die Schichten.
+---
+---Zwei getrennte Fragen, zwei getrennte Antworten:
+---1. "Lebt die Zelle noch?" - hoechster Punkt der Zelle (isMoundCellAlive).
+---   Entscheidet NUR ueber das Loeschen. Grosszuegig, weil Loeschen unumkehrbar ist.
+---2. "Ist der Grabpunkt Haldenkoerper?" - terrainY gegen die Basis der Zelle.
+---   Entscheidet ueber das MATERIAL. Unter der Basis ist die Halde durchstochen:
+---   Geologie, auch wenn am Zellrand noch Reste aufragen. Ohne diese Trennung
+---   liefert ein Krater durch die Halde endlos Haldenmaterial (Krater-Cheat).
+---@param x number
+---@param z number
+---@param terrainY number? Gelaendehoehe am Grabpunkt; nil = nur Bestandsfrage
+---@return string? fillTypeName
+function MiningLayers:getMoundFillTypeAt(x, z, terrainY)
+    local cx = math.floor(x / 2)
+    local cz = math.floor(z / 2)
+
+    local candidates = {}
+
+    for dx = -1, 1 do
+        for dz = -1, 1 do
+            local key = (cx + dx) .. '_' .. (cz + dz)
+            local cell = self.moundMemory[key]
+
+            if cell ~= nil then
+                local mx = (cx + dx) * 2 + 1 - x
+                local mz = (cz + dz) * 2 + 1 - z
+
+                table.insert(candidates, {
+                    key = key, cell = cell,
+                    cellX = cx + dx, cellZ = cz + dz,
+                    dist = mx * mx + mz * mz
+                })
+            end
+        end
+    end
+
+    if #candidates == 0 then
+        return nil
+    end
+
+    table.sort(candidates, function(a, b)
+        return a.dist < b.dist
+    end)
+
+    local now = type(g_time) == 'number' and g_time or nil
+
+    for _, candidate in ipairs(candidates) do
+        local cell = candidate.cell
+
+        -- Schonfrist: In eine Zelle, in die gerade (noch) gekippt wird, wird nicht
+        -- hineingeloescht - der Haufen ist waehrend des Abladens erst wenige
+        -- Zentimeter hoch und saehe sonst wie "aufgebraucht" aus.
+        local isFresh = now ~= nil and type(cell.t) == 'number'
+            and (now - cell.t) < MiningLayers.MOUND_DELETE_GRACE_MS
+
+        if isFresh or cell.b == nil
+            or MiningLayers.isMoundCellAlive(candidate.cellX, candidate.cellZ, cell.b) then
+            -- Zelle lebt. Material gibt es aber nur, wenn der Grabpunkt selbst noch
+            -- im Haldenkoerper liegt - unterhalb der Basis ist die Halde hier
+            -- durchstochen und es gilt die Geologie (Krater-Cheat-Sperre).
+            if terrainY == nil or cell.b == nil
+                or terrainY > cell.b - MiningLayers.MOUND_BELOW_BASE_TOLERANCE then
+                return cell.f
+            end
+
+            return nil
+        end
+
+        -- Ganze Zelle zurueck auf Ursprungshoehe: aufgebraucht, vergessen.
+        -- Die Logzeile ist Absicht (selten genug): so ist ein falsches Loeschen
+        -- im Log sofort sichtbar, statt muehsam rekonstruiert zu werden.
+        self.moundMemory[candidate.key] = nil
+        self.moundMemoryDirty = true
+        MiningLayers.log('Halden-Zelle %s (%s, Basis %.1f m) aufgebraucht - geloescht, darunter wieder Schichten.',
+            candidate.key, tostring(cell.f), cell.b or 0)
+    end
+
+    return nil
+end
+
+---Gemeinsamer Schicht-Eintrag fuer eine erkannte Halde.
+---@param fillTypeName string
+---@return table? entry
+function MiningLayers:getSpoilEntry(fillTypeName)
+    local entry = self.spoilEntries[fillTypeName]
+
+    if entry == nil then
+        local fillType = g_fillTypeManager:getFillTypeByName(fillTypeName)
+
+        if fillType == nil then
+            return nil
+        end
+
+        entry = {
+            fillTypeName = fillTypeName,
+            fillTypeIndex = fillType.index,
+            boundary = nil,
+            terrainLayerResolved = false,
+            -- Kennzeichnung fuer die Anzeige: das ist eine erkannte Halde, keine Schicht.
+            isMound = true
+        }
+        self.spoilEntries[fillTypeName] = entry
+    end
+
+    return entry
+end
+
+---@return string? path
+function MiningLayers:getMoundMemoryPath()
+    if self.SETTINGS_DIRECTORY == nil then
+        return nil
+    end
+
+    local index = ''
+
+    if g_currentMission ~= nil and g_currentMission.missionInfo ~= nil
+        and g_currentMission.missionInfo.savegameIndex ~= nil then
+        index = tostring(g_currentMission.missionInfo.savegameIndex)
+    end
+
+    return self.SETTINGS_DIRECTORY .. 'moundMemory' .. index .. '.xml'
+end
+
+---Schreibt das Halden-Gedaechtnis auf Platte (klassische XML-API, schema-frei).
+function MiningLayers:saveMoundMemory()
+    if not self.moundMemoryDirty then
+        return
+    end
+
+    local path = self:getMoundMemoryPath()
+
+    if path == nil or not MiningLayers.isCallable(createXMLFile)
+        or not MiningLayers.isCallable(setXMLString) or not MiningLayers.isCallable(saveXMLFile) then
+        return
+    end
+
+    local xmlId = createXMLFile('miningLayersMounds', path, 'mounds')
+
+    if xmlId == nil or xmlId == 0 then
+        return
+    end
+
+    local i = 0
+
+    for key, cell in pairs(self.moundMemory) do
+        local base = string.format('mounds.m(%d)', i)
+        setXMLString(xmlId, base .. '#k', key)
+        setXMLString(xmlId, base .. '#f', cell.f)
+        -- Ursprungshoehe als String: die klassische XML-API ist schema-frei,
+        -- getString/setString sind die einzigen belegt sicheren Zugriffe.
+        setXMLString(xmlId, base .. '#b', string.format('%.2f', cell.b))
+        i = i + 1
+    end
+
+    saveXMLFile(xmlId)
+    delete(xmlId)
+    self.moundMemoryDirty = false
+end
+
+---Laedt das Halden-Gedaechtnis dieses Spielstands.
+function MiningLayers:loadMoundMemory()
+    self.moundMemory = {}
+
+    local path = self:getMoundMemoryPath()
+
+    if path == nil or not MiningLayers.isCallable(loadXMLFile)
+        or not MiningLayers.isCallable(fileExists) or not fileExists(path)
+        or not MiningLayers.isCallable(getXMLString) then
+        return
+    end
+
+    local xmlId = loadXMLFile('miningLayersMounds', path)
+
+    if xmlId == nil or xmlId == 0 then
+        return
+    end
+
+    local i = 0
+    local count = 0
+    local discarded = 0
+
+    while true do
+        local base = string.format('mounds.m(%d)', i)
+        local key = getXMLString(xmlId, base .. '#k')
+
+        if key == nil then
+            break
+        end
+
+        local name = getXMLString(xmlId, base .. '#f')
+        local baseY = tonumber(getXMLString(xmlId, base .. '#b') or '')
+
+        if name ~= nil and baseY ~= nil then
+            self.moundMemory[key] = { f = name, b = baseY }
+            count = count + 1
+        elseif name ~= nil then
+            -- Alter Eintrag ohne Ursprungshoehe (Format vor dem baseY-Fix):
+            -- verwerfen. Neuanfang ist billiger als ein Migrationsfehler.
+            discarded = discarded + 1
+        end
+
+        i = i + 1
+    end
+
+    delete(xmlId)
+
+    if count > 0 or discarded > 0 then
+        MiningLayers.log('Halden-Gedaechtnis geladen: %d Zelle(n).', count)
+    end
+
+    if discarded > 0 then
+        MiningLayers.log('  %d alte Zelle(n) ohne Ursprungshoehe verworfen - Halden neu ankippen.', discarded)
+        -- Bereinigten Stand beim naechsten Speichern festschreiben.
+        self.moundMemoryDirty = true
+    end
+end
+
+---Grenzhoehe eines Schicht-Eintrags an einem Punkt: depth zaehlt ab der (ggf.
+---geneigten) Bezugsflaeche, aboveY bleibt absolut. Ohne Punktwert bleibt die an
+---der Bezugshoehe vorgerechnete Grenze - identisches Verhalten auf ebenem Boden.
+---@param entry table
+---@param surfacePointY number?
+---@return number? boundary
+function MiningLayers.entryBoundaryAt(entry, surfacePointY)
+    if entry.aboveY ~= nil then
+        return entry.aboveY
+    end
+
+    if entry.depth ~= nil and surfacePointY ~= nil then
+        return surfacePointY - entry.depth
+    end
+
+    return entry.boundary
+end
+
+---@param resolved table
+---@param terrainY number
+---@param surfacePointY number? Bezugsflaechen-Hoehe an diesem Punkt
+---@return table? entry
+function MiningLayers:findLayer(resolved, terrainY, surfacePointY)
+    for _, entry in ipairs(resolved) do
+        local boundary = MiningLayers.entryBoundaryAt(entry, surfacePointY)
+
+        if boundary == nil or terrainY > boundary then
+            return entry
+        end
+    end
+
+    return nil
+end
+
+---Ermittelt Zone, Bezugshoehe und greifende Schicht fuer ein Fahrzeug.
+---Wird sowohl beim Graben als auch von der Anzeige benutzt.
+---@param vehicle table
+---@param worldPosX number
+---@param worldPosZ number
+---@return table? entry
+---@return number terrainY
+---@return number? surfaceY
+---@return string? zoneName
+---@return string? reason  'manual' = Material im Bereich gesetzt, 'off' = per XML ausgenommen
+function MiningLayers:getLayerAt(vehicle, worldPosX, worldPosZ)
+    local terrainY = getTerrainHeightAtWorldPos(g_terrainNode, worldPosX, 0, worldPosZ)
+
+    if not self.enabled then
+        return nil, terrainY, nil, nil, nil
+    end
+
+    local area = nil
+
+    if vehicle ~= nil and MiningLayers.isCallable(vehicle.getMachineInputArea) then
+        local foundArea, isEnabled = vehicle:getMachineInputArea()
+
+        if foundArea ~= nil and isEnabled then
+            area = foundArea
+        end
+    end
+
+    local resolved, surfaceY, plane
+
+    if area ~= nil then
+        -- Pfad-Bereiche (Strassen, Rohrgraeben) haben keine Grubenflaeche - Bezugshoehe
+        -- und Grubenboden ergeben dort keinen Sinn. Schichten gibt es nur in
+        -- Polygon-Bereichen; der Pfad bleibt reines TerraFarm. Erkennung am width-Feld,
+        -- das nur LandscapingAreaPath hat (LandscapingAreaPath.lua:28).
+        if area.width ~= nil then
+            return nil, terrainY, nil, nil, 'path'
+        end
+
+        -- Umschalt-Sicherung: Wer im Bereich ein Material eintraegt, will Handbetrieb -
+        -- Baustelle, Rohrgraben, Aufschuetten. Dann laesst der Mod den Bereich komplett
+        -- in Ruhe: kein Material, keine Textur, kein Rueckfall auf die globalZone,
+        -- auch kein Halden-Gedaechtnis (das dort auch nicht gefuellt wird).
+        -- Leeres Feld ist nil (belegt AreaEditor.lua:268), und TerraFarms HUD zeigt ein
+        -- gesetztes Bereichs-Material von selbst an - die Anzeige rechts stimmt dann.
+        if area.forceFillTypeIndex ~= nil then
+            return nil, terrainY, nil, nil, 'manual'
+        end
+
+        local isOff
+
+        resolved, surfaceY, isOff, plane = self:getResolvedForArea(area)
+
+        if isOff then
+            return nil, terrainY, nil, nil, 'off'
+        end
+    end
+
+    -- Halden-Gedaechtnis ZUERST - und AUCH OHNE BEREICH: eine Halde ist eine Halde,
+    -- egal ob sie im Polygon steht oder daneben (dahin kippt man sie ja). Sie gilt
+    -- von ihrer Ursprungshoehe (baseY) bis zur Spitze, unabhaengig von jeder
+    -- Bezugshoehe - Flanken, Reste, Verfuelltes in der Grube. Bis zur Basis
+    -- zurueckgegraben loescht die Abfrage die Zelle selbst - darunter Schichten
+    -- bzw. ohne Bereich wieder normales TerraFarm.
+    -- (Befund Tommy 2026-08-08 abends: PAYDIRT-Halde lieferte DIRT - das Gedaechtnis
+    -- wurde nur INNERHALB des Bereichs befragt, die Halde stand daneben.)
+    local moundFill = self:getMoundFillTypeAt(worldPosX, worldPosZ, terrainY)
+    local moundEntry = moundFill ~= nil and self:getSpoilEntry(moundFill) or nil
+
+    if moundEntry ~= nil then
+        local surfacePointY = surfaceY
+
+        if plane ~= nil then
+            surfacePointY = MiningLayers.planeAt(plane, worldPosX, worldPosZ)
+        end
+
+        local zoneName = 'Halde'
+
+        if area ~= nil then
+            zoneName = area.name or area.uniqueId
+        end
+
+        return moundEntry, terrainY, surfacePointY, zoneName
+    end
+
+    if area ~= nil and resolved ~= nil and resolved ~= false then
+        -- Bezugsflaeche an DIESEM Punkt: am Hang geneigt, sonst der Median.
+        local surfacePointY = surfaceY
+
+        if plane ~= nil then
+            surfacePointY = MiningLayers.planeAt(plane, worldPosX, worldPosZ)
+        end
+
+        -- Ueber der Bezugsflaeche liegt kein gewachsener Boden, sondern Abraum.
+        -- Nur noch Rueckfall fuer UNBEKANNTE Halden (vor der Installation
+        -- gebaut / Gedaechtnis weg): dort gilt die TerraFarm-Auswahl.
+        if surfacePointY ~= nil and terrainY > surfacePointY + MiningLayers.SPOIL_TOLERANCE then
+            return nil, terrainY, surfacePointY, area.name or area.uniqueId, 'spoil'
+        end
+
+        return self:findLayer(resolved, terrainY, surfacePointY), terrainY, surfacePointY,
+            area.name or area.uniqueId
+    end
+
+    if self.resolvedGlobal ~= nil then
+        local globalSurfaceY = self.globalZone ~= nil and self.globalZone.surfaceY or nil
+
+        if globalSurfaceY ~= nil and terrainY > globalSurfaceY + MiningLayers.SPOIL_TOLERANCE then
+            return nil, terrainY, globalSurfaceY, 'globalZone', 'spoil'
+        end
+
+        return self:findLayer(self.resolvedGlobal, terrainY, globalSurfaceY), terrainY, globalSurfaceY, 'globalZone'
+    end
+
+    return nil, terrainY, nil, nil
+end
