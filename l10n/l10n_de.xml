@@ -42,8 +42,8 @@
 
         <!-- ===================== Reiter 4: Schichten-Editor ===================== -->
         <text name="ml_edSummarySection" text="Ergibt dieses Profil" />
-        <text name="ml_edScope" text="Achtung: Was du hier festlegst, gilt für ALLE deine Bereiche — auch für die, die schon stehen. Ein einzelner Bereich mit abweichenden Schichten geht weiterhin, den trägst du aber von Hand in der miningLayers.xml ein." />
-        <text name="ml_helpManEditor4" text="Ein Profil für alles: Was du auf dem Reiter Schichten speicherst, gilt für jeden Bereich, den du anlegst, und rückwirkend auch für die bestehenden. Es gibt also nicht pro Grube ein eigenes Profil, sondern einen Standard für alle. Wenn eine einzelne Grube etwas anderes haben soll, trägst du dafür in der miningLayers.xml eine eigene Zone mit dem Bereichsnamen ein." />
+        <text name="ml_edScope" text="Du bearbeitest den Standard: Er gilt für alle Bereiche ohne eigene Schichten — auch für die, die schon stehen. Eine einzelne Grube mit eigenen Schichten stellst du direkt hier ein: oben unter Gilt für den Bereich wählen." />
+        <text name="ml_helpManEditor4" text="Standard und Ausnahmen: Was du mit Alle Bereiche speicherst, ist der Standard — er gilt für jeden Bereich ohne eigene Schichten, rückwirkend auch für die bestehenden. Soll eine einzelne Grube anders aufgebaut sein, wähle sie oben unter Gilt für aus und speichere ihre Schichten — direkt im Editor, ohne Umweg über eine Datei." />
         <text name="ml_edTargetSection" text="Gilt für" />
         <text name="ml_edTarget" text="Bereich" />
         <text name="ml_edTargetDefault" text="Alle Bereiche (Standard)" />
@@ -112,7 +112,7 @@
 
         <text name="ml_helpManEditorTitle" text="Schichten selbst festlegen" />
         <text name="ml_helpManEditor1" text="Auf dem Reiter Schichten baust du dir dein eigenes Profil. Links siehst du den Bodenquerschnitt, rechts wählst du Schicht, Material und Dicke. Höchstens sechs Abraum-Schichten, zur Wahl stehen DIRT, SOIL, GRAVEL, SAND, STONE, COAL und LIMESTONE." />
-        <text name="ml_helpManEditor3" text="Die Seite verlässt du mit ESC oder der Zurück-Schaltfläche. Achtung: Geändert ist noch nicht gespeichert. Erst die Schaltfläche Speichern schreibt dein Profil in die miningLayers.xml und lässt es sofort für alle Bereiche ohne eigene Zone gelten. Wer vorher rausgeht, findet beim nächsten Öffnen wieder den alten Stand vor." />
+        <text name="ml_helpManEditor3" text="Die Seite verlässt du mit ESC oder der Zurück-Schaltfläche. Achtung: Geändert ist noch nicht gespeichert. Erst die Schaltfläche Speichern schreibt die Schichten und wendet sie sofort auf das oben gewählte Ziel an — den Standard oder den einzelnen Bereich. Wer vorher rausgeht, findet beim nächsten Öffnen wieder den alten Stand vor." />
         <text name="ml_helpManEditor2" text="PAYDIRT kannst du nicht selbst als Abraum setzen - das Flöz vergibt der Mod. Das ist eine bewusste Entscheidung für echtes Bergbau-Gameplay statt Materialdruck per Knopfdruck. Wer es anders will, passt die miningLayers.xml von Hand an." />
 
         <text name="ml_helpManFloorTitle" text="Der Grubenboden" />

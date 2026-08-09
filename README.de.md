@@ -24,7 +24,7 @@ Mining Layers baut auf **[TerraFarm](https://github.com/scfmod/FS25_TerraFarm)**
 1. Neuestes `FS25_MiningLayers.zip` aus den [Releases](../../releases) laden.
 2. Die **ZIP-Datei unverändert** (nicht entpacken!) in den Mods-Ordner legen:
    - **Windows:** `Dokumente\My Games\FarmingSimulator2025\mods\`
-   - **Steam unter Linux (Proton):** im Proton-Prefix — `steamapps/compatdata/<FS25-AppID>/pfx/drive_c/users/steamuser/Documents/My Games/FarmingSimulator2025/mods/`
+   - **Steam unter Linux (Proton):** im Proton-Prefix — `<dein Steam-Stamm>/steamapps/compatdata/2300320/pfx/drive_c/users/steamuser/Documents/My Games/FarmingSimulator2025/mods/`. Der Steam-Stamm unterscheidet sich je Installation (`~/.local/share/Steam`, `~/.steam/debian-installation`, …); der Teil ab `compatdata/2300320` ist fest.
 3. Sicherstellen, dass [TerraFarm](https://github.com/scfmod/FS25_TerraFarm) (`FS25_0_TerraFarm`) im selben Ordner liegt.
 4. Spiel starten und **beide Mods** in der Mod-Auswahl des Spielstands anhaken.
 

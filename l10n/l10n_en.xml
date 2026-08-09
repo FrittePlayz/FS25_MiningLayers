@@ -42,8 +42,8 @@
 
         <!-- ===================== Tab 4: layer editor ===================== -->
         <text name="ml_edSummarySection" text="Resulting profile" />
-        <text name="ml_edScope" text="Careful: what you set here applies to ALL your areas, including the ones already drawn. A single area with different layers is still possible, but you have to add it by hand in miningLayers.xml." />
-        <text name="ml_helpManEditor4" text="One profile for everything: what you save on the Layers tab applies to every area you draw, and retroactively to the existing ones too. So there is no separate profile per pit, there is one standard for all of them. If a single pit should differ, add a zone for it by name in miningLayers.xml." />
+        <text name="ml_edScope" text="You are editing the standard: it applies to every area without its own layers, including the ones already drawn. To give a single pit its own layers, simply pick that area under Applies to above." />
+        <text name="ml_helpManEditor4" text="Standard and exceptions: what you save with All areas is the standard — it applies to every area without its own layers, retroactively to the existing ones too. If a single pit should differ, pick it under Applies to above and save its layers — right in the editor, no file editing needed." />
         <text name="ml_edTargetSection" text="Applies to" />
         <text name="ml_edTarget" text="Area" />
         <text name="ml_edTargetDefault" text="All areas (default)" />
@@ -110,7 +110,7 @@
 
         <text name="ml_helpManEditorTitle" text="Setting your own layers" />
         <text name="ml_helpManEditor1" text="The Layers tab is where you build your own profile. The cross-section is on the left, layer, material and thickness on the right. Six overburden layers at most; available are DIRT, SOIL, GRAVEL, SAND, STONE, COAL and LIMESTONE." />
-        <text name="ml_helpManEditor3" text="Leave the page with ESC or the Back button. Careful: changed is not saved. Only the Save button writes your profile to miningLayers.xml and applies it right away to every area without its own zone. Leave before that and the old state is back next time you open it." />
+        <text name="ml_helpManEditor3" text="Leave the page with ESC or the Back button. Careful: changed is not saved. Only the Save button writes the layers and applies them right away to the target picked above — the standard or the single area. Leave before that and the old state is back next time you open it." />
         <text name="ml_helpManEditor2" text="You cannot pick PAYDIRT as overburden. The mod places it, and that is a deliberate choice: real mining gameplay instead of material at the push of a button. If you want it differently, edit miningLayers.xml by hand." />
 
         <text name="ml_helpManFloorTitle" text="The pit floor" />

@@ -13,16 +13,22 @@
 
 ---@diagnostic disable: lowercase-global, undefined-global
 
----Schild des Basisspiels. $data wird von der Engine aufgeloest, die Datei wird
----NICHT mitgeliefert - das waere weder erlaubt noch noetig.
+---Schild des Basisspiels. Die Datei wird NICHT mitgeliefert - das waere weder
+---erlaubt noch noetig. $data versteht nur der XML-Lader; vor loadSharedI3DFile
+---muss der Pfad durch Utils.getFilename (TerraFarm uebergibt aus demselben
+---Grund fertige Pfade).
 MiningLayers.SIGN_I3D = '$data/maps/mapUS/textures/props/signCompany01.i3d'
 
 ---Name des Shapes, der die austauschbare Logotafel traegt.
 MiningLayers.SIGN_LOGO_NODE = 'decalLogo'
 
----Unsere Tafel. Format 1024x256 (4:1) - exakt das Seitenverhaeltnis der
----Vorlage, die das Schild von Haus aus traegt. Eine 2:1-Grafik wuerde gestaucht.
----DDS zuerst (Mipmaps, kleiner), PNG als Rueckfall.
+---Unsere Tafel. 1024x256 wie die Vorlage, aber die Vorlage ist ein ATLAS:
+---die Tafel am Schild zeigt nur x 0-540 (~2:1), ab x 583 liegt eine zweite
+---Variante fuer andere Shapes. Vollflaechige Grafik wird deshalb rechts
+---abgeschnitten (Fund 2026-08-09, Tommys Sichttest) - Inhalt muss in die
+---Fenster des Werkslogos (farmHouse01Logo_diffuse) gesetzt werden.
+---DDS zuerst (Mipmaps, kleiner), PNG als Rueckfall. Aktuell nur PNG an Bord:
+---kein DDS-Packer auf dem Rechner, Neubau steht aus.
 MiningLayers.SIGN_TEXTURES = {
     'data/textures/farmersingles_logo_1024x256.dds',
     'data/textures/farmersingles_logo_1024x256.png',
@@ -353,7 +359,15 @@ function MiningLayers:spawnSign(area)
     local requestId
 
     local ok = MiningLayers.protectedCall('loadSignI3D', function()
-        local root, request = g_i3DManager:loadSharedI3DFile(MiningLayers.SIGN_I3D, false, false)
+        local filename = MiningLayers.SIGN_I3D
+
+        if Utils ~= nil and MiningLayers.isCallable(Utils.getFilename) then
+            filename = Utils.getFilename(filename)
+        else
+            filename = filename:gsub('^%$', '')
+        end
+
+        local root, request = g_i3DManager:loadSharedI3DFile(filename, false, false)
 
         requestId = request
 
