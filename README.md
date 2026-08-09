@@ -73,7 +73,7 @@ This is **not a defect and not a mod conflict — it's the intended switch.** If
 
 - **Material by digging depth** — layer boundaries in meters below the original surface
 - **Per-pit geology** — every TerraFarm area can have its own layer stack (different pits, different materials, one map)
-- **Per-pit opt-out** — decide for each area: Mining Layers geology or plain TerraFarm terraforming
+- **Per pit: own geology or plain TerraFarm** — pick the target area in the editor and decide per pit
 - **Spoil pile memory** — what you dump is what you pick back up. No material cheating: dig a pile below its base and you hit geology again (crater-cheat protection included)
 - **Automatic pit floor** — target depth is set to the lowest layer boundary, follows area changes
 - **Slope & water handling** — tilted reference plane on hillsides, pit floor clamps to the waterline

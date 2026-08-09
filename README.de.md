@@ -73,7 +73,7 @@ Das ist **kein Defekt und kein Mod-Konflikt — es ist die vorgesehene Umschaltu
 
 - **Material nach Grabtiefe** — Schichtgrenzen in Metern unter der ursprünglichen Oberfläche
 - **Geologie pro Grube** — jeder TerraFarm-Bereich kann seinen eigenen Schichtaufbau haben (verschiedene Gruben, verschiedene Materialien, eine Karte)
-- **Pro Grube abschaltbar** — je Bereich entscheiden: Mining-Layers-Geologie oder normales TerraFarm-Terraforming
+- **Pro Grube eigene Geologie oder ganz normales TerraFarm** — Zielbereich im Editor wählen und je Grube entscheiden
 - **Halden-Gedächtnis** — was du abkippst, nimmst du auch wieder auf. Kein Material-Cheaten: Wer eine Halde unter ihre Basis durchgräbt, trifft wieder auf Geologie (Krater-Cheat-Sperre inklusive)
 - **Automatischer Grubenboden** — Zieltiefe = unterste Schichtgrenze, zieht bei Bereichs-Änderungen nach
 - **Hang- und Wasser-Behandlung** — geneigte Bezugsfläche am Hang, Grubenboden klemmt an der Wasserlinie
