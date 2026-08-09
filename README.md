@@ -3,7 +3,7 @@
 **Real mining gameplay for Farming Simulator 25 — dig through geological layers.**
 Material is determined by digging depth, not by hand selection: topsoil first, then gravel, then paydirt, then rock. Per-pit geology, spoil piles that remember what you dumped, and an in-game editor. Works on **any map** — no map editing required.
 
-An unofficial add-on **powered by [TerraFarm](https://github.com/scfmod/FS25_TerraFarm)** (by scfmod — no affiliation).
+Mining Layers builds on **[TerraFarm](https://github.com/scfmod/FS25_TerraFarm)** by scfmod, which it requires to run. Unofficial add-on, not affiliated with scfmod.
 
 🇩🇪 **Deutsche Version: [README.de.md](README.de.md)**
 
@@ -105,7 +105,7 @@ In game this shows as a small sign at the pit edge. Don't want it? Set `sponsorS
 - **Author:** Tommy Honold — [seeside.ai](https://seeside.ai)
 - **Sponsor:** [farmersingles.de](https://farmersingles.de) — the dating site for farmers
 - A **FrittePlayz** project (YouTube)
-- Powered by **TerraFarm** by [scfmod](https://github.com/scfmod) — this is an unofficial add-on with no affiliation to scfmod or GIANTS Software.
+- Built on **[TerraFarm](https://github.com/scfmod/FS25_TerraFarm)** by scfmod (required, install separately) — unofficial add-on, no affiliation with scfmod or GIANTS Software.
 
 ## Support
 

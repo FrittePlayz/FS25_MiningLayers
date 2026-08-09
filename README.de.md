@@ -3,7 +3,7 @@
 **Echtes Bergbau-Gameplay für den Landwirtschafts-Simulator 25 — grab dich durch geologische Schichten.**
 Das Material bestimmt die Grabtiefe, nicht die Handauswahl: erst Mutterboden, dann Kies, dann Paydirt, dann Fels. Eigene Geologie pro Grube, Halden mit Gedächtnis und ein Ingame-Editor. Läuft auf **jeder Karte** — ohne Map-Bearbeitung.
 
-Ein inoffizielles Addon, **powered by [TerraFarm](https://github.com/scfmod/FS25_TerraFarm)** (von scfmod — keine Verbindung).
+Mining Layers baut auf **[TerraFarm](https://github.com/scfmod/FS25_TerraFarm)** von scfmod auf und benötigt es zum Laufen. Inoffizielles Addon, keine Verbindung zu scfmod.
 
 🇬🇧 **English version: [README.md](README.md)**
 
@@ -105,7 +105,7 @@ Im Spiel zeigt sich das als kleines Schild am Grubenrand. Nicht gewünscht? `spo
 - **Autor:** Tommy Honold — [seeside.ai](https://seeside.ai)
 - **Sponsor:** [farmersingles.de](https://farmersingles.de) — die Singlebörse für Landwirte
 - Ein **FrittePlayz**-Projekt (YouTube)
-- Powered by **TerraFarm** von [scfmod](https://github.com/scfmod) — dies ist ein inoffizielles Addon ohne Verbindung zu scfmod oder GIANTS Software.
+- Baut auf **[TerraFarm](https://github.com/scfmod/FS25_TerraFarm)** von scfmod auf (wird benötigt, separat installieren) — inoffizielles Addon, keine Verbindung zu scfmod oder GIANTS Software.
 
 ## Support
 
