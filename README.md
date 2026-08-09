@@ -63,6 +63,7 @@ After starting, you'll find a new **Mining Layers** page in the ESC menu — wit
 
 - **Material by digging depth** — layer boundaries in meters below the original surface
 - **Per-pit geology** — every TerraFarm area can have its own layer stack (different pits, different materials, one map)
+- **Per-pit opt-out** — decide for each area: Mining Layers geology or plain TerraFarm terraforming
 - **Spoil pile memory** — what you dump is what you pick back up. No material cheating: dig a pile below its base and you hit geology again (crater-cheat protection included)
 - **Automatic pit floor** — target depth is set to the lowest layer boundary, follows area changes
 - **Slope & water handling** — tilted reference plane on hillsides, pit floor clamps to the waterline
