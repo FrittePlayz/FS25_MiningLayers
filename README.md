@@ -46,7 +46,7 @@ After starting, you'll find a new **Mining Layers** page in the ESC menu — wit
 
 ![Deeper — gravel, paydirt next](docs/images/05_display_paydirt.jpg)
 
-**4. Set your own layers — per pit.** ESC menu → Mining Layers → Layers tab. Under *Applies to* you pick the target: all areas or one specific pit — and whether that pit uses layers at all. Below that you set material and thickness per layer, and the preview shows the resulting profile live:
+**4. Set your own layers.** ESC menu → Mining Layers → Layers tab: set material and thickness per layer, the preview shows the resulting profile live. ⚠️ What you set here is the **default stack for all your areas**, including the ones you already drew. A single pit with a different stack is possible too, but that one you write by hand into `miningLayers.xml`:
 
 ![Layer editor](docs/images/02_layer_editor.jpg)
 
@@ -68,7 +68,7 @@ The single most common point of confusion. In the TerraFarm menu → **Landscapi
 
 1. **Both fields on "Not set"** → Mining Layers works: what ends up in the bucket depends on how deep you dig. **This is the delivery state of a freshly drawn area** — you don't have to do anything.
 2. **Set a material on *Terraform*** → that area runs as a completely normal TerraFarm polygon area, no layers. Exactly right for construction sites, road building and levelling — anywhere you always need the same material.
-3. Same result from Mining Layers' **Layers tab**: pick the area and set it to "Plain TerraFarm". Both routes lead to the same place.
+3. Prefer to configure it in a file? `modSettings/FS25_MiningLayers/miningLayers.xml` can disable layers per area as well — same result.
 4. **Path areas are excluded entirely** — layers only ever apply to polygon areas. A path area always behaves like plain TerraFarm, no matter what you configure.
 
 This is **not a defect and not a mod conflict — it's the intended switch.** If a zone gives you "the wrong material", check the area's material fields first.
@@ -76,8 +76,8 @@ This is **not a defect and not a mod conflict — it's the intended switch.** If
 ## Features
 
 - **Material by digging depth** — layer boundaries in meters below the original surface
-- **Per-pit geology** — every TerraFarm area can have its own layer stack (different pits, different materials, one map)
-- **Per pit: own geology or plain TerraFarm** — pick the target area in the editor and decide per pit
+- **Layer stack per area** — a single pit can have its own geology (different pits, different materials, one map). The in-game editor sets the default for all areas; a deviating stack for one pit is written by hand in `miningLayers.xml`
+- **Plain TerraFarm per area** — any area with a material set behaves like normal TerraFarm, no layers
 - **Spoil pile memory** — what you dump is what you pick back up. No material cheating: dig a pile below its base and you hit geology again (crater-cheat protection included)
 - **Automatic pit floor** — target depth is set to the lowest layer boundary, follows area changes
 - **Slope & water handling** — tilted reference plane on hillsides, pit floor clamps to the waterline
