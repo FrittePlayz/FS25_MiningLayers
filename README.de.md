@@ -55,7 +55,8 @@ Im Spiel zeigt sich das als kleines Schild am Grubenrand. Nicht gewünscht? `spo
 
 ## Credits
 
-- **Autor:** Tommy Honold — Farmersingles.de
+- **Autor:** Tommy Honold — [seeside.ai](https://seeside.ai)
+- **Sponsor:** [farmersingles.de](https://farmersingles.de) — die Singlebörse für Landwirte
 - Ein **FrittePlayz**-Projekt (YouTube)
 - Powered by **TerraFarm** von [scfmod](https://github.com/scfmod) — dies ist ein inoffizielles Addon ohne Verbindung zu scfmod oder GIANTS Software.
 

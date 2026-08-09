@@ -55,7 +55,8 @@ In game this shows as a small sign at the pit edge. Don't want it? Set `sponsorS
 
 ## Credits
 
-- **Author:** Tommy Honold — Farmersingles.de
+- **Author:** Tommy Honold — [seeside.ai](https://seeside.ai)
+- **Sponsor:** [farmersingles.de](https://farmersingles.de) — the dating site for farmers
 - A **FrittePlayz** project (YouTube)
 - Powered by **TerraFarm** by [scfmod](https://github.com/scfmod) — this is an unofficial add-on with no affiliation to scfmod or GIANTS Software.
 
