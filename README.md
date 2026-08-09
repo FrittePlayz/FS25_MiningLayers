@@ -110,8 +110,18 @@ In game this shows as a small sign at the pit edge. Don't want it? Set `sponsorS
 - A **FrittePlayz** project (YouTube)
 - Built on **[TerraFarm](https://github.com/scfmod/FS25_TerraFarm)** by scfmod (required, install separately) — unofficial add-on, no affiliation with scfmod or GIANTS Software.
 
-## Support
+## Bugs & questions
 
-Mining Layers is free and stays free. If it saved you an afternoon, you can [buy me a portion of fries 🍟](https://buymeacoffee.com/fritteplayz) — it goes straight back into testing hours and new features.
+Found a bug? [Open an issue](../../issues) — include your `log.txt` and the map you play on. Ideas for features are welcome in the same place.
 
-Found a bug? [Open an issue](../../issues) — include your `log.txt` and the map you play on.
+## Support this mod 🍟
+
+<p align="center">
+  <a href="https://buymeacoffee.com/fritteplayz"><img src="https://img.shields.io/badge/Buy%20me%20fries-FFDD00?style=for-the-badge&logo=buymeacoffee&logoColor=black" alt="Buy me fries"></a>
+</p>
+
+Mining Layers is free and stays free — no paywalled early access, no ads, no strings attached.
+
+Behind it are a lot of evenings: reading TerraFarm's source, digging test pits, and hunting bugs that only show up after the fifth reload. If the mod gave you a good afternoon in the pit, **[buy me a portion of fries](https://buymeacoffee.com/fritteplayz)** — every one of them goes straight back into testing hours and new features.
+
+Not your thing? A ⭐ on this repo, a bug report, or telling a friend about the mod helps just as much. Thanks for playing!

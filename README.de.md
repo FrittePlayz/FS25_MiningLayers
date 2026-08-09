@@ -110,8 +110,18 @@ Im Spiel zeigt sich das als kleines Schild am Grubenrand. Nicht gewünscht? `spo
 - Ein **FrittePlayz**-Projekt (YouTube)
 - Baut auf **[TerraFarm](https://github.com/scfmod/FS25_TerraFarm)** von scfmod auf (wird benötigt, separat installieren) — inoffizielles Addon, keine Verbindung zu scfmod oder GIANTS Software.
 
-## Support
+## Fehler & Fragen
 
-Mining Layers ist kostenlos und bleibt es. Wenn dir der Mod einen Nachmittag gerettet hat, kannst du mir [eine Portion Pommes spendieren 🍟](https://buymeacoffee.com/fritteplayz) — das fließt direkt in Testzeit und neue Features.
+Fehler gefunden? [Issue aufmachen](../../issues) — bitte mit `log.txt` und der gespielten Karte. Feature-Ideen sind an derselben Stelle willkommen.
 
-Fehler gefunden? [Issue aufmachen](../../issues) — bitte mit `log.txt` und der gespielten Karte.
+## Unterstütz den Mod 🍟
+
+<p align="center">
+  <a href="https://buymeacoffee.com/fritteplayz"><img src="https://img.shields.io/badge/Buy%20me%20fries-FFDD00?style=for-the-badge&logo=buymeacoffee&logoColor=black" alt="Buy me fries"></a>
+</p>
+
+Mining Layers ist kostenlos und bleibt es — keine Paywall, keine Vorabversionen gegen Geld, keine Werbung.
+
+Dahinter stecken viele Abende: TerraFarms Quelltext lesen, Testgruben ausheben und Fehler jagen, die erst beim fünften Neuladen auftauchen. Wenn dir der Mod einen guten Nachmittag in der Grube gemacht hat, **[spendier mir eine Portion Pommes](https://buymeacoffee.com/fritteplayz)** — die fließt direkt in Testzeit und neue Features.
+
+Nicht dein Ding? Ein ⭐ auf dieses Repo, ein Fehlerbericht oder eine Empfehlung an einen Kumpel helfen genauso. Danke fürs Spielen!
