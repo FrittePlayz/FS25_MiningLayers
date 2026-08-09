@@ -113,7 +113,7 @@ Wohin der Mod geht. Das sind **Vorhaben, keine Versprechen** — keine Termine, 
 
 **TerraFarm-Konfigurationen für die Basisspiel-Maschinen** — wer heute mit TerraFarm anfangen will, muss sich erst Mod-Bagger besorgen: Das offizielle Machines-Addon deckt Fremd-Mods ab, die Community-Packs ebenso. Niemand deckt ab, was das Spiel ohnehin mitbringt. Geplant ist ein Konfigurations-Addon für die Basisspiel-Flotte — Radlader, Teleskoplader, Frontlader samt Schaufeln, Schilden und Reißzähnen — damit jeder TerraFarm mit den Maschinen ausprobieren kann, die schon in der Halle stehen.
 
-Das wird ein eigenes Repository, kein Teil von Mining Layers. Vorschläge, welche Maschinen rein sollen, gern in den Issues.
+Es hat ein eigenes Repository — **[Dig With Anything](https://github.com/FrittePlayz/FS25_DigWithAnything)** (in Arbeit). Wenn eine Maschine mit TerraFarm arbeiten sollte und es nicht tut, nenn sie dort in den Issues.
 
 Andere Meinung zur Reihenfolge oder eine Idee, die fehlt? [Diskussion oder Issue aufmachen](../../issues) — die Liste ist nicht in Stein gemeißelt.
 
