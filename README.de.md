@@ -109,4 +109,6 @@ Im Spiel zeigt sich das als kleines Schild am Grubenrand. Nicht gewünscht? `spo
 
 ## Support
 
+Mining Layers ist kostenlos und bleibt es. Wenn dir der Mod einen Nachmittag gerettet hat, kannst du mir [eine Portion Pommes spendieren 🍟](https://buymeacoffee.com/fritteplayz) — das fließt direkt in Testzeit und neue Features.
+
 Fehler gefunden? [Issue aufmachen](../../issues) — bitte mit `log.txt` und der gespielten Karte.

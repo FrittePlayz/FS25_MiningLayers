@@ -109,4 +109,6 @@ In game this shows as a small sign at the pit edge. Don't want it? Set `sponsorS
 
 ## Support
 
+Mining Layers is free and stays free. If it saved you an afternoon, you can [buy me a portion of fries 🍟](https://buymeacoffee.com/fritteplayz) — it goes straight back into testing hours and new features.
+
 Found a bug? [Open an issue](../../issues) — include your `log.txt` and the map you play on.
