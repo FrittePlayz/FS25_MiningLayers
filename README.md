@@ -77,6 +77,7 @@ This is **not a defect and not a mod conflict — it's the intended switch.** If
 
 - **Material by digging depth** — layer boundaries in meters below the original surface
 - **Geology per pit** — every area can have its own layer stack, set right in the in-game editor (different pits, different materials, one map)
+- **Overburden is yours, the seam is not** — you configure the layers above the paydirt seam; paydirt and rock are placed by the mod itself. Deliberate: this is a mining mod, not a material dispenser
 - **Per pit: layers or plain TerraFarm** — pick the target area in the editor and decide for each pit individually
 - **Spoil pile memory** — what you dump is what you pick back up. No material cheating: dig a pile below its base and you hit geology again (crater-cheat protection included)
 - **Automatic pit floor** — target depth is set to the lowest layer boundary, follows area changes

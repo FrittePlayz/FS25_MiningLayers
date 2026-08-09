@@ -83,6 +83,7 @@
         <text name="ml_helpQsLayers1" text="Out of the box: topsoil, gravel below it, then paydirt, rock at the bottom. That fits almost any pit, so there is nothing you have to set up." />
         <text name="ml_helpQsWizardButton" text="Set up layers" />
         <text name="ml_helpQsWizardHint" text="You do not have to, though. Do nothing and our default applies, which fits almost any pit. Want it different? Go to the Layers tab, build your own profile there and watch it take shape as you go." />
+        <text name="ml_helpQsLayersScope" text="You only ever edit the overburden layers above the seam. Paydirt and the rock below are placed by the mod itself, and that is deliberate: whoever wants the ore has to dig through the overburden — real mining gameplay instead of material at the push of a button." />
 
         <text name="ml_helpQsMistakesTitle" text="The three mistakes when drawing an area" />
         <text name="ml_helpQsWarnWater" text="Lake or shore: corner points in the water measure the bottom. The reference plane tilts and you hit rock at the shoreline. Keep the area mostly on land." />

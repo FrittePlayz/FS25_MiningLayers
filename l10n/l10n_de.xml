@@ -85,6 +85,7 @@
         <text name="ml_helpQsLayers1" text="Ab Werk gilt: Mutterboden, darunter Kies, darunter das Paydirt-Flöz, ganz unten Fels. Das passt für die allermeisten Gruben, du musst nichts einstellen." />
         <text name="ml_helpQsWizardButton" text="Schichten einrichten" />
         <text name="ml_helpQsWizardHint" text="Musst du aber nicht: Wenn du nichts machst, gilt unser Standard, und der passt für die allermeisten Gruben. Willst du es anders, geh auf den Reiter Schichten — dort baust du dir dein Profil selbst zusammen und siehst sofort, wie es aussieht." />
+        <text name="ml_helpQsLayersScope" text="Dabei bearbeitest du immer nur die Abraum-Schichten oberhalb des Flözes. Paydirt und den Fels darunter setzt der Mod selbst, und das ist Absicht: Wer ans Erz will, muss sich durch den Abraum graben — echtes Bergbau-Gameplay statt Material auf Knopfdruck." />
 
         <text name="ml_helpQsMistakesTitle" text="Die drei Fehler beim Bereich ziehen" />
         <text name="ml_helpQsWarnWater" text="See oder Ufer: Liegen Eckpunkte im Wasser, messen sie den Grund. Die Bezugsfläche kippt und am Ufer steht plötzlich Fels an. Zieh den Bereich überwiegend an Land." />

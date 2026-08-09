@@ -77,6 +77,7 @@ Das ist **kein Defekt und kein Mod-Konflikt — es ist die vorgesehene Umschaltu
 
 - **Material nach Grabtiefe** — Schichtgrenzen in Metern unter der ursprünglichen Oberfläche
 - **Geologie pro Grube** — jeder Bereich kann seinen eigenen Schichtaufbau haben, direkt im Ingame-Editor einstellbar (verschiedene Gruben, verschiedene Materialien, eine Karte)
+- **Der Abraum gehört dir, das Flöz nicht** — einstellbar sind die Schichten über dem Paydirt-Flöz; Paydirt und Fels setzt der Mod selbst. Bewusst so: Das ist ein Bergbau-Mod, kein Materialautomat
 - **Pro Grube: Schichten oder normales TerraFarm** — Zielbereich im Editor wählen und je Grube einzeln entscheiden
 - **Halden-Gedächtnis** — was du abkippst, nimmst du auch wieder auf. Kein Material-Cheaten: Wer eine Halde unter ihre Basis durchgräbt, trifft wieder auf Geologie (Krater-Cheat-Sperre inklusive)
 - **Automatischer Grubenboden** — Zieltiefe = unterste Schichtgrenze, zieht bei Bereichs-Änderungen nach

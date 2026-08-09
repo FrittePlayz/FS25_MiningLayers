@@ -59,6 +59,7 @@ InGameMenuMiningLayersFrame.CONTENT = {
         { type = 'paragraph', text = 'ml_helpQsLayers1' },
         { type = 'image',     file = 'ml_help_09_layers' },
         { type = 'paragraph', text = 'ml_helpQsWizardHint' },
+        { type = 'paragraph', text = 'ml_helpQsLayersScope' },
         { type = 'spacer' },
 
         { type = 'section',   text = 'ml_helpQsMistakesTitle' },
