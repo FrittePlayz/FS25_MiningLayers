@@ -61,13 +61,13 @@ Nach dem Start findest du eine neue Seite **Mining Layers** im ESC-Menü — mit
 
 ## ⚠️ Zwei Wege je Bereich — lesen, bevor du den Mod für kaputt hältst
 
-Der häufigste Verwirrungspunkt überhaupt:
+Der häufigste Verwirrungspunkt überhaupt. Im TerraFarm-Menü → **Landscaping areas** → Bereich auswählen gibt es **zwei Materialfelder**: **Terraformen** und **Abladen** (gesetzt über *Material ändern*). Beide stehen ab Werk auf **„Not set"**.
 
-1. **Materialfelder im TerraFarm-Bereich LEER lassen** → Mining Layers arbeitet: Was in der Schaufel landet, hängt an der Grabtiefe. Das ist der Normalfall für eine Grube.
-2. **Ein Material im Bereich EINTRAGEN** → ganz normales TerraFarm ohne Schichten. Genau richtig für Baustellen, Straßenbau, Planieren — überall, wo du einfach nur Erde bewegen willst und immer dasselbe Material brauchst.
-3. Denselben Effekt gibt es auf dem **Reiter Schichten**: dort einen Bereich auswählen und auf „Normales TerraFarm" stellen. Beides führt zum gleichen Ergebnis, such dir aus, was dir lieber ist.
+1. **Beide Felder auf „Not set"** → Mining Layers arbeitet: Was in der Schaufel landet, hängt an der Grabtiefe. **Das ist der Auslieferungszustand eines frisch gezogenen Bereichs** — du musst nichts tun.
+2. **Beim *Terraformen* ein Material eintragen** → der Bereich läuft als ganz normale TerraFarm-Polygon-Area ohne Schichten. Genau richtig für Baustellen, Straßenbau, Planieren — überall, wo du immer dasselbe Material brauchst.
+3. Dasselbe geht über den **Reiter Schichten** von Mining Layers: Bereich wählen und auf „Normales TerraFarm" stellen. Beides führt zum gleichen Ergebnis.
 
-Heißt: Liefert eine Zone „das falsche Material", ist nichts kaputt — erst prüfen, ob im Bereich ein Material gesetzt ist.
+Das ist **kein Defekt und kein Mod-Konflikt — es ist die vorgesehene Umschaltung.** Liefert eine Zone „das falsche Material", zuerst die Materialfelder des Bereichs prüfen.
 
 ## Features
 

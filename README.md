@@ -61,13 +61,13 @@ After starting, you'll find a new **Mining Layers** page in the ESC menu — wit
 
 ## ⚠️ Two ways per area — read this before you judge the mod
 
-The single most common point of confusion:
+The single most common point of confusion. In the TerraFarm menu → **Landscaping areas** → select your area, there are **two material fields**: **Terraform** and **Discharge** (set via *Change material*). Both default to **"Not set"**.
 
-1. **Leave the material fields on the TerraFarm area EMPTY** and Mining Layers does its job: what ends up in the bucket depends on how deep you dig. That is the normal case for a pit.
-2. **Enter a material on the area instead** and you get plain TerraFarm without layers. Exactly right for construction sites, road building and levelling — anywhere you just want to move soil and always need the same material.
-3. You get the same result from the **Layers tab**: pick an area there and set it to "Plain TerraFarm". Both routes lead to the same place, take whichever you prefer.
+1. **Both fields on "Not set"** → Mining Layers works: what ends up in the bucket depends on how deep you dig. **This is the delivery state of a freshly drawn area** — you don't have to do anything.
+2. **Set a material on *Terraform*** → that area runs as a completely normal TerraFarm polygon area, no layers. Exactly right for construction sites, road building and levelling — anywhere you always need the same material.
+3. Same result from Mining Layers' **Layers tab**: pick the area and set it to "Plain TerraFarm". Both routes lead to the same place.
 
-So: if a zone gives you "the wrong material", it's not broken — check whether a material is set on the area.
+This is **not a defect and not a mod conflict — it's the intended switch.** If a zone gives you "the wrong material", check the area's material fields first.
 
 ## Features
 
