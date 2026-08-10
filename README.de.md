@@ -161,6 +161,9 @@ Bis zum Fels unter der tiefsten Schicht — dort ist bewusst Schluss. Genau das 
 **Wie dick sollten die Schichten sein?**
 Mindestens 1,5 m (der Editor erzwingt 1 m für die oberste, 1,5 m darunter). Bei großen Maschinen wie dem PC 8000 gräbt sich mit 2 m pro Schicht spürbar besser.
 
+**Gibt es ein Halden-Limit — wie viel kann ich abkippen?**
+Nein. Abgekipptes Material wird über TerraFarm zu echtem Gelände, nicht zu einem Basegame-Haufen — ein Haufen-Limit des Spiels greift also nicht. Das Halden-Gedächtnis ist ein 2-m-Raster pro Spielstand, ohne Deckel für Anzahl oder Größe. Einzige Eigenheit: Jede 2-m-Zelle merkt sich EIN Material (der letzte Abwurf gewinnt) — Materialien am selben Fleck nicht mischen, wenn du sie getrennt zurückholen willst.
+
 **Wie schalte ich die Tiefenanzeige aus (oder wieder ein)?**
 **Numpad 5** drücken, solange eine Maschine aktiv ist (seit 1.4.1). Die Taste ist umbelegbar: Optionen → Steuerung → Mining Layers. Soll die Anzeige von Anfang an aus sein: `showHeightDisplay="false"` in der `modSettings/FS25_MiningLayers/miningLayers.xml`.
 

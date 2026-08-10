@@ -7,6 +7,7 @@ All notable changes to Mining Layers. Newest first.
 ### Added
 - **Toggle key for the depth display** — **Numpad 5** switches the height/depth readout on and off while a machine is active. Rebindable in the game options (Options → Controls → Mining Layers), shown in the F1 help. Requested by raver on Discord — thanks! The key registers through TerraFarm's own input lifecycle, so it survives menu and vehicle changes (the reason an earlier attempt at this key was removed before release).
 - FAQ (all four languages): how to toggle the display and how to move it via `displayPosX` / `displayPosY` — no extra HUD mod needed.
+- FAQ + mod description (all four languages): there is **no pile limit** — dumped material becomes real terrain, the 2 m pile memory has no cap; one material per 2 m cell (last dump wins). Asked by GA on Discord — thanks!
 
 ## [1.4.0.0] — 2026-08-10
 

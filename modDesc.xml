@@ -20,6 +20,7 @@ In vanilla FS25 you pick the material yourself, no matter how deep you dig. This
 Setup is one step: draw a TerraFarm area around the pit. The reference height is taken from the area outline automatically - nothing to read off, nothing to type in. Works on any map, no map editing required.
 
 Also included:
+- Spoil pile memory: you pick back up what you dumped - with NO pile limit (dumped material becomes real terrain, not a base-game heap)
 - Height and depth readout while a machine is active (Numpad 5 toggles it on/off, rebindable in the game options)
 - Startup check that reports materials which cannot be dropped on this map (the 63 terrain type limit)
 
@@ -39,6 +40,7 @@ Im FS25 stellst du das Material selbst ein, egal wie tief du graebst. Dieses Add
 Einrichtung ist ein Schritt: einen TerraFarm-Bereich um die Grube ziehen. Die Bezugshoehe holt sich der Mod selbst aus der Umrandung - nichts ablesen, nichts eintragen. Laeuft auf jeder Karte, ohne Map-Bearbeitung.
 
 Ausserdem dabei:
+- Halden-Gedaechtnis: aufgenommen wird, was abgekippt wurde - OHNE Halden-Limit (abgekipptes Material wird echtes Gelaende, kein Basegame-Haufen)
 - Hoehen- und Tiefenanzeige, solange eine Maschine aktiv ist (Numpad 5 schaltet sie ein/aus, im Spiel umbelegbar)
 - Pruefung beim Start, welche Materialien sich auf dieser Karte nicht ablegen lassen (die 63-Gelaendetypen-Grenze)
 
@@ -58,6 +60,7 @@ Dans FS25 tu choisis le materiau toi-meme, peu importe la profondeur. Cet addon 
 La mise en place tient en une etape : trace une zone TerraFarm autour de la fosse. La hauteur de reference vient automatiquement du contour de la zone - rien a relever, rien a saisir. Fonctionne sur n'importe quelle carte, sans edition de carte.
 
 Egalement inclus :
+- Memoire des tas : tu reprends ce que tu as deverse - SANS limite de tas (le materiau devient du vrai terrain, pas un tas du jeu de base)
 - Affichage de hauteur et de profondeur quand une machine est active (Pave num. 5 pour l'activer/desactiver, reassignable dans les options)
 - Verification au demarrage des materiaux qui ne peuvent pas etre deverses sur cette carte (la limite des 63 types de terrain)
 
@@ -77,6 +80,7 @@ W FS25 sam wybierasz material, niezaleznie od glebokosci. Ten dodatek daje warst
 Konfiguracja to jeden krok: narysuj obszar TerraFarm wokol wyrobiska. Wysokosc odniesienia mod bierze automatycznie z obrysu obszaru - niczego nie odczytujesz, niczego nie wpisujesz. Dziala na kazdej mapie, bez edycji mapy.
 
 W zestawie takze:
+- Pamiec hald: odbierasz to, co wysypales - BEZ limitu hald (material staje sie prawdziwym terenem, nie sterta z gry bazowej)
 - Wskaznik wysokosci i glebokosci, gdy maszyna jest aktywna (Num 5 wlacza/wylacza, klawisz mozna zmienic w opcjach)
 - Kontrola przy starcie, ktorych materialow nie da sie wysypac na tej mapie (limit 63 typow terenu)
 

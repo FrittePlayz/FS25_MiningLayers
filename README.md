@@ -161,6 +161,9 @@ Down to the bedrock below your deepest layer — there digging ends on purpose. 
 **How thick should my layers be?**
 At least 1.5 m (the editor enforces 1 m for the top layer, 1.5 m below). With big machines like the PC 8000, 2 m per layer digs noticeably smoother.
 
+**Is there a pile limit — how much can I dump?**
+No. Dumped material becomes real terrain via TerraFarm, not a base-game heap — so no heap capacity applies. The pile memory is a 2 m grid per savegame with no cap on pile count or size. One thing to know: each 2 m cell remembers ONE material (the last dump wins), so don't mix materials on the same spot if you want them back separately.
+
 **How do I turn the depth display off (or back on)?**
 Press **Numpad 5** while a machine is active (since 1.4.1). The key is rebindable: Options → Controls → Mining Layers. To start with the display hidden, set `showHeightDisplay="false"` in `modSettings/FS25_MiningLayers/miningLayers.xml`.
 
