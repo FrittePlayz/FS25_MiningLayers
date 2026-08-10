@@ -2,6 +2,11 @@
 
 All notable changes to Mining Layers. Newest first.
 
+## [1.4.1.2] — 2026-08-10 (pre-release until the in-game test passes)
+
+### Fixed
+- **Toggle key, third attempt — now via a proper vehicle specialization** (the exact pattern EnhancedVehicle, AutoDrive and Courseplay use in FS25). Dredd's log pinpointed why 1.4.1.1 stayed dead: `FSBaseMission.registerActionEvents` does not exist in FS25, so the registration was never called. The key now registers through the game's own `onRegisterActionEvents` event on every enterable motorized vehicle. Consequence: the key works while sitting in a vehicle (on foot there is no display, so no key needed). The log reports how many vehicle types carry the input spec.
+
 ## [1.4.1.1] — 2026-08-10
 
 ### Fixed

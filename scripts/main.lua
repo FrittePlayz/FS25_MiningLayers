@@ -15,7 +15,7 @@
 
 MiningLayers = {}
 
-MiningLayers.VERSION = '1.4.1.1'
+MiningLayers.VERSION = '1.4.1.2'
 MiningLayers.LOG_PREFIX = '[MiningLayers] '
 
 MiningLayers.MOD_NAME = g_currentModName
@@ -136,6 +136,53 @@ source(g_currentModDirectory .. 'scripts/HeightDisplay.lua')
 source(g_currentModDirectory .. 'scripts/LayerEditor.lua')
 source(g_currentModDirectory .. 'scripts/MiningLayersGui.lua')
 source(g_currentModDirectory .. 'scripts/SponsorSign.lua')
+source(g_currentModDirectory .. 'scripts/MiningLayersSpec.lua')
+
+---Anzahl Fahrzeugtypen mit unserer Eingabe-Spezialisierung (fuer das Log).
+MiningLayers.inputSpecCount = 0
+
+---Haengt die Eingabe-Spezialisierung (Anzeige-Taste) an alle fahrbaren Typen.
+---⚠️ Muss beim DATEI-LADEN eingehakt werden: validateTypes laeuft vor loadMap.
+---Muster 1:1 von EnhancedVehicle/AutoDrive (TypeManager.validateTypes prepend).
+local function installInputSpecialization(typeManager)
+    if typeManager == nil or typeManager.typeName ~= 'vehicle' then
+        return
+    end
+
+    local ok, err = pcall(function()
+        g_specializationManager:addSpecialization('miningLayersInput', 'MiningLayersSpec',
+            MiningLayers.MOD_DIRECTORY .. 'scripts/MiningLayersSpec.lua', nil)
+
+        if g_specializationManager:getSpecializationByName('miningLayersInput') == nil then
+            MiningLayers.log('WARNUNG: Eingabe-Spezialisierung nicht angenommen - Anzeige-Taste bleibt aus.')
+            return
+        end
+
+        local count = 0
+
+        for typeName, typeDef in pairs(g_vehicleTypeManager.types) do
+            if typeDef ~= nil and typeDef.specializations ~= nil
+                and SpecializationUtil.hasSpecialization(Enterable, typeDef.specializations)
+                and SpecializationUtil.hasSpecialization(Motorized, typeDef.specializations) then
+                g_vehicleTypeManager:addSpecialization(typeName, MiningLayers.MOD_NAME .. '.miningLayersInput')
+                count = count + 1
+            end
+        end
+
+        MiningLayers.inputSpecCount = count
+    end)
+
+    if not ok then
+        MiningLayers.log('FEHLER bei der Eingabe-Spezialisierung: %s', tostring(err))
+        MiningLayers.log('  Anzeige-Taste bleibt aus, alles andere laeuft normal weiter.')
+    end
+end
+
+if TypeManager ~= nil and Utils ~= nil and type(Utils.prependedFunction) == 'function' then
+    TypeManager.validateTypes = Utils.prependedFunction(TypeManager.validateTypes, installInputSpecialization)
+else
+    print(MiningLayers.LOG_PREFIX .. 'WARNUNG: TypeManager/Utils fehlen beim Laden - Anzeige-Taste bleibt aus.')
+end
 
 ---Wird vom Basisspiel aufgerufen, nachdem die Karte geladen ist.
 ---@param filename string

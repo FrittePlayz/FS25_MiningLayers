@@ -315,19 +315,18 @@ end
 -- Geschichte, damit der naechste Anlauf nicht wieder dieselben Graeber findet:
 -- 1. Num * (vor 1.2.2.0): einmalige Registrierung beim Kartenstart - beim ersten
 --    Kontext-Rebuild war das Event weg, Taste tot (Tommy 2026-08-08).
--- 2. 1.4.1.0: Append an TerraFarms Machine.onRegisterActionEvents - feuerte in
---    Tommys Live-Test NICHT (die Spezialisierungs-Listener koennen die Funktion
---    beim Bau der Fahrzeugtypen einfangen; ein spaeterer Tausch am Klassen-Table
---    laeuft dann ins Leere).
--- 3. Jetzt: Append an FSBaseMission.registerActionEvents. Die Mission ruft das
---    beim Start und nach JEDEM Menue-Schliessen als normale Methode auf - der
---    Tausch am Klassen-Table greift sicher, und der Rebuild-Zeitpunkt ist genau
---    der richtige. Nebeneffekt, gewollt: die Taste geht auch zu Fuss.
--- Jeder Schritt schreibt ins Log - ein Blick in die log.txt sagt kuenftig, OB
--- und WARUM (nicht) registriert wurde.
+-- 2. 1.4.1.0: Append an TerraFarms Machine.onRegisterActionEvents - Taste tot
+--    in Tommys Live-Test (keine Diagnose-Zeile, Ursache unbewiesen).
+-- 3. 1.4.1.1: Append an FSBaseMission.registerActionEvents - Dredds Log 21:21
+--    beweist: DIE FUNKTION EXISTIERT IN FS25 NICHT (FS22-Wissen, mein Fehler).
+-- 4. Jetzt: eigene Fahrzeug-Spezialisierung (MiningLayersSpec.lua, Bootstrap in
+--    main.lua) - onRegisterActionEvents kommt vom Spielkern, exakt das Muster
+--    von EnhancedVehicle/AutoDrive/Courseplay. Folge: Taste wirkt IM FAHRZEUG
+--    (zu Fuss gibt es keine Anzeige, also auch keine Taste noetig).
+-- Jeder Schritt schreibt ins Log - ein Blick in die log.txt sagt, OB und
+-- WARUM (nicht) registriert wurde.
 --------------------------------------------------------------------------------
 
-MiningLayers.toggleKeyInstalled = false
 MiningLayers.toggleRegisterLogged = false
 MiningLayers.toggleActionMissingLogged = false
 
@@ -386,41 +385,16 @@ function MiningLayers:registerToggleActionEvent()
     end
 end
 
----Haengt die Registrierung an den Rebuild der Missions-Action-Events.
+---Meldet den Status der Eingabe-Spezialisierung (installiert wird sie beim
+---Datei-Laden in main.lua - hier ist nur noch der Log-Report).
 function MiningLayers:installToggleKey()
-    if MiningLayers.toggleKeyInstalled then
-        -- Zweiter Spielstand in derselben Session: der Wrapper sitzt schon,
-        -- nicht noch einmal stapeln.
-        return
-    end
-
-    local missionClass = nil
-
-    if type(FSBaseMission) == 'table' and MiningLayers.isCallable(FSBaseMission.registerActionEvents) then
-        missionClass = FSBaseMission
-    elseif type(BaseMission) == 'table' and MiningLayers.isCallable(BaseMission.registerActionEvents) then
-        missionClass = BaseMission
-    end
-
-    if missionClass == nil then
-        MiningLayers.log('WARNUNG: FSBaseMission.registerActionEvents nicht gefunden - Anzeige-Taste bleibt aus.')
+    if type(MiningLayers.inputSpecCount) == 'number' and MiningLayers.inputSpecCount > 0 then
+        MiningLayers.log('Anzeige-Taste bereit: Eingabe-Spez auf %d Fahrzeugtypen (Standard Num 5, im Fahrzeug, umbelegbar).',
+            MiningLayers.inputSpecCount)
+    else
+        MiningLayers.log('WARNUNG: Eingabe-Spezialisierung nicht installiert - Anzeige-Taste ohne Funktion.')
         MiningLayers.log('  Anzeige weiterhin per showHeightDisplay="false" in der miningLayers.xml schaltbar.')
-        return
     end
-
-    local original = missionClass.registerActionEvents
-
-    missionClass.registerActionEvents = function(...)
-        original(...)
-        pcall(MiningLayers.registerToggleActionEvent, MiningLayers)
-    end
-
-    -- Sofort ein erster Versuch: laeuft die Mission schon, kommt der naechste
-    -- Rebuild sonst erst beim naechsten Menue-Schliessen.
-    pcall(MiningLayers.registerToggleActionEvent, MiningLayers)
-
-    MiningLayers.toggleKeyInstalled = true
-    MiningLayers.log('Anzeige-Taste bereit (Standard Num 5, umbelegbar unter Optionen > Steuerung).')
 end
 
 function MiningLayers:drawHeightDisplay()
