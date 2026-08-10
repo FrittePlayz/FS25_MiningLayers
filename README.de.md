@@ -186,6 +186,7 @@ Wohin der Mod geht. Das sind **Vorhaben, keine Versprechen** — keine Termine, 
 2. **Materialhärte & passendes Werkzeug** — Fels soll sich nicht wie Erde graben: langsamer, oder erst nach Aufreißen/Hämmern. Zum Einordnen: Weder TerraFarm noch das Basisspiel kennen so etwas wie Materialhärte (der `hardness`-Wert des Engine-Pinsels ist die Randschärfe, nicht die Festigkeit) — das wird also kompletter Eigenbau.
 3. **Ergiebigkeit** — magere Deckschicht, ergiebige Nutzschicht: mehr oder weniger Liter pro Kubikmeter, je nach Schicht.
 4. **Deckgestein** — eine harte Zwischenschicht über dem Paydirt-Flöz, Kombination aus 1 und 2.
+5. **Übergangsband an Schichtgrenzen** — eine kleine Toleranzzone, damit ein Werkzeug, das genau auf einer Grenze arbeitet, bei einem Material bleibt statt zwischen zweien hin- und herzuspringen (die Engine mag keine gemischten Materialien am Boden — danke an scfmod für den Hinweis in [#123](https://github.com/scfmod/FS25_TerraFarm/discussions/123)). Das Band wird im Schichten-Editor maßstäblich mitgezeichnet und erklärt sich damit selbst.
 
 ### Begleitprojekt (eigener Mod, geplant)
 

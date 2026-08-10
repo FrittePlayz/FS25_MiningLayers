@@ -186,6 +186,7 @@ Where this mod is headed. These are **intentions, not promises** — no dates, a
 2. **Material hardness & the right tool** — rock should not dig like soil: slower, or only after ripping/hammering it loose. Worth knowing: neither TerraFarm nor the base game has any notion of material hardness (the `hardness` value in the engine brush is edge softness, not rock strength), so this one is built from scratch.
 3. **Yield** — a lean overburden and a rich seam: more or fewer liters per cubic meter depending on the layer you are in.
 4. **Caprock** — a hard band sitting on top of the paydirt seam, combining 1 and 2.
+5. **Transition band at layer boundaries** — a small tolerance zone so a tool working right on a boundary keeps delivering one material instead of flip-flopping between two (the engine dislikes mixed fill types on the ground — thanks to scfmod for flagging this in [#123](https://github.com/scfmod/FS25_TerraFarm/discussions/123)). The band will be drawn to scale in the layer editor, so it explains itself.
 
 ### Companion project (separate mod, planned)
 
