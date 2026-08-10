@@ -109,6 +109,10 @@ This is **not a defect and not a mod conflict — it's the intended switch.** If
 
 `modSettings/FS25_MiningLayers/miningLayers.xml` — created from the template on first start, survives mod updates. Layer stacks (material + depth, per area), display options, and the sponsor sign toggle live here. Everything can also be edited from the in-game menu.
 
+## Changelog
+
+Every release with its changes: [CHANGELOG.md](CHANGELOG.md)
+
 ## Roadmap
 
 Where this mod is headed. These are **intentions, not promises** — no dates, and anything here can change or be dropped.
