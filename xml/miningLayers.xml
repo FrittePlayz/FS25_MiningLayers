@@ -56,7 +56,10 @@
     digging. Piles and manual areas are never touched.
 
     displayPosX / displayPosY: Lage der Hoehenanzeige (0,0 = links unten).
-    TerraFarms eigenes HUD sitzt oben rechts.
+    TerraFarms eigenes HUD sitzt oben rechts. Im Spiel schaltet Numpad 5 die
+    Anzeige ein/aus (Taste umbelegbar unter Optionen > Steuerung); hier steht
+    nur der Startzustand. / In game, Numpad 5 toggles the display (rebindable
+    in the options); showHeightDisplay is just the state at startup.
 
     sponsorSign: Stellt an einem Eckpunkt jedes Bereichs ein kleines Schild mit dem
     Logo von farmersingles.de auf - dem Sponsor, der die Arbeit an diesem Mod

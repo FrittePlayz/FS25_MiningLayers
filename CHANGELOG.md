@@ -2,6 +2,12 @@
 
 All notable changes to Mining Layers. Newest first.
 
+## [1.4.1.0] — 2026-08-10
+
+### Added
+- **Toggle key for the depth display** — **Numpad 5** switches the height/depth readout on and off while a machine is active. Rebindable in the game options (Options → Controls → Mining Layers), shown in the F1 help. Requested by raver on Discord — thanks! The key registers through TerraFarm's own input lifecycle, so it survives menu and vehicle changes (the reason an earlier attempt at this key was removed before release).
+- FAQ (all four languages): how to toggle the display and how to move it via `displayPosX` / `displayPosY` — no extra HUD mod needed.
+
 ## [1.4.0.0] — 2026-08-10
 
 ### Added

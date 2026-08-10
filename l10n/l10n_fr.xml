@@ -24,6 +24,8 @@
         <text name="ml_tip5" text="couleur de ligne = matériau qui commence là ; rouge = fond de fosse" />
         <text name="ml_tip6" text="l'affichage indique la distance jusqu'à la prochaine couche" />
 
+        <text name="input_ML_TOGGLE_HUD" text="Mining Layers : affichage act./désact." />
+
         <text name="ml_uiLayers" text="Couches" />
         <text name="ml_uiNoLayers" text="pas de couches" />
         <text name="ml_uiBelow" text="sous" />

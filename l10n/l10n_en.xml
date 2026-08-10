@@ -24,6 +24,8 @@
         <text name="ml_tip5" text="line colour = material starting there; red = pit floor" />
         <text name="ml_tip6" text="the display shows how far it is to the next layer" />
 
+        <text name="input_ML_TOGGLE_HUD" text="Mining Layers: display on/off" />
+
         <text name="ml_uiLayers" text="Layers" />
         <text name="ml_uiNoLayers" text="no layers" />
         <text name="ml_uiBelow" text="below" />

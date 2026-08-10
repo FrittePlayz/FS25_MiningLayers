@@ -15,7 +15,7 @@
 
 MiningLayers = {}
 
-MiningLayers.VERSION = '1.4.0.0'
+MiningLayers.VERSION = '1.4.1.0'
 MiningLayers.LOG_PREFIX = '[MiningLayers] '
 
 MiningLayers.MOD_NAME = g_currentModName
@@ -179,11 +179,14 @@ function MiningLayers:loadMap(filename)
     MiningLayers.protectedCall('spawnSignsForAllAreas', function()
         MiningLayers:spawnSignsForAllAreas()
     end)
-end
 
--- Die Anzeige-Taste (Numpad *) ist raus - sie reagierte wegen der Input-Kontexte
--- nicht zuverlaessig, und Tommy hat sie 2026-08-08 gestrichen. Anzeige aus geht
--- weiterhin per showHeightDisplay="false" in der miningLayers.xml.
+    -- Anzeige-Taste (Standard Num 5): registriert sich ueber TerraFarms
+    -- Machine:onRegisterActionEvents und ueberlebt so jeden Kontext-Rebuild -
+    -- der Fehler, an dem die alte Num-*-Taste starb (siehe HeightDisplay.lua).
+    MiningLayers.protectedCall('installToggleKey', function()
+        MiningLayers:installToggleKey()
+    end)
+end
 
 function MiningLayers:deleteMap()
     -- Halden-Gedaechtnis wegschreiben, bevor die Welt abgebaut wird.

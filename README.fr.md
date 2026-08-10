@@ -71,6 +71,12 @@ Jusqu'au socle rocheux sous ta couche la plus profonde — là, ça s'arrête vo
 **Quelle épaisseur pour mes couches ?**
 Au moins 1,5 m (l'éditeur impose 1 m en haut, 1,5 m en dessous). Avec de grosses machines type PC 8000, 2 m par couche creuse nettement mieux.
 
+**Comment masquer (ou réafficher) l'affichage de profondeur ?**
+Appuie sur **Pavé num. 5** quand une machine est active (depuis la 1.4.1). Touche réassignable : Options → Commandes → Mining Layers. Pour démarrer sans affichage : `showHeightDisplay="false"` dans `modSettings/FS25_MiningLayers/miningLayers.xml`.
+
+**Puis-je déplacer l'affichage pour éviter les conflits avec d'autres HUD ?**
+Oui. Règle `displayPosX` / `displayPosY` dans `modSettings/FS25_MiningLayers/miningLayers.xml` (fractions d'écran, `0 0` = bas gauche ; défaut `0.012` / `0.55`). Aucun mod HUD supplémentaire nécessaire.
+
 **Ça tourne sur PS5 ou Xbox ?**
 Non. Mining Layers est un mod script, et les mods script ne tournent que sur PC/Mac.
 

@@ -24,6 +24,8 @@
         <text name="ml_tip5" text="kolor linii = materiał zaczynający się od tego miejsca; czerwony = dno wyrobiska" />
         <text name="ml_tip6" text="wskaźnik pokazuje, ile zostało do następnej warstwy" />
 
+        <text name="input_ML_TOGGLE_HUD" text="Mining Layers: wskaźnik wł./wył." />
+
         <text name="ml_uiLayers" text="Warstwy" />
         <text name="ml_uiNoLayers" text="brak warstw" />
         <text name="ml_uiBelow" text="poniżej" />

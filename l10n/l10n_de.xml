@@ -24,6 +24,8 @@
         <text name="ml_tip5" text="Linienfarbe = Material, das ab dort beginnt; rot = Grubenboden" />
         <text name="ml_tip6" text="Die Anzeige zeigt, wie weit es noch bis zur nächsten Schicht ist" />
 
+        <text name="input_ML_TOGGLE_HUD" text="Mining Layers: Anzeige ein/aus" />
+
         <text name="ml_uiLayers" text="Schichten" />
         <text name="ml_uiNoLayers" text="keine Schichten" />
         <text name="ml_uiBelow" text="ab" />

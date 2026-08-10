@@ -94,7 +94,7 @@ Das ist **kein Defekt und kein Mod-Konflikt — es ist die vorgesehene Umschaltu
 - **Automatischer Grubenboden** — Zieltiefe = unterste Schichtgrenze, zieht bei Bereichs-Änderungen nach
 - **Hang- und Wasser-Behandlung** — geneigte Bezugsfläche am Hang, Grubenboden klemmt an der Wasserlinie
 - **Eigene Menüseite** — grafischer Schichten-Editor plus vollständige Ingame-Doku (Deutsch + Englisch)
-- **Tiefenanzeige & Tiefenlinien** — du weißt immer, wie tief du bist und was als Nächstes kommt
+- **Tiefenanzeige & Tiefenlinien** — du weißt immer, wie tief du bist und was als Nächstes kommt; **Numpad 5** schaltet die Anzeige ein/aus (im Spiel umbelegbar)
 - **Material-Check beim Start** — warnt vor der 63-Materialien-Grenze der Engine
 - **Berg-Bonus** — am Steilhang liegt Paydirt oberflächennah: Wer die Anfahrt auf sich nimmt, wird belohnt
 - Multiplayer-freundliches Sponsorschild (siehe unten), kein Sync-Verkehr
@@ -160,6 +160,12 @@ Bis zum Fels unter der tiefsten Schicht — dort ist bewusst Schluss. Genau das 
 
 **Wie dick sollten die Schichten sein?**
 Mindestens 1,5 m (der Editor erzwingt 1 m für die oberste, 1,5 m darunter). Bei großen Maschinen wie dem PC 8000 gräbt sich mit 2 m pro Schicht spürbar besser.
+
+**Wie schalte ich die Tiefenanzeige aus (oder wieder ein)?**
+**Numpad 5** drücken, solange eine Maschine aktiv ist (seit 1.4.1). Die Taste ist umbelegbar: Optionen → Steuerung → Mining Layers. Soll die Anzeige von Anfang an aus sein: `showHeightDisplay="false"` in der `modSettings/FS25_MiningLayers/miningLayers.xml`.
+
+**Kann ich die Anzeige verschieben, damit sie nicht mit anderen HUD-Mods kollidiert?**
+Ja. `displayPosX` / `displayPosY` in der `modSettings/FS25_MiningLayers/miningLayers.xml` setzen (Bildschirmanteile, `0 0` = links unten; Standard `0.012` / `0.55`). Kein zusätzlicher HUD-Mod nötig.
 
 **Läuft das auf PS5 oder Xbox?**
 Nein. Mining Layers ist ein Script-Mod, und Script-Mods laufen nur auf PC/Mac.

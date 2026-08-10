@@ -94,7 +94,7 @@ This is **not a defect and not a mod conflict — it's the intended switch.** If
 - **Automatic pit floor** — target depth is set to the lowest layer boundary, follows area changes
 - **Slope & water handling** — tilted reference plane on hillsides, pit floor clamps to the waterline
 - **In-game menu page** — graphical layer editor plus full documentation (English + German)
-- **Depth display & depth lines** — always know how deep you are and what comes next
+- **Depth display & depth lines** — always know how deep you are and what comes next; **Numpad 5** toggles the display (rebindable in the game options)
 - **Material check at startup** — warns about the engine's 63 terrain material limit
 - **Mountain bonus** — on steep slopes paydirt sits near the surface: hauling up the mountain gets rewarded
 - Multiplayer-friendly sponsor sign (see below), no sync traffic
@@ -160,6 +160,12 @@ Down to the bedrock below your deepest layer — there digging ends on purpose. 
 
 **How thick should my layers be?**
 At least 1.5 m (the editor enforces 1 m for the top layer, 1.5 m below). With big machines like the PC 8000, 2 m per layer digs noticeably smoother.
+
+**How do I turn the depth display off (or back on)?**
+Press **Numpad 5** while a machine is active (since 1.4.1). The key is rebindable: Options → Controls → Mining Layers. To start with the display hidden, set `showHeightDisplay="false"` in `modSettings/FS25_MiningLayers/miningLayers.xml`.
+
+**Can I move the display so it does not overlap other HUD mods?**
+Yes. Set `displayPosX` / `displayPosY` in `modSettings/FS25_MiningLayers/miningLayers.xml` (screen fractions, `0 0` = bottom left; default `0.012` / `0.55`). No extra HUD mod needed.
 
 **Does it work on PS5 or Xbox?**
 No. Mining Layers is a script mod, and script mods only run on PC/Mac.

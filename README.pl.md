@@ -71,6 +71,12 @@ Do litej skały pod najgłębszą warstwą — tam koniec, celowo. Właśnie to 
 **Jak grube powinny być warstwy?**
 Co najmniej 1,5 m (edytor wymusza 1 m na górze, 1,5 m niżej). Przy dużych maszynach klasy PC 8000 lepiej 2 m na warstwę.
 
+**Jak wyłączyć (albo włączyć) wskaźnik głębokości?**
+Naciśnij **Num 5**, gdy maszyna jest aktywna (od 1.4.1). Klawisz można zmienić: Opcje → Sterowanie → Mining Layers. Żeby wskaźnik był wyłączony od startu: `showHeightDisplay="false"` w `modSettings/FS25_MiningLayers/miningLayers.xml`.
+
+**Czy mogę przesunąć wskaźnik, żeby nie nachodził na inne HUD-y?**
+Tak. Ustaw `displayPosX` / `displayPosY` w `modSettings/FS25_MiningLayers/miningLayers.xml` (ułamki ekranu, `0 0` = lewy dół; domyślnie `0.012` / `0.55`). Bez dodatkowego moda HUD.
+
 **Czy działa na PS5 albo Xboxie?**
 Nie. Mining Layers to mod skryptowy, a mody skryptowe działają tylko na PC/Mac.
 

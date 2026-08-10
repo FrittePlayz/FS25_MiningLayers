@@ -90,8 +90,9 @@ function MiningLayers:appendTip(lines)
     table.insert(lines, '')
     table.insert(lines, '» ' .. MiningLayers.getText(tip.key, tip.fallback))
 
-    -- Kein Tasten-Hinweis: die Toggle-Taste ist komplett raus (Tommy 2026-08-08,
-    -- Input-Kontexte machten sie unzuverlaessig). Anzeige aus geht per XML.
+    -- Kein Tasten-Hinweis im News-Band: die F1-Hilfe zeigt die Toggle-Taste
+    -- mit der ECHTEN Belegung an (setActionEventText) - hier stuende sonst
+    -- "Num 5", obwohl der Spieler laengst umbelegt hat.
 end
 
 ---Sammelt die Zeilen fuer die Anzeige.
@@ -306,6 +307,95 @@ function MiningLayers:getNextLayerBelow(vehicle, terrainY, zoneName, worldPosX, 
     end
 
     return nil
+end
+
+--------------------------------------------------------------------------------
+-- Toggle-Taste (Standard Num 5, im Spiel umbelegbar)
+--
+-- Der erste Anlauf (Num *, vor 1.2.2.0) registrierte einmalig beim Kartenstart -
+-- beim naechsten Input-Kontext-Rebuild (Menue auf/zu, Fahrzeugwechsel) war das
+-- Event weg und die Taste tot (Tommy 2026-08-08). TerraFarms eigene Tasten
+-- ueberleben das, weil die Engine Machine:onRegisterActionEvents bei JEDEM
+-- Rebuild neu aufruft. Also haengen wir uns genau dort an: gleiche Lebensdauer,
+-- gleiche Zuverlaessigkeit wie scfmods Num-4-HUD-Taste.
+--------------------------------------------------------------------------------
+
+MiningLayers.toggleKeyInstalled = false
+
+---Callback der Toggle-Taste.
+function MiningLayers:actionToggleHud()
+    self.showHeightDisplay = not self.showHeightDisplay
+
+    -- Bewusster Neuversuch: hat sich die Anzeige nach einem Fehler selbst
+    -- abgeschaltet, darf die Taste sie wieder aktivieren (Fehler loggt erneut
+    -- genau einmal, falls er noch besteht).
+    if self.showHeightDisplay then
+        MiningLayers.displayErrorReported = false
+    end
+end
+
+---Registriert das Action-Event im Kontext der aktiven TerraFarm-Maschine.
+---Laeuft bei jedem Rebuild erneut, deshalb vorher immer aufraeumen - sonst
+---stapeln sich die Events (TerraFarm macht es in Editor.lua:624 genauso).
+---@param isActiveForInput boolean
+function MiningLayers:registerToggleActionEvent(isActiveForInput)
+    if g_inputBinding == nil then
+        return
+    end
+
+    g_inputBinding:removeActionEventsByTarget(MiningLayers)
+
+    -- Ohne Maschine keine Anzeige, also auch keine Taste (haelt die F1-Hilfe sauber).
+    if not isActiveForInput or not MiningLayers.active then
+        return
+    end
+
+    -- Action fehlt, wenn das Spiel das inputBinding aus der modDesc nicht laden
+    -- konnte - dann lieber still bleiben als jeden Rebuild einen Fehler werfen.
+    if InputAction == nil or InputAction.ML_TOGGLE_HUD == nil then
+        return
+    end
+
+    local _, eventId = g_inputBinding:registerActionEvent(InputAction.ML_TOGGLE_HUD,
+        MiningLayers, MiningLayers.actionToggleHud, false, true, false, true)
+
+    if eventId ~= nil then
+        g_inputBinding:setActionEventText(eventId,
+            MiningLayers.getText('input_ML_TOGGLE_HUD', 'Mining Layers: toggle display'))
+
+        if GS_PRIO_LOW ~= nil then
+            g_inputBinding:setActionEventTextPriority(eventId, GS_PRIO_LOW)
+        end
+    end
+end
+
+---Haengt die Registrierung an TerraFarms Machine:onRegisterActionEvents.
+function MiningLayers:installToggleKey()
+    if MiningLayers.toggleKeyInstalled then
+        -- Zweiter Spielstand in derselben Session: der Wrapper sitzt schon auf
+        -- der Klasse in TerraFarms Umgebung, nicht noch einmal stapeln.
+        return
+    end
+
+    local Machine = MiningLayers.tf('Machine')
+
+    if type(Machine) ~= 'table' or not MiningLayers.isCallable(Machine.onRegisterActionEvents) then
+        MiningLayers.log('WARNUNG: Machine.onRegisterActionEvents nicht gefunden - Anzeige-Taste bleibt aus.')
+        MiningLayers.log('  Anzeige weiterhin per showHeightDisplay="false" in der miningLayers.xml schaltbar.')
+        return
+    end
+
+    local original = Machine.onRegisterActionEvents
+
+    Machine.onRegisterActionEvents = function(vehicle, isActiveForInput, ...)
+        original(vehicle, isActiveForInput, ...)
+
+        pcall(MiningLayers.registerToggleActionEvent, MiningLayers,
+            isActiveForInput == true and vehicle ~= nil and vehicle.isClient == true)
+    end
+
+    MiningLayers.toggleKeyInstalled = true
+    MiningLayers.log('Anzeige-Taste bereit (Standard Num 5, umbelegbar unter Optionen > Steuerung).')
 end
 
 function MiningLayers:drawHeightDisplay()

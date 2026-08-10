@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <modDesc descVersion="97">
     <author>Tommy Honold - Farmersingles.de - FrittePlayz</author>
-    <version>1.4.0.0</version>
+    <version>1.4.1.0</version>
 
     <title>
         <en>Mining Layers</en>
@@ -20,7 +20,7 @@ In vanilla FS25 you pick the material yourself, no matter how deep you dig. This
 Setup is one step: draw a TerraFarm area around the pit. The reference height is taken from the area outline automatically - nothing to read off, nothing to type in. Works on any map, no map editing required.
 
 Also included:
-- Height and depth readout while a machine is active
+- Height and depth readout while a machine is active (Numpad 5 toggles it on/off, rebindable in the game options)
 - Startup check that reports materials which cannot be dropped on this map (the 63 terrain type limit)
 
 Requires TerraFarm by scfmod: github.com/scfmod/FS25_TerraFarm
@@ -39,7 +39,7 @@ Im FS25 stellst du das Material selbst ein, egal wie tief du graebst. Dieses Add
 Einrichtung ist ein Schritt: einen TerraFarm-Bereich um die Grube ziehen. Die Bezugshoehe holt sich der Mod selbst aus der Umrandung - nichts ablesen, nichts eintragen. Laeuft auf jeder Karte, ohne Map-Bearbeitung.
 
 Ausserdem dabei:
-- Hoehen- und Tiefenanzeige, solange eine Maschine aktiv ist
+- Hoehen- und Tiefenanzeige, solange eine Maschine aktiv ist (Numpad 5 schaltet sie ein/aus, im Spiel umbelegbar)
 - Pruefung beim Start, welche Materialien sich auf dieser Karte nicht ablegen lassen (die 63-Gelaendetypen-Grenze)
 
 Benoetigt TerraFarm von scfmod: github.com/scfmod/FS25_TerraFarm
@@ -58,7 +58,7 @@ Dans FS25 tu choisis le materiau toi-meme, peu importe la profondeur. Cet addon 
 La mise en place tient en une etape : trace une zone TerraFarm autour de la fosse. La hauteur de reference vient automatiquement du contour de la zone - rien a relever, rien a saisir. Fonctionne sur n'importe quelle carte, sans edition de carte.
 
 Egalement inclus :
-- Affichage de hauteur et de profondeur quand une machine est active
+- Affichage de hauteur et de profondeur quand une machine est active (Pave num. 5 pour l'activer/desactiver, reassignable dans les options)
 - Verification au demarrage des materiaux qui ne peuvent pas etre deverses sur cette carte (la limite des 63 types de terrain)
 
 Necessite TerraFarm de scfmod : github.com/scfmod/FS25_TerraFarm
@@ -77,7 +77,7 @@ W FS25 sam wybierasz material, niezaleznie od glebokosci. Ten dodatek daje warst
 Konfiguracja to jeden krok: narysuj obszar TerraFarm wokol wyrobiska. Wysokosc odniesienia mod bierze automatycznie z obrysu obszaru - niczego nie odczytujesz, niczego nie wpisujesz. Dziala na kazdej mapie, bez edycji mapy.
 
 W zestawie takze:
-- Wskaznik wysokosci i glebokosci, gdy maszyna jest aktywna
+- Wskaznik wysokosci i glebokosci, gdy maszyna jest aktywna (Num 5 wlacza/wylacza, klawisz mozna zmienic w opcjach)
 - Kontrola przy starcie, ktorych materialow nie da sie wysypac na tej mapie (limit 63 typow terenu)
 
 Wymaga TerraFarm od scfmod: github.com/scfmod/FS25_TerraFarm
@@ -98,5 +98,18 @@ Ustawienia: modSettings/FS25_MiningLayers/miningLayers.xml]]>
     </extraSourceFiles>
 
     <l10n filenamePrefix="l10n/l10n" />
+
+    <!-- Numpad 5 als Standard: TerraFarm belegt Num 0/4/8/9/Komma, die 5 liegt
+         direkt neben scfmods HUD-Taste (Num 4) und war auf den Testsystemen frei.
+         Umbelegen geht im Spiel unter Optionen > Steuerung > Mining Layers. -->
+    <actions>
+        <action name="ML_TOGGLE_HUD" />
+    </actions>
+
+    <inputBinding>
+        <actionBinding action="ML_TOGGLE_HUD">
+            <binding device="KB_MOUSE_DEFAULT" input="KEY_KP_5" index="1" />
+        </actionBinding>
+    </inputBinding>
 
 </modDesc>
