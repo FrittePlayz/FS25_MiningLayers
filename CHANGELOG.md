@@ -12,6 +12,9 @@ All notable changes to Mining Layers. Newest first.
 ### Changed
 - Help texts (editor hint, quickstart, manual) now describe the selectable seam.
 
+### Translations
+- **French and Polish** added — full UI and in-game manual (`l10n_fr.xml`, `l10n_pl.xml`), machine-translated; native-speaker corrections welcome via PR or the language poll.
+
 ## [1.3.7.0] — 2026-08-10
 
 ### Added

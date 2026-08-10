@@ -134,7 +134,7 @@ One catch: COAL and LIMESTONE are not base-game fill types — your map or a min
 
 ## Translations
 
-The mod and its in-game manual are available in **English and German**. Which language should come next? **[Vote in the poll](https://github.com/FrittePlayz/FS25_MiningLayers/discussions/1)** — or translate it yourself: the language files are plain XML (`l10n/`), no coding needed, and you'll be credited.
+The mod and its in-game manual are available in **English, German, French and Polish** (FR/PL machine-translated — corrections welcome!). Which language should come next? **[Vote in the poll](https://github.com/FrittePlayz/FS25_MiningLayers/discussions/1)** — or translate it yourself: the language files are plain XML (`l10n/`), no coding needed, and you'll be credited.
 
 ## Changelog
 

@@ -6,6 +6,8 @@
     <title>
         <en>Mining Layers</en>
         <de>Mining Layers</de>
+        <fr>Mining Layers</fr>
+        <pl>Mining Layers</pl>
     </title>
 
     <description>
@@ -47,6 +49,44 @@ Mining Layers von Tommy Honold, Farmersingles.de. Ein FrittePlayz-Projekt (YouTu
 
 Einstellungen: modSettings/FS25_MiningLayers/miningLayers.xml]]>
         </de>
+        <fr>
+            <![CDATA[POUR TERRAFARM ET LES CARTES MINIERES (Yukon Back Country et autres cartes RGC).
+Addon non officiel pour TerraFarm de scfmod.
+
+Dans FS25 tu choisis le materiau toi-meme, peu importe la profondeur. Cet addon donne des couches au sol : terre vegetale d'abord, puis gravier, paydirt plus bas. Les profondeurs se reglent en metres sous la surface, par zone TerraFarm.
+
+La mise en place tient en une etape : trace une zone TerraFarm autour de la fosse. La hauteur de reference vient automatiquement du contour de la zone - rien a relever, rien a saisir. Fonctionne sur n'importe quelle carte, sans edition de carte.
+
+Egalement inclus :
+- Affichage de hauteur et de profondeur quand une machine est active
+- Verification au demarrage des materiaux qui ne peuvent pas etre deverses sur cette carte (la limite des 63 types de terrain)
+
+Necessite TerraFarm de scfmod : github.com/scfmod/FS25_TerraFarm
+Aucune affiliation avec scfmod. Aucun fichier TerraFarm n'est livre avec ce mod.
+
+Mining Layers par Tommy Honold, Farmersingles.de. Un projet FrittePlayz (YouTube).
+
+Reglages : modSettings/FS25_MiningLayers/miningLayers.xml]]>
+        </fr>
+        <pl>
+            <![CDATA[DLA TERRAFARM I MAP GORNICZYCH (Yukon Back Country i inne mapy RGC).
+Nieoficjalny dodatek do TerraFarm od scfmod.
+
+W FS25 sam wybierasz material, niezaleznie od glebokosci. Ten dodatek daje warstwy w gruncie: najpierw humus, potem zwir, glebiej paydirt. Glebokosci ustawiasz w metrach pod powierzchnia, osobno dla kazdego obszaru TerraFarm.
+
+Konfiguracja to jeden krok: narysuj obszar TerraFarm wokol wyrobiska. Wysokosc odniesienia mod bierze automatycznie z obrysu obszaru - niczego nie odczytujesz, niczego nie wpisujesz. Dziala na kazdej mapie, bez edycji mapy.
+
+W zestawie takze:
+- Wskaznik wysokosci i glebokosci, gdy maszyna jest aktywna
+- Kontrola przy starcie, ktorych materialow nie da sie wysypac na tej mapie (limit 63 typow terenu)
+
+Wymaga TerraFarm od scfmod: github.com/scfmod/FS25_TerraFarm
+Brak powiazania ze scfmod. Zadne pliki TerraFarm nie sa dolaczane.
+
+Mining Layers - Tommy Honold, Farmersingles.de. Projekt FrittePlayz (YouTube).
+
+Ustawienia: modSettings/FS25_MiningLayers/miningLayers.xml]]>
+        </pl>
     </description>
 
     <iconFilename>icon_miningLayers.png</iconFilename>

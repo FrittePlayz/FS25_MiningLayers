@@ -134,7 +134,7 @@ Ein Haken: COAL und LIMESTONE sind keine Basisspiel-Materialien — Karte oder e
 
 ## Übersetzungen
 
-Mod und Ingame-Handbuch gibt es auf **Deutsch und Englisch**. Welche Sprache als nächstes? **[In der Umfrage abstimmen](https://github.com/FrittePlayz/FS25_MiningLayers/discussions/1)** — oder selbst übersetzen: Die Sprachdateien sind simples XML (`l10n/`), kein Programmieren nötig, und du wirst in den Credits genannt.
+Mod und In-Game-Handbuch gibt es auf **Deutsch, Englisch, Französisch und Polnisch** (FR/PL maschinell übersetzt — Korrekturen willkommen!). Welche Sprache soll als Nächstes kommen? **[Stimm in der Umfrage ab](https://github.com/FrittePlayz/FS25_MiningLayers/discussions/1)** — oder übersetz selbst: Die Sprachdateien sind einfaches XML (`l10n/`), kein Code nötig, und du wirst in den Credits genannt.
 
 ## Changelog
 

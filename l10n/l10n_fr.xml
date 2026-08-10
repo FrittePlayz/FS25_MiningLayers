@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<l10n>
+    <texts>
+        <text name="ml_decimalSeparator" text="," />
+        <text name="ml_heightHere" text="Hauteur ici" />
+        <text name="ml_zone" text="Zone" />
+        <text name="ml_layer" text="Couche" />
+        <text name="ml_depth" text="Profondeur" />
+        <text name="ml_until" text="à" />
+        <text name="ml_stillNeeded" text="encore" />
+        <text name="ml_noLayers" text="pas de couches à cet endroit" />
+        <text name="ml_above" text="soit" />
+        <text name="ml_aboveRef" text="au-dessus de la hauteur de référence" />
+        <text name="ml_overrideHint" text="Le matériau TerraFarm %s est sans effet ici - la couche décide" />
+        <text name="ml_manualArea" text="Matériau renseigné dans cette zone = TerraFarm classique, cette zone n'a PAS de couches" />
+        <text name="ml_zoneOff" text="couches désactivées pour cette zone" />
+        <text name="ml_spoil" text="entassé (au-dessus de la hauteur de référence) - la sélection TerraFarm s'applique" />
+        <text name="ml_pathArea" text="Zone de chemin = TerraFarm classique, les couches ne fonctionnent que dans les zones polygonales" />
+        <text name="ml_moundKnown" text="tas reconnu - tu récupères ce qui a été déversé ici" />
+        <text name="ml_tip1" text="trace une zone, laisse les champs vides - le mod règle le fond de fosse" />
+        <text name="ml_tip2" text="Renseigner un matériau dans une zone = TerraFarm classique sans couches (chantier)" />
+        <text name="ml_tip3" text="vide le godet avant un changement de couche - un godet, un matériau" />
+        <text name="ml_tip4" text="le mod mémorise les tas - tu reprends ce qui a été déversé" />
+        <text name="ml_tip5" text="couleur de ligne = matériau qui commence là ; rouge = fond de fosse" />
+        <text name="ml_tip6" text="l'affichage indique la distance jusqu'à la prochaine couche" />
+
+        <text name="ml_uiLayers" text="Couches" />
+        <text name="ml_uiNoLayers" text="pas de couches" />
+        <text name="ml_uiBelow" text="sous" />
+        <text name="ml_uiIntro" text="Redéfinir les couches ? Actuellement : %s. L'éditeur demande pour chaque couche de morts-terrains le matériau et la limite basse en mètres, puis le filon en dessous (PAYDIRT par défaut, le charbon ou le calcaire marchent aussi). Le socle rocheux tout en bas reste fixe - c'est là que le creusement s'arrête." />
+        <text name="ml_uiDepthTitle" text="%s : limite basse en mètres sous la surface" />
+        <text name="ml_uiDone" text="Nouvelles couches : %s. Prend effet immédiatement pour chaque zone sans zone propre." />
+        <text name="ml_uiMore" text="Ajouter une couche de morts-terrains en dessous ? Non = on passe au filon. Le mod place le socle rocheux en dessous tout seul." />
+        <text name="ml_uiNoPaydirt" text="PAYDIRT n'a pas sa place dans les morts-terrains, le filon se trouve en dessous. Le filon est la dernière étape, tu peux le choisir là." />
+        <text name="ml_uiNotAllowed" text="%s n'est pas un matériau de morts-terrains. Disponibles : DIRT, SOIL, GRAVEL, SAND, STONE, COAL, LIMESTONE." />
+        <text name="ml_uiSeamNext" text="Six couches de morts-terrains suffisent largement. Choisis maintenant le filon en dessous - le socle rocheux reste fixe." />
+        <text name="ml_uiSeamNotAllowed" text="%s ne convient pas comme filon. Disponibles : PAYDIRT, COAL, LIMESTONE, STONE, GRAVEL, SAND, DIRT, SOIL." />
+
+        <!-- ===================== Menu page: tabs ===================== -->
+        <text name="ml_tabQuickstart" text="Démarrage rapide" />
+        <text name="ml_tabManual" text="Manuel" />
+        <text name="ml_tabTips" text="Astuces et véhicules" />
+        <text name="ml_tabEditor" text="Couches" />
+
+        <!-- ===================== Tab 4: layer editor ===================== -->
+        <text name="ml_edSummarySection" text="Profil obtenu" />
+        <text name="ml_edScope" text="Tu édites le standard : il s'applique à toutes les zones sans couches propres, y compris celles déjà tracées. Pour donner ses propres couches à une seule fosse, choisis simplement cette zone sous S'applique à ci-dessus." />
+        <text name="ml_helpManEditor4" text="Standard et exceptions : ce que tu sauvegardes avec Toutes les zones est le standard — il s'applique à toute zone sans couches propres, rétroactivement aussi aux zones existantes. Si une seule fosse doit différer, choisis-la sous S'applique à et sauvegarde ses couches — directement dans l'éditeur, sans toucher aux fichiers." />
+        <text name="ml_edTargetSection" text="S'applique à" />
+        <text name="ml_edTarget" text="Zone" />
+        <text name="ml_edTargetDefault" text="Toutes les zones (standard)" />
+        <text name="ml_edScopeArea" text="Ces couches ne s'appliquent qu'à &quot;%s&quot;. Toutes les autres zones gardent le standard. Repasse sur Toutes les zones ci-dessus et tu édites de nouveau le standard." />
+        <text name="ml_edSavedArea" text="Couches sauvegardées pour &quot;%s&quot;. Elles ne s'appliquent qu'à cette zone." />
+        <text name="ml_edActive" text="Cette zone" />
+        <text name="ml_edActiveOn" text="Mining Layers (couches)" />
+        <text name="ml_edActiveOff" text="TerraFarm classique (sans couches)" />
+        <text name="ml_edSavedOff" text="Les couches sont désactivées pour &quot;%s&quot;. Le TerraFarm classique s'y applique de nouveau." />
+        <text name="ml_helpQsBothWaysTitle" text="Deux voies — tu décides par zone" />
+        <text name="ml_helpQsBothWays1" text="Laisse les champs de matériau de la zone TerraFarm VIDES et Mining Layers fait son travail : ce qui finit dans le godet dépend de la profondeur à laquelle tu creuses. C'est le cas normal pour une fosse." />
+        <text name="ml_helpQsBothWays2" text="Renseigne un matériau sur la zone à la place et tu obtiens le TerraFarm classique sans couches. Exactement ce qu'il faut pour les chantiers, la construction de routes et le nivellement — partout où tu veux juste déplacer de la terre avec toujours le même matériau." />
+        <text name="ml_helpQsBothWays3" text="Tu obtiens le même résultat depuis l'onglet Couches : choisis-y une zone et mets-la sur &quot;TerraFarm classique&quot;. Les deux chemins mènent au même endroit, prends celui que tu préfères." />
+        <text name="ml_edForeign" text="⚠ Cette zone a été écrite à la main dans miningLayers.xml et ne peut être affichée ici que sous forme simplifiée. Sauvegarder la réécrit dans le schéma de l'éditeur ; les extras comme des textures de sol personnalisées ou une hauteur de référence fixe sont perdus." />
+        <text name="ml_edLayerSection" text="Couches" />
+        <text name="ml_edLayer" text="Couche" />
+        <text name="ml_edMaterial" text="Matériau" />
+        <text name="ml_edThickness" text="Épaisseur" />
+        <text name="ml_edSave" text="Sauvegarder" />
+        <text name="ml_edAdd" text="Ajouter une couche" />
+        <text name="ml_edRemove" text="Retirer la couche" />
+        <text name="ml_edSaved" text="Couches sauvegardées. Elles s'appliquent immédiatement à toute zone sans zone propre." />
+        <text name="ml_edHint" text="Le contour clair marque la couche que tu édites. Le filon est la dernière ligne, fixe : matériau au choix (PAYDIRT par défaut, le charbon ou le calcaire marchent aussi), épaisseur et position fixes. La roche en dessous se place toute seule. N'oublie pas de sauvegarder : ESC ou Retour quitte la page et tout ce qui suit ta dernière sauvegarde est perdu." />
+        <text name="ml_edSeamEntry" text="Filon : %s" />
+
+        <!-- ===================== Tab 1: quick start ===================== -->
+        <text name="ml_helpQsSetupTitle" text="Mise en place en une étape" />
+        <text name="ml_helpQsSetup1" text="Trace une zone TerraFarm autour de ta fosse et laisse les champs à l'intérieur vides. C'est toute la mise en place. Creuse n'importe où dans cette zone et le matériau vient de la profondeur au lieu du réglage du véhicule." />
+        <text name="ml_helpQsSetup2" text="Le mod calcule la hauteur de référence lui-même : il lit les hauteurs de terrain aux coins de ta zone et en déduit la surface. Rien à relever, rien à saisir. Si tu renseignes un matériau sur la zone, tu obtiens le TerraFarm classique sans couches. Pratique pour les chantiers." />
+
+        <text name="ml_helpQsStockNote" text="Toutes les images ici montrent le mod tel qu'il est livré : terre végétale, gravier, paydirt, roche, sans que personne n'ait réglé une seule couche à la main. C'est ce que tu obtiens dès que la zone est tracée. Tes propres couches sont une option, pas une condition." />
+        <text name="ml_helpQsDisplayTitle" text="L'affichage à gauche" />
+        <text name="ml_helpQsDisplay1" text="Quand une machine est active, la gauche de l'écran te dit où tu en es : hauteur actuelle, couche en cours et combien de mètres restent jusqu'à la prochaine." />
+        <text name="ml_helpQsDisplayB1" text="C'est cet affichage qui compte, pas le champ de matériau de TerraFarm. Le véhicule continue d'afficher son propre réglage et n'est remplacé qu'au moment où tu creuses." />
+        <text name="ml_helpQsDisplayB2" text="Déplace-le avec displayPosX et displayPosY dans miningLayers.xml, ou désactive-le avec showHeightDisplay." />
+
+        <text name="ml_helpQsLayersTitle" text="Régler ses propres couches" />
+        <text name="ml_helpQsLayers1" text="D'origine : terre végétale, gravier en dessous, puis le paydirt, roche tout en bas. Ça convient à presque toutes les fosses, tu n'as donc rien à régler." />
+        <text name="ml_helpQsWizardButton" text="Configurer les couches" />
+        <text name="ml_helpQsWizardHint" text="Rien ne t'y oblige, cela dit. Ne fais rien et notre standard s'applique, il convient à presque toutes les fosses. Tu veux autre chose ? Va sur l'onglet Couches, monte ton propre profil et regarde-le prendre forme au fur et à mesure." />
+        <text name="ml_helpQsLayersScope" text="Tu édites les couches de morts-terrains et le filon en dessous (PAYDIRT par défaut, le charbon ou le calcaire marchent aussi). Sa position reste fixe : qui veut le minerai doit creuser à travers les morts-terrains — un vrai gameplay minier au lieu de matériau sur simple pression d'un bouton. La roche tout en bas est placée par le mod lui-même." />
+
+        <text name="ml_helpQsMistakesTitle" text="Les trois erreurs en traçant une zone" />
+        <text name="ml_helpQsWarnWater" text="Lac ou rive : des coins dans l'eau mesurent le fond. Le plan de référence bascule et tu tombes sur la roche au bord de l'eau. Garde la zone essentiellement sur la terre ferme." />
+        <text name="ml_helpQsWarnRidge" text="Crête de montagne : une zone tracée à travers la crête transforme le plan de référence en corde et pousse le paydirt près de la surface. Sur une pente raide isolée c'est le bonus de montagne voulu, sur la colline derrière ta ferme non. Trace les zones de pente sur UN seul versant." />
+        <text name="ml_helpQsRidgeCaption" text="Sur une pente raide ça se lit ainsi : couche GRAVEL à 15,7 m, plus que 2,3 m jusqu'au paydirt. Qui fait le trajet jusqu'à la montagne y arrive plus vite - c'est voulu." />
+        <text name="ml_helpQsWarnRiver" text="Traversée de rivière : avec des coins sur les deux berges, le lit au milieu se trouve loin sous le plan de référence et le fond de fosse finit sous le lit, donc la fosse est inondée. Trace les zones le long de la rivière, jamais en travers." />
+
+        <!-- ===================== Tab 2: manual ===================== -->
+        <text name="ml_helpManWhatTitle" text="Ce que le mod change" />
+        <text name="ml_helpManWhat1" text="Dans FS25 tu règles sur le véhicule ce que ramasse ton godet, peu importe la profondeur. Ce mod donne des couches au sol à la place : ce que tu obtiens dépend de la distance entre ton point de creusement et la surface." />
+        <text name="ml_helpManWhat2" text="C'est un addon purement runtime par-dessus TerraFarm. Aucun fichier TerraFarm n'est modifié et aucun code tiers n'est livré. Sans TerraFarm, le mod reste muet." />
+
+        <text name="ml_helpManLayersTitle" text="Les couches" />
+        <text name="ml_helpManLayers1" text="Standard de haut en bas : DIRT, puis GRAVEL, puis PAYDIRT, puis STONE. La roche est le bout du chemin - c'est voulu, pas une fonction manquante." />
+        <text name="ml_helpManLayersB1" text="Les profondeurs sont des limites basses en mètres sous la surface, pas des hauteurs absolues au-dessus du niveau de la mer." />
+        <text name="ml_helpManLayersB2" text="La couche du bas n'a pas besoin de limite, elle continue vers le bas sans fin." />
+        <text name="ml_helpManLayersB3" text="Chaque couche reçoit une texture de sol assortie pour que tu voies où tu en es dans le trou. Utilise paintLayer pour la définir toi-même par couche." />
+        <text name="ml_helpManLayers2" text="Les couches s'appliquent par zone. Une zone sans zone propre hérite des couches standard, une zone avec un matériau renseigné n'en a aucune." />
+
+        <text name="ml_helpManMoundTitle" text="Tas de déblais et remblayage" />
+        <text name="ml_helpManMound1" text="Le mod se souvient de ce que tu as déversé où. Reprends un tas et tu obtiens exactement ce qu'il contient, pas la géologie en dessous. Ça vaut partout sur la carte tant que le tas existe." />
+        <text name="ml_helpManMoundB1" text="Remblaie ton trou et tu ressors d'abord le remblai. C'est seulement en dessous que les couches s'appliquent de nouveau." />
+        <text name="ml_helpManMoundB2" text="Creuse sous la base d'un tas et le tas est épuisé à cet endroit, la géologie revient. Ça t'empêche de pelleter du matériau sans fin depuis un cratère." />
+        <text name="ml_helpManMoundB3" text="Vide le godet avant de changer de couche. Un conteneur ne tient qu'un seul type de matériau, et avec l'ancienne charge encore dedans le godet ne prendra pas le nouveau." />
+
+        <text name="ml_helpManEditorTitle" text="Régler ses propres couches" />
+        <text name="ml_helpManEditor1" text="L'onglet Couches est l'endroit où tu montes ton propre profil. La coupe transversale est à gauche, couche, matériau et épaisseur à droite. Six couches de morts-terrains au maximum ; disponibles : DIRT, SOIL, GRAVEL, SAND, STONE, COAL et LIMESTONE." />
+        <text name="ml_helpManEditor3" text="Quitte la page avec ESC ou le bouton Retour. Attention : modifié n'est pas sauvegardé. Seul le bouton Sauvegarder écrit les couches et les applique immédiatement à la cible choisie au-dessus — le standard ou la zone seule. Pars avant et l'ancien état revient à la prochaine ouverture." />
+        <text name="ml_helpManEditor2" text="Tu ne peux pas mettre PAYDIRT dans les morts-terrains - le matériau qui rapporte se trouve toujours SOUS les morts-terrains. Comme filon (dernière ligne de l'éditeur) tu peux choisir COAL, LIMESTONE, STONE, GRAVEL, SAND, DIRT ou SOIL en plus de PAYDIRT : pour les gravières et le pays du charbon. Le socle rocheux en dessous reste fixe." />
+
+        <text name="ml_helpManFloorTitle" text="Le fond de fosse" />
+        <text name="ml_helpManFloor1" text="Le mod règle automatiquement la hauteur cible de la zone au bas de ta couche la plus profonde, pour que le nivellement ne creuse pas dans le vide. Agrandis la zone et le fond suit dans la même session. Après rechargement d'une sauvegarde, il ne suit plus." />
+        <text name="ml_helpManFloor2" text="C'est aussi pourquoi tu ne peux pas creuser sans fin au bord de l'eau : sous la couche la plus profonde, ça s'arrête. Sans zone cette limite manque, et la hauteur cible devient le niveau de la mer." />
+
+        <text name="ml_helpManConfigTitle" text="Configurer à la main" />
+        <text name="ml_helpManConfig1" text="Tout vit dans modSettings/FS25_MiningLayers/miningLayers.xml. Le fichier est créé au premier démarrage et survit aux mises à jour du mod. Avant la première sauvegarde de l'assistant, le mod pose un .bak à côté, une fois par session." />
+        <text name="ml_helpManConfig2" text="C'est aussi là que tu actives ou coupes l'affichage, les lignes de profondeur, le fond de fosse automatique et la texture de sol au déversement. Les zones peuvent être désactivées individuellement ou recevoir leurs propres couches par zone." />
+
+        <!-- ===================== Tab 3: tips and vehicles ===================== -->
+        <text name="ml_helpTipsTfTitle" text="Pièges de TerraFarm" />
+        <text name="ml_helpTipsTfB1" text="Désactive defaultEnabled, sinon chaque véhicule TerraFarm retourne ta cour rien qu'en roulant." />
+        <text name="ml_helpTipsTfB2" text="L'abaissement ne fonctionne dans le polygone que si Restrict area est activé. Le nivellement marche aussi dehors. S'il ne se passe rien, tu es en général du mauvais côté de la ligne. Ou le sol est déjà à la hauteur cible." />
+        <text name="ml_helpTipsTfB3" text="Une chargeuse sur pneus ne gère que 30 à 40 centimètres par passe. Construis une rampe. L'outil pour la profondeur, c'est la pelle." />
+        <text name="ml_helpTipsTfB4" text="Les touches sont sur le pavé numérique, Num 9 ouvre les réglages globaux. Après les avoir changés, une sortie propre et un redémarrage peuvent être nécessaires avant qu'ils prennent effet." />
+        <text name="ml_helpTipsTfB6" text="Un bulldozer traverse aussi les couches : abaisse la lame, mode Aplanir, et fais des passes assez longues - plus la passe est longue, plus tu descends à chaque fois. L'image montre la deuxième couche (gravier) atteinte à la lame seule - sans ripper arrière. À la limite : épuise d'abord les vieux tas et vide la lame, jusque-là l'ancien matériau y reste." />
+        <text name="ml_helpTipsTfB5" text="Sans zone, l'abaissement n'a pas de limite basse, parce que la hauteur cible est le niveau de la mer. Le trou ne devient toujours que aussi profond que tu le creuses, mais une zone te donne un fond défini." />
+
+        <text name="ml_helpTipsVehTitle" text="Quand un véhicule ne creuse pas" />
+        <text name="ml_helpTipsVeh1" text="Pour qu'un véhicule creuse, TerraFarm a besoin d'une configuration machine pour lui. Sans elle il ne se passe rien, et ce n'est la faute ni de TerraFarm ni de ce mod." />
+        <text name="ml_helpTipsVehB1" text="Installe une configuration de machines, par exemple l'officielle FS25_TerraFarmMachines de scfmod." />
+        <text name="ml_helpTipsVehB2" text="Beaucoup de packs de véhicules miniers livrent leurs propres entrées machine. Les doublons n'améliorent rien, ils empirent. Choisis-en un." />
+        <text name="ml_helpTipsVehB3" text="Si un godet montre les flèches mais n'enlève rien, c'est ce godet. Essaie-en un autre sur la même pelle : si ça marche, c'est l'entrée de l'outil qui est en cause, pas ta configuration." />
+        <text name="ml_helpTipsVeh2" text="Un pack de configurations pour les machines minières courantes est en préparation. Il sortira séparément de ce mod." />
+
+        <text name="ml_helpTipsMapTitle" text="Spécificités des cartes" />
+        <text name="ml_helpTipsMapB1" text="FS25 ne gère que 63 types de matériaux. Avec beaucoup de mods installés, certains tombent au bout et ne peuvent plus être déversés. Le mod le vérifie au démarrage et écrit les matériaux concernés dans le log." />
+        <text name="ml_helpTipsMapB2" text="Les noms de textures de sol diffèrent sur chaque carte. Au premier creusement, le mod écrit la liste de ta carte dans le log. Prends-y les valeurs paintLayer." />
+        <text name="ml_helpTipsMapB4" text="Le mod tourne sur n'importe quelle carte : pour les textures de couches, il choisit automatiquement le sol le plus proche que la carte propose (noms standard comme GRAVEL, MOUNTAINROCK, MOSS_STONES). Si une carte n'a rien de convenable, ta propre sélection de texture reste simplement active - matériaux, couches et tas fonctionnent toujours." />
+        <text name="ml_helpTipsMapB3" text="Certaines cartes verrouillent les lits de rivière contre la déformation. C'est la block map de la carte elle-même et ça n'a rien à voir avec la propriété ou avec ce mod." />
+
+        <text name="ml_helpSponsorTitle" text="Soutenu par farmersingles.de" />
+        <text name="ml_helpSponsor1" text="Ce mod est soutenu par farmersingles.de, un site de rencontre pour agriculteurs. C'est pourquoi un petit panneau avec leur logo se trouve à un coin de chaque zone. On le dit ouvertement au lieu de le cacher." />
+        <text name="ml_helpSponsor2" text="Le panneau se trouve toujours en dehors de la zone de creusement et ne bloque aucune machine. Si tu préfères t'en passer : mets sponsorSign=false dans miningLayers.xml et il disparaît aussitôt. Rien d'autre ne change dans le mod, et on ne redemandera pas." />
+        <text name="ml_helpTipsAboutTitle" text="À propos de ce mod" />
+        <text name="ml_helpTipsAbout1" text="Mining Layers est un addon non officiel pour TerraFarm de scfmod. Il n'y a aucune affiliation avec scfmod et aucun fichier TerraFarm n'est livré. TerraFarm est disponible sur GitHub, pas sur le ModHub." />
+        <text name="ml_pageTitle" text="Mining Layers" />
+        <text name="ml_credits" text="Mining Layers par Tommy Honold, Farmersingles.de. Un projet FrittePlayz." />
+        <text name="ml_helpTipsAbout2" text="Ce mod est gratuit et le restera." />
+    </texts>
+</l10n>

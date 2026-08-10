@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<l10n>
+    <texts>
+        <text name="ml_decimalSeparator" text="," />
+        <text name="ml_heightHere" text="Wysokość tutaj" />
+        <text name="ml_zone" text="Strefa" />
+        <text name="ml_layer" text="Warstwa" />
+        <text name="ml_depth" text="Głębokość" />
+        <text name="ml_until" text="do" />
+        <text name="ml_stillNeeded" text="jeszcze" />
+        <text name="ml_noLayers" text="brak warstw w tym miejscu" />
+        <text name="ml_above" text="czyli" />
+        <text name="ml_aboveRef" text="powyżej wysokości odniesienia" />
+        <text name="ml_overrideHint" text="Materiał TerraFarm %s nie działa tutaj - decyduje warstwa" />
+        <text name="ml_manualArea" text="Materiał ustawiony w tym obszarze = zwykły TerraFarm, ten obszar NIE ma warstw" />
+        <text name="ml_zoneOff" text="warstwy wyłączone dla tego obszaru" />
+        <text name="ml_spoil" text="usypane (powyżej wysokości odniesienia) - obowiązuje wybór TerraFarm" />
+        <text name="ml_pathArea" text="Obszar ścieżki = zwykły TerraFarm, warstwy działają tylko w obszarach wielokątnych" />
+        <text name="ml_moundKnown" text="hałda rozpoznana - dostajesz to, co tu wysypano" />
+        <text name="ml_tip1" text="narysuj obszar, zostaw pola puste - mod ustawia dno wyrobiska" />
+        <text name="ml_tip2" text="Wpisanie materiału w obszarze = zwykły TerraFarm bez warstw (budowa)" />
+        <text name="ml_tip3" text="opróżnij łyżkę przed zmianą warstwy - jedna łyżka, jeden materiał" />
+        <text name="ml_tip4" text="mod pamięta hałdy - podnosisz to, co wysypano" />
+        <text name="ml_tip5" text="kolor linii = materiał zaczynający się od tego miejsca; czerwony = dno wyrobiska" />
+        <text name="ml_tip6" text="wskaźnik pokazuje, ile zostało do następnej warstwy" />
+
+        <text name="ml_uiLayers" text="Warstwy" />
+        <text name="ml_uiNoLayers" text="brak warstw" />
+        <text name="ml_uiBelow" text="poniżej" />
+        <text name="ml_uiIntro" text="Zdefiniować warstwy od nowa? Obecnie: %s. Edytor pyta o materiał i dolną granicę w metrach dla każdej warstwy nadkładu, a na końcu o pokład pod nimi (domyślnie PAYDIRT, węgiel lub wapień też działają). Lita skała na samym dole pozostaje stała - tam kopanie się kończy." />
+        <text name="ml_uiDepthTitle" text="%s: dolna granica w metrach pod powierzchnią" />
+        <text name="ml_uiDone" text="Nowe warstwy: %s. Obowiązują natychmiast dla każdego obszaru bez własnej strefy." />
+        <text name="ml_uiMore" text="Dodać kolejną warstwę nadkładu poniżej? Nie = przechodzimy do pokładu. Litą skałę pod spodem mod ustawia sam." />
+        <text name="ml_uiNoPaydirt" text="PAYDIRT nie należy do nadkładu, pokład leży pod nim. Pokład to ostatni krok, tam możesz go wybrać." />
+        <text name="ml_uiNotAllowed" text="%s nie jest materiałem nadkładu. Dostępne: DIRT, SOIL, GRAVEL, SAND, STONE, COAL, LIMESTONE." />
+        <text name="ml_uiSeamNext" text="Sześć warstw nadkładu w zupełności wystarczy. Teraz wybierz pokład pod nimi - lita skała pod spodem pozostaje stała." />
+        <text name="ml_uiSeamNotAllowed" text="%s nie nadaje się na pokład. Dostępne: PAYDIRT, COAL, LIMESTONE, STONE, GRAVEL, SAND, DIRT, SOIL." />
+
+        <!-- ===================== Menu page: tabs ===================== -->
+        <text name="ml_tabQuickstart" text="Szybki start" />
+        <text name="ml_tabManual" text="Instrukcja" />
+        <text name="ml_tabTips" text="Porady i pojazdy" />
+        <text name="ml_tabEditor" text="Warstwy" />
+
+        <!-- ===================== Tab 4: layer editor ===================== -->
+        <text name="ml_edSummarySection" text="Wynikowy profil" />
+        <text name="ml_edScope" text="Edytujesz standard: obowiązuje dla wszystkich obszarów bez własnych warstw, także tych już narysowanych. Aby dać własne warstwy pojedynczemu wyrobisku, po prostu wybierz ten obszar powyżej pod Dotyczy." />
+        <text name="ml_helpManEditor4" text="Standard i wyjątki: to, co zapiszesz z Wszystkie obszary, jest standardem — obowiązuje dla każdego obszaru bez własnych warstw, wstecznie także dla istniejących. Jeśli jedno wyrobisko ma się różnić, wybierz je powyżej pod Dotyczy i zapisz jego warstwy — bezpośrednio w edytorze, bez grzebania w plikach." />
+        <text name="ml_edTargetSection" text="Dotyczy" />
+        <text name="ml_edTarget" text="Obszar" />
+        <text name="ml_edTargetDefault" text="Wszystkie obszary (standard)" />
+        <text name="ml_edScopeArea" text="Te warstwy dotyczą tylko &quot;%s&quot;. Wszystkie pozostałe obszary zachowują standard. Przełącz powyżej z powrotem na Wszystkie obszary, a znów edytujesz standard." />
+        <text name="ml_edSavedArea" text="Warstwy zapisane dla &quot;%s&quot;. Dotyczą tylko tego obszaru." />
+        <text name="ml_edActive" text="Ten obszar" />
+        <text name="ml_edActiveOn" text="Mining Layers (warstwy)" />
+        <text name="ml_edActiveOff" text="Zwykły TerraFarm (bez warstw)" />
+        <text name="ml_edSavedOff" text="Warstwy dla &quot;%s&quot; są wyłączone. Obowiązuje tam znów zwykły TerraFarm." />
+        <text name="ml_helpQsBothWaysTitle" text="Dwie drogi — decydujesz per obszar" />
+        <text name="ml_helpQsBothWays1" text="Zostaw pola materiału obszaru TerraFarm PUSTE, a Mining Layers robi swoje: to, co ląduje w łyżce, zależy od głębokości kopania. To normalny przypadek dla wyrobiska." />
+        <text name="ml_helpQsBothWays2" text="Wpisz zamiast tego materiał w obszarze, a dostajesz zwykły TerraFarm bez warstw. W sam raz na place budowy, budowę dróg i niwelację — wszędzie tam, gdzie chcesz tylko przemieszczać ziemię i zawsze potrzebujesz tego samego materiału." />
+        <text name="ml_helpQsBothWays3" text="Ten sam wynik osiągniesz z zakładki Warstwy: wybierz tam obszar i ustaw go na &quot;Zwykły TerraFarm&quot;. Obie drogi prowadzą w to samo miejsce, wybierz którą wolisz." />
+        <text name="ml_edForeign" text="⚠ Ta strefa została napisana ręcznie w miningLayers.xml i może być tu pokazana tylko w uproszczonej formie. Zapisanie przepisze ją na schemat edytora; dodatki jak własne tekstury podłoża czy stała wysokość odniesienia przepadną." />
+        <text name="ml_edLayerSection" text="Warstwy" />
+        <text name="ml_edLayer" text="Warstwa" />
+        <text name="ml_edMaterial" text="Materiał" />
+        <text name="ml_edThickness" text="Grubość" />
+        <text name="ml_edSave" text="Zapisz" />
+        <text name="ml_edAdd" text="Dodaj warstwę" />
+        <text name="ml_edRemove" text="Usuń warstwę" />
+        <text name="ml_edSaved" text="Warstwy zapisane. Obowiązują od razu dla każdego obszaru bez własnej strefy." />
+        <text name="ml_edHint" text="Jasna obwódka to warstwa, którą właśnie edytujesz. Pokład to stały ostatni wiersz: materiał do wyboru (domyślnie PAYDIRT, węgiel lub wapień też działają), grubość i położenie stałe. Skała pod spodem ustawia się sama. Nie zapomnij zapisać: ESC lub Wstecz opuszcza stronę i wszystko od ostatniego zapisu przepada." />
+        <text name="ml_edSeamEntry" text="Pokład: %s" />
+
+        <!-- ===================== Tab 1: quick start ===================== -->
+        <text name="ml_helpQsSetupTitle" text="Konfiguracja w jednym kroku" />
+        <text name="ml_helpQsSetup1" text="Narysuj obszar TerraFarm wokół swojego wyrobiska i zostaw pola w nim puste. To cała konfiguracja. Kop gdziekolwiek w tym obszarze, a materiał pochodzi z głębokości zamiast z ustawienia pojazdu." />
+        <text name="ml_helpQsSetup2" text="Mod sam wylicza wysokość odniesienia: odczytuje wysokości terenu w narożnikach twojego obszaru i wyprowadza z nich powierzchnię. Niczego nie odczytujesz, niczego nie wpisujesz. Jeśli jednak wpiszesz materiał w obszarze, dostajesz zwykły TerraFarm bez warstw. Przydatne przy pracach budowlanych." />
+
+        <text name="ml_helpQsStockNote" text="Wszystkie obrazki tutaj pokazują mod w stanie fabrycznym: humus, żwir, paydirt, skała - bez ręcznego ustawiania choćby jednej warstwy. Dokładnie to dostajesz, gdy tylko obszar jest narysowany. Własne warstwy to opcja, nie wymóg." />
+        <text name="ml_helpQsDisplayTitle" text="Wskaźnik po lewej" />
+        <text name="ml_helpQsDisplay1" text="Gdy maszyna jest aktywna, lewa strona ekranu mówi ci, gdzie jesteś: aktualna wysokość, którą warstwę kopiesz i ile metrów zostało do następnej." />
+        <text name="ml_helpQsDisplayB1" text="Liczy się ten wskaźnik, nie pole materiału TerraFarm. Pojazd nadal pokazuje własne ustawienie i jest nadpisywany tylko w momencie kopania." />
+        <text name="ml_helpQsDisplayB2" text="Przesuń go przez displayPosX i displayPosY w miningLayers.xml albo wyłącz przez showHeightDisplay." />
+
+        <text name="ml_helpQsLayersTitle" text="Ustawianie własnych warstw" />
+        <text name="ml_helpQsLayers1" text="Fabrycznie: humus, pod nim żwir, potem paydirt, na dole skała. To pasuje do prawie każdego wyrobiska, więc nie musisz nic ustawiać." />
+        <text name="ml_helpQsWizardButton" text="Skonfiguruj warstwy" />
+        <text name="ml_helpQsWizardHint" text="Nie musisz jednak. Nie rób nic, a obowiązuje nasz standard, który pasuje do prawie każdego wyrobiska. Chcesz inaczej? Wejdź na zakładkę Warstwy, zbuduj tam własny profil i patrz, jak nabiera kształtu." />
+        <text name="ml_helpQsLayersScope" text="Edytujesz warstwy nadkładu i pokład pod nimi (domyślnie PAYDIRT, węgiel lub wapień też działają). Jego położenie pozostaje stałe: kto chce rudy, musi przekopać się przez nadkład — prawdziwy górniczy gameplay zamiast materiału na przycisk. Skałę na samym dole ustawia sam mod." />
+
+        <text name="ml_helpQsMistakesTitle" text="Trzy błędy przy rysowaniu obszaru" />
+        <text name="ml_helpQsWarnWater" text="Jezioro lub brzeg: narożniki w wodzie mierzą dno. Płaszczyzna odniesienia przechyla się i przy linii brzegowej trafiasz na skałę. Trzymaj obszar głównie na lądzie." />
+        <text name="ml_helpQsWarnRidge" text="Grzbiet górski: obszar narysowany w poprzek grzbietu zamienia płaszczyznę odniesienia w cięciwę i wypycha paydirt pod powierzchnię. Na odległym stromym zboczu to zamierzony bonus górski, na pagórku za twoim gospodarstwem nie. Rysuj obszary stokowe na JEDNYM zboczu." />
+        <text name="ml_helpQsRidgeCaption" text="Na stromym zboczu wygląda to tak: warstwa GRAVEL na 15,7 m, tylko 2,3 m do paydirtu. Kto zada sobie trud wjazdu na górę, dotrze szybciej - tak ma być." />
+        <text name="ml_helpQsWarnRiver" text="Przeprawa przez rzekę: z narożnikami na obu brzegach koryto pośrodku leży daleko pod płaszczyzną odniesienia, a dno wyrobiska ląduje pod korytem, więc wyrobisko zalewa woda. Rysuj obszary wzdłuż rzeki, nigdy w poprzek." />
+
+        <!-- ===================== Tab 2: manual ===================== -->
+        <text name="ml_helpManWhatTitle" text="Co zmienia ten mod" />
+        <text name="ml_helpManWhat1" text="W FS25 ustawiasz na pojeździe, co zbiera twoja łyżka, niezależnie od głębokości. Ten mod daje zamiast tego warstwy w gruncie: to, co dostajesz, zależy od tego, jak głęboko pod powierzchnią leży punkt kopania." />
+        <text name="ml_helpManWhat2" text="To czysto runtime'owy dodatek na TerraFarm. Żaden plik TerraFarm nie jest modyfikowany i żaden obcy kod nie jest dołączany. Bez TerraFarm mod pozostaje cichy." />
+
+        <text name="ml_helpManLayersTitle" text="Warstwy" />
+        <text name="ml_helpManLayers1" text="Standard od góry do dołu: DIRT, potem GRAVEL, potem PAYDIRT, potem STONE. Skała to koniec drogi - to celowe, nie brakująca funkcja." />
+        <text name="ml_helpManLayersB1" text="Głębokości to dolne granice w metrach pod powierzchnią, nie bezwzględne wysokości nad poziomem morza." />
+        <text name="ml_helpManLayersB2" text="Dolna warstwa nie potrzebuje granicy, ciągnie się w dół bez końca." />
+        <text name="ml_helpManLayersB3" text="Każda warstwa dostaje pasującą teksturę podłoża, żebyś widział, gdzie jesteś w dole. Użyj paintLayer, aby ustawić ją samemu per warstwa." />
+        <text name="ml_helpManLayers2" text="Warstwy obowiązują per obszar. Obszar bez własnej strefy dziedziczy warstwy standardowe, obszar z wpisanym materiałem nie ma żadnych." />
+
+        <text name="ml_helpManMoundTitle" text="Hałdy i zasypywanie" />
+        <text name="ml_helpManMound1" text="Mod pamięta, co gdzie wysypałeś. Podnieś hałdę z powrotem, a dostaniesz dokładnie to, co w niej jest, nie geologię pod spodem. To obowiązuje wszędzie na mapie, dopóki hałda istnieje." />
+        <text name="ml_helpManMoundB1" text="Zasyp swój dół, a najpierw wybierasz zasypkę. Dopiero poniżej znów obowiązują warstwy." />
+        <text name="ml_helpManMoundB2" text="Kop poniżej podstawy hałdy, a hałda jest w tym miejscu wyczerpana i wraca geologia. To uniemożliwia wybieranie niekończącego się materiału z krateru." />
+        <text name="ml_helpManMoundB3" text="Opróżnij łyżkę przed zmianą warstwy. Pojemnik mieści tylko jeden typ materiału, a ze starym ładunkiem w środku łyżka nie weźmie nowego." />
+
+        <text name="ml_helpManEditorTitle" text="Ustawianie własnych warstw" />
+        <text name="ml_helpManEditor1" text="Zakładka Warstwy to miejsce, gdzie budujesz własny profil. Przekrój po lewej, warstwa, materiał i grubość po prawej. Maksymalnie sześć warstw nadkładu; dostępne: DIRT, SOIL, GRAVEL, SAND, STONE, COAL i LIMESTONE." />
+        <text name="ml_helpManEditor3" text="Stronę opuszczasz przez ESC lub przycisk Wstecz. Uwaga: zmienione to nie zapisane. Dopiero przycisk Zapisz zapisuje warstwy i stosuje je od razu do celu wybranego powyżej — standardu albo pojedynczego obszaru. Wyjdź wcześniej, a przy następnym otwarciu wraca stary stan." />
+        <text name="ml_helpManEditor2" text="PAYDIRT nie może być nadkładem - materiał, który przynosi pieniądze, leży zawsze POD nadkładem. Jako pokład (ostatni wiersz edytora) możesz oprócz PAYDIRT wybrać COAL, LIMESTONE, STONE, GRAVEL, SAND, DIRT lub SOIL: dla żwirowni i zagłębia węglowego. Lita skała pod spodem pozostaje stała." />
+
+        <text name="ml_helpManFloorTitle" text="Dno wyrobiska" />
+        <text name="ml_helpManFloor1" text="Mod automatycznie ustawia wysokość docelową obszaru na spód twojej najgłębszej warstwy, żeby niwelacja nie kopała w nicość. Powiększ obszar, a dno podąża w tej samej sesji. Po wczytaniu zapisu gry już nie." />
+        <text name="ml_helpManFloor2" text="Dlatego też nie możesz kopać w nieskończoność nad wodą: poniżej najgłębszej warstwy koniec. Bez obszaru tego limitu brakuje, a wysokością docelową staje się poziom morza." />
+
+        <text name="ml_helpManConfigTitle" text="Konfiguracja ręczna" />
+        <text name="ml_helpManConfig1" text="Wszystko mieszka w modSettings/FS25_MiningLayers/miningLayers.xml. Plik powstaje przy pierwszym starcie i przeżywa aktualizacje moda. Zanim kreator zapisze po raz pierwszy, mod kładzie obok .bak, raz na sesję." />
+        <text name="ml_helpManConfig2" text="Tam też włączasz i wyłączasz wskaźnik, linie głębokości, automatyczne dno wyrobiska i teksturę podłoża przy wysypywaniu. Strefy można wyłączać pojedynczo albo dawać im własne warstwy per obszar." />
+
+        <!-- ===================== Tab 3: tips and vehicles ===================== -->
+        <text name="ml_helpTipsTfTitle" text="Pułapki TerraFarm" />
+        <text name="ml_helpTipsTfB1" text="Wyłącz defaultEnabled, inaczej każdy pojazd TerraFarm rozorze ci podwórko samą jazdą." />
+        <text name="ml_helpTipsTfB2" text="Obniżanie działa wewnątrz wielokąta tylko przy włączonym Restrict area. Niwelacja działa też na zewnątrz. Jeśli nic się nie dzieje, zwykle jesteś po złej stronie linii. Albo grunt jest już na wysokości docelowej." />
+        <text name="ml_helpTipsTfB3" text="Ładowarka kołowa daje radę tylko jakieś 30-40 centymetrów na przejazd. Zbuduj rampę. Narzędziem do głębokości jest koparka." />
+        <text name="ml_helpTipsTfB4" text="Klawisze siedzą na klawiaturze numerycznej, Num 9 otwiera ustawienia globalne. Po ich zmianie może być potrzebne czyste wyjście i restart, zanim zaczną działać." />
+        <text name="ml_helpTipsTfB6" text="Spycharka też przebija się przez warstwy: opuść lemiesz, tryb Wyrównywanie, i rób odpowiednio długie przejazdy - im dłuższy przejazd, tym głębiej schodzisz za każdym razem. Obrazek pokazuje drugą warstwę (żwir) osiągniętą samym lemieszem - bez tylnego zrywaka. Na granicy: najpierw zużyj stare hałdy i opróżnij lemiesz, do tego czasu stary materiał w nim zostaje." />
+        <text name="ml_helpTipsTfB5" text="Bez obszaru obniżanie nie ma dolnego limitu, bo wysokością docelową jest poziom morza. Dół i tak robi się tylko tak głęboki, jak go wykopiesz, ale obszar daje ci zdefiniowane dno." />
+
+        <text name="ml_helpTipsVehTitle" text="Gdy pojazd nie chce kopać" />
+        <text name="ml_helpTipsVeh1" text="Żeby pojazd w ogóle kopał, TerraFarm potrzebuje dla niego konfiguracji maszyny. Bez niej nic się nie dzieje, i nie jest to wina ani TerraFarm, ani tego moda." />
+        <text name="ml_helpTipsVehB1" text="Zainstaluj konfigurację maszyn, na przykład oficjalną FS25_TerraFarmMachines od scfmod." />
+        <text name="ml_helpTipsVehB2" text="Wiele paczek pojazdów górniczych ma własne wpisy maszyn. Zdublowane wpisy nie poprawiają, tylko psują. Wybierz jeden." />
+        <text name="ml_helpTipsVehB3" text="Jeśli łyżka pokazuje strzałki, ale nic nie zbiera, to wina tej łyżki. Spróbuj innej na tej samej koparce: jeśli działa, winny jest wpis narzędzia, nie twoja konfiguracja." />
+        <text name="ml_helpTipsVeh2" text="Paczka konfiguracji dla popularnych maszyn górniczych jest w przygotowaniu. Wyjdzie osobno od tego moda." />
+
+        <text name="ml_helpTipsMapTitle" text="Specyfika map" />
+        <text name="ml_helpTipsMapB1" text="FS25 obsługuje tylko 63 typy materiałów. Przy wielu zainstalowanych modach niektóre wypadają poza koniec i nie dają się już wysypywać. Mod sprawdza to przy starcie i zapisuje dotknięte materiały do logu." />
+        <text name="ml_helpTipsMapB2" text="Nazwy tekstur podłoża różnią się na każdej mapie. Przy pierwszym kopaniu mod zapisuje listę twojej mapy do logu. Stamtąd bierz wartości paintLayer." />
+        <text name="ml_helpTipsMapB4" text="Mod działa na każdej mapie: dla tekstur warstw automatycznie wybiera najbliższe podłoże, jakie mapa oferuje (standardowe nazwy jak GRAVEL, MOUNTAINROCK, MOSS_STONES). Jeśli mapa nie ma nic pasującego, po prostu zostaje aktywny twój własny wybór tekstury - materiały, warstwy i hałdy nadal działają." />
+        <text name="ml_helpTipsMapB3" text="Niektóre mapy blokują koryta rzek przed deformacją. To block mapa samej mapy i nie ma nic wspólnego z własnością ani z tym modem." />
+
+        <text name="ml_helpSponsorTitle" text="Wspierane przez farmersingles.de" />
+        <text name="ml_helpSponsor1" text="Ten mod jest wspierany przez farmersingles.de, portal randkowy dla rolników. Dlatego przy jednym narożniku każdego obszaru stoi mała tablica z ich logo. Mówimy to otwarcie, zamiast ukrywać." />
+        <text name="ml_helpSponsor2" text="Tablica stoi zawsze POZA obszarem kopania i nie blokuje żadnej maszyny. Jeśli wolisz bez niej: ustaw sponsorSign=false w miningLayers.xml i znika od razu. Nic innego w modzie się nie zmienia, i nie będziemy pytać ponownie." />
+        <text name="ml_helpTipsAboutTitle" text="O tym modzie" />
+        <text name="ml_helpTipsAbout1" text="Mining Layers to nieoficjalny dodatek do TerraFarm od scfmod. Nie ma żadnego powiązania ze scfmod i żadne pliki TerraFarm nie są dołączane. TerraFarm jest dostępny na GitHubie, nie w ModHubie." />
+        <text name="ml_pageTitle" text="Mining Layers" />
+        <text name="ml_credits" text="Mining Layers - Tommy Honold, Farmersingles.de. Projekt FrittePlayz." />
+        <text name="ml_helpTipsAbout2" text="Ten mod jest darmowy i taki pozostanie." />
+    </texts>
+</l10n>
