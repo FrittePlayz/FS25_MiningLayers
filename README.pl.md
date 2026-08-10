@@ -50,6 +50,9 @@ Co najmniej 1,5 m na warstwę (edytor wymusza 1 m dla najwyższej, 1,5 m dla ni�
 **Czy Mining Layers działa na każdej mapie?**
 Tak. Bez edycji mapy: narysuj obszar TerraFarm wokół wyrobiska i kop. Dla tekstur mod automatycznie bierze najbliższe podłoże, jakie mapa oferuje; jeśli nic nie pasuje, po prostu zostaje aktywny twój własny wybór tekstury.
 
+**Czy potrzebny jest nowy zapis gry?**
+Nie. Mining Layers działa z istniejącymi zapisami — zainstaluj, włącz oba mody w zapisie i graj dalej. Istniejące obszary TerraFarm działają dalej; obszary bez wpisanego materiału po prostu dostają warstwy.
+
 **Jak zbudować żwirownię w FS25?**
 Zainstaluj TerraFarm i Mining Layers, narysuj obszar, potem menu ESC → Mining Layers → Warstwy: DIRT na górze, LIMESTONE lub STONE jako pokład. Od 1.4.0 wszystko ustawisz w edytorze — bez XML.
 

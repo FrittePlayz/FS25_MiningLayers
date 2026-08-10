@@ -140,6 +140,9 @@ One catch: COAL and LIMESTONE are not base-game fill types — your map or a min
 **Does Mining Layers work on any map?**
 Yes. No map editing is needed: draw a TerraFarm area around your future pit and start digging. For layer textures the mod automatically picks the closest ground texture the map offers; if nothing fits, your own texture selection simply stays active.
 
+**Do I need a new savegame?**
+No. Mining Layers works with existing saves — install, enable both mods for the savegame, keep playing. Existing TerraFarm areas keep working; areas without a material set simply get layers.
+
 **How do I make a gravel pit in FS25?**
 Install TerraFarm and Mining Layers, draw a TerraFarm area, then open ESC menu → Mining Layers → Layers and set DIRT on top with LIMESTONE or STONE as the pay seam. Since 1.4.0 the seam material is selectable right in the editor — no XML needed.
 

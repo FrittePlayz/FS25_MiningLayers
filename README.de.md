@@ -140,6 +140,9 @@ Ein Haken: COAL und LIMESTONE sind keine Basisspiel-Materialien — Karte oder e
 **Läuft Mining Layers auf jeder Karte?**
 Ja. Keine Map-Bearbeitung nötig: TerraFarm-Bereich um die künftige Grube ziehen und losgraben. Für die Schicht-Texturen nimmt der Mod automatisch die passendste Bodentextur der Karte; passt keine, bleibt einfach deine eigene Texturauswahl aktiv.
 
+**Brauche ich einen neuen Spielstand?**
+Nein. Mining Layers läuft mit bestehenden Savegames — installieren, beide Mods im Spielstand aktivieren, weiterspielen. Vorhandene TerraFarm-Bereiche funktionieren weiter; Bereiche ohne eingetragenes Material bekommen einfach Schichten.
+
 **Wie baue ich eine Kiesgrube im LS25?**
 TerraFarm und Mining Layers installieren, TerraFarm-Bereich ziehen, dann ESC-Menü → Mining Layers → Schichten: DIRT oben, LIMESTONE oder STONE als Nutzschicht. Seit 1.4.0 ist das Flöz-Material direkt im Editor wählbar — ganz ohne XML.
 

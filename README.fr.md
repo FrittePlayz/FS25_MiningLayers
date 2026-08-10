@@ -50,6 +50,9 @@ Au moins 1,5 m par couche (l'éditeur impose 1 m pour la couche du haut, 1,5 m e
 **Mining Layers fonctionne-t-il sur n'importe quelle carte ?**
 Oui. Aucune édition de carte : trace une zone TerraFarm autour de ta fosse et creuse. Pour les textures, le mod prend automatiquement le sol le plus proche que la carte propose ; si rien ne convient, ta propre sélection reste simplement active.
 
+**Faut-il une nouvelle sauvegarde ?**
+Non. Mining Layers fonctionne avec les sauvegardes existantes — installe, active les deux mods dans ta sauvegarde et continue de jouer. Les zones TerraFarm existantes continuent de fonctionner ; les zones sans matériau renseigné reçoivent simplement des couches.
+
 **Comment faire une gravière dans FS25 ?**
 Installe TerraFarm et Mining Layers, trace une zone, puis menu ESC → Mining Layers → Couches : DIRT en haut, LIMESTONE ou STONE comme filon. Depuis la 1.4.0, tout se règle dans l'éditeur — sans XML.
 
