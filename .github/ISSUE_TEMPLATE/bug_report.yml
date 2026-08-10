@@ -1,0 +1,50 @@
+name: Bug report / Fehlermeldung
+description: Something is broken? Report it here. / Etwas kaputt? Hier melden. (English or German, both fine)
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for the report! **Without your `log.txt` we usually cannot help** — it contains
+        your full mod list and the actual error, so please attach it below.
+        / Danke für die Meldung! **Ohne deine `log.txt` können wir meistens nicht helfen** —
+        darin stehen deine komplette Modliste und der eigentliche Fehler.
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened? / Was ist passiert?
+      description: What did you expect, what happened instead? / Was hast du erwartet, was kam stattdessen?
+      placeholder: "Example: layers stop working as soon as mod X is enabled - digging always gives DIRT."
+    validations:
+      required: true
+
+  - type: input
+    id: map
+    attributes:
+      label: Map / Karte
+      placeholder: "e.g. Yukon Back Country"
+    validations:
+      required: true
+
+  - type: input
+    id: versions
+    attributes:
+      label: Versions (Mining Layers + TerraFarm)
+      placeholder: "e.g. Mining Layers 1.4.1.0, TerraFarm 1.0.x"
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: logfile
+    attributes:
+      label: log.txt attached / log.txt angehängt
+      description: >
+        Path / Pfad: `Documents/My Games/FarmingSimulator2025/log.txt` —
+        copy it right AFTER the problem happened (the game overwrites it on every start).
+        Your mod list is inside the log, no need to type it.
+        / Direkt NACH dem Problem kopieren (das Spiel überschreibt sie bei jedem Start).
+        Deine Modliste steht im Log, nicht abtippen.
+      options:
+        - label: I attached my log.txt to this issue (drag & drop the file into the text box above) / log.txt ist angehängt
+          required: true

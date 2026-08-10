@@ -95,7 +95,7 @@ Cette page et les textes en jeu FR sont traduits automatiquement — les correct
 
 ## Bugs et questions
 
-[GitHub Issues](https://github.com/FrittePlayz/FS25_MiningLayers/issues) — joins ton `log.txt` et le nom de la carte.
+[GitHub Issues](https://github.com/FrittePlayz/FS25_MiningLayers/issues) — **joins toujours ton `log.txt`** (`Documents/My Games/FarmingSimulator2025/log.txt`, copié juste après le problème). Il contient ta liste de mods et l'erreur réelle — sans lui, on ne peut généralement pas aider.
 
 ## Sponsor
 

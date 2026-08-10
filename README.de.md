@@ -212,7 +212,7 @@ Im Spiel zeigt sich das als kleines Schild am Grubenrand. Nicht gewünscht? `spo
 
 ## Fehler & Fragen
 
-Fehler gefunden? [Issue aufmachen](../../issues) — bitte mit `log.txt` und der gespielten Karte. Feature-Ideen sind an derselben Stelle willkommen.
+Fehler gefunden? [Issue aufmachen](../../issues) — **immer die `log.txt` anhängen** (`Dokumente/My Games/FarmingSimulator2025/log.txt`, direkt nach dem Problem kopieren). Darin stehen deine komplette Modliste und der eigentliche Fehler — ohne sie können wir meistens nicht helfen. Feature-Ideen sind an derselben Stelle willkommen.
 
 ## Unterstütz den Mod 🍟
 

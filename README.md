@@ -212,7 +212,7 @@ In game this shows as a small sign at the pit edge. Don't want it? Set `sponsorS
 
 ## Bugs & questions
 
-Found a bug? [Open an issue](../../issues) — include your `log.txt` and the map you play on. Ideas for features are welcome in the same place.
+Found a bug? [Open an issue](../../issues) — **always attach your `log.txt`** (`Documents/My Games/FarmingSimulator2025/log.txt`, copied right after the problem happened). It contains your full mod list and the actual error — without it we usually cannot help. Ideas for features are welcome in the same place.
 
 ## Support this mod 🍟
 

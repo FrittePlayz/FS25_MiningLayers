@@ -95,7 +95,7 @@ Ta strona i polskie teksty w grze są tłumaczone maszynowo — poprawki od nati
 
 ## Błędy i pytania
 
-[GitHub Issues](https://github.com/FrittePlayz/FS25_MiningLayers/issues) — dołącz swój `log.txt` i nazwę mapy.
+[GitHub Issues](https://github.com/FrittePlayz/FS25_MiningLayers/issues) — **zawsze dołącz swój `log.txt`** (`Dokumenty/My Games/FarmingSimulator2025/log.txt`, skopiowany zaraz po wystąpieniu problemu). Zawiera pełną listę modów i właściwy błąd — bez niego zwykle nie pomożemy.
 
 ## Sponsor
 
