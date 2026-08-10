@@ -158,6 +158,11 @@ TerraFarm needs a machine configuration for that vehicle — without one, nothin
 **Why do I always get the same material, no matter how deep I dig?**
 A material is set on your TerraFarm area — that switches the area to plain TerraFarm without layers (by design, for construction work). Leave the material fields empty and the layers take over.
 
+**Why do I get no layers, even though I drew an area? (top 3 causes)**
+1. **The machine has no input area assigned.** TerraFarm links areas to the MACHINE, not to your position: machine settings (default `Y`) → select your area as input. Saved per machine and savegame — this is the number one support case; the TerraFarm HUD then shows your area instead of just a material.
+2. **A material is set in the area** → the area is plain TerraFarm on purpose (construction mode). Leave the material fields empty.
+3. **You are digging outside the area polygon** (or on a path area — paths never get layers).
+
 **How deep can I dig?**
 Down to the bedrock below your deepest layer — there digging ends on purpose. That is what makes it mining instead of a bottomless money hole.
 

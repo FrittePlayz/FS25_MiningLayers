@@ -68,6 +68,11 @@ TerraFarm a besoin d'une configuration machine pour ce véhicule — sans elle, 
 **Pourquoi j'obtiens toujours le même matériau, quelle que soit la profondeur ?**
 Un matériau est renseigné sur ta zone TerraFarm — la zone passe alors en TerraFarm classique sans couches (voulu, pour les chantiers). Laisse les champs de matériau vides et les couches prennent le relais.
 
+**Pourquoi n'ai-je pas de couches alors que j'ai tracé une zone ? (top 3 des causes)**
+1. **La machine n'a pas de zone d'entrée assignée.** TerraFarm lie les zones à la MACHINE, pas à ta position : réglages machine (`Y` par défaut) → choisis ta zone comme entrée. Sauvegardé par machine et par partie — le cas de support n° 1 ; le HUD TerraFarm affiche alors ta zone au lieu d'un simple matériau.
+2. **Un matériau est renseigné dans la zone** → la zone fonctionne volontairement en TerraFarm classique (mode chantier). Laisse les champs de matériau vides.
+3. **Tu creuses en dehors du polygone** (ou dans une zone chemin — les chemins n'ont jamais de couches).
+
 **Jusqu'où peut-on creuser ?**
 Jusqu'au socle rocheux sous ta couche la plus profonde — là, ça s'arrête volontairement. C'est ce qui en fait du minage et pas un trou à argent sans fond.
 

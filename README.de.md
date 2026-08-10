@@ -158,6 +158,11 @@ TerraFarm braucht eine Maschinen-Konfiguration für das Fahrzeug — ohne passie
 **Warum bekomme ich immer dasselbe Material, egal wie tief ich grabe?**
 Im TerraFarm-Bereich ist ein Material eingetragen — damit läuft der Bereich als normales TerraFarm ohne Schichten (Absicht, für Baustellen). Materialfelder leer lassen, dann greifen die Schichten.
 
+**Warum kommen keine Schichten, obwohl ich einen Bereich gezogen habe? (Top-3-Ursachen)**
+1. **Die Maschine hat keinen Eingabe-Bereich zugewiesen.** TerraFarm koppelt Bereiche an die MASCHINE, nicht an deine Position: Maschinen-Einstellungen (Standard `Y`) → deinen Bereich als Eingabe wählen. Wird pro Maschine und Spielstand gespeichert — der häufigste Support-Fall; TerraFarms HUD zeigt dann deinen Bereich statt nur ein Material.
+2. **Im Bereich ist ein Material eingetragen** → der Bereich läuft absichtlich als normales TerraFarm (Baustellen-Modus). Materialfelder leer lassen.
+3. **Du gräbst außerhalb des Bereichs-Polygons** (oder in einem Pfad-Bereich — Pfade bekommen nie Schichten).
+
 **Wie tief kann ich graben?**
 Bis zum Fels unter der tiefsten Schicht — dort ist bewusst Schluss. Genau das macht es zum Bergbau statt zum bodenlosen Geldloch.
 

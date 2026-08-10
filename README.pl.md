@@ -68,6 +68,11 @@ TerraFarm potrzebuje konfiguracji maszyny dla tego pojazdu — bez niej nic się
 **Dlaczego zawsze dostaję ten sam materiał, niezależnie od głębokości?**
 W obszarze TerraFarm jest wpisany materiał — obszar działa wtedy jak zwykły TerraFarm bez warstw (celowo, do budów). Zostaw pola materiału puste, a warstwy przejmą robotę.
 
+**Dlaczego nie ma warstw, chociaż narysowałem obszar? (3 najczęstsze przyczyny)**
+1. **Maszyna nie ma przypisanego obszaru wejściowego.** TerraFarm wiąże obszary z MASZYNĄ, nie z twoją pozycją: ustawienia maszyny (domyślnie `Y`) → wybierz swój obszar jako wejście. Zapisywane per maszyna i zapis gry — najczęstszy przypadek supportu; HUD TerraFarm pokazuje wtedy twój obszar zamiast samego materiału.
+2. **W obszarze wpisany jest materiał** → obszar celowo działa jak zwykły TerraFarm (tryb budowy). Zostaw pola materiału puste.
+3. **Kopiesz poza wielokątem obszaru** (albo w obszarze ścieżki — ścieżki nigdy nie mają warstw).
+
 **Jak głęboko można kopać?**
 Do litej skały pod najgłębszą warstwą — tam koniec, celowo. Właśnie to czyni z tego górnictwo, a nie bezdenną dziurę z pieniędzmi.
 
