@@ -525,6 +525,22 @@ InGameMenuMiningLayersFrame.MAX_THICKNESS = 20.0
 InGameMenuMiningLayersFrame.THICKNESS_STEP = 0.5
 InGameMenuMiningLayersFrame.MAX_LAYERS = 6
 
+---Mindestdicken (Tommy, 10.08.2026): duennere Schichten brechen das Halden-
+---Abtragen. Oberste Schicht 1,0 m, jede weitere 1,5 m; im Handbuch steht
+---zusaetzlich die Empfehlung, bei grossen Maschinen eher 2 m zu nehmen.
+InGameMenuMiningLayersFrame.MIN_THICKNESS_FIRST = 1.0
+InGameMenuMiningLayersFrame.MIN_THICKNESS_BELOW = 1.5
+
+---@param index number Abraum-Schicht (1 = oberste)
+---@return number
+function InGameMenuMiningLayersFrame:minThicknessFor(index)
+    if index <= 1 then
+        return InGameMenuMiningLayersFrame.MIN_THICKNESS_FIRST
+    end
+
+    return InGameMenuMiningLayersFrame.MIN_THICKNESS_BELOW
+end
+
 ---@return number
 local function paydirtThickness()
     return MiningLayers.PAYDIRT_SEAM_THICKNESS or 6
@@ -648,10 +664,12 @@ function InGameMenuMiningLayersFrame:loadEditorFromConfig()
             local thickness = layer.depth - previousDepth
             previousDepth = layer.depth
 
-            if thickness < InGameMenuMiningLayersFrame.MIN_THICKNESS then
+            local minHere = self:minThicknessFor(#self.editLayers + 1)
+
+            if thickness < minHere then
                 -- Zu duenn fuer die Auswahl: auf das Mindestmass heben, statt
                 -- die Schicht verschwinden zu lassen.
-                thickness = InGameMenuMiningLayersFrame.MIN_THICKNESS
+                thickness = minHere
                 self.editorForeign = true
             elseif thickness > InGameMenuMiningLayersFrame.MAX_THICKNESS then
                 thickness = InGameMenuMiningLayersFrame.MAX_THICKNESS
@@ -985,9 +1003,20 @@ function InGameMenuMiningLayersFrame:onThicknessChanged(state)
     local value = self.thicknessValues[state]
 
     if value ~= nil and self.editLayers[self.editIndex] ~= nil then
-        self.editLayers[self.editIndex].thickness = value
+        -- Unter das Mindestmass laesst sich nichts stellen - zu duenne
+        -- Schichten brechen das Halden-Abtragen.
+        local minHere = self:minThicknessFor(self.editIndex)
+        local clamped = math.max(value, minHere)
+
+        self.editLayers[self.editIndex].thickness = clamped
         self.editorDirty = true
-        self:updateEditorSummary()
+
+        if clamped ~= value then
+            -- Anzeige auf den geklemmten Wert zurueckholen.
+            self:updateEditorOptions()
+        else
+            self:updateEditorSummary()
+        end
     end
 end
 
@@ -1044,7 +1073,7 @@ function InGameMenuMiningLayersFrame:onClickSaveLayers()
         local fillType = g_fillTypeManager:getFillTypeByName(layer.fillTypeName)
 
         if fillType ~= nil then
-            depth = depth + layer.thickness
+            depth = depth + math.max(layer.thickness, self:minThicknessFor(#layers + 1))
 
             table.insert(layers, {
                 fillTypeName = layer.fillTypeName,

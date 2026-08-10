@@ -10,7 +10,11 @@ All notable changes to Mining Layers. Newest first.
 - Fallback: if the map does not know the chosen seam material (COAL and LIMESTONE are not base-game fill types), the seam reverts to PAYDIRT with a log line instead of silently producing a pit with nothing in it.
 
 ### Changed
+- **Minimum layer thickness enforced in the editor** — 1 m for the top layer, 1.5 m for every layer below. Thinner layers break spoil pile pickup; with big machines 2 m is the better choice (hint added to editor and manual).
 - Help texts (editor hint, quickstart, manual) now describe the selectable seam.
+
+### Fixed
+- Version string in the log said 1.3.7.0.
 
 ### Translations
 - **French and Polish** added — full UI and in-game manual (`l10n_fr.xml`, `l10n_pl.xml`), machine-translated; native-speaker corrections welcome via PR or the language poll.

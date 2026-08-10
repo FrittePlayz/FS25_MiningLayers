@@ -68,7 +68,7 @@
         <text name="ml_edAdd" text="Dodaj warstwę" />
         <text name="ml_edRemove" text="Usuń warstwę" />
         <text name="ml_edSaved" text="Warstwy zapisane. Obowiązują od razu dla każdego obszaru bez własnej strefy." />
-        <text name="ml_edHint" text="Jasna obwódka to warstwa, którą właśnie edytujesz. Pokład to stały ostatni wiersz: materiał do wyboru (domyślnie PAYDIRT, węgiel lub wapień też działają), grubość i położenie stałe. Skała pod spodem ustawia się sama. Nie zapomnij zapisać: ESC lub Wstecz opuszcza stronę i wszystko od ostatniego zapisu przepada." />
+        <text name="ml_edHint" text="Jasna obwódka to warstwa, którą właśnie edytujesz. Pokład to stały ostatni wiersz: materiał do wyboru (domyślnie PAYDIRT, węgiel lub wapień też działają), grubość i położenie stałe. Skała pod spodem ustawia się sama. Minimalna grubość: 1 m dla najwyższej warstwy, 1,5 m dla każdej niższej — przy dużych maszynach lepiej 2 m. Nie zapomnij zapisać: ESC lub Wstecz opuszcza stronę i wszystko od ostatniego zapisu przepada." />
         <text name="ml_edSeamEntry" text="Pokład: %s" />
 
         <!-- ===================== Tab 1: quick start ===================== -->
@@ -113,7 +113,7 @@
         <text name="ml_helpManMoundB3" text="Opróżnij łyżkę przed zmianą warstwy. Pojemnik mieści tylko jeden typ materiału, a ze starym ładunkiem w środku łyżka nie weźmie nowego." />
 
         <text name="ml_helpManEditorTitle" text="Ustawianie własnych warstw" />
-        <text name="ml_helpManEditor1" text="Zakładka Warstwy to miejsce, gdzie budujesz własny profil. Przekrój po lewej, warstwa, materiał i grubość po prawej. Maksymalnie sześć warstw nadkładu; dostępne: DIRT, SOIL, GRAVEL, SAND, STONE, COAL i LIMESTONE." />
+        <text name="ml_helpManEditor1" text="Zakładka Warstwy to miejsce, gdzie budujesz własny profil. Przekrój po lewej, warstwa, materiał i grubość po prawej. Maksymalnie sześć warstw nadkładu; dostępne: DIRT, SOIL, GRAVEL, SAND, STONE, COAL i LIMESTONE. Minimalna grubość: 1 m dla najwyższej warstwy, 1,5 m dla każdej niższej — cieńsze warstwy psują podnoszenie hałd. Przy dużych maszynach lepszym wyborem są 2 m." />
         <text name="ml_helpManEditor3" text="Stronę opuszczasz przez ESC lub przycisk Wstecz. Uwaga: zmienione to nie zapisane. Dopiero przycisk Zapisz zapisuje warstwy i stosuje je od razu do celu wybranego powyżej — standardu albo pojedynczego obszaru. Wyjdź wcześniej, a przy następnym otwarciu wraca stary stan." />
         <text name="ml_helpManEditor2" text="PAYDIRT nie może być nadkładem - materiał, który przynosi pieniądze, leży zawsze POD nadkładem. Jako pokład (ostatni wiersz edytora) możesz oprócz PAYDIRT wybrać COAL, LIMESTONE, STONE, GRAVEL, SAND, DIRT lub SOIL: dla żwirowni i zagłębia węglowego. Lita skała pod spodem pozostaje stała." />
 

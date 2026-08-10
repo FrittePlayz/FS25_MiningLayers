@@ -68,7 +68,7 @@
         <text name="ml_edAdd" text="Schicht hinzufügen" />
         <text name="ml_edRemove" text="Schicht entfernen" />
         <text name="ml_edSaved" text="Schichten gespeichert. Sie gelten sofort für alle Bereiche ohne eigene Zone." />
-        <text name="ml_edHint" text="Die helle Umrandung ist die Schicht, die du gerade bearbeitest. Die Nutzschicht ist die feste letzte Zeile: Material wählbar (Vorgabe PAYDIRT, auch Kohle oder Kalkstein), Dicke und Lage fest. Den Fels darunter setzt der Mod selbst. Speichern nicht vergessen: mit ESC oder Zurück verlässt du die Seite, und alles seit dem letzten Speichern ist verworfen." />
+        <text name="ml_edHint" text="Die helle Umrandung ist die Schicht, die du gerade bearbeitest. Die Nutzschicht ist die feste letzte Zeile: Material wählbar (Vorgabe PAYDIRT, auch Kohle oder Kalkstein), Dicke und Lage fest. Den Fels darunter setzt der Mod selbst. Mindestdicke: oberste Schicht 1 m, jede weitere 1,5 m — bei großen Maschinen besser 2 m. Speichern nicht vergessen: mit ESC oder Zurück verlässt du die Seite, und alles seit dem letzten Speichern ist verworfen." />
         <text name="ml_edSeamEntry" text="Nutzschicht: %s" />
 
         <!-- ===================== Reiter 1: Schnellstart ===================== -->
@@ -115,7 +115,7 @@
         <text name="ml_helpManMoundB3" text="Leer den Löffel vor dem Schichtwechsel. Ein Behälter hält nur einen Materialtyp, mit altem Inhalt nimmt die Schaufel das neue Material nicht auf." />
 
         <text name="ml_helpManEditorTitle" text="Schichten selbst festlegen" />
-        <text name="ml_helpManEditor1" text="Auf dem Reiter Schichten baust du dir dein eigenes Profil. Links siehst du den Bodenquerschnitt, rechts wählst du Schicht, Material und Dicke. Höchstens sechs Abraum-Schichten, zur Wahl stehen DIRT, SOIL, GRAVEL, SAND, STONE, COAL und LIMESTONE." />
+        <text name="ml_helpManEditor1" text="Auf dem Reiter Schichten baust du dir dein eigenes Profil. Links siehst du den Bodenquerschnitt, rechts wählst du Schicht, Material und Dicke. Höchstens sechs Abraum-Schichten, zur Wahl stehen DIRT, SOIL, GRAVEL, SAND, STONE, COAL und LIMESTONE. Mindestdicke: oberste Schicht 1 m, jede weitere 1,5 m — dünnere Schichten brechen das Halden-Abtragen. Bei großen Maschinen sind 2 m die bessere Wahl." />
         <text name="ml_helpManEditor3" text="Die Seite verlässt du mit ESC oder der Zurück-Schaltfläche. Achtung: Geändert ist noch nicht gespeichert. Erst die Schaltfläche Speichern schreibt die Schichten und wendet sie sofort auf das oben gewählte Ziel an — den Standard oder den einzelnen Bereich. Wer vorher rausgeht, findet beim nächsten Öffnen wieder den alten Stand vor." />
         <text name="ml_helpManEditor2" text="PAYDIRT kannst du nicht als Abraum setzen - Geld-Material liegt immer UNTER dem Abraum. Als Nutzschicht (letzte Zeile im Editor) sind neben PAYDIRT auch COAL, LIMESTONE, STONE, GRAVEL, SAND, DIRT und SOIL erlaubt: für Kiesgruben und Kohlereviere. Der Fels darunter bleibt fest." />
 

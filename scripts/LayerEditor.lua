@@ -285,13 +285,16 @@ function MiningLayers:askWizardDepth()
     local slot = #self.wizardLayers
     local layer = self.wizardLayers[slot]
 
-    -- Untergrenzen muessen wachsen: Minimum = vorige Grenze + 0,5 m,
-    -- der Dialog klemmt Eingaben selbst auf [min, max].
+    -- Untergrenzen muessen wachsen. Mindestdicke je Schicht: oberste 1,0 m,
+    -- jede weitere 1,5 m (duennere brechen das Halden-Abtragen); der Dialog
+    -- klemmt Eingaben selbst auf [min, max].
     local prevDepth = 0
 
     if slot > 1 and self.wizardLayers[slot - 1].depth ~= nil then
         prevDepth = self.wizardLayers[slot - 1].depth
     end
+
+    local minStep = slot <= 1 and 1.0 or 1.5
 
     -- Vorbelegung: bisherige Tiefe an dieser Stelle, sonst vorige Grenze + 2 m.
     local suggestion = prevDepth + 2
@@ -309,7 +312,7 @@ function MiningLayers:askWizardDepth()
         layer.fillTypeName)
 
     numberDialog:setCallback(self.onWizardDepth, self)
-    numberDialog:show(suggestion, prevDepth + 0.5, 100, 1, title)
+    numberDialog:show(suggestion, prevDepth + minStep, 100, 1, title)
 end
 
 ---@param value number?

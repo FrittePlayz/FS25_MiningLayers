@@ -68,7 +68,7 @@
         <text name="ml_edAdd" text="Add layer" />
         <text name="ml_edRemove" text="Remove layer" />
         <text name="ml_edSaved" text="Layers saved. They apply right away to every area without its own zone." />
-        <text name="ml_edHint" text="The bright outline marks the layer you are editing. The pay seam is the fixed last row: material selectable (PAYDIRT by default, coal or limestone work too), thickness and position fixed. The rock below goes in on its own. Do not forget to save: ESC or Back leaves the page and everything since your last save is discarded." />
+        <text name="ml_edHint" text="The bright outline marks the layer you are editing. The pay seam is the fixed last row: material selectable (PAYDIRT by default, coal or limestone work too), thickness and position fixed. The rock below goes in on its own. Minimum thickness: 1 m for the top layer, 1.5 m for every layer below — with big machines better go 2 m. Do not forget to save: ESC or Back leaves the page and everything since your last save is discarded." />
         <text name="ml_edSeamEntry" text="Pay seam: %s" />
 
         <!-- ===================== Tab 1: quick start ===================== -->
@@ -113,7 +113,7 @@
         <text name="ml_helpManMoundB3" text="Empty the bucket before changing layers. A container holds one material type only, and with the old load still in it the bucket will not take the new material." />
 
         <text name="ml_helpManEditorTitle" text="Setting your own layers" />
-        <text name="ml_helpManEditor1" text="The Layers tab is where you build your own profile. The cross-section is on the left, layer, material and thickness on the right. Six overburden layers at most; available are DIRT, SOIL, GRAVEL, SAND, STONE, COAL and LIMESTONE." />
+        <text name="ml_helpManEditor1" text="The Layers tab is where you build your own profile. The cross-section is on the left, layer, material and thickness on the right. Six overburden layers at most; available are DIRT, SOIL, GRAVEL, SAND, STONE, COAL and LIMESTONE. Minimum thickness: 1 m for the top layer, 1.5 m for every layer below it — thinner layers break spoil pile pickup. With big machines, 2 m is the better choice." />
         <text name="ml_helpManEditor3" text="Leave the page with ESC or the Back button. Careful: changed is not saved. Only the Save button writes the layers and applies them right away to the target picked above — the standard or the single area. Leave before that and the old state is back next time you open it." />
         <text name="ml_helpManEditor2" text="You cannot pick PAYDIRT as overburden - the money material always sits BELOW the overburden. As the pay seam (last row in the editor) you can pick COAL, LIMESTONE, STONE, GRAVEL, SAND, DIRT or SOIL besides PAYDIRT: for gravel pits and coal country. The bedrock below stays fixed." />
 

@@ -68,7 +68,7 @@
         <text name="ml_edAdd" text="Ajouter une couche" />
         <text name="ml_edRemove" text="Retirer la couche" />
         <text name="ml_edSaved" text="Couches sauvegardées. Elles s'appliquent immédiatement à toute zone sans zone propre." />
-        <text name="ml_edHint" text="Le contour clair marque la couche que tu édites. Le filon est la dernière ligne, fixe : matériau au choix (PAYDIRT par défaut, le charbon ou le calcaire marchent aussi), épaisseur et position fixes. La roche en dessous se place toute seule. N'oublie pas de sauvegarder : ESC ou Retour quitte la page et tout ce qui suit ta dernière sauvegarde est perdu." />
+        <text name="ml_edHint" text="Le contour clair marque la couche que tu édites. Le filon est la dernière ligne, fixe : matériau au choix (PAYDIRT par défaut, le charbon ou le calcaire marchent aussi), épaisseur et position fixes. La roche en dessous se place toute seule. Épaisseur minimale : 1 m pour la couche du haut, 1,5 m pour chaque couche en dessous — avec de grosses machines, vise plutôt 2 m. N'oublie pas de sauvegarder : ESC ou Retour quitte la page et tout ce qui suit ta dernière sauvegarde est perdu." />
         <text name="ml_edSeamEntry" text="Filon : %s" />
 
         <!-- ===================== Tab 1: quick start ===================== -->
@@ -113,7 +113,7 @@
         <text name="ml_helpManMoundB3" text="Vide le godet avant de changer de couche. Un conteneur ne tient qu'un seul type de matériau, et avec l'ancienne charge encore dedans le godet ne prendra pas le nouveau." />
 
         <text name="ml_helpManEditorTitle" text="Régler ses propres couches" />
-        <text name="ml_helpManEditor1" text="L'onglet Couches est l'endroit où tu montes ton propre profil. La coupe transversale est à gauche, couche, matériau et épaisseur à droite. Six couches de morts-terrains au maximum ; disponibles : DIRT, SOIL, GRAVEL, SAND, STONE, COAL et LIMESTONE." />
+        <text name="ml_helpManEditor1" text="L'onglet Couches est l'endroit où tu montes ton propre profil. La coupe transversale est à gauche, couche, matériau et épaisseur à droite. Six couches de morts-terrains au maximum ; disponibles : DIRT, SOIL, GRAVEL, SAND, STONE, COAL et LIMESTONE. Épaisseur minimale : 1 m pour la couche du haut, 1,5 m pour chacune en dessous — plus fin, la reprise des tas casse. Avec de grosses machines, 2 m est le meilleur choix." />
         <text name="ml_helpManEditor3" text="Quitte la page avec ESC ou le bouton Retour. Attention : modifié n'est pas sauvegardé. Seul le bouton Sauvegarder écrit les couches et les applique immédiatement à la cible choisie au-dessus — le standard ou la zone seule. Pars avant et l'ancien état revient à la prochaine ouverture." />
         <text name="ml_helpManEditor2" text="Tu ne peux pas mettre PAYDIRT dans les morts-terrains - le matériau qui rapporte se trouve toujours SOUS les morts-terrains. Comme filon (dernière ligne de l'éditeur) tu peux choisir COAL, LIMESTONE, STONE, GRAVEL, SAND, DIRT ou SOIL en plus de PAYDIRT : pour les gravières et le pays du charbon. Le socle rocheux en dessous reste fixe." />
 
