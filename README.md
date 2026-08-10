@@ -11,7 +11,7 @@ Material is determined by digging depth, not by hand selection: topsoil first, t
 
 Mining Layers builds on **[TerraFarm](https://github.com/scfmod/FS25_TerraFarm)** by scfmod, which it requires to run. Unofficial add-on, not affiliated with scfmod.
 
-🇩🇪 **Deutsche Version: [README.de.md](README.de.md)**
+🇩🇪 [Deutsch](README.de.md) · 🇫🇷 [Français](README.fr.md) · 🇵🇱 [Polski](README.pl.md)
 
 ---
 

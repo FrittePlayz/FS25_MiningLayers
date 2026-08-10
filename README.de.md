@@ -11,7 +11,7 @@ Das Material bestimmt die Grabtiefe, nicht die Handauswahl: erst Mutterboden, da
 
 Mining Layers baut auf **[TerraFarm](https://github.com/scfmod/FS25_TerraFarm)** von scfmod auf und benötigt es zum Laufen. Inoffizielles Addon, keine Verbindung zu scfmod.
 
-🇬🇧 **English version: [README.md](README.md)**
+🇬🇧 [English](README.md) · 🇫🇷 [Français](README.fr.md) · 🇵🇱 [Polski](README.pl.md)
 
 ---
 
