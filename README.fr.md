@@ -59,6 +59,9 @@ Installe TerraFarm et Mining Layers, trace une zone, puis menu ESC → Mining La
 **Comment extraire du charbon dans FS25 ?**
 Choisis COAL comme filon dans l'éditeur. Attention : COAL n'est pas un matériau du jeu de base — ta carte ou un mod minier doit le fournir.
 
+**Puis-je définir mes propres couches — plus de terre, différents types de sol ?**
+Oui, c'est le cœur du mod. Menu ESC → Mining Layers → Couches : pour chaque fosse tu choisis le matériau ET l'épaisseur de chaque couche de découverte. Plus de terre ? Passe la couche DIRT à 4 m au lieu de 2. De la variété ? Empile DIRT sur SOIL sur gravier. Tout matériau connu de ta carte fonctionne, et le filon du bas est lui aussi sélectionnable. Minimums : 1 m en haut, 1,5 m en dessous (2 m creuse mieux avec les grosses machines).
+
 **Pourquoi ma pelle ne creuse-t-elle pas ?**
 TerraFarm a besoin d'une configuration machine pour ce véhicule — sans elle, rien ne se passe (ce n'est pas un problème de Mining Layers). Installe un pack de configs comme FS25_TerraFarmMachines, et évite les entrées en double venant de plusieurs packs.
 

@@ -149,6 +149,9 @@ TerraFarm und Mining Layers installieren, TerraFarm-Bereich ziehen, dann ESC-Men
 **Wie baue ich Kohle ab?**
 COAL als Nutzschicht im Schichten-Editor wählen. Achtung: COAL ist kein Basisspiel-Material — Karte oder ein Mining-Mod muss es mitbringen (RGC-Karten wie Yukon Back Country haben es).
 
+**Kann ich eigene Schichten einstellen — mehr Erde, verschiedene Erdarten?**
+Ja, genau das ist das Kernfeature. ESC-Menü → Mining Layers → Schichten: Pro Grube wählst du Material UND Dicke jeder Abraum-Schicht. Mehr Erde? DIRT-Schicht auf 4 m statt 2. Abwechslung? DIRT über SOIL über Kies stapeln. Es geht alles, was deine Karte als Material kennt, und das Flöz unten ist ebenfalls wählbar. Mindestdicken: 1 m oben, 1,5 m darunter (mit großen Maschinen gräbt sich 2 m besser).
+
 **Warum gräbt mein Bagger nicht?**
 TerraFarm braucht eine Maschinen-Konfiguration für das Fahrzeug — ohne passiert nichts (das liegt nicht an Mining Layers). Config-Paket installieren, z. B. scfmods FS25_TerraFarmMachines, und doppelte Maschinen-Einträge aus mehreren Paketen vermeiden.
 

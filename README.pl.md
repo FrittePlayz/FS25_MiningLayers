@@ -59,6 +59,9 @@ Zainstaluj TerraFarm i Mining Layers, narysuj obszar, potem menu ESC → Mining 
 **Jak wydobywać węgiel w FS25?**
 Wybierz COAL jako pokład w edytorze warstw. Uwaga: COAL nie jest materiałem z podstawki — mapa albo mod górniczy musi go dostarczyć.
 
+**Czy mogę ustawić własne warstwy — więcej ziemi, różne rodzaje gleby?**
+Tak, to sedno moda. Menu ESC → Mining Layers → Warstwy: dla każdego wyrobiska wybierasz materiał I grubość każdej warstwy nadkładu. Więcej ziemi? Ustaw warstwę DIRT na 4 m zamiast 2. Różnorodność? Ułóż DIRT na SOIL na żwirze. Działa wszystko, co twoja mapa zna jako materiał, a pokład na dole też jest do wyboru. Minimalne grubości: 1 m na górze, 1,5 m niżej (przy dużych maszynach 2 m kopie się lepiej).
+
 **Dlaczego moja koparka nie kopie?**
 TerraFarm potrzebuje konfiguracji maszyny dla tego pojazdu — bez niej nic się nie dzieje (to nie problem Mining Layers). Zainstaluj paczkę konfiguracji, np. FS25_TerraFarmMachines, i unikaj zdublowanych wpisów z kilku paczek.
 

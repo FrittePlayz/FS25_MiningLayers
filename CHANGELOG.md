@@ -9,6 +9,7 @@ All notable changes to Mining Layers. Newest first.
 - FAQ (all four languages): how to toggle the display and how to move it via `displayPosX` / `displayPosY` — no extra HUD mod needed.
 - FAQ + mod description (all four languages): there is **no pile limit** — dumped material becomes real terrain, the 2 m pile memory has no cap; one material per 2 m cell (last dump wins). Asked by GA on Discord — thanks!
 - Bug report form on GitHub: `log.txt` is now a required attachment (it contains the full mod list and the actual error — the Hof Bergmann support rule). READMEs updated accordingly.
+- FAQ (all four languages): custom layers — more dirt / different soil types per pit, all in the in-game editor. Asked by Slightpilot on Discord — thanks!
 
 ## [1.4.0.0] — 2026-08-10
 
