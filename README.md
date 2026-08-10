@@ -63,6 +63,14 @@ After starting, you'll find a new **Mining Layers** page in the ESC menu — wit
 
 ![Riverbed limit](docs/images/12_riverbed_limit.jpg)
 
+**8. Dozers reach the second layer too.** With the blade alone — mode *Flatten*, no rear ripper. Make the run long enough: the longer the pass, the deeper it cuts per go:
+
+![Second layer with a dozer blade](docs/images/13_dozer_second_layer.jpg)
+
+## Any map
+
+Mining Layers runs on any map. Layer textures automatically pick the closest ground texture the map offers (standard names like `GRAVEL`, `MOUNTAINROCK`, `MOSS_STONES`). If a map has nothing suitable, the player's own texture selection stays active — materials, layers and mounds work regardless. On the first dig the mod writes the map's full texture list to the log, so you can set your own `paintLayer` overrides.
+
 ## ⚠️ Two ways per area — read this before you judge the mod
 
 The single most common point of confusion. In the TerraFarm menu → **Landscaping areas** → select your area, there are **two material fields**: **Terraform** and **Discharge** (set via *Change material*). Both default to **"Not set"**.

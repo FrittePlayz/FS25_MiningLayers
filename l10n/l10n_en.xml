@@ -128,6 +128,7 @@
         <text name="ml_helpTipsTfB2" text="Lowering only works inside the polygon when Restrict area is set. Levelling works outside too. If nothing happens you are usually on the wrong side of the line. Or the ground is already at target height." />
         <text name="ml_helpTipsTfB3" text="A wheel loader only manages some 30 to 40 centimetres per pass. Build a ramp. The tool for depth is the excavator." />
         <text name="ml_helpTipsTfB4" text="The keys sit on the numpad, Num 9 opens the global settings. After changing them a clean exit and restart may be needed before they take effect." />
+        <text name="ml_helpTipsTfB6" text="A dozer gets through the layers too: lower the blade, mode Flatten, and make the run long enough - the longer the pass, the deeper you get each time. The picture shows the second layer (gravel) reached with the blade alone - no rear ripper at all. At the boundary: use up old mounds first and empty the blade, until then the old material stays in it." />
         <text name="ml_helpTipsTfB5" text="Without an area, lowering has no lower limit, because the target height is sea level. The hole still only gets as deep as you dig it, but an area gives you a defined floor." />
 
         <text name="ml_helpTipsVehTitle" text="When a vehicle will not dig" />
@@ -140,6 +141,7 @@
         <text name="ml_helpTipsMapTitle" text="Map specifics" />
         <text name="ml_helpTipsMapB1" text="FS25 only handles 63 material types. With many mods installed some drop off the end and can no longer be dumped. The mod checks this at startup and writes the affected materials to the log." />
         <text name="ml_helpTipsMapB2" text="Ground texture names differ on every map. On your first dig the mod writes your map's list to the log. Take the paintLayer values from there." />
+        <text name="ml_helpTipsMapB4" text="The mod runs on any map: for layer textures it automatically picks the closest ground the map offers (standard names like GRAVEL, MOUNTAINROCK, MOSS_STONES). If a map has nothing suitable, your own texture selection simply stays active - materials, layers and mounds still work." />
         <text name="ml_helpTipsMapB3" text="Some maps lock riverbeds against deformation. That is the map's own block map and has nothing to do with ownership or with this mod." />
 
         <text name="ml_helpSponsorTitle" text="Supported by farmersingles.de" />

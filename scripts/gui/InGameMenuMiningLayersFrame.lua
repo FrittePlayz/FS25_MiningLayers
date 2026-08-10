@@ -128,6 +128,8 @@ InGameMenuMiningLayersFrame.CONTENT = {
         { type = 'bullet',    text = 'ml_helpTipsTfB4' },
         { type = 'bullet',    text = 'ml_helpTipsTfB5' },
         { type = 'image',     file = 'ml_help_05_ramp' },
+        { type = 'bullet',    text = 'ml_helpTipsTfB6' },
+        { type = 'image',     file = 'ml_help_10_dozer' },
         { type = 'spacer' },
 
         { type = 'section',   text = 'ml_helpTipsVehTitle' },
@@ -141,6 +143,7 @@ InGameMenuMiningLayersFrame.CONTENT = {
         { type = 'section',   text = 'ml_helpTipsMapTitle' },
         { type = 'bullet',    text = 'ml_helpTipsMapB1' },
         { type = 'bullet',    text = 'ml_helpTipsMapB2' },
+        { type = 'bullet',    text = 'ml_helpTipsMapB4' },
         { type = 'bullet',    text = 'ml_helpTipsMapB3' },
         { type = 'image',     file = 'ml_help_08_riverbed' },
         { type = 'spacer' },

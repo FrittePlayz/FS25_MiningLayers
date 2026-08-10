@@ -63,6 +63,14 @@ Nach dem Start findest du eine neue Seite **Mining Layers** im ESC-Menü — mit
 
 ![Flussbett-Grenze](docs/images/12_riverbed_limit.jpg)
 
+**8. Auch der Dozer kommt in die zweite Schicht.** Nur mit dem Schild — Modus *Ebnen*, ohne Heckaufreißer. Die Bahn lang genug machen: Je länger der Zug, desto tiefer geht es pro Durchgang:
+
+![Zweite Schicht mit dem Dozer-Schild](docs/images/13_dozer_second_layer.jpg)
+
+## Jede Karte
+
+Mining Layers läuft auf jeder Karte. Die Schicht-Texturen suchen sich automatisch die passendste Bodentextur, die die Karte anbietet (Standardnamen wie `GRAVEL`, `MOUNTAINROCK`, `MOSS_STONES`). Hat eine Karte nichts Passendes, bleibt einfach die eigene Texturauswahl aktiv — Materialien, Schichten und Halden funktionieren davon unabhängig. Beim ersten Graben schreibt der Mod die vollständige Texturliste der Karte ins Log, damit du eigene `paintLayer`-Vorgaben setzen kannst.
+
 ## ⚠️ Zwei Wege je Bereich — lesen, bevor du den Mod für kaputt hältst
 
 Der häufigste Verwirrungspunkt überhaupt. Im TerraFarm-Menü → **Landscaping areas** → Bereich auswählen gibt es **zwei Materialfelder**: **Terraformen** und **Abladen** (gesetzt über *Material ändern*). Beide stehen ab Werk auf **„Not set"**.

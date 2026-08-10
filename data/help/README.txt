@@ -15,6 +15,8 @@ Erwartete Dateinamen (Stand 2026-08-09 abends):
   ml_help_08_riverbed   VORHANDEN  Flussloch, Sperre am Flussbett
   ml_help_09_layers     VORHANDEN  Schichten-Seite im ESC-Menue (Layer-Uebersicht)
 
+  ml_help_10_dozer      VORHANDEN  Dozer erreicht Schicht 2 (Kies) nur mit Schild, Modus Ebnen
+
 Der fehlende Platz 05 bleibt leer und faellt im Menue still weg.
 
 Format: Ultrawide 21:9, angezeigt mit 764x320 Punkten. Groesser einliefern ist

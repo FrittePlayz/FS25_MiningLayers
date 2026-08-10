@@ -130,6 +130,7 @@
         <text name="ml_helpTipsTfB2" text="Absenken wirkt nur innerhalb des Polygons, wenn Restrict area gesetzt ist. Ebnen geht auch außerhalb. Geht nichts, stehst du meist auf der falschen Seite der Linie - oder der Boden ist schon auf Zielhöhe." />
         <text name="ml_helpTipsTfB3" text="Ein Radlader schafft nur etwa 30 bis 40 Zentimeter pro Ansatz. Fahr eine Rampe. Das Werkzeug für Tiefe ist der Bagger." />
         <text name="ml_helpTipsTfB4" text="Die Tasten liegen auf dem Ziffernblock, Num 9 öffnet die globalen Einstellungen. Nach dem Ändern kann ein sauberes Beenden und Neustarten nötig sein, bevor sie greifen." />
+        <text name="ml_helpTipsTfB6" text="Auch der Dozer kommt durch die Schichten: Schild absenken, Modus Ebnen, und die Bahn lang genug machen - je länger der Zug, desto tiefer kommst du pro Durchgang. Im Bild ist die zweite Schicht (Kies) nur mit dem Schild erreicht - ganz ohne Heckaufreißer. Wichtig am Übergang: alte Halden erst aufbrauchen und die Schaufel leeren, vorher bleibt das alte Material in der Klinge." />
         <text name="ml_helpTipsTfB5" text="Ohne Bereich hat Absenken keine Untergrenze - die Zielhöhe ist dann der Meeresspiegel. Das Loch entsteht zwar nur so tief, wie du gräbst, aber ein Bereich gibt dir einen definierten Boden." />
 
         <text name="ml_helpTipsVehTitle" text="Wenn ein Fahrzeug nicht gräbt" />
@@ -142,6 +143,7 @@
         <text name="ml_helpTipsMapTitle" text="Karten-Besonderheiten" />
         <text name="ml_helpTipsMapB1" text="FS25 verkraftet nur 63 Materialtypen. Mit vielen Mods fallen welche hinten raus und lassen sich nicht mehr ablegen. Der Mod prüft das beim Start und schreibt betroffene Materialien ins Log." />
         <text name="ml_helpTipsMapB2" text="Die Namen der Bodentexturen sind auf jeder Karte anders. Beim ersten Grabvorgang schreibt der Mod die Liste deiner Karte ins Log - daraus nimmst du die Werte für paintLayer." />
+        <text name="ml_helpTipsMapB4" text="Der Mod läuft auf jeder Karte: Für die Schicht-Texturen sucht er sich automatisch den passendsten Boden, den die Karte anbietet (Standardnamen wie GRAVEL, MOUNTAINROCK, MOSS_STONES). Hat eine Karte nichts Passendes, bleibt einfach deine eigene Texturwahl aktiv - Material, Schichten und Halden funktionieren trotzdem." />
         <text name="ml_helpTipsMapB3" text="Manche Karten sperren Flussbetten gegen Verformung. Das ist eine Sperrkarte der Karte selbst und hat nichts mit Besitz oder mit diesem Mod zu tun." />
 
         <text name="ml_helpSponsorTitle" text="Unterstützt von farmersingles.de" />
