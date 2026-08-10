@@ -820,6 +820,7 @@ function InGameMenuMiningLayersFrame:updateEditorOptions()
 
         self.materialOption:setState(materialIndex, false)
 
+        self.thicknessOffset = 0
         self.thicknessOption:setTexts(self.thicknessTexts)
         self.thicknessOption:setState(self:thicknessToIndex(paydirtThickness()), false)
 
@@ -859,8 +860,29 @@ function InGameMenuMiningLayersFrame:updateEditorOptions()
 
     self.materialOption:setState(materialIndex, false)
 
-    self.thicknessOption:setTexts(self.thicknessTexts)
-    self.thicknessOption:setState(self:thicknessToIndex(current.thickness), false)
+    -- Werte unter dem Mindestmass der gewaehlten Schicht gar nicht erst
+    -- anbieten - zurueckspringen nach der Auswahl fuehlt sich kaputt an.
+    local minHere = self:minThicknessFor(self.editIndex)
+    local offset = 0
+
+    for _, value in ipairs(self.thicknessValues) do
+        if value < minHere - 0.001 then
+            offset = offset + 1
+        else
+            break
+        end
+    end
+
+    self.thicknessOffset = offset
+
+    local texts = {}
+
+    for i = offset + 1, #self.thicknessTexts do
+        table.insert(texts, self.thicknessTexts[i])
+    end
+
+    self.thicknessOption:setTexts(texts)
+    self.thicknessOption:setState(math.max(1, self:thicknessToIndex(current.thickness) - offset), false)
 
     self.updatingEditor = false
 
@@ -1000,11 +1022,12 @@ function InGameMenuMiningLayersFrame:onThicknessChanged(state)
         return
     end
 
-    local value = self.thicknessValues[state]
+    local value = self.thicknessValues[state + (self.thicknessOffset or 0)]
 
     if value ~= nil and self.editLayers[self.editIndex] ~= nil then
         -- Unter das Mindestmass laesst sich nichts stellen - zu duenne
-        -- Schichten brechen das Halden-Abtragen.
+        -- Schichten brechen das Halden-Abtragen. (Die Auswahl beginnt schon
+        -- beim Minimum; die Klemmung bleibt als Gurt zur Hose.)
         local minHere = self:minThicknessFor(self.editIndex)
         local clamped = math.max(value, minHere)
 
