@@ -319,38 +319,50 @@ end
 --    in Tommys Live-Test (keine Diagnose-Zeile, Ursache unbewiesen).
 -- 3. 1.4.1.1: Append an FSBaseMission.registerActionEvents - Dredds Log 21:21
 --    beweist: DIE FUNKTION EXISTIERT IN FS25 NICHT (FS22-Wissen, mein Fehler).
--- 4. Jetzt: eigene Fahrzeug-Spezialisierung (MiningLayersSpec.lua, Bootstrap in
---    main.lua) - onRegisterActionEvents kommt vom Spielkern, exakt das Muster
---    von EnhancedVehicle/AutoDrive/Courseplay. Folge: Taste wirkt IM FAHRZEUG
---    (zu Fuss gibt es keine Anzeige, also auch keine Taste noetig).
+-- 4. 1.4.1.2: eigene Fahrzeug-Spezialisierung (Bootstrap in main.lua) - Spec
+--    lief, eventId kam zurueck, Taste TROTZDEM tot, F1-Eintrag fehlte (Dredd
+--    ~21:45). Abweichungen zum EV-Vorbild: eigenes removeActionEventsByTarget
+--    im Rebuild-Fenster (loescht mutmasslich das frische Event), Target war
+--    der Mod statt des Fahrzeugs, Guard ohne getIsControlled.
+-- 5. Jetzt: alle drei Abweichungen raus - Registrierung 1:1 wie
+--    FS25_EnhancedVehicle (kein Cleanup, Target = Fahrzeug, EV-Guard).
+--    Taste wirkt IM FAHRZEUG (zu Fuss gibt es keine Anzeige).
 -- Jeder Schritt schreibt ins Log - ein Blick in die log.txt sagt, OB und
--- WARUM (nicht) registriert wurde.
+-- WARUM (nicht) registriert wurde; jede Registrierung wird mitgezaehlt.
 --------------------------------------------------------------------------------
 
-MiningLayers.toggleRegisterLogged = false
+MiningLayers.toggleRegisterCount = 0
 MiningLayers.toggleActionMissingLogged = false
 
----Callback der Toggle-Taste.
-function MiningLayers:actionToggleHud()
-    self.showHeightDisplay = not self.showHeightDisplay
+---Maximal so viele Registrierungs-Zeilen ins Log (Diagnose ja, Flut nein).
+MiningLayers.TOGGLE_LOG_LIMIT = 25
+
+---Callback der Toggle-Taste. ⚠️ Target ist das FAHRZEUG (EV-Muster), also
+---hier KEIN self benutzen - self waere das Fahrzeug, nicht der Mod.
+function MiningLayers.actionToggleHud()
+    MiningLayers.showHeightDisplay = not MiningLayers.showHeightDisplay
 
     -- Bewusster Neuversuch: hat sich die Anzeige nach einem Fehler selbst
     -- abgeschaltet, darf die Taste sie wieder aktivieren (Fehler loggt erneut
     -- genau einmal, falls er noch besteht).
-    if self.showHeightDisplay then
+    if MiningLayers.showHeightDisplay then
         MiningLayers.displayErrorReported = false
     end
 end
 
----Registriert das Action-Event im aktuellen Input-Kontext.
----Laeuft bei jedem Rebuild erneut, deshalb vorher immer aufraeumen - sonst
----stapeln sich die Events (TerraFarm macht es in Editor.lua:624 genauso).
-function MiningLayers:registerToggleActionEvent()
-    if g_inputBinding == nil or not MiningLayers.active then
+---Registriert das Action-Event im aktuellen Input-Kontext. Wird von der
+---Spezialisierung (MiningLayersSpec) bei jedem Rebuild aufgerufen.
+---
+---⚠️ KEIN removeActionEventsByTarget hier: der Rebuild beginnt mit leerem
+---Kontext, das System raeumt selbst (EnhancedVehicle macht auch kein Cleanup).
+---Unser Remove in 1.4.1.2 lief mutmasslich NACH dem Add desselben Fensters
+---und hat das frische Event gleich wieder geloescht - eventId kam zurueck,
+---aber F1-Hilfe leer und Taste tot (Dredds Eingrenzung 10.08. ~21:45).
+---@param vehicle table Fahrzeug, dient als Event-Target (EV-Muster)
+function MiningLayers:registerToggleActionEvent(vehicle)
+    if g_inputBinding == nil or not MiningLayers.active or vehicle == nil then
         return
     end
-
-    g_inputBinding:removeActionEventsByTarget(MiningLayers)
 
     if InputAction == nil or InputAction.ML_TOGGLE_HUD == nil then
         -- Action fehlt = das Spiel hat <actions>/<inputBinding> aus der modDesc
@@ -364,8 +376,21 @@ function MiningLayers:registerToggleActionEvent()
         return
     end
 
-    local _, eventId = g_inputBinding:registerActionEvent(InputAction.ML_TOGGLE_HUD,
-        MiningLayers, MiningLayers.actionToggleHud, false, true, false, true)
+    local success, eventId = g_inputBinding:registerActionEvent(InputAction.ML_TOGGLE_HUD,
+        vehicle, MiningLayers.actionToggleHud, false, true, false, true)
+
+    -- Dredds Anforderung fuer 1.4.1.3: JEDE Registrierung protokollieren
+    -- (Zaehler + success + eventId), damit das Log den Rebuild-Takt zeigt.
+    MiningLayers.toggleRegisterCount = MiningLayers.toggleRegisterCount + 1
+
+    if MiningLayers.toggleRegisterCount <= MiningLayers.TOGGLE_LOG_LIMIT then
+        MiningLayers.log('Anzeige-Taste: Registrierung #%d, success=%s, eventId=%s',
+            MiningLayers.toggleRegisterCount, tostring(success), tostring(eventId))
+
+        if MiningLayers.toggleRegisterCount == MiningLayers.TOGGLE_LOG_LIMIT then
+            MiningLayers.log('  (weitere Registrierungs-Zeilen werden unterdrueckt)')
+        end
+    end
 
     if eventId ~= nil then
         g_inputBinding:setActionEventText(eventId,
@@ -375,13 +400,7 @@ function MiningLayers:registerToggleActionEvent()
             g_inputBinding:setActionEventTextPriority(eventId, GS_PRIO_LOW)
         end
 
-        if not MiningLayers.toggleRegisterLogged then
-            MiningLayers.toggleRegisterLogged = true
-            MiningLayers.log('Anzeige-Taste registriert - Num 5 (oder deine Belegung) schaltet die Anzeige.')
-        end
-    elseif not MiningLayers.toggleRegisterLogged then
-        MiningLayers.toggleRegisterLogged = true
-        MiningLayers.log('WARNUNG: registerActionEvent lieferte kein Event - Taste vermutlich ohne Funktion.')
+        g_inputBinding:setActionEventTextVisibility(eventId, true)
     end
 end
 

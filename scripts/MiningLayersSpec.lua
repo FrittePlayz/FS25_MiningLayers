@@ -1,11 +1,10 @@
 --
 -- Minimale Fahrzeug-Spezialisierung - einziger Zweck: die Anzeige-Taste.
 --
--- Das ist der in FS25 nachweislich funktionierende Weg fuer Mod-Hotkeys im
--- Fahrzeug (EnhancedVehicle, AutoDrive, Courseplay machen es exakt so):
--- eine eigene Spec auf den fahrbaren Typen, und onRegisterActionEvents kommt
--- vom Spielkern selbst - bei jedem Input-Kontext-Rebuild, ohne dass wir
--- fremde Funktionen patchen. Historie der Fehlversuche: HeightDisplay.lua.
+-- Muster 1:1 von FS25_EnhancedVehicle (nachweislich funktionierende Tasten):
+-- Guard isClient -> isOnActiveVehicle + getIsControlled -> registerActionEvent
+-- mit dem FAHRZEUG als Target, OHNE eigenes Aufraeumen (der Rebuild beginnt
+-- leer, das System raeumt selbst). Historie der Fehlversuche: HeightDisplay.lua.
 --
 -- ⚠️ Diese Datei muss eigenstaendig bleiben (kein Zustand beim Laden): der
 -- Spezialisierungs-Manager kann sie zusaetzlich zu main.lua ein zweites Mal
@@ -32,10 +31,9 @@ function MiningLayersSpec:onRegisterActionEvents(isSelected, isOnActiveVehicle)
         return
     end
 
-    -- Nur fuer das Gespann, in dem der Spieler sitzt. Die Registrierung selbst
-    -- raeumt vorher auf (removeActionEventsByTarget) und ist damit idempotent,
-    -- auch wenn mehrere Fahrzeuge des Gespanns nacheinander feuern.
-    if isOnActiveVehicle or isSelected then
-        pcall(MiningLayers.registerToggleActionEvent, MiningLayers)
+    -- EV-Guard 1:1: nur im aktiven, vom Spieler kontrollierten Fahrzeug.
+    if isOnActiveVehicle
+        and (not MiningLayers.isCallable(self.getIsControlled) or self:getIsControlled()) then
+        pcall(MiningLayers.registerToggleActionEvent, MiningLayers, self)
     end
 end

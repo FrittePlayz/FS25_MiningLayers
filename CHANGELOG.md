@@ -2,6 +2,11 @@
 
 All notable changes to Mining Layers. Newest first.
 
+## [1.4.1.3] — 2026-08-10 (pre-release until the in-game test passes)
+
+### Fixed
+- **Toggle key: registration now matches FS25_EnhancedVehicle exactly.** 1.4.1.2 registered an event (eventId returned) but the key stayed dead and the F1 help never showed the entry — Dredd's narrowing. Three deviations from the proven pattern removed: no more `removeActionEventsByTarget` inside the rebuild window (it most likely deleted the freshly added event), the event target is now the vehicle instead of the mod object, and the guard is `isOnActiveVehicle and getIsControlled` like EnhancedVehicle. Every registration is now logged with a counter, success flag and event id (capped at 25 lines).
+
 ## [1.4.1.2] — 2026-08-10 (pre-release until the in-game test passes)
 
 ### Fixed
