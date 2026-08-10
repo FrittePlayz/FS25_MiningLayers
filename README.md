@@ -109,6 +109,10 @@ This is **not a defect and not a mod conflict — it's the intended switch.** If
 
 `modSettings/FS25_MiningLayers/miningLayers.xml` — created from the template on first start, survives mod updates. Layer stacks (material + depth, per area), display options, and the sponsor sign toggle live here. Everything can also be edited from the in-game menu.
 
+## Translations
+
+The mod and its in-game manual are available in **English and German**. Which language should come next? **[Vote in the poll](https://github.com/FrittePlayz/FS25_MiningLayers/discussions/1)** — or translate it yourself: the language files are plain XML (`l10n/`), no coding needed, and you'll be credited.
+
 ## Changelog
 
 Every release with its changes: [CHANGELOG.md](CHANGELOG.md)

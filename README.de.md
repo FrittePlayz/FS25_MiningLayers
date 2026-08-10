@@ -109,6 +109,10 @@ Das ist **kein Defekt und kein Mod-Konflikt — es ist die vorgesehene Umschaltu
 
 `modSettings/FS25_MiningLayers/miningLayers.xml` — wird beim ersten Start aus der Vorlage angelegt und überlebt Mod-Updates. Schichtaufbau (Material + Tiefe, pro Bereich), Anzeige-Optionen und der Sponsorschild-Schalter stehen hier. Alles auch über das Ingame-Menü editierbar.
 
+## Übersetzungen
+
+Mod und Ingame-Handbuch gibt es auf **Deutsch und Englisch**. Welche Sprache als nächstes? **[In der Umfrage abstimmen](https://github.com/FrittePlayz/FS25_MiningLayers/discussions/1)** — oder selbst übersetzen: Die Sprachdateien sind simples XML (`l10n/`), kein Programmieren nötig, und du wirst in den Credits genannt.
+
 ## Changelog
 
 Jede Version mit ihren Änderungen: [CHANGELOG.md](CHANGELOG.md)
