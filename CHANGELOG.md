@@ -2,6 +2,22 @@
 
 All notable changes to Mining Layers. Newest first.
 
+## [1.4.1.6] — 2026-08-10
+
+### Fixed
+- **The depth display toggle (Numpad 5) finally works — verified in-game.** The evening's diagnosis builds (1.4.1.4/1.4.1.5, never released) proved the action registration itself was fine: `success=true`, real event id, correct VEHICLE context, the binding present in the profile — and the callback still never fired, on any key. The game's binding resolution simply does not deliver the event on this installation (334 mods; suspicion: load order, since TerraFarm loads early as `FS25_0_*`). The registration now goes through the vehicle's own `addActionEvent` (TerraFarm's proven pattern, parameters included), and on top sits a **direct fallback**: if a key press is not handled by the action system within a second, the mod reads the key itself and toggles on release. Self-calibrating — on installations where the action system works, the fallback stays silent. Rebinding works in both paths: the fallback re-resolves the bound key from the input system after every menu close. The log states once when the fallback is active (our remote-diagnosis data point in every user log).
+- Registration log lines now include the input context name (capped at 25 lines).
+
+### Known limits (fallback path only)
+- Keyboard only — no gamepad buttons in the fallback.
+- No F1-help entry on installations where the action system drops the binding.
+- The key also toggles on foot there (harmless: without a machine there is no display to show).
+- Tap the key, don't hold it: two timing edges in the 1-second handshake between the two input
+  paths are known and queued for 1.4.2 (holding >1 s can cancel its own toggle; on fallback
+  installations a second tap within one second is ignored). Normal tapping is unaffected.
+
+*Built and diagnosed locally by Dredd, live-tested by Tommy (toggle + rebinding), reviewed and released by Percy.*
+
 ## [1.4.1.3] — 2026-08-10 (pre-release until the in-game test passes)
 
 ### Docs

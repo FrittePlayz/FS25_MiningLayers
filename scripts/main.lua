@@ -15,7 +15,7 @@
 
 MiningLayers = {}
 
-MiningLayers.VERSION = '1.4.1.3'
+MiningLayers.VERSION = '1.4.1.6'
 MiningLayers.LOG_PREFIX = '[MiningLayers] '
 
 MiningLayers.MOD_NAME = g_currentModName
@@ -260,6 +260,97 @@ function MiningLayers:deleteMap()
     MiningLayers.signNodes = {}
 
     MiningLayers.active = false
+end
+
+---Direkt-Fallback fuer die Anzeige-Taste (1.4.1.6). Hintergrund: Auf grossen
+---Modlisten (Tommys 334er-Installation, Diagnose 10.08.) bekommt unsere Action
+---trotz erfolgreicher Registrierung (success=true, Kontext=VEHICLE, Binding im
+---Profil) NIE einen Callback - die Binding-Aufloesung des Spiels greift nicht.
+---Bewiesen hat die Diagnose aber auch: Input.isKeyPressed sieht jeden Druck.
+---Also toggeln wir notfalls direkt. Selbstkalibrierend: feuert das Action-
+---System (normale Modlisten), stempelt der Callback lastActionToggleTime und
+---der Fallback bleibt stumm. Ausgewertet wird beim LOSLASSEN der Taste, damit
+---der Stempel des Druck-Ereignisses sicher schon da ist.
+---Umbelegen funktioniert auch im Fallback: Die Taste wird aus dem Input-System
+---gelesen (das Steuerungs-Menue kennt die Belegung nachweislich, es zeigte
+---Tommys Umbelegungen korrekt an). Nach jedem Menue-Schliessen wird neu
+---aufgeloest, damit eine Umbelegung sofort greift. Default: Num 5.
+MiningLayers.kp5WasDown = false
+MiningLayers.fallbackToggleLogged = false
+MiningLayers.fallbackKey = nil
+MiningLayers.fallbackKeyName = 'KEY_KP_5'
+MiningLayers.guiWasOpen = false
+
+---Liest die aktuell belegte Taste der Action aus g_inputBinding. Liefert immer
+---etwas Brauchbares: notfalls den Default Num 5.
+function MiningLayers.resolveFallbackKey()
+    local key = Input.KEY_KP_5
+    local keyName = 'KEY_KP_5'
+
+    pcall(function()
+        local action = g_inputBinding:getActionByName('ML_TOGGLE_HUD')
+
+        if action == nil or action.bindings == nil then
+            return
+        end
+
+        for _, binding in ipairs(action.bindings) do
+            for _, axisName in ipairs(binding.axisNames or {}) do
+                if type(axisName) == 'string' and axisName:sub(1, 4) == 'KEY_'
+                    and Input[axisName] ~= nil then
+                    key = Input[axisName]
+                    keyName = axisName
+                    return
+                end
+            end
+        end
+    end)
+
+    MiningLayers.fallbackKey = key
+    MiningLayers.fallbackKeyName = keyName
+end
+
+function MiningLayers:update(dt)
+    if not MiningLayers.active then
+        return
+    end
+
+    if Input == nil or Input.KEY_KP_5 == nil or not MiningLayers.isCallable(Input.isKeyPressed) then
+        return
+    end
+
+    -- Taste beim ersten Durchlauf aufloesen und nach jedem Menue-Schliessen neu
+    -- (dort wird umbelegt).
+    local guiOpen = g_gui ~= nil and g_gui.currentGui ~= nil
+
+    if MiningLayers.fallbackKey == nil or (MiningLayers.guiWasOpen and not guiOpen) then
+        MiningLayers.resolveFallbackKey()
+    end
+
+    MiningLayers.guiWasOpen = guiOpen
+
+    local ok, down = pcall(Input.isKeyPressed, MiningLayers.fallbackKey)
+    down = ok and down == true
+
+    if not down and MiningLayers.kp5WasDown then
+        -- Taste wurde losgelassen: hat das Action-System den Druck behandelt?
+        local now = g_time or 0
+        local handled = MiningLayers.lastActionToggleTime ~= nil
+            and (now - MiningLayers.lastActionToggleTime) < 1000
+
+        -- Nicht in Menues/Dialogen toggeln - dort gehoert die Taste der GUI.
+        if not handled and not guiOpen then
+            if not MiningLayers.fallbackToggleLogged then
+                MiningLayers.fallbackToggleLogged = true
+                MiningLayers.log('Anzeige-Taste laeuft ueber den Direkt-Fallback (Action-Binding griff nicht, Taste: %s).',
+                    MiningLayers.fallbackKeyName)
+            end
+
+            MiningLayers.actionToggleHud()
+        end
+    end
+
+    MiningLayers.kp5WasDown = down
 end
 
 ---Wird vom Basisspiel jeden Frame aufgerufen.

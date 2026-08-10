@@ -342,6 +342,13 @@ MiningLayers.TOGGLE_LOG_LIMIT = 25
 function MiningLayers.actionToggleHud()
     MiningLayers.showHeightDisplay = not MiningLayers.showHeightDisplay
 
+    -- Zeitstempel fuer den Direkt-Fallback in main.lua: hat das Action-System
+    -- diesen Druck behandelt, haelt sich der Fallback raus (keine Doppel-Toggles).
+    MiningLayers.lastActionToggleTime = g_time or 0
+
+    MiningLayers.log('Anzeige-Taste gedrueckt - Anzeige jetzt %s.',
+        MiningLayers.showHeightDisplay and 'AN' or 'AUS')
+
     -- Bewusster Neuversuch: hat sich die Anzeige nach einem Fehler selbst
     -- abgeschaltet, darf die Taste sie wieder aktivieren (Fehler loggt erneut
     -- genau einmal, falls er noch besteht).
@@ -358,8 +365,9 @@ end
 ---Unser Remove in 1.4.1.2 lief mutmasslich NACH dem Add desselben Fensters
 ---und hat das frische Event gleich wieder geloescht - eventId kam zurueck,
 ---aber F1-Hilfe leer und Taste tot (Dredds Eingrenzung 10.08. ~21:45).
----@param vehicle table Fahrzeug, dient als Event-Target (EV-Muster)
-function MiningLayers:registerToggleActionEvent(vehicle)
+---@param vehicle table Fahrzeug, dient als Event-Target
+---@param isActiveForInput boolean vom onRegisterActionEvents-Ereignis (TerraFarm-Guard)
+function MiningLayers:registerToggleActionEvent(vehicle, isActiveForInput)
     if g_inputBinding == nil or not MiningLayers.active or vehicle == nil then
         return
     end
@@ -376,16 +384,49 @@ function MiningLayers:registerToggleActionEvent(vehicle)
         return
     end
 
-    local success, eventId = g_inputBinding:registerActionEvent(InputAction.ML_TOGGLE_HUD,
-        vehicle, MiningLayers.actionToggleHud, false, true, false, true)
+    -- 1.4.1.5: Registrierung ueber die FAHRZEUG-API (TerraFarm Machine.lua:1561-1571,
+    -- lokal bewiesen funktionierend) statt direkt ueber g_inputBinding. Der direkte
+    -- Weg lieferte success=true im richtigen Kontext, aber das Fahrzeug-Input-System
+    -- hat das Event nie aktiviert - Taste tot bei JEDER Belegung (Diagnose 1.4.1.4).
+    if not MiningLayers.isCallable(vehicle.addActionEvent)
+        or not MiningLayers.isCallable(vehicle.clearActionEventsTable) then
+        if not MiningLayers.toggleActionMissingLogged then
+            MiningLayers.toggleActionMissingLogged = true
+            MiningLayers.log('WARNUNG: Fahrzeug ohne addActionEvent/clearActionEventsTable - Anzeige-Taste bleibt aus.')
+        end
+
+        return
+    end
+
+    vehicle.miningLayersActionEvents = vehicle.miningLayersActionEvents or {}
+    vehicle:clearActionEventsTable(vehicle.miningLayersActionEvents)
+
+    -- TerraFarm-Guard 1:1: nur registrieren, wenn das Fahrzeug aktiv fuer Eingaben ist.
+    if not isActiveForInput then
+        return
+    end
+
+    local success, eventId = vehicle:addActionEvent(vehicle.miningLayersActionEvents,
+        InputAction.ML_TOGGLE_HUD, vehicle, MiningLayers.actionToggleHud, false, true, false, true)
 
     -- Dredds Anforderung fuer 1.4.1.3: JEDE Registrierung protokollieren
     -- (Zaehler + success + eventId), damit das Log den Rebuild-Takt zeigt.
     MiningLayers.toggleRegisterCount = MiningLayers.toggleRegisterCount + 1
 
     if MiningLayers.toggleRegisterCount <= MiningLayers.TOGGLE_LOG_LIMIT then
-        MiningLayers.log('Anzeige-Taste: Registrierung #%d, success=%s, eventId=%s',
-            MiningLayers.toggleRegisterCount, tostring(success), tostring(eventId))
+        -- Diagnose (Dredd): Kontextname zeigt, WO das Event gelandet ist.
+        local contextName = 'unbekannt'
+
+        if MiningLayers.isCallable(g_inputBinding.getContextName) then
+            local okCtx, ctx = pcall(g_inputBinding.getContextName, g_inputBinding)
+
+            if okCtx and ctx ~= nil then
+                contextName = tostring(ctx)
+            end
+        end
+
+        MiningLayers.log('Anzeige-Taste: Registrierung #%d, success=%s, eventId=%s, Kontext=%s',
+            MiningLayers.toggleRegisterCount, tostring(success), tostring(eventId), contextName)
 
         if MiningLayers.toggleRegisterCount == MiningLayers.TOGGLE_LOG_LIMIT then
             MiningLayers.log('  (weitere Registrierungs-Zeilen werden unterdrueckt)')

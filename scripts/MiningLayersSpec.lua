@@ -24,16 +24,14 @@ function MiningLayersSpec.registerEventListeners(vehicleType)
 end
 
 ---Vom Spielkern bei jedem Input-Kontext-Rebuild aufgerufen. self = Fahrzeug.
----@param isSelected boolean
----@param isOnActiveVehicle boolean
-function MiningLayersSpec:onRegisterActionEvents(isSelected, isOnActiveVehicle)
+---Parameter-Namen wie in TerraFarms Machine.lua:1554 (das ist die lokal
+---BEWIESENE Referenz: dessen Tasten funktionieren im selben Spielstand).
+---@param isActiveForInput boolean
+---@param isActiveForInputIgnoreSelection boolean
+function MiningLayersSpec:onRegisterActionEvents(isActiveForInput, isActiveForInputIgnoreSelection)
     if not self.isClient or MiningLayers == nil then
         return
     end
 
-    -- EV-Guard 1:1: nur im aktiven, vom Spieler kontrollierten Fahrzeug.
-    if isOnActiveVehicle
-        and (not MiningLayers.isCallable(self.getIsControlled) or self:getIsControlled()) then
-        pcall(MiningLayers.registerToggleActionEvent, MiningLayers, self)
-    end
+    pcall(MiningLayers.registerToggleActionEvent, MiningLayers, self, isActiveForInput)
 end
