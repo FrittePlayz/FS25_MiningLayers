@@ -22,10 +22,9 @@ MiningLayers.configBackupDone = false
 MiningLayers.wizardLayers = {}
 
 ---Materialien, die der Editor als Abraum-Schicht zulaesst - die wichtigsten
----Bergbauprodukte (Tommys Vorgabe). PAYDIRT ist bewusst NICHT dabei: das ist das
----Geld-Material, wer es frei einstellen koennte, macht sich die Karte zur
----Goldgrube. Das Floez vergibt der Mod selbst (siehe finishLayerWizard).
----Die XML von Hand bleibt der Ausweg fuer Leute, die es anders wollen.
+---Bergbauprodukte (Tommys Vorgabe). PAYDIRT gehoert hier bewusst nicht hin: das
+---Geld-Material sitzt am Ende der Grube, nicht im Abraum darueber. Was als
+---Nutzschicht taugt, steht in SEAM_MATERIALS.
 MiningLayers.EDITOR_MATERIALS = {
     DIRT = true,
     SOIL = true,
@@ -36,8 +35,31 @@ MiningLayers.EDITOR_MATERIALS = {
     LIMESTONE = true,
 }
 
----Dicke des PAYDIRT-Floezes, das der Editor unter den Abraum setzt (Meter).
+---Materialien fuer die NUTZSCHICHT, also das Floez unter dem Abraum. Seit v1.4.0
+---waehlbar (Anstoss: Tazweb auf itch.io) - wer eine Kiesgrube oder eine Kohlegrube
+---bauen will, ist kein Cheater. PAYDIRT bleibt die Vorgabe.
+---
+---Der Cheat-Schutz haengt nicht am Material, sondern an der Lage: das Floez kommt
+---immer UNTER den Abraum, und mindestens eine Abraum-Schicht ist Pflicht. An der
+---Grasnarbe liegt also weiterhin nie ein Geld-Material.
+---Eine Whitelist bleibt es trotzdem: sonst legt jemand das wertvollste Material
+---eines fremden Mods ins Floez. Der Fels darunter ist ohnehin fest.
+MiningLayers.SEAM_MATERIALS = {
+    PAYDIRT = true,
+    DIRT = true,
+    SOIL = true,
+    GRAVEL = true,
+    SAND = true,
+    STONE = true,
+    COAL = true,
+    LIMESTONE = true,
+}
+
+---Dicke des Floezes, das der Editor unter den Abraum setzt (Meter).
 MiningLayers.PAYDIRT_SEAM_THICKNESS = 6
+
+---Material, das der Assistent gerade als Floez vorgesehen hat (Vorgabe PAYDIRT).
+MiningLayers.wizardSeamFillTypeName = 'PAYDIRT'
 
 ---Kurzbeschreibung einer Zone fuer Dialoge, z. B. "DIRT 0-2 m, GRAVEL 2-6 m, PAYDIRT ab 6 m".
 ---@param zone table?
@@ -165,10 +187,11 @@ function MiningLayers:startLayerWizard()
     end
 
     self.wizardLayers = {}
+    self.wizardSeamFillTypeName = 'PAYDIRT'
 
     local intro = string.format(
         MiningLayers.getText('ml_uiIntro',
-            'Abraum-Schichten neu festlegen?\n\nAktuell: %s\n\nDer Editor fragt je Schicht Material und Untergrenze in Metern ab. Darunter setzt der Mod automatisch das PAYDIRT-Floez und Fels (STONE) - fuer echtes Bergbau-Gameplay, Cheaten unterstuetzen wir nicht.'),
+            'Schichten neu festlegen?\n\nAktuell: %s\n\nDer Editor fragt je Abraum-Schicht Material und Untergrenze in Metern ab, zum Schluss die Nutzschicht darunter (Vorgabe PAYDIRT, auch Kohle oder Kalkstein moeglich). Der Fels ganz unten bleibt fest - dort ist Schluss.'),
         self:describeZone(self.defaultZone))
 
     YesNoDialog.show(self.onWizardIntro, self, intro)
@@ -219,7 +242,7 @@ function MiningLayers:onWizardMaterial(fillTypeIndex, clickOk)
     -- Deshalb Pruefung NACH der Auswahl - mit Begruendung, nicht nur "nein".
     if fillType.name == 'PAYDIRT' then
         self:rejectWizardMaterial(MiningLayers.getText('ml_uiNoPaydirt',
-            'PAYDIRT vergibt der Mod selbst - das Floez liegt unter dem Abraum.\n\nWir wollen echtes Bergbau-Gameplay erzeugen; Cheaten unterstuetzen wir nicht. Wer es anders will, kann die miningLayers.xml von Hand anpassen.'))
+            'PAYDIRT gehoert nicht in den Abraum - das Floez liegt darunter.\n\nDie Nutzschicht kommt als letzter Schritt, dort kannst du sie waehlen.'))
         return
     end
 
@@ -299,17 +322,30 @@ function MiningLayers:onWizardDepth(value)
     self.wizardLayers[#self.wizardLayers].depth = value
 
     if #self.wizardLayers >= 6 then
-        -- Sechs Abraum-Schichten reichen jedem - darunter kommt ohnehin das Floez.
-        MiningLayers.protectedCall('wizardFinish', function()
-            MiningLayers:finishLayerWizard()
-        end)
+        -- Sechs Abraum-Schichten reichen jedem - jetzt noch die Nutzschicht.
+        -- Hier fehlt der "Noch eine?"-Dialog, der sonst ankuendigt was kommt,
+        -- deshalb ein kurzer Hinweis vor der Material-Auswahl.
+        local toSeam = function()
+            MiningLayers.protectedCall('wizardSeam', function()
+                MiningLayers:askSeamMaterial()
+            end)
+        end
+
+        local hint = MiningLayers.getText('ml_uiSeamNext',
+            'Sechs Abraum-Schichten sind genug.\n\nJetzt noch die Nutzschicht darunter waehlen - der Fels darunter ist fest.')
+
+        if InfoDialog ~= nil and MiningLayers.isCallable(InfoDialog.show) then
+            InfoDialog.show(hint, toSeam)
+        else
+            toSeam()
+        end
 
         return
     end
 
     YesNoDialog.show(self.onWizardMore, self,
         MiningLayers.getText('ml_uiMore',
-            'Noch eine Abraum-Schicht darunter?\n\nNein = fertig: PAYDIRT-Floez und Fels setzt der Mod automatisch darunter.'))
+            'Noch eine Abraum-Schicht darunter?\n\nNein = weiter zur Nutzschicht. Den Fels darunter setzt der Mod selbst.'))
 end
 
 ---@param yes boolean
@@ -319,10 +355,115 @@ function MiningLayers:onWizardMore(yes)
             MiningLayers:askWizardMaterial()
         end)
     else
+        MiningLayers.protectedCall('wizardSeam', function()
+            MiningLayers:askSeamMaterial()
+        end)
+    end
+end
+
+--------------------------------------------------------------------------------
+-- Die Nutzschicht (Floez)
+--------------------------------------------------------------------------------
+
+---Fragt das Material des Floezes ab - der letzte Schritt vor dem Speichern.
+---Vorausgewaehlt ist das bisherige Floez der defaultZone, sonst PAYDIRT.
+function MiningLayers:askSeamMaterial()
+    local selectDialog = MiningLayers.tf('g_selectMaterialDialog')
+
+    if type(selectDialog) ~= 'table' then
+        -- Ohne Dialog nicht abbrechen: mit der Vorgabe weitermachen ist besser,
+        -- als den fertig eingesammelten Abraum wegzuwerfen.
+        self.wizardSeamFillTypeName = 'PAYDIRT'
+
         MiningLayers.protectedCall('wizardFinish', function()
             MiningLayers:finishLayerWizard()
         end)
+
+        return
     end
+
+    local preselect = nil
+    local previous = self:getCurrentSeamLayer()
+
+    if previous ~= nil then
+        preselect = previous.fillTypeIndex
+        self.wizardSeamFillTypeName = previous.fillTypeName
+    else
+        self.wizardSeamFillTypeName = 'PAYDIRT'
+
+        local paydirt = g_fillTypeManager:getFillTypeByName('PAYDIRT')
+
+        if paydirt ~= nil then
+            preselect = paydirt.index
+        end
+    end
+
+    selectDialog:setSelectCallback(self.onSeamMaterial, self)
+    selectDialog:show(preselect)
+end
+
+---Das Floez der aktuellen defaultZone: die unterste Schicht MIT Tiefe, denn die
+---letzte ohne Tiefe ist der endlose Fels darunter.
+---@return table?
+function MiningLayers:getCurrentSeamLayer()
+    if self.defaultZone == nil or self.defaultZone.layers == nil then
+        return nil
+    end
+
+    local found = nil
+
+    for _, layer in ipairs(self.defaultZone.layers) do
+        if layer.depth ~= nil then
+            found = layer
+        end
+    end
+
+    return found
+end
+
+---@param fillTypeIndex number?
+---@param clickOk boolean
+function MiningLayers:onSeamMaterial(fillTypeIndex, clickOk)
+    if not clickOk or fillTypeIndex == nil then
+        -- Abbruch: nichts speichern, nichts aendern - wie in jedem anderen Schritt.
+        self.wizardLayers = {}
+
+        return
+    end
+
+    local fillType = g_fillTypeManager:getFillTypeByIndex(fillTypeIndex)
+
+    if fillType == nil or fillType.name == nil then
+        return
+    end
+
+    -- Wie beim Abraum zeigt TerraFarms Dialog ALLE Materialien - pruefen laesst
+    -- sich erst danach.
+    if not MiningLayers.SEAM_MATERIALS[fillType.name] then
+        local reopen = function()
+            MiningLayers.protectedCall('wizardSeam', function()
+                MiningLayers:askSeamMaterial()
+            end)
+        end
+
+        local message = string.format(MiningLayers.getText('ml_uiSeamNotAllowed',
+            '%s taugt nicht als Nutzschicht.\n\nZur Wahl stehen: PAYDIRT, COAL, LIMESTONE, STONE, GRAVEL, SAND, DIRT, SOIL.'),
+            fillType.name)
+
+        if InfoDialog ~= nil and MiningLayers.isCallable(InfoDialog.show) then
+            InfoDialog.show(message, reopen)
+        else
+            reopen()
+        end
+
+        return
+    end
+
+    self.wizardSeamFillTypeName = fillType.name
+
+    MiningLayers.protectedCall('wizardFinish', function()
+        MiningLayers:finishLayerWizard()
+    end)
 end
 
 ---Uebernimmt die neuen Schichten: Floez + Fels anhaengen, defaultZone ersetzen,
@@ -332,19 +473,37 @@ function MiningLayers:finishLayerWizard()
         return
     end
 
-    -- Das PAYDIRT-Floez und den Fels darunter vergibt der Mod - nicht der Spieler.
-    -- Echtes Bergbau-Gameplay: durch den Abraum zum Floez, am Fels ist Schluss.
+    -- Das Floez waehlt der Spieler (Vorgabe PAYDIRT), den Fels darunter vergibt
+    -- der Mod: durch den Abraum zur Nutzschicht, am Fels ist Schluss.
     local lastDepth = self.wizardLayers[#self.wizardLayers].depth or 0
-    local paydirt = g_fillTypeManager:getFillTypeByName('PAYDIRT')
-    local stone = g_fillTypeManager:getFillTypeByName('STONE')
+    local seamName = self.wizardSeamFillTypeName or 'PAYDIRT'
+    local seam = g_fillTypeManager:getFillTypeByName(seamName)
 
-    if paydirt ~= nil then
+    -- Kennt die Karte das gewaehlte Material nicht (COAL und LIMESTONE bringt
+    -- nicht jede mit), faellt das Floez auf PAYDIRT zurueck. Eine Grube ganz ohne
+    -- Nutzschicht waere ein stiller Totalausfall.
+    if seam == nil and seamName ~= 'PAYDIRT' then
+        MiningLayers.log('Schichten-Editor: fillType "%s" kennt diese Karte nicht - Floez bleibt PAYDIRT.',
+            seamName)
+
+        seamName = 'PAYDIRT'
+        seam = g_fillTypeManager:getFillTypeByName(seamName)
+    end
+
+    if seam ~= nil then
         table.insert(self.wizardLayers, {
-            fillTypeName = 'PAYDIRT',
-            fillTypeIndex = paydirt.index,
-            depth = lastDepth + MiningLayers.PAYDIRT_SEAM_THICKNESS
+            fillTypeName = seamName,
+            fillTypeIndex = seam.index,
+            depth = lastDepth + MiningLayers.PAYDIRT_SEAM_THICKNESS,
+            -- Markiert das Floez in der XML (seam="true"), damit Editor und
+            -- Assistent es beim Wiedereinlesen sicher erkennen - auch wenn es
+            -- nicht PAYDIRT heisst. STONE als Floez bekommt trotzdem die
+            -- normale Fels-Sohle darunter: gleiche Struktur, kein Sonderfall.
+            seam = true
         })
     end
+
+    local stone = g_fillTypeManager:getFillTypeByName('STONE')
 
     if stone ~= nil then
         table.insert(self.wizardLayers, {
@@ -415,6 +574,10 @@ local function writeZone(xmlId, zoneKey, zone)
 
         if layer.paintLayerName ~= nil then
             setXMLString(xmlId, layerKey .. '#paintLayer', tostring(layer.paintLayerName))
+        end
+
+        if layer.seam then
+            setXMLString(xmlId, layerKey .. '#seam', 'true')
         end
     end
 end

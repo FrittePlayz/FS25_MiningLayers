@@ -27,12 +27,14 @@
         <text name="ml_uiLayers" text="Layers" />
         <text name="ml_uiNoLayers" text="no layers" />
         <text name="ml_uiBelow" text="below" />
-        <text name="ml_uiIntro" text="Redefine the overburden layers? Current: %s. The editor asks for each layer's material and lower boundary in metres. Below them the mod places the PAYDIRT layer and rock (STONE) on its own: real mining gameplay, no cheating." />
+        <text name="ml_uiIntro" text="Redefine the layers? Current: %s. The editor asks for each overburden layer's material and lower boundary in metres, then for the pay seam below them (PAYDIRT by default, coal or limestone work too). The bedrock at the very bottom stays fixed - that is where digging ends." />
         <text name="ml_uiDepthTitle" text="%s: lower boundary in metres below the surface" />
         <text name="ml_uiDone" text="New layers: %s. Takes effect immediately for every area without its own zone." />
-        <text name="ml_uiMore" text="Add another overburden layer below? No = done, the mod puts the PAYDIRT layer and rock underneath by itself." />
-        <text name="ml_uiNoPaydirt" text="The mod places PAYDIRT itself, below the overburden. We are after real mining gameplay and do not support cheating. If you want it differently, edit miningLayers.xml by hand." />
+        <text name="ml_uiMore" text="Add another overburden layer below? No = on to the pay seam. The mod puts the bedrock underneath by itself." />
+        <text name="ml_uiNoPaydirt" text="PAYDIRT does not belong in the overburden, the seam sits below it. The pay seam is the last step, you can choose it there." />
         <text name="ml_uiNotAllowed" text="%s is not an overburden material. Available: DIRT, SOIL, GRAVEL, SAND, STONE, COAL, LIMESTONE." />
+        <text name="ml_uiSeamNext" text="Six overburden layers are plenty. Now pick the pay seam below them - the bedrock underneath stays fixed." />
+        <text name="ml_uiSeamNotAllowed" text="%s does not work as a pay seam. Available: PAYDIRT, COAL, LIMESTONE, STONE, GRAVEL, SAND, DIRT, SOIL." />
 
         <!-- ===================== Menu page: tabs ===================== -->
         <text name="ml_tabQuickstart" text="Quick start" />
@@ -58,7 +60,7 @@
         <text name="ml_helpQsBothWays2" text="Enter a material on the area instead and you get plain TerraFarm without layers. Exactly right for construction sites, road building and levelling — anywhere you just want to move soil and always need the same material." />
         <text name="ml_helpQsBothWays3" text="You get the same result from the Layers tab: pick an area there and set it to &quot;Plain TerraFarm&quot;. Both routes lead to the same place, take whichever you prefer." />
         <text name="ml_edForeign" text="⚠ This zone was hand-written in miningLayers.xml and can only be shown here in simplified form. Saving rewrites it in the editor’s own scheme; extras such as custom ground textures or a fixed reference height are lost." />
-        <text name="ml_edLayerSection" text="Overburden layers" />
+        <text name="ml_edLayerSection" text="Layers" />
         <text name="ml_edLayer" text="Layer" />
         <text name="ml_edMaterial" text="Material" />
         <text name="ml_edThickness" text="Thickness" />
@@ -66,7 +68,8 @@
         <text name="ml_edAdd" text="Add layer" />
         <text name="ml_edRemove" text="Remove layer" />
         <text name="ml_edSaved" text="Layers saved. They apply right away to every area without its own zone." />
-        <text name="ml_edHint" text="The bright outline marks the layer you are editing. Paydirt and rock go underneath on their own. Do not forget to save: ESC or Back leaves the page and everything since your last save is discarded." />
+        <text name="ml_edHint" text="The bright outline marks the layer you are editing. The pay seam is the fixed last row: material selectable (PAYDIRT by default, coal or limestone work too), thickness and position fixed. The rock below goes in on its own. Do not forget to save: ESC or Back leaves the page and everything since your last save is discarded." />
+        <text name="ml_edSeamEntry" text="Pay seam: %s" />
 
         <!-- ===================== Tab 1: quick start ===================== -->
         <text name="ml_helpQsSetupTitle" text="Set up in one step" />
@@ -83,7 +86,7 @@
         <text name="ml_helpQsLayers1" text="Out of the box: topsoil, gravel below it, then paydirt, rock at the bottom. That fits almost any pit, so there is nothing you have to set up." />
         <text name="ml_helpQsWizardButton" text="Set up layers" />
         <text name="ml_helpQsWizardHint" text="You do not have to, though. Do nothing and our default applies, which fits almost any pit. Want it different? Go to the Layers tab, build your own profile there and watch it take shape as you go." />
-        <text name="ml_helpQsLayersScope" text="You only ever edit the overburden layers above the seam. Paydirt and the rock below are placed by the mod itself, and that is deliberate: whoever wants the ore has to dig through the overburden — real mining gameplay instead of material at the push of a button." />
+        <text name="ml_helpQsLayersScope" text="You edit the overburden layers and the pay seam below them (PAYDIRT by default, coal or limestone work too). Its position stays fixed: whoever wants the ore has to dig through the overburden — real mining gameplay instead of material at the push of a button. The rock at the very bottom is placed by the mod itself." />
 
         <text name="ml_helpQsMistakesTitle" text="The three mistakes when drawing an area" />
         <text name="ml_helpQsWarnWater" text="Lake or shore: corner points in the water measure the bottom. The reference plane tilts and you hit rock at the shoreline. Keep the area mostly on land." />
@@ -112,7 +115,7 @@
         <text name="ml_helpManEditorTitle" text="Setting your own layers" />
         <text name="ml_helpManEditor1" text="The Layers tab is where you build your own profile. The cross-section is on the left, layer, material and thickness on the right. Six overburden layers at most; available are DIRT, SOIL, GRAVEL, SAND, STONE, COAL and LIMESTONE." />
         <text name="ml_helpManEditor3" text="Leave the page with ESC or the Back button. Careful: changed is not saved. Only the Save button writes the layers and applies them right away to the target picked above — the standard or the single area. Leave before that and the old state is back next time you open it." />
-        <text name="ml_helpManEditor2" text="You cannot pick PAYDIRT as overburden. The mod places it, and that is a deliberate choice: real mining gameplay instead of material at the push of a button. If you want it differently, edit miningLayers.xml by hand." />
+        <text name="ml_helpManEditor2" text="You cannot pick PAYDIRT as overburden - the money material always sits BELOW the overburden. As the pay seam (last row in the editor) you can pick COAL, LIMESTONE, STONE, GRAVEL, SAND, DIRT or SOIL besides PAYDIRT: for gravel pits and coal country. The bedrock below stays fixed." />
 
         <text name="ml_helpManFloorTitle" text="The pit floor" />
         <text name="ml_helpManFloor1" text="The mod sets the area's target height to the bottom of your deepest layer automatically, so levelling does not dig into nothing. Enlarge the area and the floor follows within the same session. After reloading a savegame it no longer does." />

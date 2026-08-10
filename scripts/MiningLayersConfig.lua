@@ -217,7 +217,11 @@ function MiningLayers:loadZone(xmlFile, key, kind)
                     aboveY = aboveY,
                     -- Bodentextur: ausdruecklich gesetzt, sonst spaeter automatisch
                     -- aus dem fillType-Namen abgeleitet.
-                    paintLayerName = xmlFile:getString(layerKey .. '#paintLayer')
+                    paintLayerName = xmlFile:getString(layerKey .. '#paintLayer'),
+                    -- Markiert die Nutzschicht (das Floez). Setzt der Editor beim
+                    -- Speichern; in Hand-XMLs optional. Ohne Marker gilt weiter
+                    -- die alte Regel: PAYDIRT ueber der Sohle = Floez.
+                    seam = MiningLayers.getXmlBool(xmlFile, layerKey .. '#seam', false)
                 })
             end
         end

@@ -109,6 +109,29 @@ This is **not a defect and not a mod conflict — it's the intended switch.** If
 
 `modSettings/FS25_MiningLayers/miningLayers.xml` — created from the template on first start, survives mod updates. Layer stacks (material + depth, per area), display options, and the sponsor sign toggle live here. Everything can also be edited from the in-game menu.
 
+### Custom geology — gravel pit, coal mine
+
+Since 1.4.0 the pay seam is selectable in the editor (ESC menu → Mining Layers → Layers): the seam is the fixed last row — pick COAL, LIMESTONE, STONE, GRAVEL, SAND, DIRT or SOIL instead of PAYDIRT. Its position stays fixed: the seam always sits below the overburden, bedrock below it ends the pit.
+
+The same per area in the XML:
+
+```xml
+<zone area="gravel-pit">
+    <layer depth="1" fillType="DIRT" />
+    <layer depth="7" fillType="LIMESTONE" seam="true" />
+    <layer           fillType="STONE" />
+</zone>
+
+<zone area="coal-mine">
+    <layer depth="2"  fillType="DIRT" />
+    <layer depth="6"  fillType="STONE" />
+    <layer depth="12" fillType="COAL" seam="true" />
+    <layer            fillType="STONE" />
+</zone>
+```
+
+One catch: COAL and LIMESTONE are not base-game fill types — your map or a mining mod has to bring them. The log lists every fill type your map knows on startup; unknown materials are skipped with a warning (and the editor falls back to PAYDIRT rather than saving a pit with nothing in it).
+
 ## Translations
 
 The mod and its in-game manual are available in **English and German**. Which language should come next? **[Vote in the poll](https://github.com/FrittePlayz/FS25_MiningLayers/discussions/1)** — or translate it yourself: the language files are plain XML (`l10n/`), no coding needed, and you'll be credited.

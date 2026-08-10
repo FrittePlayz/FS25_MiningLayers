@@ -109,6 +109,29 @@ Das ist **kein Defekt und kein Mod-Konflikt — es ist die vorgesehene Umschaltu
 
 `modSettings/FS25_MiningLayers/miningLayers.xml` — wird beim ersten Start aus der Vorlage angelegt und überlebt Mod-Updates. Schichtaufbau (Material + Tiefe, pro Bereich), Anzeige-Optionen und der Sponsorschild-Schalter stehen hier. Alles auch über das Ingame-Menü editierbar.
 
+### Eigene Geologie — Kiesgrube, Kohlerevier
+
+Seit 1.4.0 ist die Nutzschicht im Editor wählbar (ESC-Menü → Mining Layers → Schichten): Sie ist die feste letzte Zeile — statt PAYDIRT gehen auch COAL, LIMESTONE, STONE, GRAVEL, SAND, DIRT oder SOIL. Ihre Lage bleibt fest: Die Nutzschicht liegt immer unter dem Abraum, der Fels darunter beendet die Grube.
+
+Dasselbe pro Bereich in der XML:
+
+```xml
+<zone area="kiesgrube">
+    <layer depth="1" fillType="DIRT" />
+    <layer depth="7" fillType="LIMESTONE" seam="true" />
+    <layer           fillType="STONE" />
+</zone>
+
+<zone area="kohlegrube">
+    <layer depth="2"  fillType="DIRT" />
+    <layer depth="6"  fillType="STONE" />
+    <layer depth="12" fillType="COAL" seam="true" />
+    <layer            fillType="STONE" />
+</zone>
+```
+
+Ein Haken: COAL und LIMESTONE sind keine Basisspiel-Materialien — Karte oder ein Mining-Mod muss sie mitbringen. Das Log listet beim Start alle Materialien der Karte; unbekannte werden mit Warnung übersprungen (und der Editor fällt auf PAYDIRT zurück, statt eine leere Grube zu speichern).
+
 ## Übersetzungen
 
 Mod und Ingame-Handbuch gibt es auf **Deutsch und Englisch**. Welche Sprache als nächstes? **[In der Umfrage abstimmen](https://github.com/FrittePlayz/FS25_MiningLayers/discussions/1)** — oder selbst übersetzen: Die Sprachdateien sind simples XML (`l10n/`), kein Programmieren nötig, und du wirst in den Credits genannt.

@@ -498,6 +498,15 @@ InGameMenuMiningLayersFrame.MATERIALS = {
     'DIRT', 'SOIL', 'GRAVEL', 'SAND', 'STONE', 'COAL', 'LIMESTONE',
 }
 
+---Materialien fuer die Nutzschicht (das Floez) - seit 1.4.0 waehlbar, Anstoss
+---war Tazwebs Wunsch nach Kies- und Kohlegruben (itch.io, 10.08.). PAYDIRT
+---bleibt die Vorgabe und steht deshalb vorn. Der Cheat-Schutz haengt an der
+---Lage, nicht am Material: das Floez liegt immer UNTER dem Abraum, und der
+---Fels darunter bleibt fest.
+InGameMenuMiningLayersFrame.SEAM_MATERIALS = {
+    'PAYDIRT', 'COAL', 'LIMESTONE', 'STONE', 'GRAVEL', 'SAND', 'DIRT', 'SOIL',
+}
+
 ---Farben fuer den Querschnitt. PAYDIRT und STONE hoeren zum Unterbau, den der
 ---Mod selbst setzt; sie stehen mit drin, damit man das Ganze sieht.
 InGameMenuMiningLayersFrame.MATERIAL_COLORS = {
@@ -521,9 +530,16 @@ local function paydirtThickness()
     return MiningLayers.PAYDIRT_SEAM_THICKNESS or 6
 end
 
+---Die Nutzschicht haengt als feste letzte Zeile in der Schicht-Auswahl:
+---waehlbar wie eine Abraum-Schicht, aber nicht entfernbar und mit fester Dicke.
+---@return boolean
+function InGameMenuMiningLayersFrame:isSeamSelected()
+    return self.editLayers ~= nil and self.editIndex == #self.editLayers + 1
+end
+
 ---Liest die aktuelle Standardzone in eine Arbeitskopie aus Abraum-Schichten.
----PAYDIRT und STONE werden dabei weggelassen: die haengt der Mod beim Speichern
----selbst wieder an, genau wie der alte Assistent.
+---Floez und STONE-Sohle werden dabei weggelassen: die haengt der Mod beim
+---Speichern selbst wieder an - das Floez-Material landet in seamName.
 ---Baut die Liste der Ziele: Standard plus jeder Polygon-Bereich der Karte.
 function InGameMenuMiningLayersFrame:buildTargetList()
     self.targets = {
@@ -579,21 +595,44 @@ function InGameMenuMiningLayersFrame:loadEditorFromConfig()
     -- Folge: Wer eine Schicht anlegte und speicherte, fand sie beim naechsten
     -- Oeffnen nicht mehr vor, und das Floez rutschte jedes Mal hoeher.
     --
-    -- Der Mod schreibt immer: Abraum..., PAYDIRT (mit depth), Sohle (ohne depth).
-    -- Also: letzte Schicht ohne depth = Sohle, die davor = Floez, wenn PAYDIRT.
+    -- Der Mod schreibt immer: Abraum..., Floez (mit depth), Sohle (ohne depth).
+    -- Also: letzte Schicht ohne depth = Sohle. Das Floez davor traegt seit 1.4.0
+    -- den seam-Marker; aeltere Configs haben keinen, dort gilt weiter: PAYDIRT
+    -- ueber der Sohle = Floez.
     local lastIndex = #layers
 
     if lastIndex > 0 and layers[lastIndex].depth == nil then
         lastIndex = lastIndex - 1
     end
 
-    if lastIndex > 0 and layers[lastIndex].fillTypeName == 'PAYDIRT' then
-        lastIndex = lastIndex - 1
-    end
-
     -- Passt die Zone nicht in unser Schema, wird das Speichern sie umschreiben.
     -- Das sagen wir, statt es still zu tun.
     self.editorForeign = false
+    self.seamName = 'PAYDIRT'
+
+    if lastIndex > 0 and (layers[lastIndex].seam == true
+        or layers[lastIndex].fillTypeName == 'PAYDIRT') then
+        local seamLayer = layers[lastIndex]
+        lastIndex = lastIndex - 1
+
+        -- Nur was die Auswahl kennt, kann sie auch anzeigen. Ein Floez aus
+        -- einem fremden Material (Hand-XML) bleibt beim Speichern nicht
+        -- erhalten - das faellt unter die editorForeign-Warnung.
+        local known = false
+
+        for _, name in ipairs(InGameMenuMiningLayersFrame.SEAM_MATERIALS) do
+            if name == seamLayer.fillTypeName then
+                known = true
+                break
+            end
+        end
+
+        if known then
+            self.seamName = seamLayer.fillTypeName
+        else
+            self.editorForeign = true
+        end
+    end
 
     local previousDepth = 0
 
@@ -708,7 +747,13 @@ function InGameMenuMiningLayersFrame:updateEditorOptions()
         table.insert(layerTexts, string.format('%d. %s', index, layer.fillTypeName))
     end
 
-    self.editIndex = math.max(1, math.min(self.editIndex or 1, #self.editLayers))
+    -- Die Nutzschicht ist die feste letzte Zeile: Material waehlbar, Dicke und
+    -- Position nicht. Der Fels darunter taucht hier gar nicht erst auf.
+    local seamTemplate = MiningLayers.getText('ml_edSeamEntry', 'Nutzschicht: %s')
+    local okSeam, seamText = pcall(string.format, seamTemplate, self.seamName or 'PAYDIRT')
+    table.insert(layerTexts, okSeam and seamText or seamTemplate)
+
+    self.editIndex = math.max(1, math.min(self.editIndex or 1, #self.editLayers + 1))
 
     self.updatingEditor = true
 
@@ -741,6 +786,38 @@ function InGameMenuMiningLayersFrame:updateEditorOptions()
 
     self.layerOption:setTexts(layerTexts)
     self.layerOption:setState(self.editIndex, false)
+
+    if self:isSeamSelected() then
+        -- Nutzschicht: eigene Materialliste, Dicke fest verdrahtet.
+        self.materialOption:setTexts(InGameMenuMiningLayersFrame.SEAM_MATERIALS)
+
+        local materialIndex = 1
+
+        for index, name in ipairs(InGameMenuMiningLayersFrame.SEAM_MATERIALS) do
+            if name == self.seamName then
+                materialIndex = index
+                break
+            end
+        end
+
+        self.materialOption:setState(materialIndex, false)
+
+        self.thicknessOption:setTexts(self.thicknessTexts)
+        self.thicknessOption:setState(self:thicknessToIndex(paydirtThickness()), false)
+
+        if MiningLayers.isCallable(self.thicknessOption.setDisabled) then
+            self.thicknessOption:setDisabled(true)
+        end
+
+        self.updatingEditor = false
+
+        self:updateEditorSummary()
+        return
+    end
+
+    if MiningLayers.isCallable(self.thicknessOption.setDisabled) then
+        self.thicknessOption:setDisabled(false)
+    end
 
     self.materialOption:setTexts(InGameMenuMiningLayersFrame.MATERIALS)
 
@@ -792,7 +869,8 @@ function InGameMenuMiningLayersFrame:updateEditorSummary()
 
     local seamEnd = depth + paydirtThickness()
 
-    table.insert(parts, string.format('PAYDIRT %s-%s m',
+    table.insert(parts, string.format('%s %s-%s m',
+        self.seamName or 'PAYDIRT',
         MiningLayers.formatNumber(depth),
         MiningLayers.formatNumber(seamEnd)))
     table.insert(parts, string.format('STONE %s %s m',
@@ -871,6 +949,18 @@ function InGameMenuMiningLayersFrame:onMaterialChanged(state)
         return
     end
 
+    if self:isSeamSelected() then
+        local name = InGameMenuMiningLayersFrame.SEAM_MATERIALS[state]
+
+        if name ~= nil then
+            self.seamName = name
+            self.editorDirty = true
+            self:updateEditorOptions()
+        end
+
+        return
+    end
+
     local name = InGameMenuMiningLayersFrame.MATERIALS[state]
 
     if name ~= nil and self.editLayers[self.editIndex] ~= nil then
@@ -882,6 +972,13 @@ end
 
 function InGameMenuMiningLayersFrame:onThicknessChanged(state)
     if self.updatingEditor or self.editLayers == nil then
+        return
+    end
+
+    -- Die Dicke der Nutzschicht ist fest - falls das Element trotz
+    -- setDisabled ein Event durchlaesst, die Anzeige einfach zuruecksetzen.
+    if self:isSeamSelected() then
+        self:updateEditorOptions()
         return
     end
 
@@ -905,6 +1002,7 @@ function InGameMenuMiningLayersFrame:onClickAddLayer()
 
     table.insert(self.editLayers, { fillTypeName = 'STONE', thickness = 2 })
 
+    -- Neue Schicht kommt ans Ende des Abraums - direkt ueber die Nutzschicht.
     self.editIndex = #self.editLayers
     self.editorDirty = true
 
@@ -913,6 +1011,12 @@ end
 
 function InGameMenuMiningLayersFrame:onClickRemoveLayer()
     if self.editLayers == nil or #self.editLayers <= 1 then
+        return
+    end
+
+    -- Die Nutzschicht laesst sich nicht entfernen - ohne sie gaebe es nichts
+    -- zu holen, und der Cheat-Schutz haengt an genau dieser Struktur.
+    if self:isSeamSelected() then
         return
     end
 
@@ -963,16 +1067,29 @@ function InGameMenuMiningLayersFrame:onClickSaveLayers()
         return
     end
 
-    local paydirt = g_fillTypeManager:getFillTypeByName('PAYDIRT')
+    local seamName = self.seamName or 'PAYDIRT'
+    local seam = g_fillTypeManager:getFillTypeByName(seamName)
     local stone = g_fillTypeManager:getFillTypeByName('STONE')
 
-    if paydirt ~= nil then
+    -- Kennt die Karte das gewaehlte Material nicht (COAL und LIMESTONE bringt
+    -- nicht jede mit), faellt das Floez auf PAYDIRT zurueck - eine Grube ohne
+    -- Nutzschicht waere ein stiller Totalausfall.
+    if seam == nil and seamName ~= 'PAYDIRT' then
+        MiningLayers.log('Editor: fillType "%s" kennt diese Karte nicht - Floez wird PAYDIRT.',
+            seamName)
+
+        seamName = 'PAYDIRT'
+        seam = g_fillTypeManager:getFillTypeByName(seamName)
+    end
+
+    if seam ~= nil then
         depth = depth + paydirtThickness()
 
         table.insert(layers, {
-            fillTypeName = 'PAYDIRT',
-            fillTypeIndex = paydirt.index,
+            fillTypeName = seamName,
+            fillTypeIndex = seam.index,
             depth = depth,
+            seam = true,
         })
     end
 
@@ -1096,7 +1213,11 @@ function InGameMenuMiningLayersFrame:drawLayerGraph()
         })
     end
 
-    table.insert(drawList, { name = 'PAYDIRT', thickness = seam, fixed = true })
+    table.insert(drawList, {
+        name = self.seamName or 'PAYDIRT',
+        thickness = seam,
+        active = self:isSeamSelected(),
+    })
     table.insert(drawList, { name = 'STONE', thickness = stoneShown, fixed = true, openEnded = true })
 
     setTextAlignment(RenderText.ALIGN_LEFT)

@@ -2,6 +2,16 @@
 
 All notable changes to Mining Layers. Newest first.
 
+## [1.4.0.0] — 2026-08-10
+
+### Added
+- **Selectable pay seam** — the seam below the overburden is no longer hardwired to PAYDIRT. Pick COAL for a coal mine, LIMESTONE and STONE for a gravel pit, or GRAVEL, SAND, DIRT, SOIL. In the editor the seam is the fixed last row: material selectable, thickness and position fixed, bedrock below stays fixed. Requested by Tazweb on itch.io — thanks!
+- Seam layers are marked `seam="true"` in `miningLayers.xml`, so hand-written configs with a non-PAYDIRT seam survive the editor round-trip. Old configs load as before (PAYDIRT above the bedrock counts as the seam).
+- Fallback: if the map does not know the chosen seam material (COAL and LIMESTONE are not base-game fill types), the seam reverts to PAYDIRT with a log line instead of silently producing a pit with nothing in it.
+
+### Changed
+- Help texts (editor hint, quickstart, manual) now describe the selectable seam.
+
 ## [1.3.7.0] — 2026-08-10
 
 ### Added

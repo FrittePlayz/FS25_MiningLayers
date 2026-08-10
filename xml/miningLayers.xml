@@ -128,6 +128,17 @@
         <layer           fillType="GRAVEL" />
     </zone>
 
+    Nutzschicht markieren: seam="true" sagt Editor und Mod, welche Schicht das
+    Floez ist - noetig, wenn es nicht PAYDIRT heisst (Kohle, Kalkstein, ...).
+    Mark the pay seam: seam="true" tells the editor which layer is the seam -
+    needed when it is not PAYDIRT (coal, limestone, ...).
+
+    <zone area="kohlegrube">
+        <layer depth="2"  fillType="DIRT" />
+        <layer depth="12" fillType="COAL" seam="true" />
+        <layer            fillType="STONE" />
+    </zone>
+
     Bereich dauerhaft OHNE Schichten (faellt dann nicht auf die defaultZone zurueck):
     Area permanently WITHOUT layers (does not fall back to the defaultZone):
 
