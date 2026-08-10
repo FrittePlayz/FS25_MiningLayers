@@ -2,6 +2,11 @@
 
 All notable changes to Mining Layers. Newest first.
 
+## [1.4.1.1] — 2026-08-10
+
+### Fixed
+- **The Numpad 5 toggle did not react** (caught by Tommy's live test minutes after the 1.4.1.0 release). The key now registers on the mission's own input rebuild — at mission start and after every menu close — instead of through TerraFarm's machine specialization path, which never fired. Side effect, intended: the key also works on foot now. The log states explicitly whether the key was registered and, if not, why.
+
 ## [1.4.1.0] — 2026-08-10
 
 ### Added

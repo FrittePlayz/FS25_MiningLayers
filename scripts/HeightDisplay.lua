@@ -312,15 +312,24 @@ end
 --------------------------------------------------------------------------------
 -- Toggle-Taste (Standard Num 5, im Spiel umbelegbar)
 --
--- Der erste Anlauf (Num *, vor 1.2.2.0) registrierte einmalig beim Kartenstart -
--- beim naechsten Input-Kontext-Rebuild (Menue auf/zu, Fahrzeugwechsel) war das
--- Event weg und die Taste tot (Tommy 2026-08-08). TerraFarms eigene Tasten
--- ueberleben das, weil die Engine Machine:onRegisterActionEvents bei JEDEM
--- Rebuild neu aufruft. Also haengen wir uns genau dort an: gleiche Lebensdauer,
--- gleiche Zuverlaessigkeit wie scfmods Num-4-HUD-Taste.
+-- Geschichte, damit der naechste Anlauf nicht wieder dieselben Graeber findet:
+-- 1. Num * (vor 1.2.2.0): einmalige Registrierung beim Kartenstart - beim ersten
+--    Kontext-Rebuild war das Event weg, Taste tot (Tommy 2026-08-08).
+-- 2. 1.4.1.0: Append an TerraFarms Machine.onRegisterActionEvents - feuerte in
+--    Tommys Live-Test NICHT (die Spezialisierungs-Listener koennen die Funktion
+--    beim Bau der Fahrzeugtypen einfangen; ein spaeterer Tausch am Klassen-Table
+--    laeuft dann ins Leere).
+-- 3. Jetzt: Append an FSBaseMission.registerActionEvents. Die Mission ruft das
+--    beim Start und nach JEDEM Menue-Schliessen als normale Methode auf - der
+--    Tausch am Klassen-Table greift sicher, und der Rebuild-Zeitpunkt ist genau
+--    der richtige. Nebeneffekt, gewollt: die Taste geht auch zu Fuss.
+-- Jeder Schritt schreibt ins Log - ein Blick in die log.txt sagt kuenftig, OB
+-- und WARUM (nicht) registriert wurde.
 --------------------------------------------------------------------------------
 
 MiningLayers.toggleKeyInstalled = false
+MiningLayers.toggleRegisterLogged = false
+MiningLayers.toggleActionMissingLogged = false
 
 ---Callback der Toggle-Taste.
 function MiningLayers:actionToggleHud()
@@ -334,25 +343,25 @@ function MiningLayers:actionToggleHud()
     end
 end
 
----Registriert das Action-Event im Kontext der aktiven TerraFarm-Maschine.
+---Registriert das Action-Event im aktuellen Input-Kontext.
 ---Laeuft bei jedem Rebuild erneut, deshalb vorher immer aufraeumen - sonst
 ---stapeln sich die Events (TerraFarm macht es in Editor.lua:624 genauso).
----@param isActiveForInput boolean
-function MiningLayers:registerToggleActionEvent(isActiveForInput)
-    if g_inputBinding == nil then
+function MiningLayers:registerToggleActionEvent()
+    if g_inputBinding == nil or not MiningLayers.active then
         return
     end
 
     g_inputBinding:removeActionEventsByTarget(MiningLayers)
 
-    -- Ohne Maschine keine Anzeige, also auch keine Taste (haelt die F1-Hilfe sauber).
-    if not isActiveForInput or not MiningLayers.active then
-        return
-    end
-
-    -- Action fehlt, wenn das Spiel das inputBinding aus der modDesc nicht laden
-    -- konnte - dann lieber still bleiben als jeden Rebuild einen Fehler werfen.
     if InputAction == nil or InputAction.ML_TOGGLE_HUD == nil then
+        -- Action fehlt = das Spiel hat <actions>/<inputBinding> aus der modDesc
+        -- nicht uebernommen. Einmal klar ins Log statt still zu schweigen.
+        if not MiningLayers.toggleActionMissingLogged then
+            MiningLayers.toggleActionMissingLogged = true
+            MiningLayers.log('WARNUNG: Action ML_TOGGLE_HUD ist im Spiel nicht angekommen - Taste ohne Funktion.')
+            MiningLayers.log('  Anzeige bleibt per showHeightDisplay="false" in der miningLayers.xml schaltbar.')
+        end
+
         return
     end
 
@@ -366,33 +375,49 @@ function MiningLayers:registerToggleActionEvent(isActiveForInput)
         if GS_PRIO_LOW ~= nil then
             g_inputBinding:setActionEventTextPriority(eventId, GS_PRIO_LOW)
         end
+
+        if not MiningLayers.toggleRegisterLogged then
+            MiningLayers.toggleRegisterLogged = true
+            MiningLayers.log('Anzeige-Taste registriert - Num 5 (oder deine Belegung) schaltet die Anzeige.')
+        end
+    elseif not MiningLayers.toggleRegisterLogged then
+        MiningLayers.toggleRegisterLogged = true
+        MiningLayers.log('WARNUNG: registerActionEvent lieferte kein Event - Taste vermutlich ohne Funktion.')
     end
 end
 
----Haengt die Registrierung an TerraFarms Machine:onRegisterActionEvents.
+---Haengt die Registrierung an den Rebuild der Missions-Action-Events.
 function MiningLayers:installToggleKey()
     if MiningLayers.toggleKeyInstalled then
-        -- Zweiter Spielstand in derselben Session: der Wrapper sitzt schon auf
-        -- der Klasse in TerraFarms Umgebung, nicht noch einmal stapeln.
+        -- Zweiter Spielstand in derselben Session: der Wrapper sitzt schon,
+        -- nicht noch einmal stapeln.
         return
     end
 
-    local Machine = MiningLayers.tf('Machine')
+    local missionClass = nil
 
-    if type(Machine) ~= 'table' or not MiningLayers.isCallable(Machine.onRegisterActionEvents) then
-        MiningLayers.log('WARNUNG: Machine.onRegisterActionEvents nicht gefunden - Anzeige-Taste bleibt aus.')
+    if type(FSBaseMission) == 'table' and MiningLayers.isCallable(FSBaseMission.registerActionEvents) then
+        missionClass = FSBaseMission
+    elseif type(BaseMission) == 'table' and MiningLayers.isCallable(BaseMission.registerActionEvents) then
+        missionClass = BaseMission
+    end
+
+    if missionClass == nil then
+        MiningLayers.log('WARNUNG: FSBaseMission.registerActionEvents nicht gefunden - Anzeige-Taste bleibt aus.')
         MiningLayers.log('  Anzeige weiterhin per showHeightDisplay="false" in der miningLayers.xml schaltbar.')
         return
     end
 
-    local original = Machine.onRegisterActionEvents
+    local original = missionClass.registerActionEvents
 
-    Machine.onRegisterActionEvents = function(vehicle, isActiveForInput, ...)
-        original(vehicle, isActiveForInput, ...)
-
-        pcall(MiningLayers.registerToggleActionEvent, MiningLayers,
-            isActiveForInput == true and vehicle ~= nil and vehicle.isClient == true)
+    missionClass.registerActionEvents = function(...)
+        original(...)
+        pcall(MiningLayers.registerToggleActionEvent, MiningLayers)
     end
+
+    -- Sofort ein erster Versuch: laeuft die Mission schon, kommt der naechste
+    -- Rebuild sonst erst beim naechsten Menue-Schliessen.
+    pcall(MiningLayers.registerToggleActionEvent, MiningLayers)
 
     MiningLayers.toggleKeyInstalled = true
     MiningLayers.log('Anzeige-Taste bereit (Standard Num 5, umbelegbar unter Optionen > Steuerung).')

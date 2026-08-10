@@ -15,7 +15,7 @@
 
 MiningLayers = {}
 
-MiningLayers.VERSION = '1.4.1.0'
+MiningLayers.VERSION = '1.4.1.1'
 MiningLayers.LOG_PREFIX = '[MiningLayers] '
 
 MiningLayers.MOD_NAME = g_currentModName
@@ -180,9 +180,9 @@ function MiningLayers:loadMap(filename)
         MiningLayers:spawnSignsForAllAreas()
     end)
 
-    -- Anzeige-Taste (Standard Num 5): registriert sich ueber TerraFarms
-    -- Machine:onRegisterActionEvents und ueberlebt so jeden Kontext-Rebuild -
-    -- der Fehler, an dem die alte Num-*-Taste starb (siehe HeightDisplay.lua).
+    -- Anzeige-Taste (Standard Num 5): registriert sich ueber den Rebuild der
+    -- Missions-Action-Events (Start + jedes Menue-Schliessen) und ueberlebt so
+    -- jeden Kontext-Wechsel - Historie der Fehlversuche in HeightDisplay.lua.
     MiningLayers.protectedCall('installToggleKey', function()
         MiningLayers:installToggleKey()
     end)
