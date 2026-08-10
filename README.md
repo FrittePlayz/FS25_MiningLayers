@@ -2,12 +2,12 @@
 
 [![Buy me fries](https://img.shields.io/badge/Buy%20me%20fries-FFDD00?style=for-the-badge&logo=buymeacoffee&logoColor=black)](https://buymeacoffee.com/fritteplayz)
 [![Latest release](https://img.shields.io/github/v/release/FrittePlayz/FS25_MiningLayers?style=for-the-badge&color=2d8a4e)](https://github.com/FrittePlayz/FS25_MiningLayers/releases)
-[![Language: EN + DE](https://img.shields.io/badge/in--game-English%20%2B%20German-2d8a4e?style=for-the-badge)](#)
+[![Languages](https://img.shields.io/badge/in--game-EN%20·%20DE%20·%20FR%20·%20PL-2d8a4e?style=for-the-badge)](#)
 
 ![Mining Layers — material by digging depth, or make your own gravel pit](docs/images/00_header.jpg)
 
-**Real mining gameplay for Farming Simulator 25 — dig through geological layers.**
-Material is determined by digging depth, not by hand selection: topsoil first, then gravel, then paydirt, then rock. Per-pit geology, spoil piles that remember what you dumped, and an in-game editor. Works on **any map** — no map editing required. **The mod and its in-game manual are fully available in English and German.**
+**Real mining gameplay for Farming Simulator 25 — dig through geological layers, or make your own gravel pit in FS25.**
+Material is determined by digging depth, not by hand selection: topsoil first, then gravel, then paydirt, then rock. Since 1.4.0 the pay seam is selectable — build a coal mine, a gravel pit or a limestone quarry on any map. Per-pit geology, spoil piles that remember what you dumped, and an in-game editor. Works on **any map** — no map editing required. **The mod and its in-game manual are fully available in English, German, French and Polish.**
 
 Mining Layers builds on **[TerraFarm](https://github.com/scfmod/FS25_TerraFarm)** by scfmod, which it requires to run. Unofficial add-on, not affiliated with scfmod.
 
@@ -134,6 +134,38 @@ The same per area in the XML:
 ```
 
 One catch: COAL and LIMESTONE are not base-game fill types — your map or a mining mod has to bring them. The log lists every fill type your map knows on startup; unknown materials are skipped with a warning (and the editor falls back to PAYDIRT rather than saving a pit with nothing in it).
+
+## FAQ
+
+**Does Mining Layers work on any map?**
+Yes. No map editing is needed: draw a TerraFarm area around your future pit and start digging. For layer textures the mod automatically picks the closest ground texture the map offers; if nothing fits, your own texture selection simply stays active.
+
+**How do I make a gravel pit in FS25?**
+Install TerraFarm and Mining Layers, draw a TerraFarm area, then open ESC menu → Mining Layers → Layers and set DIRT on top with LIMESTONE or STONE as the pay seam. Since 1.4.0 the seam material is selectable right in the editor — no XML needed.
+
+**How do I mine coal in FS25?**
+Pick COAL as the pay seam in the layer editor. Note: COAL is not a base-game fill type — your map or a mining mod has to provide it (RGC maps like Yukon Back Country do).
+
+**Why is my excavator not digging?**
+TerraFarm needs a machine configuration for that vehicle — without one, nothing happens (that is not a Mining Layers issue). Install a config pack such as scfmod's FS25_TerraFarmMachines, and avoid duplicate machine entries from several packs.
+
+**Why do I always get the same material, no matter how deep I dig?**
+A material is set on your TerraFarm area — that switches the area to plain TerraFarm without layers (by design, for construction work). Leave the material fields empty and the layers take over.
+
+**How deep can I dig?**
+Down to the bedrock below your deepest layer — there digging ends on purpose. That is what makes it mining instead of a bottomless money hole.
+
+**How thick should my layers be?**
+At least 1.5 m (the editor enforces 1 m for the top layer, 1.5 m below). With big machines like the PC 8000, 2 m per layer digs noticeably smoother.
+
+**Does it work on PS5 or Xbox?**
+No. Mining Layers is a script mod, and script mods only run on PC/Mac.
+
+**Which languages are supported?**
+English, German, French and Polish — including the full in-game manual.
+
+**Is it really free?**
+Yes. Free download from GitHub, no paywall, no early access. If you want to say thanks: [buy me fries](https://buymeacoffee.com/fritteplayz). 🍟
 
 ## Translations
 

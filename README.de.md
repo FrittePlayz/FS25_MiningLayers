@@ -2,12 +2,12 @@
 
 [![Buy me fries](https://img.shields.io/badge/Buy%20me%20fries-FFDD00?style=for-the-badge&logo=buymeacoffee&logoColor=black)](https://buymeacoffee.com/fritteplayz)
 [![Latest release](https://img.shields.io/github/v/release/FrittePlayz/FS25_MiningLayers?style=for-the-badge&color=2d8a4e)](https://github.com/FrittePlayz/FS25_MiningLayers/releases)
-[![Language: EN + DE](https://img.shields.io/badge/in--game-English%20%2B%20German-2d8a4e?style=for-the-badge)](#)
+[![Sprachen](https://img.shields.io/badge/in--game-DE%20·%20EN%20·%20FR%20·%20PL-2d8a4e?style=for-the-badge)](#)
 
 ![Mining Layers — Material nach Grabtiefe, oder bau deine eigene Kiesgrube](docs/images/00_header.jpg)
 
-**Echtes Bergbau-Gameplay für den Landwirtschafts-Simulator 25 — grab dich durch geologische Schichten.**
-Das Material bestimmt die Grabtiefe, nicht die Handauswahl: erst Mutterboden, dann Kies, dann Paydirt, dann Fels. Eigene Geologie pro Grube, Halden mit Gedächtnis und ein Ingame-Editor. Läuft auf **jeder Karte** — ohne Map-Bearbeitung. **Mod und Ingame-Handbuch gibt es vollständig auf Deutsch und Englisch.**
+**Echtes Bergbau-Gameplay für den Landwirtschafts-Simulator 25 — grab dich durch geologische Schichten, oder bau deine eigene Kiesgrube im LS25.**
+Das Material bestimmt die Grabtiefe, nicht die Handauswahl: erst Mutterboden, dann Kies, dann Paydirt, dann Fels. Seit 1.4.0 ist die Nutzschicht wählbar — Kohlegrube, Kiesgrube oder Kalksteinbruch, auf jeder Karte. Eigene Geologie pro Grube, Halden mit Gedächtnis und ein Ingame-Editor. Läuft auf **jeder Karte** — ohne Map-Bearbeitung. **Mod und Ingame-Handbuch gibt es vollständig auf Deutsch, Englisch, Französisch und Polnisch.**
 
 Mining Layers baut auf **[TerraFarm](https://github.com/scfmod/FS25_TerraFarm)** von scfmod auf und benötigt es zum Laufen. Inoffizielles Addon, keine Verbindung zu scfmod.
 
@@ -134,6 +134,38 @@ Dasselbe pro Bereich in der XML:
 ```
 
 Ein Haken: COAL und LIMESTONE sind keine Basisspiel-Materialien — Karte oder ein Mining-Mod muss sie mitbringen. Das Log listet beim Start alle Materialien der Karte; unbekannte werden mit Warnung übersprungen (und der Editor fällt auf PAYDIRT zurück, statt eine leere Grube zu speichern).
+
+## FAQ
+
+**Läuft Mining Layers auf jeder Karte?**
+Ja. Keine Map-Bearbeitung nötig: TerraFarm-Bereich um die künftige Grube ziehen und losgraben. Für die Schicht-Texturen nimmt der Mod automatisch die passendste Bodentextur der Karte; passt keine, bleibt einfach deine eigene Texturauswahl aktiv.
+
+**Wie baue ich eine Kiesgrube im LS25?**
+TerraFarm und Mining Layers installieren, TerraFarm-Bereich ziehen, dann ESC-Menü → Mining Layers → Schichten: DIRT oben, LIMESTONE oder STONE als Nutzschicht. Seit 1.4.0 ist das Flöz-Material direkt im Editor wählbar — ganz ohne XML.
+
+**Wie baue ich Kohle ab?**
+COAL als Nutzschicht im Schichten-Editor wählen. Achtung: COAL ist kein Basisspiel-Material — Karte oder ein Mining-Mod muss es mitbringen (RGC-Karten wie Yukon Back Country haben es).
+
+**Warum gräbt mein Bagger nicht?**
+TerraFarm braucht eine Maschinen-Konfiguration für das Fahrzeug — ohne passiert nichts (das liegt nicht an Mining Layers). Config-Paket installieren, z. B. scfmods FS25_TerraFarmMachines, und doppelte Maschinen-Einträge aus mehreren Paketen vermeiden.
+
+**Warum bekomme ich immer dasselbe Material, egal wie tief ich grabe?**
+Im TerraFarm-Bereich ist ein Material eingetragen — damit läuft der Bereich als normales TerraFarm ohne Schichten (Absicht, für Baustellen). Materialfelder leer lassen, dann greifen die Schichten.
+
+**Wie tief kann ich graben?**
+Bis zum Fels unter der tiefsten Schicht — dort ist bewusst Schluss. Genau das macht es zum Bergbau statt zum bodenlosen Geldloch.
+
+**Wie dick sollten die Schichten sein?**
+Mindestens 1,5 m (der Editor erzwingt 1 m für die oberste, 1,5 m darunter). Bei großen Maschinen wie dem PC 8000 gräbt sich mit 2 m pro Schicht spürbar besser.
+
+**Läuft das auf PS5 oder Xbox?**
+Nein. Mining Layers ist ein Script-Mod, und Script-Mods laufen nur auf PC/Mac.
+
+**Welche Sprachen gibt es?**
+Deutsch, Englisch, Französisch und Polnisch — inklusive komplettem Ingame-Handbuch.
+
+**Ist das wirklich kostenlos?**
+Ja. Gratis-Download auf GitHub, keine Paywall, kein Early Access. Wer Danke sagen will: [spendier mir Fritten](https://buymeacoffee.com/fritteplayz). 🍟
 
 ## Übersetzungen
 
