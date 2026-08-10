@@ -4,6 +4,8 @@
 [![Latest release](https://img.shields.io/github/v/release/FrittePlayz/FS25_MiningLayers?style=for-the-badge&color=2d8a4e)](https://github.com/FrittePlayz/FS25_MiningLayers/releases)
 [![Language: EN + DE](https://img.shields.io/badge/in--game-English%20%2B%20German-2d8a4e?style=for-the-badge)](#)
 
+![Mining Layers — material by digging depth, or make your own gravel pit](docs/images/00_header.jpg)
+
 **Real mining gameplay for Farming Simulator 25 — dig through geological layers.**
 Material is determined by digging depth, not by hand selection: topsoil first, then gravel, then paydirt, then rock. Per-pit geology, spoil piles that remember what you dumped, and an in-game editor. Works on **any map** — no map editing required. **The mod and its in-game manual are fully available in English and German.**
 
@@ -99,6 +101,7 @@ This is **not a defect and not a mod conflict — it's the intended switch.** If
 
 ## Pitfalls worth knowing
 
+- **Layer thickness: don't go thin.** The editor enforces 1 m for the top layer and 1.5 m for every layer below — thinner layers break spoil pile pickup. **With big machines (PC 8000 class), 2 m per layer digs noticeably smoother.**
 - **63 terrain materials is a hard engine limit.** Base game + map + mods share it; additional fill type mods may get kicked out. The startup check tells you where you stand.
 - **Lowering only works inside the polygon** (TerraFarm design). A wheel loader only cuts ~30–40 cm per pass — drive a ramp into the pit; the excavator is the depth tool.
 - **One slope face per area.** Areas drawn across a ridge or far into a lake stretch the reference plane — draw shoreline areas mostly over land.

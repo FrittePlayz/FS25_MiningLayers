@@ -4,6 +4,8 @@
 [![Latest release](https://img.shields.io/github/v/release/FrittePlayz/FS25_MiningLayers?style=for-the-badge&color=2d8a4e)](https://github.com/FrittePlayz/FS25_MiningLayers/releases)
 [![Language: EN + DE](https://img.shields.io/badge/in--game-English%20%2B%20German-2d8a4e?style=for-the-badge)](#)
 
+![Mining Layers — Material nach Grabtiefe, oder bau deine eigene Kiesgrube](docs/images/00_header.jpg)
+
 **Echtes Bergbau-Gameplay für den Landwirtschafts-Simulator 25 — grab dich durch geologische Schichten.**
 Das Material bestimmt die Grabtiefe, nicht die Handauswahl: erst Mutterboden, dann Kies, dann Paydirt, dann Fels. Eigene Geologie pro Grube, Halden mit Gedächtnis und ein Ingame-Editor. Läuft auf **jeder Karte** — ohne Map-Bearbeitung. **Mod und Ingame-Handbuch gibt es vollständig auf Deutsch und Englisch.**
 
@@ -99,7 +101,8 @@ Das ist **kein Defekt und kein Mod-Konflikt — es ist die vorgesehene Umschaltu
 
 ## Fallstricke, die man kennen sollte
 
-- **63 Gelände-Materialien sind ein hartes Engine-Limit.** Basisspiel + Karte + Mods teilen es sich; zusätzliche Filltype-Mods können rausfliegen. Der Start-Check sagt dir, wo du stehst.
+**Schichtdicke: nicht zu dünn.** Der Editor erzwingt 1 m für die oberste Schicht und 1,5 m für jede darunter — dünnere Schichten brechen das Halden-Abtragen. **Bei großen Maschinen (PC-8000-Klasse) gräbt sich mit 2 m pro Schicht spürbar besser.**
+- - **63 Gelände-Materialien sind ein hartes Engine-Limit.** Basisspiel + Karte + Mods teilen es sich; zusätzliche Filltype-Mods können rausfliegen. Der Start-Check sagt dir, wo du stehst.
 - **Absenken geht nur innerhalb des Polygons** (TerraFarm-Design). Ein Radlader schafft nur ~30–40 cm pro Ansatz — Rampe in die Grube fahren; der Bagger ist das Tiefen-Werkzeug.
 - **Eine Hangflanke pro Bereich.** Bereiche über einen Bergkamm oder weit in einen See spannen die Bezugsebene falsch — Ufer-Bereiche hauptsächlich über Land ziehen.
 - **Manche Karten sperren Terraforming** an Flussbett und Kartenrand (Engine-Sperrflächen). Da kommt kein Mod durch.
