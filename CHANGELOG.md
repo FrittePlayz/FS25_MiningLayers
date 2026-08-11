@@ -2,6 +2,11 @@
 
 All notable changes to Mining Layers. Newest first.
 
+## [Unreleased]
+
+### Docs
+- FAQ from the 1.4.2.0 test day, in all four READMEs: dumping refused on flat ground (TerraFarm's ~0.5 m bucket-edge check), material in the bucket but not tippable (the 63 height-type limit), output-area behavior for free dumping. The move-display answer now describes the Num * move mode instead of the old config-file-only way.
+
 ## [1.4.2.0] — 2026-08-11
 
 ### Added

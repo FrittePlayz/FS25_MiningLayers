@@ -85,11 +85,20 @@ Au moins 1,5 m (l'éditeur impose 1 m en haut, 1,5 m en dessous). Avec de grosse
 **Y a-t-il une limite de tas — combien puis-je déverser ?**
 Non. Le matériau déversé devient du vrai terrain via TerraFarm, pas un tas du jeu de base — aucune limite de capacité ne s'applique. La mémoire des tas est une grille de 2 m par sauvegarde, sans plafond de nombre ni de taille. À savoir : chaque cellule de 2 m retient UN matériau (le dernier déversement gagne) — ne mélange pas les matériaux au même endroit si tu veux les récupérer séparément.
 
+**Décharger au sol affiche « action impossible » ?**
+TerraFarm vérifie à la verticale sous le bord du godet : si le terrain est à moins d'environ 0,5 m, le déchargement au sol est bloqué (protection de la posture de creusage). Ce qui compte, c'est la distance sous le bord, pas la hauteur de la flèche — au-dessus d'un creux déjà excavé ça marche même flèche basse ; sur sol plat, lève brièvement jusqu'à ce que le message disparaisse. Il y a aussi une limite vers le haut : le déversement doit encore toucher le sol. Donc : bord dégagé d'un bon demi-mètre, mais assez bas pour déverser.
+
+**Le matériau reste dans le godet mais ne se déverse pas au sol ?**
+FS25 limite les matériaux pouvant reposer au sol (height types) à 63 — jeu de base, carte et tous les mods se partagent ce quota. Quand il est plein, les matériaux enregistrés en dernier perdent leur place : ils fonctionnent dans le godet et se vendent, mais ne se déversent pas sur le terrain. Le log montre alors `maximum number (63) of height types already registered`, et depuis la 1.4.2 le mod avertit par zone quand un matériau de couche est touché. Seul remède : alléger les mods riches en matériaux.
+
+**Pourquoi ma machine ne décharge que dans une zone — ou nulle part ?**
+Une zone de sortie est assignée dans le menu machine : TerraFarm ne décharge alors que dedans. Depuis la 1.4.2, une zone de couches assignée en sortie tourne automatiquement en libre (une ligne de log le confirme). Pour décharger librement partout, mets la zone de sortie de la machine sur « non définie ».
+
 **Comment masquer (ou réafficher) l'affichage de profondeur ?**
 Appuie sur **Pavé num. 5** quand une machine est active (depuis la 1.4.1). Touche réassignable : Options → Commandes → Mining Layers. Pour démarrer sans affichage : `showHeightDisplay="false"` dans `modSettings/FS25_MiningLayers/miningLayers.xml`.
 
 **Puis-je déplacer l'affichage pour éviter les conflits avec d'autres HUD ?**
-Oui. Règle `displayPosX` / `displayPosY` dans `modSettings/FS25_MiningLayers/miningLayers.xml` (fractions d'écran, `0 0` = bas gauche ; défaut `0.012` / `0.55`). Aucun mod HUD supplémentaire nécessaire.
+Oui — depuis la 1.4.2, appuie sur **Pavé num. *** (réassignable) : clique l'affichage pour le prendre, reclique pour le poser, clic droit remet à la position par défaut. La position s'enregistre automatiquement (dans `modSettings/FS25_MiningLayers/hud.xml`). Aucun mod HUD supplémentaire nécessaire.
 
 **Ça tourne sur PS5 ou Xbox ?**
 Non. Mining Layers est un mod script, et les mods script ne tournent que sur PC/Mac.

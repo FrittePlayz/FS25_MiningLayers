@@ -175,11 +175,20 @@ At least 1.5 m (the editor enforces 1 m for the top layer, 1.5 m below). With bi
 **Is there a pile limit — how much can I dump?**
 No. Dumped material becomes real terrain via TerraFarm, not a base-game heap — so no heap capacity applies. The pile memory is a 2 m grid per savegame with no cap on pile count or size. One thing to know: each 2 m cell remembers ONE material (the last dump wins), so don't mix materials on the same spot if you want them back separately.
 
+**Dumping on the ground says "action not possible"?**
+TerraFarm checks straight down from the bucket edge: if terrain is closer than about 0.5 m, ground-dumping is blocked (dig-pose protection). What counts is the distance below the edge, not how high the boom is — over an excavated hollow it works even with a low boom; on flat ground lift briefly until the message disappears. There is an upper limit too: the dump still has to hit the ground. So: edge clear by a good half metre, but low enough to drop.
+
+**Material sits in the bucket but will not tip onto the ground?**
+FS25 caps materials that can lie on the ground (height types) at 63 — base game, map and all mods share that pool. When it is full, late-registered fill types lose their slot: they work in the bucket and sell fine, but cannot be tipped onto the terrain. Your log then shows `maximum number (63) of height types already registered`, and since 1.4.2 the mod warns per zone when a layer material is affected. The only fix is trimming fill-type-heavy mods.
+
+**Why does my machine only dump inside one area — or nowhere at all?**
+An output area is assigned in the machine menu: TerraFarm then dumps only inside that area. Since 1.4.2 a layer zone assigned as output runs free automatically (one log line says so). For free dumping anywhere, set the machine's output area to "not set".
+
 **How do I turn the depth display off (or back on)?**
 Press **Numpad 5** while a machine is active (since 1.4.1). The key is rebindable: Options → Controls → Mining Layers. To start with the display hidden, set `showHeightDisplay="false"` in `modSettings/FS25_MiningLayers/miningLayers.xml`.
 
 **Can I move the display so it does not overlap other HUD mods?**
-Yes. Set `displayPosX` / `displayPosY` in `modSettings/FS25_MiningLayers/miningLayers.xml` (screen fractions, `0 0` = bottom left; default `0.012` / `0.55`). No extra HUD mod needed.
+Yes — since 1.4.2 press **Num *** (rebindable): click the display to pick it up, click again to drop it, right-click resets to the default spot. The position saves automatically (stored in `modSettings/FS25_MiningLayers/hud.xml`). No extra HUD mod needed.
 
 **Does it work on PS5 or Xbox?**
 No. Mining Layers is a script mod, and script mods only run on PC/Mac.

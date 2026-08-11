@@ -175,11 +175,20 @@ Mindestens 1,5 m (der Editor erzwingt 1 m für die oberste, 1,5 m darunter). Bei
 **Gibt es ein Halden-Limit — wie viel kann ich abkippen?**
 Nein. Abgekipptes Material wird über TerraFarm zu echtem Gelände, nicht zu einem Basegame-Haufen — ein Haufen-Limit des Spiels greift also nicht. Das Halden-Gedächtnis ist ein 2-m-Raster pro Spielstand, ohne Deckel für Anzahl oder Größe. Einzige Eigenheit: Jede 2-m-Zelle merkt sich EIN Material (der letzte Abwurf gewinnt) — Materialien am selben Fleck nicht mischen, wenn du sie getrennt zurückholen willst.
 
+**Abladen auf den Boden bringt „Aktion nicht ausführbar"?**
+TerraFarm prüft senkrecht unter der Schaufelkante: Liegt Terrain näher als etwa 0,5 m, ist Boden-Abladen gesperrt (Grab-Posen-Schutz). Es zählt der Abstand unter der Kante, nicht die Höhe des Auslegers — über einer ausgehobenen Vertiefung geht es auch mit tiefem Ausleger; auf flachem Boden kurz anheben, bis die Meldung verschwindet. Nach oben gibt es eine zweite Grenze: Der Abwurf muss noch Boden treffen. Also: Kante gut einen halben Meter frei, aber niedrig genug zum Abwerfen.
+
+**Material liegt in der Schaufel, lässt sich aber nicht abkippen?**
+FS25 begrenzt Materialien, die auf dem Boden liegen können (height types), auf 63 — Basisspiel, Karte und alle Mods teilen sich das Kontingent. Ist es voll, verlieren spät registrierte Materialien ihren Platz: Sie funktionieren in der Schaufel und lassen sich verkaufen, aber nicht aufs Gelände kippen. Im Log steht dann `maximum number (63) of height types already registered`, und seit 1.4.2 warnt der Mod pro Zone, wenn ein Schichtmaterial betroffen ist. Einzige Abhilfe: materiallastige Mods ausmisten.
+
+**Warum kippt meine Maschine nur in einem Bereich ab — oder nirgends?**
+Im Maschinen-Menü ist ein Ausgabe-Bereich zugewiesen: TerraFarm kippt dann nur dorthin. Seit 1.4.2 läuft eine Schicht-Zone als Ausgabe-Bereich automatisch frei (eine Log-Zeile sagt es). Für freies Abkippen überall den Ausgabe-Bereich der Maschine auf „Nicht gesetzt" stellen.
+
 **Wie schalte ich die Tiefenanzeige aus (oder wieder ein)?**
 **Numpad 5** drücken, solange eine Maschine aktiv ist (seit 1.4.1). Die Taste ist umbelegbar: Optionen → Steuerung → Mining Layers. Soll die Anzeige von Anfang an aus sein: `showHeightDisplay="false"` in der `modSettings/FS25_MiningLayers/miningLayers.xml`.
 
 **Kann ich die Anzeige verschieben, damit sie nicht mit anderen HUD-Mods kollidiert?**
-Ja. `displayPosX` / `displayPosY` in der `modSettings/FS25_MiningLayers/miningLayers.xml` setzen (Bildschirmanteile, `0 0` = links unten; Standard `0.012` / `0.55`). Kein zusätzlicher HUD-Mod nötig.
+Ja — seit 1.4.2 **Num *** drücken (umbelegbar): Anzeige anklicken zum Aufnehmen, zweiter Klick legt ab, Rechtsklick setzt auf Standard zurück. Die Position speichert automatisch (liegt in `modSettings/FS25_MiningLayers/hud.xml`). Kein zusätzlicher HUD-Mod nötig.
 
 **Läuft das auf PS5 oder Xbox?**
 Nein. Mining Layers ist ein Script-Mod, und Script-Mods laufen nur auf PC/Mac.

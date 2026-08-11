@@ -85,11 +85,20 @@ Co najmniej 1,5 m (edytor wymusza 1 m na górze, 1,5 m niżej). Przy dużych mas
 **Czy jest limit hałd — ile mogę wysypać?**
 Nie. Wysypany materiał staje się przez TerraFarm prawdziwym terenem, a nie stertą z gry bazowej — limit pojemności z gry nie obowiązuje. Pamięć hałd to siatka 2 m na zapis gry, bez limitu liczby ani wielkości. Jedno zastrzeżenie: każda komórka 2 m pamięta JEDEN materiał (wygrywa ostatni wysyp) — nie mieszaj materiałów w tym samym miejscu, jeśli chcesz je odzyskać osobno.
 
+**Zrzucanie na ziemię pokazuje „akcja niemożliwa"?**
+TerraFarm sprawdza pionowo pod krawędzią łyżki: jeśli teren jest bliżej niż ok. 0,5 m, zrzut na ziemię jest zablokowany (ochrona pozycji kopania). Liczy się odstęp pod krawędzią, nie wysokość wysięgnika — nad wykopanym zagłębieniem działa nawet z nisko opuszczonym wysięgnikiem; na płaskim gruncie unieś łyżkę na chwilę, aż komunikat zniknie. Jest też górna granica: zrzut musi jeszcze trafić w ziemię. Czyli: krawędź ponad pół metra nad gruntem, ale dość nisko do zrzutu.
+
+**Materiał jest w łyżce, ale nie da się go wysypać na ziemię?**
+FS25 ogranicza materiały mogące leżeć na ziemi (height types) do 63 — gra podstawowa, mapa i wszystkie mody dzielą tę pulę. Gdy jest pełna, później rejestrowane materiały tracą miejsce: działają w łyżce i można je sprzedać, ale nie da się ich wysypać na teren. W logu widać wtedy `maximum number (63) of height types already registered`, a od 1.4.2 mod ostrzega dla każdej strefy, gdy dotyczy to materiału warstwy. Jedyna rada: odchudzić mody z wieloma materiałami.
+
+**Czemu maszyna wysypuje tylko w jednym obszarze — albo nigdzie?**
+W menu maszyny przypisany jest obszar wyjściowy: TerraFarm wysypuje wtedy tylko tam. Od 1.4.2 strefa warstw jako obszar wyjściowy działa automatycznie swobodnie (mówi o tym linia w logu). Żeby wysypywać swobodnie wszędzie, ustaw obszar wyjściowy maszyny na „nieustawiony".
+
 **Jak wyłączyć (albo włączyć) wskaźnik głębokości?**
 Naciśnij **Num 5**, gdy maszyna jest aktywna (od 1.4.1). Klawisz można zmienić: Opcje → Sterowanie → Mining Layers. Żeby wskaźnik był wyłączony od startu: `showHeightDisplay="false"` w `modSettings/FS25_MiningLayers/miningLayers.xml`.
 
 **Czy mogę przesunąć wskaźnik, żeby nie nachodził na inne HUD-y?**
-Tak. Ustaw `displayPosX` / `displayPosY` w `modSettings/FS25_MiningLayers/miningLayers.xml` (ułamki ekranu, `0 0` = lewy dół; domyślnie `0.012` / `0.55`). Bez dodatkowego moda HUD.
+Tak — od 1.4.2 naciśnij **Num *** (klawisz do zmiany): kliknij wskaźnik, żeby go podnieść, drugi klik odkłada, prawy przycisk przywraca pozycję domyślną. Pozycja zapisuje się automatycznie (w `modSettings/FS25_MiningLayers/hud.xml`). Bez dodatkowego moda HUD.
 
 **Czy działa na PS5 albo Xboxie?**
 Nie. Mining Layers to mod skryptowy, a mody skryptowe działają tylko na PC/Mac.
