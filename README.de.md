@@ -174,9 +174,6 @@ Im TerraFarm-Bereich ist ein Material eingetragen — damit läuft der Bereich a
 2. **Im Bereich ist ein Material eingetragen** → der Bereich läuft absichtlich als normales TerraFarm (Baustellen-Modus). Materialfelder leer lassen.
 3. **Du gräbst außerhalb des Bereichs-Polygons** (oder in einem Pfad-Bereich — Pfade bekommen nie Schichten).
 
-**Mein Bagger kommt nicht in die Tiefe — er häuft das Material nur neben sich auf.**
-Dieselbe Ursache wie oben: kein Eingabe-Bereich an der Maschine. TerraFarm holt sich die Zieltiefe aus dem Bereich — ohne Bereich gibt es also gar keine Zieltiefe, die Maschine kratzt an der Oberfläche und das Ausgehobene landet als Halde daneben. Das ist TerraFarm-Mechanik, kein Mining-Layers-Problem. Bereich im Maschinen-Menü (Standard `Y`) zuweisen, dann greift der Grubenboden.
-
 **Wie tief kann ich graben?**
 Bis zum Fels unter der tiefsten Schicht — dort ist bewusst Schluss. Genau das macht es zum Bergbau statt zum bodenlosen Geldloch.
 

@@ -84,9 +84,6 @@ Un matériau est renseigné sur ta zone TerraFarm — la zone passe alors en Ter
 2. **Un matériau est renseigné dans la zone** → la zone fonctionne volontairement en TerraFarm classique (mode chantier). Laisse les champs de matériau vides.
 3. **Tu creuses en dehors du polygone** (ou dans une zone chemin — les chemins n'ont jamais de couches).
 
-**Ma pelle ne descend pas — elle empile le matériau à côté d'elle.**
-Même cause que ci-dessus : aucune zone d'entrée assignée à la machine. TerraFarm prend la profondeur cible dans la zone — sans zone, pas de profondeur cible du tout : la machine gratte la surface et ce qu'elle soulève finit en tas à côté. C'est une mécanique TerraFarm, pas un problème de Mining Layers. Assigne la zone dans le menu machine (`Y` par défaut) et le fond de fosse reprend la main.
-
 **Jusqu'où peut-on creuser ?**
 Jusqu'au socle rocheux sous ta couche la plus profonde — là, ça s'arrête volontairement. C'est ce qui en fait du minage et pas un trou à argent sans fond.
 
