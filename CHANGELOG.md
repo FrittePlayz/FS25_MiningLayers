@@ -2,7 +2,7 @@
 
 All notable changes to Mining Layers. Newest first.
 
-## [1.4.2.0] — 2026-08-11 (in test, not yet released)
+## [1.4.2.0] — 2026-08-11
 
 ### Added
 - **Movable display.** Num * (rebindable) toggles a move mode with a mouse cursor: left-click the display to pick it up, click again to drop it — the position saves automatically and is resolution-independent (normalized coordinates in `modSettings/FS25_MiningLayers/hud.xml`, clamped back on screen after resolution changes). Right-click resets to the default position. Drag&drop mechanics inspired by **HappyLooser's HL Hud System** (openly shared via FS25_ProductionInfoHud) — own implementation, no code copied. This replaces the HUD presets planned earlier.
@@ -24,7 +24,7 @@ All notable changes to Mining Layers. Newest first.
 - Stale comments from the 1.4.1.x registration saga rewritten (spec header, registration docstring, history, loadMap) — they still described the EnhancedVehicle attempt instead of the shipped vehicle-API + fallback solution.
 - README credit for HappyLooser; author link cleanup.
 
-*Built locally by Dredd (Percy's 12-point review backlog + the movable-HUD spec), to be live-tested by Tommy before release.*
+*Built locally by Dredd (Percy's 12-point review backlog + the movable-HUD spec), live-tested by Tommy on the 243 Quarry map — all test points green.*
 
 ## [1.4.1.6] — 2026-08-10
 
