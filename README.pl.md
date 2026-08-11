@@ -84,6 +84,9 @@ W obszarze TerraFarm jest wpisany materiał — obszar działa wtedy jak zwykły
 2. **W obszarze wpisany jest materiał** → obszar celowo działa jak zwykły TerraFarm (tryb budowy). Zostaw pola materiału puste.
 3. **Kopiesz poza wielokątem obszaru** (albo w obszarze ścieżki — ścieżki nigdy nie mają warstw).
 
+**Koparka nie schodzi w głąb — tylko usypuje materiał obok siebie.**
+Ta sama przyczyna co wyżej: maszyna nie ma przypisanego obszaru wejściowego. TerraFarm bierze głębokość docelową z obszaru — bez obszaru nie ma jej wcale: maszyna drapie powierzchnię, a wydobyte ląduje jako hałda obok. To mechanika TerraFarm, nie problem Mining Layers. Przypisz obszar w menu maszyny (domyślnie `Y`), a przejmie dno wyrobiska.
+
 **Jak głęboko można kopać?**
 Do litej skały pod najgłębszą warstwą — tam koniec, celowo. Właśnie to czyni z tego górnictwo, a nie bezdenną dziurę z pieniędzmi.
 

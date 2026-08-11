@@ -174,6 +174,9 @@ A material is set on your TerraFarm area — that switches the area to plain Ter
 2. **A material is set in the area** → the area is plain TerraFarm on purpose (construction mode). Leave the material fields empty.
 3. **You are digging outside the area polygon** (or on a path area — paths never get layers).
 
+**My excavator won't go deep — it just piles material up next to itself.**
+Same cause as the one above: no input area assigned to the machine. TerraFarm takes the target depth from the area, so without one there is no target depth at all — the machine scrapes the surface and what it lifts ends up as a heap beside it. That's TerraFarm's own mechanic, not a Mining Layers issue. Assign the area in the machine menu (default `Y`) and the pit floor takes over.
+
 **How deep can I dig?**
 Down to the bedrock below your deepest layer — there digging ends on purpose. That is what makes it mining instead of a bottomless money hole.
 
