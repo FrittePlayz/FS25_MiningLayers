@@ -39,7 +39,7 @@ Réglages et couches : menu ESC → Mining Layers. Le manuel complet y est aussi
 
 Depuis la 1.4.0, le filon se choisit dans l'éditeur (ESC → Mining Layers → Couches) : le filon est la dernière ligne, fixe — prends COAL pour une mine de charbon, LIMESTONE ou STONE pour une gravière, ou GRAVEL, SAND, DIRT, SOIL. PAYDIRT reste la valeur par défaut. Le socle rocheux en dessous termine la fosse — c'est voulu.
 
-À savoir : COAL et LIMESTONE ne sont pas des matériaux du jeu de base — ta carte ou un mod minier doit les fournir (les cartes RGC comme Yukon Back Country les ont).
+À savoir : PAYDIRT, COAL et LIMESTONE ne sont pas des matériaux du jeu de base — ta carte, un mod minier ou un autre mod doit les fournir (les cartes RGC comme Yukon Back Country les ont).
 
 ## Épaisseur des couches
 
@@ -58,6 +58,9 @@ Installe TerraFarm et Mining Layers, trace une zone, puis menu ESC → Mining La
 
 **Comment extraire du charbon dans FS25 ?**
 Choisis COAL comme filon dans l'éditeur. Attention : COAL n'est pas un matériau du jeu de base — ta carte ou un mod minier doit le fournir.
+
+**Mining Layers ajoute-t-il un matériau paydirt à ma carte ?**
+Non — le mod n'enregistre jamais de matériaux. Il utilise uniquement ce que le jeu de base, ta carte et tes autres mods fournissent déjà. PAYDIRT n'est pas un matériau du jeu de base : les cartes et mods miniers l'apportent, c'est pourquoi il est souvent là quand même. Pas de paydirt ? Choisis dans l'éditeur un filon que ta carte connaît — le log les liste tous au démarrage.
 
 **Puis-je définir mes propres couches — plus de terre, différents types de sol ?**
 Oui, c'est le cœur du mod. Menu ESC → Mining Layers → Couches : pour chaque fosse tu choisis le matériau ET l'épaisseur de chaque couche de découverte. Plus de terre ? Passe la couche DIRT à 4 m au lieu de 2. De la variété ? Empile DIRT sur SOIL sur gravier. Tout matériau connu de ta carte fonctionne, et le filon du bas est lui aussi sélectionnable. Minimums : 1 m en haut, 1,5 m en dessous (2 m creuse mieux avec les grosses machines).

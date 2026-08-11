@@ -20,6 +20,7 @@ All notable changes to Mining Layers. Newest first.
 - Map exit resets the complete fallback/input state (no ghost toggle on the next map load), the two independent registration warnings no longer suppress each other, the toggle log line is capped like the registration log, and the per-frame key polling now skips dedicated servers and caches its capability check.
 
 ### Docs
+- New FAQ entry in all four READMEs: does the mod add a paydirt fill type to the map? (asked by SecondChanceGaming3709 on itch.io) — no, the mod registers no fill types. PAYDIRT is now correctly listed as non-base-game next to COAL and LIMESTONE (verified against the FS25 game data: `maps_fillTypes.xml` contains no PAYDIRT).
 - Stale comments from the 1.4.1.x registration saga rewritten (spec header, registration docstring, history, loadMap) — they still described the EnhancedVehicle attempt instead of the shipped vehicle-API + fallback solution.
 - README credit for HappyLooser; author link cleanup.
 

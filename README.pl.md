@@ -39,7 +39,7 @@ Ustawienia i warstwy: menu ESC → Mining Layers. Tam też pełny podręcznik, p
 
 Od 1.4.0 pokład wybierasz w edytorze (ESC → Mining Layers → Warstwy): pokład to stały ostatni wiersz — weź COAL dla kopalni węgla, LIMESTONE lub STONE dla żwirowni, albo GRAVEL, SAND, DIRT, SOIL. Domyślnie zostaje PAYDIRT. Lita skała pod spodem kończy wyrobisko — tak ma być.
 
-Warto wiedzieć: COAL i LIMESTONE nie są materiałami z podstawki — musi je dostarczyć mapa albo mod górniczy (mapy RGC jak Yukon Back Country je mają).
+Warto wiedzieć: PAYDIRT, COAL i LIMESTONE nie są materiałami z podstawki — musi je dostarczyć mapa, mod górniczy albo inny mod (mapy RGC jak Yukon Back Country je mają).
 
 ## Grubość warstw
 
@@ -58,6 +58,9 @@ Zainstaluj TerraFarm i Mining Layers, narysuj obszar, potem menu ESC → Mining 
 
 **Jak wydobywać węgiel w FS25?**
 Wybierz COAL jako pokład w edytorze warstw. Uwaga: COAL nie jest materiałem z podstawki — mapa albo mod górniczy musi go dostarczyć.
+
+**Czy Mining Layers dodaje materiał paydirt do mojej mapy?**
+Nie — mod w ogóle nie rejestruje materiałów. Korzysta tylko z tego, co dają gra podstawowa, mapa i twoje inne mody. Sam PAYDIRT nie jest materiałem z podstawki: dostarczają go mapy i mody górnicze, dlatego często i tak jest dostępny. Nie masz paydirtu w grze? Wybierz w edytorze pokład, który twoja mapa zna — log wypisuje wszystkie przy starcie.
 
 **Czy mogę ustawić własne warstwy — więcej ziemi, różne rodzaje gleby?**
 Tak, to sedno moda. Menu ESC → Mining Layers → Warstwy: dla każdego wyrobiska wybierasz materiał I grubość każdej warstwy nadkładu. Więcej ziemi? Ustaw warstwę DIRT na 4 m zamiast 2. Różnorodność? Ułóż DIRT na SOIL na żwirze. Działa wszystko, co twoja mapa zna jako materiał, a pokład na dole też jest do wyboru. Minimalne grubości: 1 m na górze, 1,5 m niżej (przy dużych maszynach 2 m kopie się lepiej).

@@ -133,7 +133,7 @@ The same per area in the XML:
 </zone>
 ```
 
-One catch: COAL and LIMESTONE are not base-game fill types — your map or a mining mod has to bring them. The log lists every fill type your map knows on startup; unknown materials are skipped with a warning (and the editor falls back to PAYDIRT rather than saving a pit with nothing in it).
+One catch: PAYDIRT, COAL and LIMESTONE are not base-game fill types — your map, a mining mod or another mod has to bring them. The log lists every fill type your map knows on startup; unknown materials are skipped with a warning (and the editor falls back to PAYDIRT rather than saving a pit with nothing in it).
 
 ## FAQ
 
@@ -148,6 +148,9 @@ Install TerraFarm and Mining Layers, draw a TerraFarm area, then open ESC menu �
 
 **How do I mine coal in FS25?**
 Pick COAL as the pay seam in the layer editor. Note: COAL is not a base-game fill type — your map or a mining mod has to provide it (RGC maps like Yukon Back Country do).
+
+**Does Mining Layers add a paydirt fill type to my map?**
+No — the mod never registers fill types. It only uses what the base game, your map and your other mods already provide. PAYDIRT itself is not a base-game fill type: mining maps and mining mods bring it, which is why it is often there anyway. No paydirt in your game? Pick a seam material your map does know in the layer editor — the startup log lists them all.
 
 **Can I set up my own layers — more dirt, different soil types?**
 Yes, that is the core feature. ESC menu → Mining Layers → Layers: per pit you pick material AND thickness of every overburden layer. More dirt? Make the DIRT layer 4 m instead of 2. Variety? Stack DIRT over SOIL over gravel. Anything your map knows as a material works, and the pay seam at the bottom is selectable too. Minimums: 1 m for the top layer, 1.5 m below (2 m digs smoother with big machines).

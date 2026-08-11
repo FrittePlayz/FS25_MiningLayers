@@ -133,7 +133,7 @@ Dasselbe pro Bereich in der XML:
 </zone>
 ```
 
-Ein Haken: COAL und LIMESTONE sind keine Basisspiel-Materialien — Karte oder ein Mining-Mod muss sie mitbringen. Das Log listet beim Start alle Materialien der Karte; unbekannte werden mit Warnung übersprungen (und der Editor fällt auf PAYDIRT zurück, statt eine leere Grube zu speichern).
+Ein Haken: PAYDIRT, COAL und LIMESTONE sind keine Basisspiel-Materialien — Karte, ein Mining-Mod oder ein anderer Mod muss sie mitbringen. Das Log listet beim Start alle Materialien der Karte; unbekannte werden mit Warnung übersprungen (und der Editor fällt auf PAYDIRT zurück, statt eine leere Grube zu speichern).
 
 ## FAQ
 
@@ -148,6 +148,9 @@ TerraFarm und Mining Layers installieren, TerraFarm-Bereich ziehen, dann ESC-Men
 
 **Wie baue ich Kohle ab?**
 COAL als Nutzschicht im Schichten-Editor wählen. Achtung: COAL ist kein Basisspiel-Material — Karte oder ein Mining-Mod muss es mitbringen (RGC-Karten wie Yukon Back Country haben es).
+
+**Fügt Mining Layers meiner Karte ein Paydirt-Material hinzu?**
+Nein — der Mod registriert grundsätzlich keine Materialien. Er nutzt nur, was Basisspiel, Karte und deine anderen Mods schon mitbringen. PAYDIRT selbst ist kein Basisspiel-Material: Mining-Karten und Mining-Mods bringen es mit, deshalb ist es oft trotzdem da. Kein Paydirt im Spiel? Im Schichten-Editor eine Nutzschicht wählen, die deine Karte kennt — das Log listet beim Start alle auf.
 
 **Kann ich eigene Schichten einstellen — mehr Erde, verschiedene Erdarten?**
 Ja, genau das ist das Kernfeature. ESC-Menü → Mining Layers → Schichten: Pro Grube wählst du Material UND Dicke jeder Abraum-Schicht. Mehr Erde? DIRT-Schicht auf 4 m statt 2. Abwechslung? DIRT über SOIL über Kies stapeln. Es geht alles, was deine Karte als Material kennt, und das Flöz unten ist ebenfalls wählbar. Mindestdicken: 1 m oben, 1,5 m darunter (mit großen Maschinen gräbt sich 2 m besser).
