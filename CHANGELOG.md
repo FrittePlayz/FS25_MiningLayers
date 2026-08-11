@@ -5,6 +5,7 @@ All notable changes to Mining Layers. Newest first.
 ## [Unreleased]
 
 ### Docs
+- Base-game facts corrected against the FS25 game data: of the mod's materials only STONE ships with the base game (176 base fill types; 48 of the 63 height-type slots are taken before any map or mod loads) — the READMEs' non-base-game note now lists all seven, and the 63-limit FAQ carries the 48/15 numbers.
 - FAQ from the 1.4.2.0 test day, in all four READMEs: dumping refused on flat ground (TerraFarm's ~0.5 m bucket-edge check), material in the bucket but not tippable (the 63 height-type limit), output-area behavior for free dumping. The move-display answer now describes the Num * move mode instead of the old config-file-only way.
 
 ## [1.4.2.0] — 2026-08-11

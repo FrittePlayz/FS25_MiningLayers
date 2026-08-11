@@ -39,7 +39,7 @@ Ustawienia i warstwy: menu ESC → Mining Layers. Tam też pełny podręcznik, p
 
 Od 1.4.0 pokład wybierasz w edytorze (ESC → Mining Layers → Warstwy): pokład to stały ostatni wiersz — weź COAL dla kopalni węgla, LIMESTONE lub STONE dla żwirowni, albo GRAVEL, SAND, DIRT, SOIL. Domyślnie zostaje PAYDIRT. Lita skała pod spodem kończy wyrobisko — tak ma być.
 
-Warto wiedzieć: PAYDIRT, COAL i LIMESTONE nie są materiałami z podstawki — musi je dostarczyć mapa, mod górniczy albo inny mod (mapy RGC jak Yukon Back Country je mają).
+Warto wiedzieć: z materiałów moda tylko STONE jest zarejestrowany w podstawce — DIRT, SOIL, GRAVEL, SAND, COAL, LIMESTONE i PAYDIRT musi dostarczyć mapa albo inne mody (mapy budowlane i górnicze, jak te od RGC, mają te najpopularniejsze).
 
 ## Grubość warstw
 
@@ -89,7 +89,7 @@ Nie. Wysypany materiał staje się przez TerraFarm prawdziwym terenem, a nie ste
 TerraFarm sprawdza pionowo pod krawędzią łyżki: jeśli teren jest bliżej niż ok. 0,5 m, zrzut na ziemię jest zablokowany (ochrona pozycji kopania). Liczy się odstęp pod krawędzią, nie wysokość wysięgnika — nad wykopanym zagłębieniem działa nawet z nisko opuszczonym wysięgnikiem; na płaskim gruncie unieś łyżkę na chwilę, aż komunikat zniknie. Jest też górna granica: zrzut musi jeszcze trafić w ziemię. Czyli: krawędź ponad pół metra nad gruntem, ale dość nisko do zrzutu.
 
 **Materiał jest w łyżce, ale nie da się go wysypać na ziemię?**
-FS25 ogranicza materiały mogące leżeć na ziemi (height types) do 63 — gra podstawowa, mapa i wszystkie mody dzielą tę pulę. Gdy jest pełna, później rejestrowane materiały tracą miejsce: działają w łyżce i można je sprzedać, ale nie da się ich wysypać na teren. W logu widać wtedy `maximum number (63) of height types already registered`, a od 1.4.2 mod ostrzega dla każdej strefy, gdy dotyczy to materiału warstwy. Jedyna rada: odchudzić mody z wieloma materiałami.
+FS25 ogranicza materiały mogące leżeć na ziemi (height types) do 63 — gra podstawowa, mapa i wszystkie mody dzielą tę pulę, a sama podstawka zajmuje już 48 z nich; mapa i mody walczą o pozostałe 15. Gdy jest pełna, później rejestrowane materiały tracą miejsce: działają w łyżce i można je sprzedać, ale nie da się ich wysypać na teren. W logu widać wtedy `maximum number (63) of height types already registered`, a od 1.4.2 mod ostrzega dla każdej strefy, gdy dotyczy to materiału warstwy. Jedyna rada: odchudzić mody z wieloma materiałami.
 
 **Czemu maszyna wysypuje tylko w jednym obszarze — albo nigdzie?**
 W menu maszyny przypisany jest obszar wyjściowy: TerraFarm wysypuje wtedy tylko tam. Od 1.4.2 strefa warstw jako obszar wyjściowy działa automatycznie swobodnie (mówi o tym linia w logu). Żeby wysypywać swobodnie wszędzie, ustaw obszar wyjściowy maszyny na „nieustawiony".

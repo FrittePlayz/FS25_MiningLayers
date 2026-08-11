@@ -39,7 +39,7 @@ Réglages et couches : menu ESC → Mining Layers. Le manuel complet y est aussi
 
 Depuis la 1.4.0, le filon se choisit dans l'éditeur (ESC → Mining Layers → Couches) : le filon est la dernière ligne, fixe — prends COAL pour une mine de charbon, LIMESTONE ou STONE pour une gravière, ou GRAVEL, SAND, DIRT, SOIL. PAYDIRT reste la valeur par défaut. Le socle rocheux en dessous termine la fosse — c'est voulu.
 
-À savoir : PAYDIRT, COAL et LIMESTONE ne sont pas des matériaux du jeu de base — ta carte, un mod minier ou un autre mod doit les fournir (les cartes RGC comme Yukon Back Country les ont).
+À savoir : parmi les matériaux du mod, seul STONE est enregistré dans le jeu de base — DIRT, SOIL, GRAVEL, SAND, COAL, LIMESTONE et PAYDIRT doivent venir de ta carte ou d'autres mods (les cartes de chantier et minières comme celles de RGC apportent les plus courants).
 
 ## Épaisseur des couches
 
@@ -89,7 +89,7 @@ Non. Le matériau déversé devient du vrai terrain via TerraFarm, pas un tas du
 TerraFarm vérifie à la verticale sous le bord du godet : si le terrain est à moins d'environ 0,5 m, le déchargement au sol est bloqué (protection de la posture de creusage). Ce qui compte, c'est la distance sous le bord, pas la hauteur de la flèche — au-dessus d'un creux déjà excavé ça marche même flèche basse ; sur sol plat, lève brièvement jusqu'à ce que le message disparaisse. Il y a aussi une limite vers le haut : le déversement doit encore toucher le sol. Donc : bord dégagé d'un bon demi-mètre, mais assez bas pour déverser.
 
 **Le matériau reste dans le godet mais ne se déverse pas au sol ?**
-FS25 limite les matériaux pouvant reposer au sol (height types) à 63 — jeu de base, carte et tous les mods se partagent ce quota. Quand il est plein, les matériaux enregistrés en dernier perdent leur place : ils fonctionnent dans le godet et se vendent, mais ne se déversent pas sur le terrain. Le log montre alors `maximum number (63) of height types already registered`, et depuis la 1.4.2 le mod avertit par zone quand un matériau de couche est touché. Seul remède : alléger les mods riches en matériaux.
+FS25 limite les matériaux pouvant reposer au sol (height types) à 63 — jeu de base, carte et tous les mods se partagent ce quota, et le jeu de base en occupe déjà 48 à lui seul ; carte et mods se disputent les 15 restants. Quand il est plein, les matériaux enregistrés en dernier perdent leur place : ils fonctionnent dans le godet et se vendent, mais ne se déversent pas sur le terrain. Le log montre alors `maximum number (63) of height types already registered`, et depuis la 1.4.2 le mod avertit par zone quand un matériau de couche est touché. Seul remède : alléger les mods riches en matériaux.
 
 **Pourquoi ma machine ne décharge que dans une zone — ou nulle part ?**
 Une zone de sortie est assignée dans le menu machine : TerraFarm ne décharge alors que dedans. Depuis la 1.4.2, une zone de couches assignée en sortie tourne automatiquement en libre (une ligne de log le confirme). Pour décharger librement partout, mets la zone de sortie de la machine sur « non définie ».

@@ -133,7 +133,7 @@ Dasselbe pro Bereich in der XML:
 </zone>
 ```
 
-Ein Haken: PAYDIRT, COAL und LIMESTONE sind keine Basisspiel-Materialien — Karte, ein Mining-Mod oder ein anderer Mod muss sie mitbringen. Das Log listet beim Start alle Materialien der Karte; unbekannte werden mit Warnung übersprungen (und der Editor fällt auf PAYDIRT zurück, statt eine leere Grube zu speichern).
+Ein Haken: Von den Materialien des Mods ist nur STONE im Basisspiel registriert — DIRT, SOIL, GRAVEL, SAND, COAL, LIMESTONE und PAYDIRT müssen Karte oder andere Mods mitbringen (gängige Bau- und Mining-Karten haben die üblichen an Bord). Das Log listet beim Start alle Materialien der Karte; unbekannte werden mit Warnung übersprungen (und der Editor fällt auf PAYDIRT zurück, statt eine leere Grube zu speichern).
 
 ## FAQ
 
@@ -179,7 +179,7 @@ Nein. Abgekipptes Material wird über TerraFarm zu echtem Gelände, nicht zu ein
 TerraFarm prüft senkrecht unter der Schaufelkante: Liegt Terrain näher als etwa 0,5 m, ist Boden-Abladen gesperrt (Grab-Posen-Schutz). Es zählt der Abstand unter der Kante, nicht die Höhe des Auslegers — über einer ausgehobenen Vertiefung geht es auch mit tiefem Ausleger; auf flachem Boden kurz anheben, bis die Meldung verschwindet. Nach oben gibt es eine zweite Grenze: Der Abwurf muss noch Boden treffen. Also: Kante gut einen halben Meter frei, aber niedrig genug zum Abwerfen.
 
 **Material liegt in der Schaufel, lässt sich aber nicht abkippen?**
-FS25 begrenzt Materialien, die auf dem Boden liegen können (height types), auf 63 — Basisspiel, Karte und alle Mods teilen sich das Kontingent. Ist es voll, verlieren spät registrierte Materialien ihren Platz: Sie funktionieren in der Schaufel und lassen sich verkaufen, aber nicht aufs Gelände kippen. Im Log steht dann `maximum number (63) of height types already registered`, und seit 1.4.2 warnt der Mod pro Zone, wenn ein Schichtmaterial betroffen ist. Einzige Abhilfe: materiallastige Mods ausmisten.
+FS25 begrenzt Materialien, die auf dem Boden liegen können (height types), auf 63 — Basisspiel, Karte und alle Mods teilen sich das Kontingent, und das Basisspiel allein belegt schon 48 davon; Karte und Mods streiten sich um die letzten 15. Ist es voll, verlieren spät registrierte Materialien ihren Platz: Sie funktionieren in der Schaufel und lassen sich verkaufen, aber nicht aufs Gelände kippen. Im Log steht dann `maximum number (63) of height types already registered`, und seit 1.4.2 warnt der Mod pro Zone, wenn ein Schichtmaterial betroffen ist. Einzige Abhilfe: materiallastige Mods ausmisten.
 
 **Warum kippt meine Maschine nur in einem Bereich ab — oder nirgends?**
 Im Maschinen-Menü ist ein Ausgabe-Bereich zugewiesen: TerraFarm kippt dann nur dorthin. Seit 1.4.2 läuft eine Schicht-Zone als Ausgabe-Bereich automatisch frei (eine Log-Zeile sagt es). Für freies Abkippen überall den Ausgabe-Bereich der Maschine auf „Nicht gesetzt" stellen.
