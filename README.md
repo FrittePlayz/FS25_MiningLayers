@@ -15,6 +15,12 @@ Mining Layers builds on **[TerraFarm](https://github.com/scfmod/FS25_TerraFarm)*
 
 ---
 
+## ⛏️ First: your map decides the materials
+
+Whether a material exists at all — and whether you can dump it back onto the ground — is not decided by this mod but by your map together with your mod list. Of the mining materials the base game only knows STONE: DIRT, GRAVEL, SAND, COAL, LIMESTONE and PAYDIRT always come from maps or mods. On top of that the game has a hard limit: only 63 materials may lie on the ground at the same time, and the base game already uses 48 of them. On large mod lists the remaining slots go fast — then you can still dig, haul and sell a material, but no longer dump it.
+
+Mining Layers therefore takes a middle road so it stays playable on every map: on map load it checks once what YOUR map actually provides and offers only that in the layer picker (since 1.4.3). A `(!)` behind a name means: digging, hauling and selling work, dumping does not on this map. Anything missing entirely is named under the cross-section. You never have to test a map first — if something is missing, it is the map, not the mod.
+
 ## Requirements — read this first
 
 1. **TerraFarm** — available **only on GitHub**: [scfmod/FS25_TerraFarm](https://github.com/scfmod/FS25_TerraFarm).

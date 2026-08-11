@@ -13,6 +13,12 @@ Materiał w łyżce zależy od głębokości kopania, nie od ręcznego wyboru: n
 
 ---
 
+## ⛏️ Najpierw: to mapa decyduje o materiałach
+
+O tym, czy materiał w ogóle istnieje i czy da się go wysypać z powrotem na ziemię, nie decyduje ten mod, lecz twoja mapa razem z listą modów. Z materiałów górniczych podstawowa gra zna tylko STONE: DIRT, GRAVEL, SAND, COAL, LIMESTONE i PAYDIRT zawsze pochodzą z map lub modów. Do tego dochodzi twardy limit gry: jednocześnie na ziemi może leżeć tylko 63 materiały, a podstawowa gra zajmuje już 48. Przy dużych listach modów ostatnie miejsca znikają szybko — wtedy materiał nadal wykopiesz, przewieziesz i sprzedasz, ale już nie wysypiesz.
+
+Dlatego Mining Layers idzie drogą pośrednią, by pozostać grywalnym na każdej mapie: przy wczytywaniu mapy mod sprawdza raz, co TWOJA mapa naprawdę oferuje, i tylko to pokazuje w wyborze warstw (od 1.4.3). `(!)` za nazwą znaczy: kopanie, transport i sprzedaż działają, wysypywanie na tej mapie nie. Czego brakuje całkowicie, jest wypisane pod przekrojem. Nie musisz więc wcześniej testować map — jeśli czegoś brak, to wina mapy, nie moda.
+
 ## Wymagania
 
 - **[TerraFarm](https://github.com/scfmod/FS25_TerraFarm)** od scfmod — dostępny wyłącznie na GitHubie. Nie zmieniaj nazwy folderu: musi zostać `FS25_0_TerraFarm` (kolejność ładowania).

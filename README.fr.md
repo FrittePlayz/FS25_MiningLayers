@@ -13,6 +13,12 @@ Le matériau dans ton godet dépend de la profondeur, pas d'un menu déroulant :
 
 ---
 
+## ⛏️ D'abord : ta carte décide des matériaux
+
+Qu'un matériau existe — et que tu puisses le redéverser au sol — ne dépend pas de ce mod, mais de ta carte et de ta liste de mods. Parmi les matériaux miniers, le jeu de base ne connaît que STONE : DIRT, GRAVEL, SAND, COAL, LIMESTONE et PAYDIRT viennent toujours de cartes ou de mods. S'ajoute une limite stricte du jeu : seuls 63 matériaux peuvent se trouver au sol en même temps, et le jeu de base en occupe déjà 48. Sur de grandes listes de mods, les dernières places partent vite — tu peux alors encore creuser, transporter et vendre un matériau, mais plus le déverser.
+
+Mining Layers emprunte donc une voie médiane pour rester jouable sur chaque carte : au chargement, le mod vérifie une fois ce que TA carte fournit réellement et ne propose que cela dans le sélecteur de couches (depuis la 1.4.3). Un `(!)` derrière un nom signifie : creuser, transporter et vendre fonctionnent, déverser non sur cette carte. Ce qui manque totalement est indiqué sous la coupe. Tu n'as donc aucune carte à tester au préalable — s'il manque quelque chose, c'est la carte, pas le mod.
+
 ## Prérequis
 
 - **[TerraFarm](https://github.com/scfmod/FS25_TerraFarm)** de scfmod — disponible sur GitHub uniquement. Ne renomme pas son dossier : il doit rester `FS25_0_TerraFarm` (ordre de chargement).
