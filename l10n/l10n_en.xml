@@ -23,6 +23,7 @@
         <text name="ml_tip4" text="the mod remembers piles - you pick up what was dumped" />
         <text name="ml_tip5" text="line colour = material starting there; red = pit floor" />
         <text name="ml_tip6" text="the display shows how far it is to the next layer" />
+        <text name="ml_tip7" text="Which materials exist is decided by your map plus your mod list — (!) means: digging yes, dumping no" />
 
         <text name="input_ML_TOGGLE_HUD" text="Mining Layers: display on/off" />
         <text name="input_ML_HUD_MOVE" text="Mining Layers: move display (mouse cursor)" />
@@ -65,7 +66,7 @@
         <text name="ml_helpQsBothWays1" text="Leave the material fields on the TerraFarm area EMPTY and Mining Layers does its job: what ends up in the bucket depends on how deep you dig. That is the normal case for a pit." />
         <text name="ml_helpQsBothWays2" text="Enter a material on the area instead and you get plain TerraFarm without layers. Exactly right for construction sites, road building and levelling — anywhere you just want to move soil and always need the same material." />
         <text name="ml_helpQsBothWays3" text="You get the same result from the Layers tab: pick an area there and set it to &quot;Plain TerraFarm&quot;. Both routes lead to the same place, take whichever you prefer." />
-        <text name="ml_edForeign" text="⚠ This zone was hand-written in miningLayers.xml and can only be shown here in simplified form. Saving rewrites it in the editor’s own scheme; extras such as custom ground textures or a fixed reference height are lost." />
+        <text name="ml_edForeign" text="⚠ This zone was hand-written in miningLayers.xml and can only be shown here in simplified form. Saving rewrites it in the editor’s own scheme; a fixed reference height is lost. Custom ground textures (paintLayer) are kept." />
         <text name="ml_edLayerSection" text="Layers" />
         <text name="ml_edLayer" text="Layer" />
         <text name="ml_edMaterial" text="Material" />
@@ -76,6 +77,11 @@
         <text name="ml_edSaved" text="Layers saved. They apply right away to every area without its own zone." />
         <text name="ml_edHint" text="The bright outline marks the layer you are editing. The pay seam is the fixed last row: material selectable (PAYDIRT by default, coal or limestone work too), thickness and position fixed. The rock below goes in on its own. Minimum thickness: 1 m for the top layer, 1.5 m for every layer below — with big machines better go 2 m. Do not forget to save: ESC or Back leaves the page and everything since your last save is discarded." />
         <text name="ml_edSeamEntry" text="Pay seam: %s" />
+        <!-- Material-Pool dieser Karte (1.4.3) -->
+        <text name="ml_edPoolNoTipHere" text="⚠ (!) %s cannot be dumped back onto the ground on THIS map. Digging, hauling and selling all work as usual. The cause is the limit of 63 terrain materials in your mod list — not this mod." />
+        <text name="ml_edPoolNoTipMark" text="(!) = cannot be dumped on this map (limit of 63 terrain materials). Digging and selling still work." />
+        <text name="ml_edPoolMissing" text="Not available on this map: %s. Neither the map nor your mods provide these materials, so they are not offered here." />
+        <text name="ml_edPoolHint" text="Rule of thumb: fewer mods = more free slots = more materials you can dump." />
 
         <!-- ===================== Tab 1: quick start ===================== -->
         <text name="ml_helpQsSetupTitle" text="Set up in one step" />
@@ -159,7 +165,20 @@
         <text name="ml_helpTipsAboutTitle" text="About this mod" />
         <text name="ml_helpTipsAbout1" text="Mining Layers is an unofficial addon for TerraFarm by scfmod. There is no affiliation with scfmod and no TerraFarm files are shipped. TerraFarm is available on GitHub, not on ModHub." />
         <text name="ml_pageTitle" text="Mining Layers" />
-        <text name="ml_credits" text="Mining Layers by Tommy Honold, Farmersingles.de. A FrittePlayz project." />
+        <text name="ml_credits" text="Mining Layers by Tommy Honold. A FrittePlayz project." />
+        <!-- Reiter 1, ganz vorn: Materialien haengen an Karte + Modliste (1.4.3) -->
+        <text name="ml_helpQsMapTitle" text="First: which materials does YOUR map have?" />
+        <text name="ml_helpQsMap1" text="Whether a material exists at all, and whether you can dump it back onto the ground, is not decided by this mod but by your map together with your mod list. Of the mining materials the base game only knows STONE — DIRT, GRAVEL, SAND, COAL, LIMESTONE or PAYDIRT always come from maps or mods. On top of that the game has a hard limit: only 63 materials may lie on the ground at the same time, and the base game already uses 48 of them. On large mod lists the remaining slots go fast — then you can still dig, haul and sell a material, but no longer dump it." />
+        <text name="ml_helpQsMap2" text="Mining Layers therefore takes a middle road so it stays playable on every map: on map load it checks once what YOUR map actually provides and offers only that in the layer picker. A (!) behind a name means: digging, hauling and selling work, dumping does not on this map. Anything missing entirely is named under the cross-section. So you never have to test a map first or look anything up — if something is missing, it is the map, not the mod." />
+        <text name="ml_helpQsMap3" text="Rule of thumb: fewer mods = more free slots = more materials you can dump. If a material you need carries a (!), there is only one cure: drop mods that bring their own ground materials. The limit of 63 itself cannot be raised — it is built into the game." />
+        <!-- Kartenbericht (1.4.3) -->
+        <text name="ml_mapSection" text="What this map can do" />
+        <text name="ml_mapNoData" text="The map report is available once the map has loaded." />
+        <text name="ml_mapUsable" text="Usable on this map: %s — you can dig, haul, sell and dump these back onto the ground." />
+        <text name="ml_mapNoTipList" text="Dig and sell only: %s. Dumping them back onto the ground does not work here — they got no slot left in the terrain system." />
+        <text name="ml_mapMissingList" text="Not present at all: %s. Neither the map nor your mods provide these." />
+        <text name="ml_mapAdvice" text="The game allows 63 ground materials in total and uses 48 itself. Map and mods share what is left — first to load gets a slot. Rule of thumb: fewer mods = more free slots = more materials you can dump." />
+        <text name="ml_mapManyOwn" text="This map brings a large number of ground materials of its own, so the slots run out early. That is typical for maps carried over from FS19 or FS22." />
         <text name="ml_helpTipsAbout2" text="This mod is free and stays free." />
     </texts>
 </l10n>

@@ -23,6 +23,7 @@
         <text name="ml_tip4" text="Halden merkt sich der Mod - aufgenommen wird, was abgekippt wurde" />
         <text name="ml_tip5" text="Linienfarbe = Material, das ab dort beginnt; rot = Grubenboden" />
         <text name="ml_tip6" text="Die Anzeige zeigt, wie weit es noch bis zur nächsten Schicht ist" />
+        <text name="ml_tip7" text="Welche Materialien es gibt, entscheidet deine Karte samt Modliste — (!) heißt: graben ja, abkippen nein" />
 
         <text name="input_ML_TOGGLE_HUD" text="Mining Layers: Anzeige ein/aus" />
         <text name="input_ML_HUD_MOVE" text="Mining Layers: Anzeige verschieben (Mauszeiger)" />
@@ -65,7 +66,7 @@
         <text name="ml_helpQsBothWays1" text="Lässt du die Materialfelder im TerraFarm-Bereich LEER, arbeitet Mining Layers: Was in der Schaufel landet, hängt an der Grabtiefe. Das ist der Normalfall für eine Grube." />
         <text name="ml_helpQsBothWays2" text="Trägst du dagegen ein Material im Bereich EIN, läuft ganz normales TerraFarm ohne Schichten. Genau richtig für Baustellen, Straßenbau, Planieren — überall, wo du einfach nur Erde bewegen willst und immer dasselbe Material brauchst." />
         <text name="ml_helpQsBothWays3" text="Denselben Effekt bekommst du auf dem Reiter Schichten: dort einen Bereich auswählen und auf &quot;Normales TerraFarm&quot; stellen. Beides führt zum gleichen Ergebnis, such dir aus, was dir lieber ist." />
-        <text name="ml_edForeign" text="⚠ Diese Zone wurde von Hand in der miningLayers.xml gebaut und lässt sich hier nur vereinfacht darstellen. Speichern schreibt sie in das Editor-Schema um; Sonderangaben wie eigene Bodentexturen oder feste Bezugshöhen gehen dabei verloren." />
+        <text name="ml_edForeign" text="⚠ Diese Zone wurde von Hand in der miningLayers.xml gebaut und lässt sich hier nur vereinfacht darstellen. Speichern schreibt sie in das Editor-Schema um; feste Bezugshöhen gehen dabei verloren. Eigene Bodentexturen (paintLayer) bleiben erhalten." />
         <text name="ml_edLayerSection" text="Schichten" />
         <text name="ml_edLayer" text="Schicht" />
         <text name="ml_edMaterial" text="Material" />
@@ -76,6 +77,11 @@
         <text name="ml_edSaved" text="Schichten gespeichert. Sie gelten sofort für alle Bereiche ohne eigene Zone." />
         <text name="ml_edHint" text="Die helle Umrandung ist die Schicht, die du gerade bearbeitest. Die Nutzschicht ist die feste letzte Zeile: Material wählbar (Vorgabe PAYDIRT, auch Kohle oder Kalkstein), Dicke und Lage fest. Den Fels darunter setzt der Mod selbst. Mindestdicke: oberste Schicht 1 m, jede weitere 1,5 m — bei großen Maschinen besser 2 m. Speichern nicht vergessen: mit ESC oder Zurück verlässt du die Seite, und alles seit dem letzten Speichern ist verworfen." />
         <text name="ml_edSeamEntry" text="Nutzschicht: %s" />
+        <!-- Material-Pool dieser Karte (1.4.3) -->
+        <text name="ml_edPoolNoTipHere" text="⚠ (!) %s lässt sich auf DIESER Karte nicht auf den Boden abkippen. Graben, fahren und verkaufen geht ganz normal. Ursache ist die Grenze von 63 Geländematerialien in deiner Modliste — nicht der Mod." />
+        <text name="ml_edPoolNoTipMark" text="(!) = auf dieser Karte nicht abkippbar (Grenze von 63 Geländematerialien). Graben und verkaufen geht trotzdem." />
+        <text name="ml_edPoolMissing" text="Auf dieser Karte nicht verfügbar: %s. Weder Karte noch Mods bringen diese Materialien mit, deshalb stehen sie hier nicht zur Auswahl." />
+        <text name="ml_edPoolHint" text="Merksatz: weniger Mods = mehr freie Plätze = mehr Materialien, die du abkippen kannst." />
 
         <!-- ===================== Reiter 1: Schnellstart ===================== -->
         <text name="ml_helpQsSetupTitle" text="Eingerichtet in einem Schritt" />
@@ -83,7 +89,20 @@
         <text name="ml_helpQsSetup2" text="Die Bezugshöhe misst der Mod selbst: er nimmt die Geländehöhen an den Eckpunkten deines Bereichs und rechnet daraus die Oberkante. Du musst nichts ablesen und nichts eintragen. Trägst du dagegen ein Material im Bereich ein, gilt normales TerraFarm ohne Schichten - praktisch für Baustellen." />
 
         <text name="ml_pageTitle" text="Mining Layers" />
-        <text name="ml_credits" text="Mining Layers von Tommy Honold, Farmersingles.de. Ein FrittePlayz-Projekt." />
+        <text name="ml_credits" text="Mining Layers von Tommy Honold. Ein FrittePlayz-Projekt." />
+        <!-- Reiter 1, ganz vorn: Materialien haengen an Karte + Modliste (1.4.3) -->
+        <text name="ml_helpQsMapTitle" text="Zuerst: welche Materialien hat DEINE Karte?" />
+        <text name="ml_helpQsMap1" text="Ob es ein Material überhaupt gibt und ob du es wieder auf den Boden kippen kannst, entscheidet nicht dieser Mod, sondern deine Karte zusammen mit deiner Modliste. Vom Bergbau kennt das Basisspiel nur STONE — DIRT, GRAVEL, SAND, COAL, LIMESTONE oder PAYDIRT bringen immer Karten oder Mods mit. Dazu kommt eine harte Grenze des Spiels: nur 63 Materialien dürfen gleichzeitig auf dem Boden liegen, und das Basisspiel belegt davon schon 48. Auf großen Modlisten sind die letzten Plätze schnell weg — dann kannst du ein Material zwar graben, fahren und verkaufen, aber nicht mehr abkippen." />
+        <text name="ml_helpQsMap2" text="Mining Layers geht deshalb einen Mittelweg, damit er auf jeder Karte spielbar bleibt: Beim Kartenstart prüft der Mod einmal, was DEINE Karte wirklich hergibt, und bietet dir in der Schichten-Auswahl nur das an. Ein (!) hinter dem Namen heißt: graben, fahren und verkaufen geht, abkippen auf dieser Karte nicht. Was ganz fehlt, steht als Hinweis unter dem Querschnitt. Du musst also keine Karte vorher testen und nichts nachschlagen — fehlt etwas, liegt es an der Karte, nicht am Mod." />
+        <text name="ml_helpQsMap3" text="Merksatz: Weniger Mods = mehr freie Plätze = mehr Materialien, die du abkippen kannst. Trägt ein Material, das du brauchst, ein (!), hilft nur eins: Mods aussortieren, die eigene Bodenmaterialien mitbringen. Die Grenze von 63 selbst kannst du nicht anheben, die steckt fest im Spiel." />
+        <!-- Kartenbericht (1.4.3) -->
+        <text name="ml_mapSection" text="Was diese Karte kann" />
+        <text name="ml_mapNoData" text="Der Kartenbericht steht erst nach dem Laden bereit." />
+        <text name="ml_mapUsable" text="Auf dieser Karte nutzbar: %s — diese Materialien kannst du graben, fahren, verkaufen und wieder auf den Boden kippen." />
+        <text name="ml_mapNoTipList" text="Nur graben und verkaufen: %s. Auf den Boden zurückkippen geht damit hier nicht — sie haben keinen Platz mehr in der Bodenverwaltung bekommen." />
+        <text name="ml_mapMissingList" text="Gar nicht vorhanden: %s. Weder Karte noch Mods bringen diese Materialien mit." />
+        <text name="ml_mapAdvice" text="Das Spiel erlaubt insgesamt 63 Bodenmaterialien, 48 davon belegt es selbst. Karte und Mods teilen sich den Rest — wer zuerst lädt, bekommt einen Platz. Merksatz: weniger Mods = mehr freie Plätze = mehr Materialien, die du abkippen kannst." />
+        <text name="ml_mapManyOwn" text="Diese Karte bringt selbst sehr viele Bodenmaterialien mit, deshalb sind die Plätze früh vergeben. Das ist typisch für Karten, die aus FS19 oder FS22 übernommen wurden." />
         <text name="ml_helpQsStockNote" text="Alle Bilder hier zeigen den Auslieferungszustand: Mutterboden, Kies, Paydirt-Flöz, Fels - ohne dass jemand Schichten von Hand angelegt hat. Genau das bekommst du, sobald der Bereich steht. Eigene Schichten sind eine Möglichkeit, keine Voraussetzung." />
         <text name="ml_helpQsDisplayTitle" text="Die Anzeige links" />
         <text name="ml_helpQsDisplay1" text="Solange eine Maschine aktiv ist, steht links im Bild, wo du gerade bist: aktuelle Höhe, welche Schicht du abbaust und wie viele Meter noch bis zur nächsten kommen." />

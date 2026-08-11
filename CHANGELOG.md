@@ -2,7 +2,18 @@
 
 All notable changes to Mining Layers. Newest first.
 
-## [Unreleased]
+## [1.4.3.0] — 2026-08-11
+
+### Added
+- **The mod now knows what your map can do.** On map load it checks every material it offers against the running session: is the fill type registered at all, and does it have a ground slot? The layer editor then only offers what your map actually provides. Materials that can be dug and sold but not dumped back onto the terrain are marked `(!)`, with the reason spelled out below the cross-section.
+- **Map report on the Mining Layers page.** First line is always what *works* — the usable materials. Only then the limitation, with the affected names. On a map where everything is fine the report ends after that first line. The report is rebuilt every time the page opens, so it always belongs to the map you are actually on.
+- **In-game quickstart now opens with "which materials does YOUR map have?"** — including the numbers behind the 63-slot limit, and a HUD tip in the rotation. Whether a material exists is decided by map plus mod list, not by this mod, and saying so first saves everyone an evening of guessing.
+- **Layers whose material is unknown on the current map are kept, not dropped.** They lie dormant and are written back when you save, so taking a savegame to a map without PAYDIRT no longer clears your configuration.
+
+### Fixed
+- **★ Custom ground textures survived the editor. Now they really do.** `onClickSaveLayers` rebuilt every layer without its `paintLayer`, so any hand-set ground texture was silently discarded on every save — the cause of a bug that looked random for two days. Textures are kept for overburden and pay seam alike, as long as the layer's material is unchanged.
+- **The pay seam no longer falls back to PAYDIRT blindly.** If your map doesn't know the chosen seam material, the mod picks the next usable one from the map's own pool. On maps without PAYDIRT this previously produced a pit with no pay seam at all, silently.
+- **Dumping is no longer refused just because the bucket sits low.** TerraFarm blocks ground-dumping when terrain is within ~0.5 m below the bucket edge (dig-pose protection). That check is now lifted inside Mining Layers — dumping works at any height, on any map. Materials that have no ground slot are still refused honestly by the game, with a log line naming the material, instead of silently dropping 0 litres. Set `freeDumpHeight="false"` in `miningLayers.xml` to restore the original behaviour.
 
 ### Docs
 - "Your map decides the materials" is now the FIRST section of all four READMEs (Tommy's call: without it, every user blames the mod first) — same message as the new in-game quickstart section and HUD tip.

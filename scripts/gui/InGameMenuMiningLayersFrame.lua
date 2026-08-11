@@ -35,6 +35,26 @@ InGameMenuMiningLayersFrame.CONTENT = {
     -- ------------------------------------------------------------------
     {
         { type = 'paragraph', text = 'ml_credits' },
+
+        -- ★ Steht bewusst VOR allem anderen (Tommy, 11.08.): Welche Materialien
+        -- es gibt und welche man abkippen kann, haengt an Karte + Modliste -
+        -- das erklaert weder TerraFarm noch das Basisspiel irgendwo, und ohne
+        -- diese Info sucht jeder den Fehler zuerst bei uns.
+        -- Der Kartenbericht steht ganz vorn: erst was DIESE Karte kann, dann die
+        -- allgemeine Erklaerung dahinter (Tommy 11.08.: "Overview, was die Karte
+        -- kann, am Anfang").
+        { type = 'section',   text = 'ml_mapSection' },
+        { type = 'paragraph', dynamic = 'mapReport' },
+        { type = 'spacer' },
+
+        { type = 'section',   text = 'ml_helpQsMapTitle' },
+        { type = 'paragraph', text = 'ml_helpQsMap1' },
+        { type = 'paragraph', text = 'ml_helpQsMap2' },
+        -- Der Merksatz zum Schluss (Tommy: "das muss rein, am Ende kapiert es
+        -- jeder"): weniger Mods = mehr freie Plaetze = mehr kippbare Materialien.
+        { type = 'paragraph', text = 'ml_helpQsMap3' },
+        { type = 'spacer' },
+
         { type = 'section',   text = 'ml_helpQsSetupTitle' },
         { type = 'paragraph', text = 'ml_helpQsSetup1' },
         { type = 'paragraph', text = 'ml_helpQsStockNote' },
@@ -358,8 +378,30 @@ function InGameMenuMiningLayersFrame:buildEntry(layout, entry)
         end
     elseif entry.type == 'spacer' then
         -- nur Abstand, kein Inhalt
+    elseif entry.dynamic ~= nil then
+        -- Inhalt steht erst zur Laufzeit fest (Kartenbericht). Element merken,
+        -- damit onFrameOpen es bei jedem Oeffnen auffrischt - die Menueseite
+        -- ueberlebt den Kartenwechsel, der Bericht darf nicht veralten.
+        self.dynamicElements = self.dynamicElements or {}
+        self.dynamicElements[entry.dynamic] = element
+
+        self:refreshDynamicEntry(entry.dynamic)
     else
         element:setText(MiningLayers.getText(entry.text, entry.text))
+    end
+end
+
+---Schreibt einen zur Laufzeit erzeugten Text in sein Element.
+---@param name string
+function InGameMenuMiningLayersFrame:refreshDynamicEntry(name)
+    local element = self.dynamicElements ~= nil and self.dynamicElements[name] or nil
+
+    if element == nil then
+        return
+    end
+
+    if name == 'mapReport' then
+        element:setText(MiningLayers:getMapReportText())
     end
 end
 
@@ -404,6 +446,12 @@ function InGameMenuMiningLayersFrame:onFrameOpen()
 
     MiningLayers.protectedCall('buildContent', function()
         self:buildContent()
+    end)
+
+    -- Bei jedem Oeffnen auffrischen: die Seite bleibt ueber den Kartenwechsel
+    -- hinweg bestehen, ihr Kartenbericht darf nicht der vorigen Karte gehoeren.
+    MiningLayers.protectedCall('refreshMapReport', function()
+        self:refreshDynamicEntry('mapReport')
     end)
 
     MiningLayers.protectedCall('loadEditorFromConfig', function()
@@ -531,6 +579,73 @@ InGameMenuMiningLayersFrame.MAX_LAYERS = 6
 InGameMenuMiningLayersFrame.MIN_THICKNESS_FIRST = 1.0
 InGameMenuMiningLayersFrame.MIN_THICKNESS_BELOW = 1.5
 
+---Marke hinter Materialien, die diese Karte zwar kennt, die sich aber nicht auf
+---den Boden abkippen lassen (63-Material-Grenze). Bewusst ein Zeichen, das in
+---jeder Schriftart sitzt - Sonderzeichen fallen in FS-Menues gern aus.
+InGameMenuMiningLayersFrame.NO_TIP_MARK = ' (!)'
+
+---Baut die Materialauswahl fuer diese Karte: was die Karte nicht kennt, kommt
+---raus; was sie kennt, aber nicht abkippen kann, bekommt die Warnmarke. Der
+---Aufrufer braucht beides - die Anzeigetexte fuer setTexts und die Namen, weil
+---die Auswahl nur den Index zurueckmeldet.
+---@param names string[]
+---@param keepName string? Material, das in der Liste bleiben MUSS (der aktuelle Stand)
+---@return table choices { names = string[], texts = string[] }
+function InGameMenuMiningLayersFrame:buildMaterialChoices(names, keepName)
+    local choices = { names = {}, texts = {} }
+    local seen = {}
+
+    local function add(name)
+        if name == nil or seen[name] then
+            return
+        end
+
+        seen[name] = true
+        table.insert(choices.names, name)
+
+        if MiningLayers:getMaterialStatus(name) == MiningLayers.MATERIAL_NO_TIP then
+            table.insert(choices.texts, name .. InGameMenuMiningLayersFrame.NO_TIP_MARK)
+        else
+            table.insert(choices.texts, name)
+        end
+    end
+
+    for _, name in ipairs(names) do
+        if MiningLayers:getIsMaterialAvailable(name) then
+            add(name)
+        end
+    end
+
+    -- Der aktuelle Stand bleibt immer waehlbar, auch wenn die Karte ihn nicht
+    -- kennt: seine Schicht still auf etwas anderes umzubiegen waere genau der
+    -- lautlose Umbau, den wir nicht wollen.
+    add(keepName)
+
+    -- Kennt die Karte gar nichts davon (dann stimmt an der Installation etwas
+    -- nicht), lieber die alte Liste zeigen als eine leere Auswahl.
+    if #choices.names == 0 then
+        for _, name in ipairs(names) do
+            add(name)
+        end
+    end
+
+    return choices
+end
+
+---Index eines Materials in einer Auswahl - 1, wenn es nicht vorkommt.
+---@param choices table
+---@param name string?
+---@return number
+function InGameMenuMiningLayersFrame:materialIndexOf(choices, name)
+    for index, entry in ipairs(choices.names) do
+        if entry == name then
+            return index
+        end
+    end
+
+    return 1
+end
+
 ---@param index number Abraum-Schicht (1 = oberste)
 ---@return number
 function InGameMenuMiningLayersFrame:minThicknessFor(index)
@@ -625,11 +740,19 @@ function InGameMenuMiningLayersFrame:loadEditorFromConfig()
     -- Das sagen wir, statt es still zu tun.
     self.editorForeign = false
     self.seamName = 'PAYDIRT'
+    self.seamPaintLayerName = nil
+    self.seamOrigName = nil
 
     if lastIndex > 0 and (layers[lastIndex].seam == true
         or layers[lastIndex].fillTypeName == 'PAYDIRT') then
         local seamLayer = layers[lastIndex]
         lastIndex = lastIndex - 1
+
+        -- Bodentextur der Nutzschicht merken (1.4.3, siehe Abraum weiter unten).
+        -- Tommys "Limestone Test" haengt genau hier: paintLayer="CONCRETE" am
+        -- Floez, das ein Editor-Speichern bis 1.4.2 verworfen hat.
+        self.seamPaintLayerName = seamLayer.paintLayerName
+        self.seamOrigName = seamLayer.fillTypeName
 
         -- Nur was die Auswahl kennt, kann sie auch anzeigen. Ein Floez aus
         -- einem fremden Material (Hand-XML) bleibt beim Speichern nicht
@@ -679,6 +802,14 @@ function InGameMenuMiningLayersFrame:loadEditorFromConfig()
             table.insert(self.editLayers, {
                 fillTypeName = name,
                 thickness = thickness,
+                -- ★ 1.4.3: eigene Bodentextur mitnehmen. Bis 1.4.2 baute der
+                -- Editor die Schichten ohne paintLayer neu auf - wer eine Zone
+                -- mit paintLayer="CONCRETE" im Editor speicherte, verlor die
+                -- Angabe lautlos (Tommys Fund vom 10.08.). Beim Speichern wird
+                -- sie nur uebernommen, wenn das Material dieser Zeile noch
+                -- dasselbe ist (origFillTypeName).
+                paintLayerName = layer.paintLayerName,
+                origFillTypeName = name,
             })
         end
     end
@@ -696,8 +827,11 @@ function InGameMenuMiningLayersFrame:loadEditorFromConfig()
         self.editorForeign = true
     end
 
+    -- ⚠️ paintLayer zaehlt seit 1.4.3 NICHT mehr als "fremd": eigene
+    -- Bodentexturen ueberleben das Speichern jetzt. Absolute Hoehen (aboveY)
+    -- kann der Editor weiterhin nicht abbilden.
     for _, layer in ipairs(layers) do
-        if layer.paintLayerName ~= nil or layer.aboveY ~= nil then
+        if layer.aboveY ~= nil then
             self.editorForeign = true
             break
         end
@@ -807,18 +941,11 @@ function InGameMenuMiningLayersFrame:updateEditorOptions()
 
     if self:isSeamSelected() then
         -- Nutzschicht: eigene Materialliste, Dicke fest verdrahtet.
-        self.materialOption:setTexts(InGameMenuMiningLayersFrame.SEAM_MATERIALS)
+        self.materialChoices = self:buildMaterialChoices(
+            InGameMenuMiningLayersFrame.SEAM_MATERIALS, self.seamName)
 
-        local materialIndex = 1
-
-        for index, name in ipairs(InGameMenuMiningLayersFrame.SEAM_MATERIALS) do
-            if name == self.seamName then
-                materialIndex = index
-                break
-            end
-        end
-
-        self.materialOption:setState(materialIndex, false)
+        self.materialOption:setTexts(self.materialChoices.texts)
+        self.materialOption:setState(self:materialIndexOf(self.materialChoices, self.seamName), false)
 
         self.thicknessOffset = 0
         self.thicknessOption:setTexts(self.thicknessTexts)
@@ -838,8 +965,6 @@ function InGameMenuMiningLayersFrame:updateEditorOptions()
         self.thicknessOption:setDisabled(false)
     end
 
-    self.materialOption:setTexts(InGameMenuMiningLayersFrame.MATERIALS)
-
     local current = self.editLayers[self.editIndex]
 
     -- Ohne Schicht gibt es nichts einzustellen. Kann nur ueber einen kuenftigen
@@ -849,16 +974,11 @@ function InGameMenuMiningLayersFrame:updateEditorOptions()
         return
     end
 
-    local materialIndex = 1
+    self.materialChoices = self:buildMaterialChoices(
+        InGameMenuMiningLayersFrame.MATERIALS, current.fillTypeName)
 
-    for index, name in ipairs(InGameMenuMiningLayersFrame.MATERIALS) do
-        if name == current.fillTypeName then
-            materialIndex = index
-            break
-        end
-    end
-
-    self.materialOption:setState(materialIndex, false)
+    self.materialOption:setTexts(self.materialChoices.texts)
+    self.materialOption:setState(self:materialIndexOf(self.materialChoices, current.fillTypeName), false)
 
     -- Werte unter dem Mindestmass der gewaehlten Schicht gar nicht erst
     -- anbieten - zurueckspringen nach der Auswahl fuehlt sich kaputt an.
@@ -923,6 +1043,8 @@ function InGameMenuMiningLayersFrame:updateEditorSummary()
         self.editorHint:setText(MiningLayers.getText('ml_edHint', ''))
     end
 
+    self:updatePoolNotice()
+
     if self.editorScope ~= nil then
         local target = self.targets and self.targets[self.targetIndex] or nil
         local key = target ~= nil and target.key or nil
@@ -945,6 +1067,97 @@ function InGameMenuMiningLayersFrame:updateEditorSummary()
 
         self.editorScope:setText(text)
     end
+end
+
+---Sagt unter dem Querschnitt, was diese Karte an Material hergibt (1.4.3).
+---
+---Drei Faelle, absteigend nach Dringlichkeit:
+---  1. In den eingestellten Schichten steckt ein Material, das sich hier nicht
+---     abkippen laesst - das ist der Fall aus GitHub #3 (voller Loeffel, nichts
+---     geht mehr) und muss auch fuer den Standard erscheinen, nicht nur fuer
+---     benannte Bereiche.
+---  2. Die Auswahl bietet solche Materialien an - dann nur die Marke erklaeren.
+---  3. Materialien, die diese Karte gar nicht kennt, stehen nicht in der
+---     Auswahl. Ohne Hinweis sucht man den Fehler beim Mod.
+---Namensliste fuer die Hinweiszeile. Gekappt, weil der Kasten vier Zeilen hat:
+---acht Materialien in FR/PL sprengen ihn sonst und der Hinweis waere genau dort
+---abgeschnitten, wo die Erklaerung steht (Percys Review 1.4.3).
+---@param names string[]
+---@return string
+local function shortList(names)
+    local limit = 4
+
+    if #names <= limit then
+        return table.concat(names, ', ')
+    end
+
+    local head = {}
+
+    for i = 1, limit do
+        table.insert(head, names[i])
+    end
+
+    return string.format('%s, +%d', table.concat(head, ', '), #names - limit)
+end
+
+function InGameMenuMiningLayersFrame:updatePoolNotice()
+    if self.editorPool == nil then
+        return
+    end
+
+    local lines = {}
+    local inStack = {}
+    local seen = {}
+
+    local function collect(name)
+        if name ~= nil and not seen[name]
+            and MiningLayers:getMaterialStatus(name) == MiningLayers.MATERIAL_NO_TIP then
+            seen[name] = true
+            table.insert(inStack, name)
+        end
+    end
+
+    for _, layer in ipairs(self.editLayers or {}) do
+        collect(layer.fillTypeName)
+    end
+
+    collect(self.seamName)
+
+    if #inStack > 0 then
+        local template = MiningLayers.getText('ml_edPoolNoTipHere', '')
+        local ok, text = pcall(string.format, template, shortList(inStack))
+        table.insert(lines, ok and text or template)
+    else
+        -- Keine Warnung noetig, aber die Marke in der Auswahl braucht trotzdem
+        -- eine Erklaerung, sobald sie ueberhaupt vorkommt.
+        local choices = self.materialChoices
+
+        if choices ~= nil then
+            for _, name in ipairs(choices.names) do
+                if MiningLayers:getMaterialStatus(name) == MiningLayers.MATERIAL_NO_TIP then
+                    table.insert(lines, MiningLayers.getText('ml_edPoolNoTipMark', ''))
+                    break
+                end
+            end
+        end
+    end
+
+    local pool = MiningLayers.materialPool
+
+    if pool ~= nil and #pool.missing > 0 then
+        local template = MiningLayers.getText('ml_edPoolMissing', '')
+        local ok, text = pcall(string.format, template, shortList(pool.missing))
+        table.insert(lines, ok and text or template)
+    end
+
+    -- Der Merksatz kommt nur, wenn oben ueberhaupt etwas fehlt oder klemmt -
+    -- auf einer sauberen Karte waere er ein Hinweis ohne Anlass
+    -- (Tommy: "als Hinweis unter der Grafik", 11.08.).
+    if #lines > 0 then
+        table.insert(lines, MiningLayers.getText('ml_edPoolHint', ''))
+    end
+
+    self.editorPool:setText(table.concat(lines, '\n'))
 end
 
 ---Ziel gewechselt: Schichten des neuen Ziels laden. Ungespeichertes am alten
@@ -989,9 +1202,12 @@ function InGameMenuMiningLayersFrame:onMaterialChanged(state)
         return
     end
 
-    if self:isSeamSelected() then
-        local name = InGameMenuMiningLayersFrame.SEAM_MATERIALS[state]
+    -- Die Auswahl meldet nur den Index - und der zeigt seit 1.4.3 in die
+    -- gefilterte Liste dieser Karte, nicht mehr in die feste Materialliste.
+    local choices = self.materialChoices
+    local name = choices ~= nil and choices.names[state] or nil
 
+    if self:isSeamSelected() then
         if name ~= nil then
             self.seamName = name
             self.editorDirty = true
@@ -1000,8 +1216,6 @@ function InGameMenuMiningLayersFrame:onMaterialChanged(state)
 
         return
     end
-
-    local name = InGameMenuMiningLayersFrame.MATERIALS[state]
 
     if name ~= nil and self.editLayers[self.editIndex] ~= nil then
         self.editLayers[self.editIndex].fillTypeName = name
@@ -1102,6 +1316,11 @@ function InGameMenuMiningLayersFrame:onClickSaveLayers()
                 fillTypeName = layer.fillTypeName,
                 fillTypeIndex = fillType.index,
                 depth = depth,
+                -- Eigene Bodentextur nur behalten, solange das Material dieser
+                -- Zeile unveraendert ist: nach einem Materialwechsel passt die
+                -- Handangabe nicht mehr zur Schicht (1.4.3).
+                paintLayerName = (layer.origFillTypeName == layer.fillTypeName)
+                    and layer.paintLayerName or nil,
             })
         else
             -- Material auf dieser Karte nicht registriert. Frueher fiel die
@@ -1124,14 +1343,22 @@ function InGameMenuMiningLayersFrame:onClickSaveLayers()
     local stone = g_fillTypeManager:getFillTypeByName('STONE')
 
     -- Kennt die Karte das gewaehlte Material nicht (COAL und LIMESTONE bringt
-    -- nicht jede mit), faellt das Floez auf PAYDIRT zurueck - eine Grube ohne
-    -- Nutzschicht waere ein stiller Totalausfall.
-    if seam == nil and seamName ~= 'PAYDIRT' then
-        MiningLayers.log('Editor: fillType "%s" kennt diese Karte nicht - Floez wird PAYDIRT.',
-            seamName)
+    -- nicht jede mit), sucht der Mod das naechstbeste aus dem Material-Pool
+    -- dieser Karte - eine Grube ohne Nutzschicht waere ein stiller Totalausfall.
+    if seam == nil then
+        -- Seit 1.4.3 nicht mehr stur auf PAYDIRT: kennt die Karte auch das
+        -- nicht, gaebe es sonst eine Grube ganz ohne Nutzschicht.
+        local fallback = MiningLayers:getFallbackSeamMaterial()
 
-        seamName = 'PAYDIRT'
-        seam = g_fillTypeManager:getFillTypeByName(seamName)
+        if fallback ~= nil then
+            MiningLayers.log('Editor: fillType "%s" kennt diese Karte nicht - Floez wird %s.',
+                seamName, fallback)
+
+            seamName = fallback
+            seam = g_fillTypeManager:getFillTypeByName(seamName)
+        else
+            MiningLayers.log('Editor: WARNUNG - diese Karte kennt kein einziges Nutzschicht-Material.')
+        end
     end
 
     if seam ~= nil then
@@ -1142,6 +1369,7 @@ function InGameMenuMiningLayersFrame:onClickSaveLayers()
             fillTypeIndex = seam.index,
             depth = depth,
             seam = true,
+            paintLayerName = (self.seamOrigName == seamName) and self.seamPaintLayerName or nil,
         })
     end
 
@@ -1311,6 +1539,12 @@ function InGameMenuMiningLayersFrame:drawLayerGraph()
             label = string.format('%s  %s-%s m', entry.name,
                 MiningLayers.formatNumber(from),
                 MiningLayers.formatNumber(depth))
+        end
+
+        -- Dieselbe Marke wie in der Materialauswahl: sonst sieht man in der
+        -- Auswahl eine Warnung und im Querschnitt nicht, welche Schicht gemeint ist.
+        if MiningLayers:getMaterialStatus(entry.name) == MiningLayers.MATERIAL_NO_TIP then
+            label = label .. InGameMenuMiningLayersFrame.NO_TIP_MARK
         end
 
         local textY = barTop - barHeight * 0.5 - textSize * 0.35
