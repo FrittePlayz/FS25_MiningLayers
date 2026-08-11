@@ -99,6 +99,9 @@ TerraFarm vérifie à la verticale sous le bord du godet : si le terrain est à 
 **Le matériau reste dans le godet mais ne se déverse pas au sol ?**
 FS25 limite les matériaux pouvant reposer au sol (height types) à 63 — jeu de base, carte et tous les mods se partagent ce quota, et le jeu de base en occupe déjà 48 à lui seul ; carte et mods se disputent les 15 restants. Quand il est plein, les matériaux enregistrés en dernier perdent leur place : ils fonctionnent dans le godet et se vendent, mais ne se déversent pas sur le terrain. Le log montre alors `maximum number (63) of height types already registered`, et depuis la 1.4.2 le mod avertit par zone quand un matériau de couche est touché. Seul remède : alléger les mods riches en matériaux.
 
+**Plusieurs matériaux manquent ou portent un `(!)` — est-ce ma carte ?**
+C'est bien possible. Méfie-toi des cartes portées depuis FS19 ou FS22 : elles enregistrent souvent une douzaine de matériaux de sol à elles seules — et comme il ne reste que 15 places après le jeu de base, une telle carte fait sauter la limite **toute seule**, avant même le premier mod. Signe révélateur dans le log : des matériaux sont refusés alors que la carte elle-même les apporte. Exemple mesuré : une carte de carrière portée enregistrait 18 matériaux de sol et en a perdu plusieurs, tandis qu'une carte minière native FS25 avec la même liste de mods avait tout d'utilisable. Si ta carte est un portage et que tu veux la gamme complète, une carte conçue pour FS25 est le choix le plus fiable.
+
 **Pourquoi ma machine ne décharge que dans une zone — ou nulle part ?**
 Une zone de sortie est assignée dans le menu machine : TerraFarm ne décharge alors que dedans. Depuis la 1.4.2, une zone de couches assignée en sortie tourne automatiquement en libre (une ligne de log le confirme). Pour décharger librement partout, mets la zone de sortie de la machine sur « non définie ».
 

@@ -189,6 +189,9 @@ TerraFarm prüft senkrecht unter der Schaufelkante: Liegt Terrain näher als etw
 **Material liegt in der Schaufel, lässt sich aber nicht abkippen?**
 FS25 begrenzt Materialien, die auf dem Boden liegen können (height types), auf 63 — Basisspiel, Karte und alle Mods teilen sich das Kontingent, und das Basisspiel allein belegt schon 48 davon; Karte und Mods streiten sich um die letzten 15. Ist es voll, verlieren spät registrierte Materialien ihren Platz: Sie funktionieren in der Schaufel und lassen sich verkaufen, aber nicht aufs Gelände kippen. Im Log steht dann `maximum number (63) of height types already registered`, und seit 1.4.2 warnt der Mod pro Zone, wenn ein Schichtmaterial betroffen ist. Einzige Abhilfe: materiallastige Mods ausmisten.
 
+**Mehrere Materialien fehlen oder tragen ein `(!)` — liegt es an meiner Karte?**
+Gut möglich. Vorsicht bei Karten, die aus dem LS19 oder LS22 portiert wurden: Solche Karten bringen oft ein Dutzend eigener Bodenmaterialien mit — und weil nach dem Basisspiel nur 15 Plätze frei sind, sprengt so eine Karte die Grenze **allein**, noch bevor ein einziger Mod geladen ist. Erkennbar im Log: Materialien werden abgelehnt, die die Karte selbst mitbringt. Gemessenes Beispiel: Eine portierte Steinbruch-Karte registrierte 18 Bodenmaterialien und verlor mehrere davon, während eine native LS25-Bergbaukarte auf derselben Modliste alles nutzbar hatte. Wenn deine Karte eine Portierung ist und du die volle Materialauswahl willst, ist eine für den LS25 gebaute Karte die verlässlichere Wahl.
+
 **Warum kippt meine Maschine nur in einem Bereich ab — oder nirgends?**
 Im Maschinen-Menü ist ein Ausgabe-Bereich zugewiesen: TerraFarm kippt dann nur dorthin. Seit 1.4.2 läuft eine Schicht-Zone als Ausgabe-Bereich automatisch frei (eine Log-Zeile sagt es). Für freies Abkippen überall den Ausgabe-Bereich der Maschine auf „Nicht gesetzt" stellen.
 

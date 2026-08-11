@@ -189,6 +189,9 @@ TerraFarm checks straight down from the bucket edge: if terrain is closer than a
 **Material sits in the bucket but will not tip onto the ground?**
 FS25 caps materials that can lie on the ground (height types) at 63 — base game, map and all mods share that pool, and the base game alone already uses 48 of it, so map and mods fight over the last 15. When it is full, late-registered fill types lose their slot: they work in the bucket and sell fine, but cannot be tipped onto the terrain. Your log then shows `maximum number (63) of height types already registered`, and since 1.4.2 the mod warns per zone when a layer material is affected. The only fix is trimming fill-type-heavy mods.
 
+**Several materials are missing or marked `(!)` — is my map to blame?**
+Quite possibly. Watch out for maps ported from FS19 or FS22: they often register a dozen or more ground materials of their own, and with only 15 slots left after the base game, such a map can blow the limit **on its own** — before a single mod is loaded. The giveaway is in the log: materials get rejected even though the map itself brought them. Measured example: one ported quarry map registered 18 ground materials and lost several of them, while a native FS25 mining map on the very same mod list came out with everything usable. If your map is a port and you want the full material range, a map built for FS25 is the more reliable choice.
+
 **Why does my machine only dump inside one area — or nowhere at all?**
 An output area is assigned in the machine menu: TerraFarm then dumps only inside that area. Since 1.4.2 a layer zone assigned as output runs free automatically (one log line says so). For free dumping anywhere, set the machine's output area to "not set".
 

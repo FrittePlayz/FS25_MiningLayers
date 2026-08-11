@@ -99,6 +99,9 @@ TerraFarm sprawdza pionowo pod krawędzią łyżki: jeśli teren jest bliżej ni
 **Materiał jest w łyżce, ale nie da się go wysypać na ziemię?**
 FS25 ogranicza materiały mogące leżeć na ziemi (height types) do 63 — gra podstawowa, mapa i wszystkie mody dzielą tę pulę, a sama podstawka zajmuje już 48 z nich; mapa i mody walczą o pozostałe 15. Gdy jest pełna, później rejestrowane materiały tracą miejsce: działają w łyżce i można je sprzedać, ale nie da się ich wysypać na teren. W logu widać wtedy `maximum number (63) of height types already registered`, a od 1.4.2 mod ostrzega dla każdej strefy, gdy dotyczy to materiału warstwy. Jedyna rada: odchudzić mody z wieloma materiałami.
 
+**Brakuje kilku materiałów albo mają `(!)` — czy to wina mapy?**
+Bardzo możliwe. Uważaj na mapy portowane z FS19 lub FS22: często rejestrują kilkanaście własnych materiałów terenu — a skoro po grze podstawowej zostaje tylko 15 miejsc, taka mapa przekracza limit **sama z siebie**, jeszcze zanim wczyta się jakikolwiek mod. Poznasz to po logu: odrzucane są materiały, które sama mapa wnosi. Zmierzony przykład: portowana mapa kamieniołomu rejestrowała 18 materiałów terenu i kilku z nich nie dostała, podczas gdy natywna mapa górnicza FS25 przy tej samej liście modów miała wszystko sprawne. Jeśli twoja mapa to port, a chcesz pełnej palety materiałów, mapa zrobiona pod FS25 jest pewniejszym wyborem.
+
 **Czemu maszyna wysypuje tylko w jednym obszarze — albo nigdzie?**
 W menu maszyny przypisany jest obszar wyjściowy: TerraFarm wysypuje wtedy tylko tam. Od 1.4.2 strefa warstw jako obszar wyjściowy działa automatycznie swobodnie (mówi o tym linia w logu). Żeby wysypywać swobodnie wszędzie, ustaw obszar wyjściowy maszyny na „nieustawiony".
 
