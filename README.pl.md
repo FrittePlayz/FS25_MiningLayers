@@ -17,7 +17,7 @@ Materiał w łyżce zależy od głębokości kopania, nie od ręcznego wyboru: n
 
 O tym, czy materiał w ogóle istnieje i czy da się go wysypać z powrotem na ziemię, nie decyduje ten mod, lecz twoja mapa razem z listą modów. Z materiałów górniczych podstawowa gra zna tylko STONE: DIRT, GRAVEL, SAND, COAL, LIMESTONE i PAYDIRT zawsze pochodzą z map lub modów. Do tego dochodzi twardy limit gry: jednocześnie na ziemi może leżeć tylko 63 materiały, a podstawowa gra zajmuje już 48. Przy dużych listach modów ostatnie miejsca znikają szybko — wtedy materiał nadal wykopiesz, przewieziesz i sprzedasz, ale już nie wysypiesz.
 
-Dlatego Mining Layers idzie drogą pośrednią, by pozostać grywalnym na każdej mapie: przy wczytywaniu mapy mod sprawdza raz, co TWOJA mapa naprawdę oferuje, i tylko to pokazuje w wyborze warstw (od 1.4.3). `(!)` za nazwą znaczy: kopanie, transport i sprzedaż działają, wysypywanie na tej mapie nie. Czego brakuje całkowicie, jest wypisane pod przekrojem. Nie musisz więc wcześniej testować map — jeśli czegoś brak, to wina mapy, nie moda.
+Dlatego Mining Layers idzie drogą pośrednią, by pozostać grywalnym na każdej mapie: przy wczytywaniu mapy mod sprawdza raz, co TWOJA mapa naprawdę oferuje, i tylko to pokazuje w wyborze warstw (od 1.5.0). `(!)` za nazwą znaczy: kopanie, transport i sprzedaż działają, wysypywanie na tej mapie nie. Czego brakuje całkowicie, jest wypisane pod przekrojem. Nie musisz więc wcześniej testować map — jeśli czegoś brak, to wina mapy, nie moda.
 
 **Zapamiętaj: mniej modów = więcej wolnych miejsc = więcej materiałów do wysypania.** Jeśli potrzebny ci materiał ma `(!)`, pomaga tylko jedno: usunąć mody wnoszące własne materiały terenu. Samego limitu 63 nie da się podnieść — jest wbudowany w grę.
 
