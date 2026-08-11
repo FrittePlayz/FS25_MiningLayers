@@ -25,6 +25,10 @@
         <text name="ml_tip6" text="the display shows how far it is to the next layer" />
 
         <text name="input_ML_TOGGLE_HUD" text="Mining Layers: display on/off" />
+        <text name="input_ML_HUD_MOVE" text="Mining Layers: move display (mouse cursor)" />
+        <text name="ml_noInputArea" text="no input area assigned - assign your area as input in the machine menu (Y)" />
+        <text name="ml_hudMoveHint" text="left click: pick up/drop - right click: default position - press the key again: done" />
+        <text name="ml_hudMoveSample" text="sample display - in game the layer info shows here" />
 
         <text name="ml_uiLayers" text="Layers" />
         <text name="ml_uiNoLayers" text="no layers" />
@@ -75,14 +79,14 @@
 
         <!-- ===================== Tab 1: quick start ===================== -->
         <text name="ml_helpQsSetupTitle" text="Set up in one step" />
-        <text name="ml_helpQsSetup1" text="Draw a TerraFarm area around your pit and leave the fields inside it empty. That is the whole setup. Dig anywhere in that area and the material comes from the depth instead of the vehicle setting." />
+        <text name="ml_helpQsSetup1" text="Draw a TerraFarm area around your pit and leave the fields inside it empty. That is the whole setup. Dig anywhere in that area and the material comes from the depth instead of the vehicle setting. Important: assign the area to your machine as its INPUT AREA (machine menu, default Y) - TerraFarm links areas to the machine, not to your position." />
         <text name="ml_helpQsSetup2" text="The mod works out the reference height itself: it reads the terrain heights at the corner points of your area and derives the surface from them. Nothing to read off, nothing to type in. If you do enter a material on the area, you get plain TerraFarm without layers. Handy for construction work." />
 
         <text name="ml_helpQsStockNote" text="Every image here shows the mod as it ships: topsoil, gravel, paydirt, rock, with nobody having set up a single layer by hand. That is what you get once the area is drawn. Your own layers are an option, not a requirement." />
         <text name="ml_helpQsDisplayTitle" text="The readout on the left" />
         <text name="ml_helpQsDisplay1" text="While a machine is active, the left of the screen tells you where you are: current height, which layer you are working and how many metres are left until the next one." />
         <text name="ml_helpQsDisplayB1" text="That readout is what counts, not TerraFarm's material field. The vehicle keeps showing its own setting and is only overridden at the moment you dig." />
-        <text name="ml_helpQsDisplayB2" text="Move it with displayPosX and displayPosY in miningLayers.xml, or switch it off with showHeightDisplay." />
+        <text name="ml_helpQsDisplayB2" text="Move it in game: Num * (rebindable) toggles the move mode with a mouse cursor - pick up, drop, done. Switch it off with Num 5 or showHeightDisplay in miningLayers.xml." />
 
         <text name="ml_helpQsLayersTitle" text="Setting your own layers" />
         <text name="ml_helpQsLayers1" text="Out of the box: topsoil, gravel below it, then paydirt, rock at the bottom. That fits almost any pit, so there is nothing you have to set up." />

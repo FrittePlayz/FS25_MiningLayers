@@ -25,6 +25,10 @@
         <text name="ml_tip6" text="l'affichage indique la distance jusqu'à la prochaine couche" />
 
         <text name="input_ML_TOGGLE_HUD" text="Mining Layers : affichage act./désact." />
+        <text name="input_ML_HUD_MOVE" text="Mining Layers : déplacer l'affichage (curseur souris)" />
+        <text name="ml_noInputArea" text="aucune zone d'entrée choisie - assigne la zone comme entrée dans le menu machine (Y)" />
+        <text name="ml_hudMoveHint" text="clic gauche : saisir/déposer - clic droit : position par défaut - touche à nouveau : terminé" />
+        <text name="ml_hudMoveSample" text="affichage d'exemple - en jeu, les infos de couches s'affichent ici" />
 
         <text name="ml_uiLayers" text="Couches" />
         <text name="ml_uiNoLayers" text="pas de couches" />
@@ -75,14 +79,14 @@
 
         <!-- ===================== Tab 1: quick start ===================== -->
         <text name="ml_helpQsSetupTitle" text="Mise en place en une étape" />
-        <text name="ml_helpQsSetup1" text="Trace une zone TerraFarm autour de ta fosse et laisse les champs à l'intérieur vides. C'est toute la mise en place. Creuse n'importe où dans cette zone et le matériau vient de la profondeur au lieu du réglage du véhicule." />
+        <text name="ml_helpQsSetup1" text="Trace une zone TerraFarm autour de ta fosse et laisse les champs à l'intérieur vides. C'est toute la mise en place. Creuse n'importe où dans cette zone et le matériau vient de la profondeur au lieu du réglage du véhicule. Important : assigne la zone à ta machine comme ZONE D'ENTRÉE (menu machine, Y par défaut) - TerraFarm lie les zones à la machine, pas à ta position." />
         <text name="ml_helpQsSetup2" text="Le mod calcule la hauteur de référence lui-même : il lit les hauteurs de terrain aux coins de ta zone et en déduit la surface. Rien à relever, rien à saisir. Si tu renseignes un matériau sur la zone, tu obtiens le TerraFarm classique sans couches. Pratique pour les chantiers." />
 
         <text name="ml_helpQsStockNote" text="Toutes les images ici montrent le mod tel qu'il est livré : terre végétale, gravier, paydirt, roche, sans que personne n'ait réglé une seule couche à la main. C'est ce que tu obtiens dès que la zone est tracée. Tes propres couches sont une option, pas une condition." />
         <text name="ml_helpQsDisplayTitle" text="L'affichage à gauche" />
         <text name="ml_helpQsDisplay1" text="Quand une machine est active, la gauche de l'écran te dit où tu en es : hauteur actuelle, couche en cours et combien de mètres restent jusqu'à la prochaine." />
         <text name="ml_helpQsDisplayB1" text="C'est cet affichage qui compte, pas le champ de matériau de TerraFarm. Le véhicule continue d'afficher son propre réglage et n'est remplacé qu'au moment où tu creuses." />
-        <text name="ml_helpQsDisplayB2" text="Déplace-le avec displayPosX et displayPosY dans miningLayers.xml, ou désactive-le avec showHeightDisplay." />
+        <text name="ml_helpQsDisplayB2" text="Déplace-le en jeu : Num * (réassignable) active le mode déplacement avec curseur souris - saisir, déposer, terminé. Désactive-le avec Num 5 ou showHeightDisplay dans miningLayers.xml." />
 
         <text name="ml_helpQsLayersTitle" text="Régler ses propres couches" />
         <text name="ml_helpQsLayers1" text="D'origine : terre végétale, gravier en dessous, puis le paydirt, roche tout en bas. Ça convient à presque toutes les fosses, tu n'as donc rien à régler." />

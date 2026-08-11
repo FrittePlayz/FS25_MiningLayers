@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <modDesc descVersion="97">
     <author>Tommy Honold - Farmersingles.de - FrittePlayz</author>
-    <version>1.4.1.6</version>
+    <version>1.4.2.0</version>
 
     <title>
         <en>Mining Layers</en>
@@ -105,14 +105,19 @@ Ustawienia: modSettings/FS25_MiningLayers/miningLayers.xml]]>
 
     <!-- Numpad 5 als Standard: TerraFarm belegt Num 0/4/8/9/Komma, die 5 liegt
          direkt neben scfmods HUD-Taste (Num 4) und war auf den Testsystemen frei.
-         Umbelegen geht im Spiel unter Optionen > Steuerung > Mining Layers. -->
+         Num * (HUD verschieben) war bis 1.2.2.0 unsere alte Toggle-Taste und ist
+         seitdem frei. Umbelegen geht unter Optionen > Steuerung > Mining Layers. -->
     <actions>
         <action name="ML_TOGGLE_HUD" />
+        <action name="ML_HUD_MOVE" />
     </actions>
 
     <inputBinding>
         <actionBinding action="ML_TOGGLE_HUD">
             <binding device="KB_MOUSE_DEFAULT" input="KEY_KP_5" index="1" />
+        </actionBinding>
+        <actionBinding action="ML_HUD_MOVE">
+            <binding device="KB_MOUSE_DEFAULT" input="KEY_KP_multiply" index="1" />
         </actionBinding>
     </inputBinding>
 

@@ -236,7 +236,8 @@ Nicht dein Ding? Ein ⭐ auf dieses Repo, ein Fehlerbericht oder eine Empfehlung
 
 ## Credits
 
-- **Autor:** Tommy Honold — [seeside.ai](https://seeside.ai)
+- **Autor:** Tommy Honold
 - **Sponsor:** [farmersingles.de](https://farmersingles.de) — die Singlebörse für Landwirte
 - Ein **[FrittePlayz](https://www.youtube.com/@FrittePlayz)**-Projekt (YouTube)
 - Baut auf **[TerraFarm](https://github.com/scfmod/FS25_TerraFarm)** von scfmod auf (wird benötigt, separat installieren) — inoffizielles Addon, keine Verbindung zu scfmod oder GIANTS Software.
+- HUD-Verschieben nach dem Vorbild von **HappyLoosers HL Hud System** (bekannt aus FS25_ProductionInfoHud) — eigene Implementierung, kein übernommener Code. Danke fürs offene Teilen des Systems!

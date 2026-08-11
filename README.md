@@ -236,7 +236,8 @@ Not your thing? A ⭐ on this repo, a bug report, or telling a friend about the 
 
 ## Credits
 
-- **Author:** Tommy Honold — [seeside.ai](https://seeside.ai)
+- **Author:** Tommy Honold
 - **Sponsor:** [farmersingles.de](https://farmersingles.de) — the dating site for farmers
 - A **[FrittePlayz](https://www.youtube.com/@FrittePlayz)** project (YouTube)
 - Built on **[TerraFarm](https://github.com/scfmod/FS25_TerraFarm)** by scfmod (required, install separately) — unofficial add-on, no affiliation with scfmod or GIANTS Software.
+- HUD drag&drop mechanics inspired by **HappyLooser's HL Hud System** (as seen in FS25_ProductionInfoHud) — own implementation, no code copied. Thanks for openly sharing the system!

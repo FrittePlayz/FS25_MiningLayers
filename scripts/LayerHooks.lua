@@ -285,6 +285,117 @@ function MiningLayers:installHook(className)
     return true
 end
 
+---Ist fuer diese Ausgabe der Bereich zu ignorieren? Ja, wenn der AUSGABE-
+---Bereich der Maschine eine Schicht-Zone ist: TerraFarm kippt mit Bereich nur
+---INNERHALB und nur bis zu dessen Zielhoehe ab (MachineWorkArea:outputRaise) -
+---und unsere Zielhoehe ist der automatisch gesetzte GRUBENBODEN, der unter dem
+---Gelaende liegt. Ergebnis waere: Schaufel leert sich nirgends, ohne Meldung
+---(243er-Befund Tommy 2026-08-11). Schicht-Zonen sind Abbau-Ziele - fuer die
+---Ausgabe verhalten wir uns wie ohne Bereich (frei kippen, das Halden-
+---Gedaechtnis zeichnet weiter auf). Pfad-/Handbetriebs-Bereiche und
+---abgeschaltete Zonen bleiben unangetastet: dort gilt TerraFarm pur.
+---@param workArea table
+---@return boolean bypass
+---@return string? areaName
+function MiningLayers:shouldBypassOutputArea(workArea)
+    local vehicle = workArea ~= nil and workArea.vehicle or nil
+
+    if vehicle == nil or not MiningLayers.isCallable(vehicle.getMachineOutputArea) then
+        return false
+    end
+
+    local area, enabled = vehicle:getMachineOutputArea()
+
+    if area == nil or not enabled then
+        return false
+    end
+
+    -- Pfad-Bereich (width) oder Handbetrieb (Material gesetzt): normales TerraFarm.
+    if area.width ~= nil or area.forceFillTypeIndex ~= nil then
+        return false
+    end
+
+    local resolved, _, isOff = self:getResolvedForArea(area)
+
+    if type(resolved) ~= 'table' or isOff then
+        return false
+    end
+
+    return true, area.name
+end
+
+MiningLayers.freeDumpLogged = false
+MiningLayers.freeDumpHookInstalled = false
+
+---Haengt sich an die Ausgabe-Funktionen von MachineWorkArea (RAISE/FLATTEN/
+---SMOOTH). Greift der Bypass, wird getMachineOutputArea am Fahrzeug fuer die
+---Dauer des Original-Aufrufs durch "kein Bereich" ersetzt - der Original-Code
+---laeuft dann selbst in seinen freien Zweig (kein kopiertes Internals-Wissen).
+---@return boolean installed
+function MiningLayers:installFreeDumpHook()
+    -- Nur einmal pro Spielsitzung wrappen: ein zweiter Kartenstart wuerde
+    -- sonst den Wrapper um den Wrapper wickeln (Percys Delta-Review D2).
+    if MiningLayers.freeDumpHookInstalled then
+        return true
+    end
+
+    local workAreaClass = MiningLayers.tf('MachineWorkArea')
+
+    if type(workAreaClass) ~= 'table' then
+        return false
+    end
+
+    local hooked = false
+
+    for _, fnName in ipairs({ 'outputRaise', 'outputGrade', 'outputSmooth' }) do
+        local original = workAreaClass[fnName]
+
+        if MiningLayers.isCallable(original) then
+            workAreaClass[fnName] = function(workArea, liters, fillTypeIndex)
+                if MiningLayers.active then
+                    local ok, bypass, areaName = pcall(MiningLayers.shouldBypassOutputArea, MiningLayers, workArea)
+
+                    if ok and bypass and workArea.vehicle ~= nil then
+                        if not MiningLayers.freeDumpLogged then
+                            MiningLayers.freeDumpLogged = true
+                            MiningLayers.log('Abkippen: Ausgabe-Bereich "%s" ist eine Schicht-Zone - dessen Zielhoehe (Grubenboden) wuerde jedes Kippen blockieren. Ausgabe laeuft frei, Halden-Gedaechtnis uebernimmt.',
+                                tostring(areaName))
+                        end
+
+                        local vehicle = workArea.vehicle
+                        local originalGetArea = vehicle.getMachineOutputArea
+
+                        vehicle.getMachineOutputArea = function()
+                            return nil, false
+                        end
+
+                        local okCall, result = pcall(original, workArea, liters, fillTypeIndex)
+
+                        vehicle.getMachineOutputArea = originalGetArea
+
+                        if okCall then
+                            return result
+                        end
+
+                        -- Fehler im Original nicht schlucken - Original nochmal
+                        -- normal laufen lassen waere doppelte Ausgabe, also melden.
+                        MiningLayers.log('FEHLER beim freien Abkippen: %s', tostring(result))
+                        return 0
+                    end
+                end
+
+                return original(workArea, liters, fillTypeIndex)
+            end
+
+            hooked = true
+        end
+    end
+
+    MiningLayers.freeDumpHookInstalled = hooked
+
+    return hooked
+end
+
 function MiningLayers:installHooks()
     local installed = {}
     local missing = {}
@@ -326,5 +437,11 @@ function MiningLayers:installHooks()
         else
             MiningLayers.log('WARNUNG: Ausgabe-Klassen nicht gefunden - Abladetextur bleibt aus.')
         end
+    end
+
+    if self:installFreeDumpHook() then
+        MiningLayers.log('Abkipp-Schutz aktiv: Schicht-Zone als Ausgabe-Bereich blockiert das Kippen nicht mehr.')
+    else
+        MiningLayers.log('WARNUNG: MachineWorkArea nicht gefunden - Abkipp-Schutz bleibt aus.')
     end
 end

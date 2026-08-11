@@ -15,7 +15,7 @@
 
 MiningLayers = {}
 
-MiningLayers.VERSION = '1.4.1.6'
+MiningLayers.VERSION = '1.4.2.0'
 MiningLayers.LOG_PREFIX = '[MiningLayers] '
 
 MiningLayers.MOD_NAME = g_currentModName
@@ -137,6 +137,7 @@ source(g_currentModDirectory .. 'scripts/LayerEditor.lua')
 source(g_currentModDirectory .. 'scripts/MiningLayersGui.lua')
 source(g_currentModDirectory .. 'scripts/SponsorSign.lua')
 source(g_currentModDirectory .. 'scripts/MiningLayersSpec.lua')
+source(g_currentModDirectory .. 'scripts/HudMover.lua')
 
 ---Anzahl Fahrzeugtypen mit unserer Eingabe-Spezialisierung (fuer das Log).
 MiningLayers.inputSpecCount = 0
@@ -201,6 +202,13 @@ function MiningLayers:loadMap(filename)
         MiningLayers:loadConfig()
     end)
 
+    -- HUD-Position aus modSettings/hud.xml (falls der Spieler die Anzeige
+    -- schon einmal verschoben hat) - NACH loadConfig, damit der Stand aus der
+    -- miningLayers.xml als Standard fuer den Rechtsklick-Reset gemerkt wird.
+    MiningLayers.protectedCall('loadHudSettings', function()
+        MiningLayers:loadHudSettings()
+    end)
+
     MiningLayers.protectedCall('loadMoundMemory', function()
         MiningLayers:loadMoundMemory()
     end)
@@ -227,9 +235,11 @@ function MiningLayers:loadMap(filename)
         MiningLayers:spawnSignsForAllAreas()
     end)
 
-    -- Anzeige-Taste (Standard Num 5): registriert sich ueber den Rebuild der
-    -- Missions-Action-Events (Start + jedes Menue-Schliessen) und ueberlebt so
-    -- jeden Kontext-Wechsel - Historie der Fehlversuche in HeightDisplay.lua.
+    -- Anzeige-Taste (Standard Num 5): registriert sich ueber die eigene
+    -- Fahrzeug-Spezialisierung (MiningLayersSpec) und zusaetzlich global via
+    -- PlayerInputComponent (HudMover.lua). Greift beides nicht, toggelt der
+    -- Direkt-Fallback in update(). installToggleKey meldet nur den Status;
+    -- Historie der Fehlversuche in HeightDisplay.lua.
     MiningLayers.protectedCall('installToggleKey', function()
         MiningLayers:installToggleKey()
     end)
@@ -259,86 +269,201 @@ function MiningLayers:deleteMap()
     -- Risiko ohne Gegenwert - wir vergessen sie nur.
     MiningLayers.signNodes = {}
 
+    -- Eingabe-/Fallback-Zustand komplett zuruecksetzen: sonst kann beim
+    -- naechsten Kartenstart ein Geister-Zustand aus dem alten Spielstand
+    -- weiterleben (haengende down-Flanke, stale Taste, alter Zeitstempel).
+    MiningLayers.setHudMoveMode(false)
+    MiningLayers.kp5WasDown = false
+    MiningLayers.moveKeyWasDown = false
+    MiningLayers.lastActionToggleTime = nil
+    MiningLayers.lastMoveActionTime = nil
+    MiningLayers.fallbackDownTime = nil
+    MiningLayers.moveDownTime = nil
+    MiningLayers.fallbackKey = nil
+    MiningLayers.moveFallbackKey = nil
+    MiningLayers.fallbackResolved = false
+    MiningLayers.fallbackCapable = nil
+    MiningLayers.guiWasOpen = false
+
+    -- Auch alle Einmal-Log-Flags: beim zweiten Kartenstart sollen genau die
+    -- Diagnose-Zeilen (Pfad-Forschung, Fallback-Status) wieder kommen (R6/D1).
+    MiningLayers.fallbackToggleLogged = false
+    MiningLayers.fallbackDisarmedLogged = false
+    MiningLayers.moveFallbackLogged = false
+    MiningLayers.moveFallbackDisarmedLogged = false
+    MiningLayers.toggleLogCount = 0
+    MiningLayers.toggleSourceLogged = {}
+    MiningLayers.toggleDupLogged = false
+    MiningLayers.toggleVehicleApiMissingLogged = false
+    MiningLayers.globalRegisterLogged = false
+    MiningLayers.hudMoveHintLogged = false
+    MiningLayers.freeDumpLogged = false
+
     MiningLayers.active = false
 end
 
----Direkt-Fallback fuer die Anzeige-Taste (1.4.1.6). Hintergrund: Auf grossen
----Modlisten (Tommys 334er-Installation, Diagnose 10.08.) bekommt unsere Action
----trotz erfolgreicher Registrierung (success=true, Kontext=VEHICLE, Binding im
----Profil) NIE einen Callback - die Binding-Aufloesung des Spiels greift nicht.
----Bewiesen hat die Diagnose aber auch: Input.isKeyPressed sieht jeden Druck.
----Also toggeln wir notfalls direkt. Selbstkalibrierend: feuert das Action-
----System (normale Modlisten), stempelt der Callback lastActionToggleTime und
----der Fallback bleibt stumm. Ausgewertet wird beim LOSLASSEN der Taste, damit
----der Stempel des Druck-Ereignisses sicher schon da ist.
+---Direkt-Fallback fuer die Anzeige-Taste (seit 1.4.1.6). Hintergrund: Auf
+---grossen Modlisten (Tommys 334er-Installation, Diagnose 10.08.) bekommt unsere
+---Action trotz erfolgreicher Registrierung (success=true, Kontext=VEHICLE,
+---Binding im Profil) NIE einen Callback - die Binding-Aufloesung des Spiels
+---greift nicht. Bewiesen hat die Diagnose aber auch: Input.isKeyPressed sieht
+---jeden Druck. Also toggeln wir notfalls direkt. Selbstkalibrierend: feuert
+---das Action-System (normale Modlisten), stempelt der Action-Callback
+---lastActionToggleTime und der Fallback bleibt stumm.
+---
+---Handshake seit 1.4.2 pro DRUCK-ZYKLUS statt 1-Sekunden-Fenster: die
+---down-Flanke merkt sich downTime, behandelt ist ein Druck nur, wenn der
+---Action-Callback NACH dieser Flanke gestempelt hat. Damit sind beide Kanten
+---aus Percys Review weg (Halten > 1 s hob den eigenen Toggle auf, Doppel-Tipp
+---< 1 s wurde im Fallback verschluckt). Stempeln duerfen NUR die
+---Action-Callbacks - der Fallback selbst nicht.
+---
 ---Umbelegen funktioniert auch im Fallback: Die Taste wird aus dem Input-System
----gelesen (das Steuerungs-Menue kennt die Belegung nachweislich, es zeigte
----Tommys Umbelegungen korrekt an). Nach jedem Menue-Schliessen wird neu
----aufgeloest, damit eine Umbelegung sofort greift. Default: Num 5.
+---gelesen und nach jedem Menue-Schliessen neu aufgeloest (dort wird umbelegt).
+---Modifier-Tasten (Shift/Ctrl/Alt) werden dabei uebersprungen, und ohne
+---Tastatur-Belegung (Gamepad-/Maus-Umbelegung) wird der Fallback DISARMT statt
+---still die alte Default-Taste weiterzupollen. Default: Num 5.
+---Die Move-Taste des HUD-Verschiebens (HudMover.lua, Default Num *) nutzt
+---denselben Mechanismus mit eigenem Zustand.
 MiningLayers.kp5WasDown = false
 MiningLayers.fallbackToggleLogged = false
+MiningLayers.fallbackDisarmedLogged = false
 MiningLayers.fallbackKey = nil
 MiningLayers.fallbackKeyName = 'KEY_KP_5'
+MiningLayers.fallbackArmed = false
+MiningLayers.fallbackResolved = false
+MiningLayers.fallbackDownTime = nil
 MiningLayers.guiWasOpen = false
+MiningLayers.fallbackCapable = nil
 
----Liest die aktuell belegte Taste der Action aus g_inputBinding. Liefert immer
----etwas Brauchbares: notfalls den Default Num 5.
-function MiningLayers.resolveFallbackKey()
-    local key = Input.KEY_KP_5
-    local keyName = 'KEY_KP_5'
+MiningLayers.moveKeyWasDown = false
+MiningLayers.moveFallbackLogged = false
+MiningLayers.moveFallbackDisarmedLogged = false
+MiningLayers.moveFallbackKey = nil
+MiningLayers.moveFallbackKeyName = 'KEY_KP_multiply'
+MiningLayers.moveFallbackArmed = false
+MiningLayers.moveDownTime = nil
 
-    pcall(function()
-        local action = g_inputBinding:getActionByName('ML_TOGGLE_HUD')
+---Modifier duerfen nie die Fallback-Taste werden: bei einer Kombi wie LCtrl+X
+---stuende sonst der MODIFIER als Taste im Fallback (Review-Punkt B5).
+MiningLayers.MODIFIER_KEY_NAMES = {
+    KEY_lshift = true, KEY_rshift = true,
+    KEY_lctrl = true, KEY_rctrl = true,
+    KEY_lalt = true, KEY_ralt = true,
+}
+
+---Liest die aktuell belegte Tastatur-Taste einer Action aus g_inputBinding.
+---Fallback-tauglich sind nur reine Tasten-Belegungen: Kombis mit Modifier
+---(LShift+F5) wuerden im Fallback zur blanken Basistaste degradieren, also
+---disarmen sie ihn (Percys Review R4). Ebenso eine bewusst GELEERTE Belegung:
+---die Action existiert, hat aber nichts - dann gilt nur das Action-System,
+---nicht der alte Default (R3).
+---@param actionName string
+---@param defaultKeyName string
+---@return number? key nil = disarmen
+---@return string keyName
+function MiningLayers.resolveActionKey(actionName, defaultKeyName)
+    local key = nil
+    local keyName = nil
+    local sawAction = false
+
+    MiningLayers.protectedCall('resolveActionKey(' .. actionName .. ')', function()
+        local action = g_inputBinding:getActionByName(actionName)
 
         if action == nil or action.bindings == nil then
             return
         end
 
+        sawAction = true
+
         for _, binding in ipairs(action.bindings) do
+            local hasModifier = false
+            local candidate = nil
+            local candidateName = nil
+
             for _, axisName in ipairs(binding.axisNames or {}) do
-                if type(axisName) == 'string' and axisName:sub(1, 4) == 'KEY_'
-                    and Input[axisName] ~= nil then
-                    key = Input[axisName]
-                    keyName = axisName
-                    return
+                if type(axisName) == 'string' and MiningLayers.MODIFIER_KEY_NAMES[axisName] then
+                    hasModifier = true
+                elseif candidate == nil and type(axisName) == 'string' and axisName:sub(1, 4) == 'KEY_'
+                    and type(Input[axisName]) == 'number' then
+                    candidate = Input[axisName]
+                    candidateName = axisName
                 end
+            end
+
+            if key == nil and not hasModifier and candidate ~= nil then
+                key = candidate
+                keyName = candidateName
             end
         end
     end)
 
-    MiningLayers.fallbackKey = key
-    MiningLayers.fallbackKeyName = keyName
+    if key ~= nil then
+        return key, keyName
+    end
+
+    if sawAction then
+        -- Action gefunden, aber keine fallback-taugliche Tastatur-Taste
+        -- (geleert, Kombi oder Gamepad/Maus): NICHT die Default-Taste pollen.
+        return nil, defaultKeyName
+    end
+
+    -- Action nicht auffindbar (Input-System nicht greifbar): Default behalten,
+    -- das war seit 1.4.1.6 der rettende Pfad.
+    return Input[defaultKeyName], defaultKeyName
 end
 
-function MiningLayers:update(dt)
-    if not MiningLayers.active then
+---Loest beide Fallback-Tasten neu auf (Anzeige-Toggle + HUD-Verschieben).
+function MiningLayers.resolveFallbackKeys()
+    local key, keyName = MiningLayers.resolveActionKey('ML_TOGGLE_HUD', 'KEY_KP_5')
+
+    MiningLayers.fallbackKey = key
+    MiningLayers.fallbackKeyName = keyName
+    MiningLayers.fallbackArmed = key ~= nil
+
+    if key == nil and not MiningLayers.fallbackDisarmedLogged then
+        MiningLayers.fallbackDisarmedLogged = true
+        MiningLayers.log('Anzeige-Taste: keine Tastatur-Belegung gefunden (Gamepad/Maus?) - Direkt-Fallback aus, es zaehlt nur das Action-System.')
+    end
+
+    local moveKey, moveKeyName = MiningLayers.resolveActionKey('ML_HUD_MOVE', 'KEY_KP_multiply')
+
+    MiningLayers.moveFallbackKey = moveKey
+    MiningLayers.moveFallbackKeyName = moveKeyName
+    MiningLayers.moveFallbackArmed = moveKey ~= nil
+
+    if moveKey == nil and not MiningLayers.moveFallbackDisarmedLogged then
+        MiningLayers.moveFallbackDisarmedLogged = true
+        MiningLayers.log('Move-Taste: keine Tastatur-Belegung gefunden - Direkt-Fallback aus, es zaehlt nur das Action-System.')
+    end
+
+    MiningLayers.fallbackResolved = true
+end
+
+---Direkt-Fallback der Anzeige-Taste (Zustandsmaschine, siehe Blockkommentar oben).
+---@param guiOpen boolean
+function MiningLayers.updateToggleFallback(guiOpen)
+    if not MiningLayers.fallbackArmed then
         return
     end
 
-    if Input == nil or Input.KEY_KP_5 == nil or not MiningLayers.isCallable(Input.isKeyPressed) then
-        return
+    local down = Input.isKeyPressed(MiningLayers.fallbackKey) == true
+
+    if down and not MiningLayers.kp5WasDown then
+        -- down-Flanke. Beginnt der Druck im Menue (Num-Eingabe im Dialog!),
+        -- zaehlt der ganze Zyklus nicht - auch wenn draussen losgelassen wird.
+        MiningLayers.fallbackDownTime = (not guiOpen) and (g_time or 0) or nil
     end
-
-    -- Taste beim ersten Durchlauf aufloesen und nach jedem Menue-Schliessen neu
-    -- (dort wird umbelegt).
-    local guiOpen = g_gui ~= nil and g_gui.currentGui ~= nil
-
-    if MiningLayers.fallbackKey == nil or (MiningLayers.guiWasOpen and not guiOpen) then
-        MiningLayers.resolveFallbackKey()
-    end
-
-    MiningLayers.guiWasOpen = guiOpen
-
-    local ok, down = pcall(Input.isKeyPressed, MiningLayers.fallbackKey)
-    down = ok and down == true
 
     if not down and MiningLayers.kp5WasDown then
-        -- Taste wurde losgelassen: hat das Action-System den Druck behandelt?
-        local now = g_time or 0
-        local handled = MiningLayers.lastActionToggleTime ~= nil
-            and (now - MiningLayers.lastActionToggleTime) < 1000
+        local downTime = MiningLayers.fallbackDownTime
+        MiningLayers.fallbackDownTime = nil
 
-        -- Nicht in Menues/Dialogen toggeln - dort gehoert die Taste der GUI.
+        -- Behandelt = der Action-Callback hat in DIESEM Druck-Zyklus gestempelt.
+        local handled = downTime == nil
+            or (MiningLayers.lastActionToggleTime ~= nil
+                and MiningLayers.lastActionToggleTime >= downTime)
+
         if not handled and not guiOpen then
             if not MiningLayers.fallbackToggleLogged then
                 MiningLayers.fallbackToggleLogged = true
@@ -351,6 +476,84 @@ function MiningLayers:update(dt)
     end
 
     MiningLayers.kp5WasDown = down
+end
+
+---Direkt-Fallback der Move-Taste (HUD verschieben) - gleiche Zustandsmaschine.
+---@param guiOpen boolean
+function MiningLayers.updateMoveFallback(guiOpen)
+    if not MiningLayers.moveFallbackArmed then
+        return
+    end
+
+    local down = Input.isKeyPressed(MiningLayers.moveFallbackKey) == true
+
+    if down and not MiningLayers.moveKeyWasDown then
+        MiningLayers.moveDownTime = (not guiOpen) and (g_time or 0) or nil
+    end
+
+    if not down and MiningLayers.moveKeyWasDown then
+        local downTime = MiningLayers.moveDownTime
+        MiningLayers.moveDownTime = nil
+
+        local handled = downTime == nil
+            or (MiningLayers.lastMoveActionTime ~= nil
+                and MiningLayers.lastMoveActionTime >= downTime)
+
+        if not handled and not guiOpen then
+            if not MiningLayers.moveFallbackLogged then
+                MiningLayers.moveFallbackLogged = true
+                MiningLayers.log('Move-Taste laeuft ueber den Direkt-Fallback (Taste: %s).',
+                    MiningLayers.moveFallbackKeyName)
+            end
+
+            MiningLayers.toggleHudMoveMode()
+        end
+    end
+
+    MiningLayers.moveKeyWasDown = down
+end
+
+function MiningLayers:update(dt)
+    if not MiningLayers.active then
+        return
+    end
+
+    -- Im Verschiebe-Modus den Mauszeiger jeden Frame behaupten (HL-Muster:
+    -- Kontextwechsel schalten ihn sonst wieder aus). VOR dem Capability-Return:
+    -- der Move-Modus laeuft auch ueber die Action, ganz ohne Fallback (R5).
+    if MiningLayers.hudMoveMode and g_inputBinding ~= nil
+        and MiningLayers.isCallable(g_inputBinding.setShowMouseCursor) then
+        g_inputBinding:setShowMouseCursor(true)
+    end
+
+    -- Faehigkeiten EINMAL pruefen statt jeden Frame (Review-Punkt C11).
+    -- Auf dem Dedicated Server gibt es keine Tastatur und kein HUD.
+    if MiningLayers.fallbackCapable == nil and Input ~= nil then
+        MiningLayers.fallbackCapable = g_dedicatedServer == nil
+            and Input.KEY_KP_5 ~= nil
+            and MiningLayers.isCallable(Input.isKeyPressed)
+
+        if not MiningLayers.fallbackCapable then
+            MiningLayers.log('Direkt-Fallback aus: Eingabe-API nicht nutzbar (Dedicated Server oder Engine ohne isKeyPressed).')
+        end
+    end
+
+    if MiningLayers.fallbackCapable ~= true then
+        return
+    end
+
+    -- Tasten beim ersten Durchlauf aufloesen und nach jedem Menue-Schliessen
+    -- neu (dort wird umbelegt).
+    local guiOpen = g_gui ~= nil and g_gui.currentGui ~= nil
+
+    if not MiningLayers.fallbackResolved or (MiningLayers.guiWasOpen and not guiOpen) then
+        MiningLayers.resolveFallbackKeys()
+    end
+
+    MiningLayers.guiWasOpen = guiOpen
+
+    MiningLayers.updateToggleFallback(guiOpen)
+    MiningLayers.updateMoveFallback(guiOpen)
 end
 
 ---Wird vom Basisspiel jeden Frame aufgerufen.

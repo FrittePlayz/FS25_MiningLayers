@@ -25,6 +25,10 @@
         <text name="ml_tip6" text="wskaźnik pokazuje, ile zostało do następnej warstwy" />
 
         <text name="input_ML_TOGGLE_HUD" text="Mining Layers: wskaźnik wł./wył." />
+        <text name="input_ML_HUD_MOVE" text="Mining Layers: przesuń wskaźnik (kursor myszy)" />
+        <text name="ml_noInputArea" text="nie wybrano obszaru wejściowego - przypisz obszar jako wejście w menu maszyny (Y)" />
+        <text name="ml_hudMoveHint" text="LPM: chwyć/upuść - PPM: pozycja domyślna - klawisz ponownie: gotowe" />
+        <text name="ml_hudMoveSample" text="przykładowy widok - w grze tutaj są informacje o warstwach" />
 
         <text name="ml_uiLayers" text="Warstwy" />
         <text name="ml_uiNoLayers" text="brak warstw" />
@@ -75,14 +79,14 @@
 
         <!-- ===================== Tab 1: quick start ===================== -->
         <text name="ml_helpQsSetupTitle" text="Konfiguracja w jednym kroku" />
-        <text name="ml_helpQsSetup1" text="Narysuj obszar TerraFarm wokół swojego wyrobiska i zostaw pola w nim puste. To cała konfiguracja. Kop gdziekolwiek w tym obszarze, a materiał pochodzi z głębokości zamiast z ustawienia pojazdu." />
+        <text name="ml_helpQsSetup1" text="Narysuj obszar TerraFarm wokół swojego wyrobiska i zostaw pola w nim puste. To cała konfiguracja. Kop gdziekolwiek w tym obszarze, a materiał pochodzi z głębokości zamiast z ustawienia pojazdu. Ważne: przypisz obszar swojej maszynie jako OBSZAR WEJŚCIOWY (menu maszyny, domyślnie Y) - TerraFarm łączy obszary z maszyną, nie z twoją pozycją." />
         <text name="ml_helpQsSetup2" text="Mod sam wylicza wysokość odniesienia: odczytuje wysokości terenu w narożnikach twojego obszaru i wyprowadza z nich powierzchnię. Niczego nie odczytujesz, niczego nie wpisujesz. Jeśli jednak wpiszesz materiał w obszarze, dostajesz zwykły TerraFarm bez warstw. Przydatne przy pracach budowlanych." />
 
         <text name="ml_helpQsStockNote" text="Wszystkie obrazki tutaj pokazują mod w stanie fabrycznym: humus, żwir, paydirt, skała - bez ręcznego ustawiania choćby jednej warstwy. Dokładnie to dostajesz, gdy tylko obszar jest narysowany. Własne warstwy to opcja, nie wymóg." />
         <text name="ml_helpQsDisplayTitle" text="Wskaźnik po lewej" />
         <text name="ml_helpQsDisplay1" text="Gdy maszyna jest aktywna, lewa strona ekranu mówi ci, gdzie jesteś: aktualna wysokość, którą warstwę kopiesz i ile metrów zostało do następnej." />
         <text name="ml_helpQsDisplayB1" text="Liczy się ten wskaźnik, nie pole materiału TerraFarm. Pojazd nadal pokazuje własne ustawienie i jest nadpisywany tylko w momencie kopania." />
-        <text name="ml_helpQsDisplayB2" text="Przesuń go przez displayPosX i displayPosY w miningLayers.xml albo wyłącz przez showHeightDisplay." />
+        <text name="ml_helpQsDisplayB2" text="Przesuwaj go w grze: Num * (można zmienić) włącza tryb przesuwania z kursorem myszy - chwyć, upuść, gotowe. Wyłącz przez Num 5 albo showHeightDisplay w miningLayers.xml." />
 
         <text name="ml_helpQsLayersTitle" text="Ustawianie własnych warstw" />
         <text name="ml_helpQsLayers1" text="Fabrycznie: humus, pod nim żwir, potem paydirt, na dole skała. To pasuje do prawie każdego wyrobiska, więc nie musisz nic ustawiać." />

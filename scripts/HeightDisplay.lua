@@ -57,8 +57,9 @@ MiningLayers.TIPS = {
     { key = 'ml_tip6', fallback = 'Anzeige links zeigt, wie weit es noch bis zur naechsten Schicht ist' },
 }
 
----Sekunden pro Tipp im News-Band.
-MiningLayers.TIP_SECONDS = 12
+---Sekunden pro Tipp im News-Band. Bewusst EINE Konstante und leicht zu finden:
+---Tommy kalibriert das Tempo im Test (12 war zu hektisch, M8 aus dem 1.4.2-Paket).
+MiningLayers.TIP_SECONDS = 20
 
 ---Haengt den aktuellen Tipp ans Zeilenende. Ohne Zeitquelle bleibt der erste stehen.
 ---@param lines string[]
@@ -161,7 +162,26 @@ function MiningLayers:buildDisplayLines()
             table.insert(lines, '! ' .. MiningLayers.getText('ml_pathArea',
                 'Pfad-Bereich = normales TerraFarm, Schichten gibt es nur in Polygon-Bereichen'))
         else
-            table.insert(lines, MiningLayers.getText('ml_noLayers', 'keine Schichten an dieser Stelle'))
+            -- raver-Supportfall 10.08.: haeufigste Ursache fuer "keine Schichten"
+            -- ist eine Maschine OHNE zugewiesenen Eingabe-Bereich - das sagen wir
+            -- woertlich, samt Weg dahin (Maschinen-Menue, Standard Y).
+            local hasInputArea = false
+
+            if MiningLayers.isCallable(vehicle.getMachineInputArea) then
+                local foundArea, isEnabled = vehicle:getMachineInputArea()
+
+                -- truthy wie an den anderen getMachineInputArea-Stellen
+                if foundArea ~= nil and isEnabled then
+                    hasInputArea = true
+                end
+            end
+
+            if not hasInputArea then
+                table.insert(lines, '! ' .. MiningLayers.getText('ml_noInputArea',
+                    'kein Eingabe-Bereich gewaehlt - Maschinen-Menue (Y): Bereich als Eingabe zuweisen'))
+            else
+                table.insert(lines, MiningLayers.getText('ml_noLayers', 'keine Schichten an dieser Stelle'))
+            end
         end
 
         self:appendTip(lines)
@@ -324,30 +344,50 @@ end
 --    ~21:45). Abweichungen zum EV-Vorbild: eigenes removeActionEventsByTarget
 --    im Rebuild-Fenster (loescht mutmasslich das frische Event), Target war
 --    der Mod statt des Fahrzeugs, Guard ohne getIsControlled.
--- 5. Jetzt: alle drei Abweichungen raus - Registrierung 1:1 wie
---    FS25_EnhancedVehicle (kein Cleanup, Target = Fahrzeug, EV-Guard).
---    Taste wirkt IM FAHRZEUG (zu Fuss gibt es keine Anzeige).
+-- 5. 1.4.1.3/1.4.1.4: Registrierung 1:1 wie FS25_EnhancedVehicle - lief auf
+--    Tommys 334er-Modliste TROTZDEM leer: success=true, korrekter Kontext,
+--    nie ein Callback. Die Binding-Aufloesung des Spiels liefert dort schlicht
+--    nicht (Ursache offen, Verdacht: actionEventId-Recycling im Rebuild).
+-- 6. Seit 1.4.1.5/6: Registrierung ueber die FAHRZEUG-API
+--    (vehicle:addActionEvent, TerraFarm-Muster Machine.lua:1561-1571) PLUS
+--    Direkt-Fallback in main.lua (pollt die Taste selbst, wenn kein
+--    Action-Callback stempelt). 1.4.2 dazu: dritter Registrierungspfad global
+--    via PlayerInputComponent.registerGlobalPlayerActionEvents (HL-Muster,
+--    HudMover.lua) - der Hook laeuft bei JEDEM Kontextwechsel, die
+--    Registrierung ist damit nie stale. Welcher Pfad Callbacks liefert,
+--    schreibt onToggleActionInput einmal je Pfad ins Log.
 -- Jeder Schritt schreibt ins Log - ein Blick in die log.txt sagt, OB und
 -- WARUM (nicht) registriert wurde; jede Registrierung wird mitgezaehlt.
 --------------------------------------------------------------------------------
 
 MiningLayers.toggleRegisterCount = 0
+MiningLayers.toggleLogCount = 0
 MiningLayers.toggleActionMissingLogged = false
+MiningLayers.toggleVehicleApiMissingLogged = false
+MiningLayers.toggleSourceLogged = {}
+MiningLayers.toggleDupLogged = false
 
 ---Maximal so viele Registrierungs-Zeilen ins Log (Diagnose ja, Flut nein).
 MiningLayers.TOGGLE_LOG_LIMIT = 25
 
----Callback der Toggle-Taste. ⚠️ Target ist das FAHRZEUG (EV-Muster), also
----hier KEIN self benutzen - self waere das Fahrzeug, nicht der Mod.
+---Schaltet die Anzeige um. Kern-Funktion OHNE Zeitstempel: den setzen nur die
+---Action-Callbacks (onToggleActionInput). Der Direkt-Fallback ruft hier direkt
+---an und darf sich nicht selbst als "vom Action-System behandelt" stempeln -
+---sonst verschluckt er den zweiten Tipp eines Doppel-Tipps (Review-Punkt A2).
 function MiningLayers.actionToggleHud()
     MiningLayers.showHeightDisplay = not MiningLayers.showHeightDisplay
 
-    -- Zeitstempel fuer den Direkt-Fallback in main.lua: hat das Action-System
-    -- diesen Druck behandelt, haelt sich der Fallback raus (keine Doppel-Toggles).
-    MiningLayers.lastActionToggleTime = g_time or 0
+    -- Cap wie beim Registrierungs-Log: Diagnose ja, Flut nein (Review-Punkt C9).
+    MiningLayers.toggleLogCount = MiningLayers.toggleLogCount + 1
 
-    MiningLayers.log('Anzeige-Taste gedrueckt - Anzeige jetzt %s.',
-        MiningLayers.showHeightDisplay and 'AN' or 'AUS')
+    if MiningLayers.toggleLogCount <= MiningLayers.TOGGLE_LOG_LIMIT then
+        MiningLayers.log('Anzeige-Taste gedrueckt - Anzeige jetzt %s.',
+            MiningLayers.showHeightDisplay and 'AN' or 'AUS')
+
+        if MiningLayers.toggleLogCount == MiningLayers.TOGGLE_LOG_LIMIT then
+            MiningLayers.log('  (weitere Toggle-Zeilen werden unterdrueckt)')
+        end
+    end
 
     -- Bewusster Neuversuch: hat sich die Anzeige nach einem Fehler selbst
     -- abgeschaltet, darf die Taste sie wieder aktivieren (Fehler loggt erneut
@@ -357,16 +397,62 @@ function MiningLayers.actionToggleHud()
     end
 end
 
----Registriert das Action-Event im aktuellen Input-Kontext. Wird von der
----Spezialisierung (MiningLayersSpec) bei jedem Rebuild aufgerufen.
----
----⚠️ KEIN removeActionEventsByTarget hier: der Rebuild beginnt mit leerem
----Kontext, das System raeumt selbst (EnhancedVehicle macht auch kein Cleanup).
----Unser Remove in 1.4.1.2 lief mutmasslich NACH dem Add desselben Fensters
----und hat das frische Event gleich wieder geloescht - eventId kam zurueck,
----aber F1-Hilfe leer und Taste tot (Dredds Eingrenzung 10.08. ~21:45).
+---Gemeinsamer Action-Callback beider Registrierungspfade. Stempelt
+---lastActionToggleTime fuer den Handshake mit dem Direkt-Fallback (main.lua)
+---und dedupliziert Doppel-Callbacks: melden Fahrzeug-Spez UND globaler Pfad
+---denselben Tastendruck, ist der zweite Callback binnen 50 ms ein Duplikat,
+---kein neuer Druck (ein Mensch tippt nicht schneller).
+---@param sourceName string 'Fahrzeug-Spez' oder 'global'
+function MiningLayers.onToggleActionInput(sourceName)
+    local now = g_time or 0
+
+    if MiningLayers.lastActionToggleTime ~= nil
+        and (now - MiningLayers.lastActionToggleTime) < 50 then
+        -- Diagnose fuer die Pfad-3-Forschung: einmal festhalten, dass die
+        -- Deduplizierung real exerziert wird (Percys Review, Testfrage 1).
+        if not MiningLayers.toggleDupLogged then
+            MiningLayers.toggleDupLogged = true
+            MiningLayers.log('Anzeige-Taste: Duplikat-Callback via Pfad "%s" (%d ms nach dem ersten) - dedupliziert.',
+                sourceName, now - MiningLayers.lastActionToggleTime)
+        end
+
+        MiningLayers.lastActionToggleTime = now
+        return
+    end
+
+    MiningLayers.lastActionToggleTime = now
+
+    -- Forschung Binding-Aufloesung (Percys Recycling-Hypothese): einmal je
+    -- Pfad festhalten, WELCHER Weg auf dieser Modliste Callbacks liefert.
+    if not MiningLayers.toggleSourceLogged[sourceName] then
+        MiningLayers.toggleSourceLogged[sourceName] = true
+        MiningLayers.log('Anzeige-Taste: Callback ueber Pfad "%s".', sourceName)
+    end
+
+    MiningLayers.actionToggleHud()
+end
+
+---Callback der Fahrzeug-Spez-Registrierung. ⚠️ Target ist das FAHRZEUG,
+---also KEIN self benutzen - self waere das Fahrzeug, nicht der Mod.
+function MiningLayers.actionToggleHudVehicle()
+    MiningLayers.onToggleActionInput('Fahrzeug-Spez')
+end
+
+---Callback der globalen Registrierung (HudMover.lua).
+function MiningLayers.actionToggleHudGlobal()
+    MiningLayers.onToggleActionInput('global')
+end
+
+---Registriert das Action-Event ueber die FAHRZEUG-API (TerraFarm-Muster,
+---Machine.lua:1561-1571). Wird von der Spezialisierung (MiningLayersSpec) bei
+---jedem Input-Kontext-Rebuild aufgerufen: clearActionEventsTable leert die
+---fahrzeug-eigene Event-Tabelle des Vorlaufs, danach wird - nur wenn das
+---Fahrzeug aktiv fuer Eingaben ist - frisch registriert, mit dem FAHRZEUG als
+---Target. Zusaetzlich laeuft eine GLOBALE Registrierung derselben Action ueber
+---PlayerInputComponent (HudMover.lua) und als letzte Absicherung der
+---Direkt-Fallback in main.lua.
 ---@param vehicle table Fahrzeug, dient als Event-Target
----@param isActiveForInput boolean vom onRegisterActionEvents-Ereignis (TerraFarm-Guard)
+---@param isActiveForInput boolean Param 1 ODER Param 2 des Ereignisses (siehe MiningLayersSpec)
 function MiningLayers:registerToggleActionEvent(vehicle, isActiveForInput)
     if g_inputBinding == nil or not MiningLayers.active or vehicle == nil then
         return
@@ -388,10 +474,12 @@ function MiningLayers:registerToggleActionEvent(vehicle, isActiveForInput)
     -- lokal bewiesen funktionierend) statt direkt ueber g_inputBinding. Der direkte
     -- Weg lieferte success=true im richtigen Kontext, aber das Fahrzeug-Input-System
     -- hat das Event nie aktiviert - Taste tot bei JEDER Belegung (Diagnose 1.4.1.4).
+    -- Eigenes Flag (nicht toggleActionMissingLogged): sonst unterdrueckt die
+    -- zuerst feuernde Warnung die jeweils andere (Review-Punkt C8).
     if not MiningLayers.isCallable(vehicle.addActionEvent)
         or not MiningLayers.isCallable(vehicle.clearActionEventsTable) then
-        if not MiningLayers.toggleActionMissingLogged then
-            MiningLayers.toggleActionMissingLogged = true
+        if not MiningLayers.toggleVehicleApiMissingLogged then
+            MiningLayers.toggleVehicleApiMissingLogged = true
             MiningLayers.log('WARNUNG: Fahrzeug ohne addActionEvent/clearActionEventsTable - Anzeige-Taste bleibt aus.')
         end
 
@@ -401,13 +489,15 @@ function MiningLayers:registerToggleActionEvent(vehicle, isActiveForInput)
     vehicle.miningLayersActionEvents = vehicle.miningLayersActionEvents or {}
     vehicle:clearActionEventsTable(vehicle.miningLayersActionEvents)
 
-    -- TerraFarm-Guard 1:1: nur registrieren, wenn das Fahrzeug aktiv fuer Eingaben ist.
+    -- Guard nach TerraFarm-Vorbild, seit 1.4.2 mit Param 2 kombiniert (siehe
+    -- MiningLayersSpec): registriert wird, solange das Fahrzeug aktiv fuer
+    -- Eingaben ist - auch wenn gerade ein Anbaugeraet selektiert ist.
     if not isActiveForInput then
         return
     end
 
     local success, eventId = vehicle:addActionEvent(vehicle.miningLayersActionEvents,
-        InputAction.ML_TOGGLE_HUD, vehicle, MiningLayers.actionToggleHud, false, true, false, true)
+        InputAction.ML_TOGGLE_HUD, vehicle, MiningLayers.actionToggleHudVehicle, false, true, false, true)
 
     -- Dredds Anforderung fuer 1.4.1.3: JEDE Registrierung protokollieren
     -- (Zaehler + success + eventId), damit das Log den Rebuild-Takt zeigt.
@@ -458,7 +548,12 @@ function MiningLayers:installToggleKey()
 end
 
 function MiningLayers:drawHeightDisplay()
-    if not self.showHeightDisplay then
+    -- Im Verschiebe-Modus (HudMover.lua) wird IMMER gezeichnet - auch bei
+    -- abgeschalteter Anzeige oder ohne aktive Maschine, sonst gaebe es nichts
+    -- zu greifen.
+    local moveMode = MiningLayers.hudMoveMode == true
+
+    if not self.showHeightDisplay and not moveMode then
         return
     end
 
@@ -480,7 +575,21 @@ function MiningLayers:drawHeightDisplay()
     end
 
     if lines == nil or #lines == 0 then
-        return
+        if not moveMode then
+            return
+        end
+
+        -- Platzhalter, damit die Box beim Verschieben sichtbar und greifbar ist.
+        lines = {
+            'Mining Layers',
+            MiningLayers.getText('ml_hudMoveSample', 'Beispielanzeige - im Spiel stehen hier die Schicht-Infos'),
+        }
+    end
+
+    if moveMode then
+        table.insert(lines, '')
+        table.insert(lines, '» ' .. MiningLayers.getText('ml_hudMoveHint',
+            'Linksklick: greifen/ablegen - Rechtsklick: Standardposition - Taste erneut: fertig'))
     end
 
     pcall(function()
@@ -490,9 +599,21 @@ function MiningLayers:drawHeightDisplay()
             setTextAlignment(RenderText.ALIGN_LEFT)
         end
 
+        local canMeasure = MiningLayers.isCallable(drawFilledRect) and MiningLayers.isCallable(getTextWidth)
+
+        -- M7: Der Kasten waechst NICHT mehr mit dem laengsten Tipp mit -
+        -- Referenzbreite ist das F1-Hilfe-Menue, lange Zeilen werden umbrochen.
+        local pad = size * 0.6
+        local maxTextWidth = nil
+
+        if canMeasure then
+            maxTextWidth = MiningLayers.getHudMaxWidth() - pad * 2
+            lines = MiningLayers.wrapLines(lines, size, maxTextWidth)
+        end
+
         -- Balken-Hintergrund wie bei TerraFarms HUD, defensiv: fehlt eine der
         -- Engine-Funktionen, bleibt es beim reinen Text mit Schatten.
-        if MiningLayers.isCallable(drawFilledRect) and MiningLayers.isCallable(getTextWidth) then
+        if canMeasure then
             local maxWidth = 0
 
             for i = 1, #lines do
@@ -506,12 +627,46 @@ function MiningLayers:drawHeightDisplay()
             -- renderText setzt die Grundlinie: Zeile 1 liegt bei displayPosY, jede
             -- weitere lineStep tiefer. Box von unterster Grundlinie - pad bis
             -- Oberkante der Titelzeile + pad.
-            local pad = size * 0.4
             local lineStep = size * 1.25
             local bottom = self.displayPosY - (#lines - 1) * lineStep - pad
             local height = (#lines - 1) * lineStep + size + pad * 2
+            local left = self.displayPosX - pad
+            local width = maxWidth + pad * 2
+            local top = bottom + height
 
-            drawFilledRect(self.displayPosX - pad, bottom, maxWidth + pad * 2, height, 0, 0, 0, 0.45)
+            drawFilledRect(left, bottom, width, height, 0, 0, 0, 0.45)
+
+            -- M6: klare Titelzeile - eigenes, etwas dunkleres Band oben plus
+            -- feine Trennlinie darunter (Alphas addieren sich mit der Box).
+            local titleBandBottom = self.displayPosY - size * 0.4
+            drawFilledRect(left, titleBandBottom, width, top - titleBandBottom, 0, 0, 0, 0.2)
+            drawFilledRect(left, titleBandBottom, width, 0.0012, 1, 1, 1, 0.25)
+
+            -- M6 (Tommy ~01:50): das News-Band unten bekommt einen dunkleren
+            -- Hintergrund als die Schichten-Daten (eigenes Band, ca. 0.45->0.6).
+            local tipStart = nil
+
+            for i = 2, #lines do
+                if lines[i]:sub(1, 2) == '\194\187' then -- '»'
+                    tipStart = i
+                    break
+                end
+            end
+
+            if tipStart ~= nil then
+                local tipBandTop = self.displayPosY - (tipStart - 1) * lineStep + size * 1.0
+                drawFilledRect(left, bottom, width, math.max(0, tipBandTop - bottom), 0, 0, 0, 0.25)
+            end
+
+            -- Box-Rechteck fuer den Maus-Treffer-Test beim Verschieben merken,
+            -- dazu den Abstand Grundlinie->Boxunterkante fuer den Y-Clamp
+            -- (clampHudPosition, Percys Review R2).
+            MiningLayers.lastHudRect = { x = left, y = bottom, w = width, h = height }
+            MiningLayers.lastHudBaselineToBottom = (#lines - 1) * lineStep + pad
+
+            if moveMode then
+                MiningLayers.drawHudMoveFrame(left, bottom, width, height)
+            end
         end
 
         local posY = self.displayPosY
@@ -533,6 +688,71 @@ function MiningLayers:drawHeightDisplay()
         setTextBold(false)
         setTextColor(1, 1, 1, 1)
     end)
+end
+
+---M7: Referenzbreite des Kastens = F1-Hilfe-Menue. Defensiv gelesen, mit
+---festem Rueckfallwert - die HUD-Interna sind kein stabiles API.
+---@return number
+function MiningLayers.getHudMaxWidth()
+    local width = 0.24
+
+    local hud = g_currentMission ~= nil and g_currentMission.hud or nil
+    local inputHelp = hud ~= nil and hud.inputHelp or nil
+
+    if inputHelp ~= nil then
+        if MiningLayers.isCallable(inputHelp.getWidth) then
+            local ok, w = pcall(inputHelp.getWidth, inputHelp)
+
+            if ok and type(w) == 'number' and w > 0.05 then
+                return w
+            end
+        end
+
+        if type(inputHelp.overlay) == 'table' and type(inputHelp.overlay.width) == 'number'
+            and inputHelp.overlay.width > 0.05 then
+            return inputHelp.overlay.width
+        end
+    end
+
+    return width
+end
+
+---M7: bricht Zeilen an Wortgrenzen um, damit nichts breiter wird als das
+---F1-Menue. Folgezeilen eines Tipps ruecken leicht ein.
+---@param lines string[]
+---@param size number
+---@param maxWidth number
+---@return string[]
+function MiningLayers.wrapLines(lines, size, maxWidth)
+    local wrapped = {}
+
+    for _, line in ipairs(lines) do
+        local w = getTextWidth(size, line)
+
+        if line == '' or w == nil or w <= maxWidth then
+            table.insert(wrapped, line)
+        else
+            local current = ''
+            local isTip = line:sub(1, 2) == '\194\187' -- '»'
+
+            for word in line:gmatch('%S+') do
+                local candidate = (current == '') and word or (current .. ' ' .. word)
+
+                if current ~= '' and getTextWidth(size, candidate) > maxWidth then
+                    table.insert(wrapped, current)
+                    current = (isTip and '   ' or '') .. word
+                else
+                    current = candidate
+                end
+            end
+
+            if current ~= '' then
+                table.insert(wrapped, current)
+            end
+        end
+    end
+
+    return wrapped
 end
 
 ---Farben der Tiefenlinien je Material (RGB 0-1). DEFAULT fuer Unbekanntes.

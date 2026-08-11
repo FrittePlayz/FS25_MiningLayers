@@ -2,6 +2,29 @@
 
 All notable changes to Mining Layers. Newest first.
 
+## [1.4.2.0] — 2026-08-11 (in test, not yet released)
+
+### Added
+- **Movable display.** Num * (rebindable) toggles a move mode with a mouse cursor: left-click the display to pick it up, click again to drop it — the position saves automatically and is resolution-independent (normalized coordinates in `modSettings/FS25_MiningLayers/hud.xml`, clamped back on screen after resolution changes). Right-click resets to the default position. Drag&drop mechanics inspired by **HappyLooser's HL Hud System** (openly shared via FS25_ProductionInfoHud) — own implementation, no code copied. This replaces the HUD presets planned earlier.
+- **"No input area assigned" hint.** The display now says explicitly when the machine has no area assigned as its input area — the number one support cause ("why do I get no layers?") — including where to fix it (machine menu, default `Y`). The quickstart texts in all four languages got the same clarification.
+- **Display polish** (Tommy's design pass): a clear title band with a fine separator line, calmer padding, and the tip ticker at the bottom sits on its own darker band — layer data and news ticker are visually separated now.
+- **Display width is capped** at the F1 help menu's width (read from the game, not hardcoded) — the box no longer grows with the longest tip; long lines wrap at word boundaries, wrapped tip lines indent slightly.
+- Tips rotate slower: 20 seconds per tip instead of 12 (one constant, easy to tune).
+- **Third key-registration path** for the toggle key, after HappyLooser's pattern: globally via `PlayerInputComponent.registerGlobalPlayerActionEvents`, which re-registers on every input context change and can never hold a stale event id. This is a live experiment for the still-open question why the game's binding resolution drops our callbacks on large mod lists (HL's mouse key demonstrably works on a 1721-mod installation). The log states once which path delivers callbacks; duplicate callbacks from two paths within 50 ms are deduplicated.
+
+### Fixed
+- **Dumping is no longer silently blocked when a layer zone is the machine's output area.** With a TerraFarm output area assigned, TerraFarm only dumps inside that area and only up to its target height — and the mod auto-sets a layer zone's target height to the pit floor below the terrain, so nothing would ever dump, anywhere, with no message (found live on the 243 Quarry map). The mod now detects a layer zone acting as output area and lets the output run free (exactly as without an area, one log line states it once); path areas, manual-material areas and disabled zones keep pure TerraFarm behavior.
+- **Both timing edges of the 1-second handshake** between action system and direct fallback (known limits of 1.4.1.6): the handshake now works per press cycle instead of a global 1-second window, and only the action callbacks stamp it. Holding the key longer than a second no longer cancels its own toggle, and a quick double-tap on fallback installations no longer swallows the second press. A press that starts inside a menu (numpad input in dialogs!) no longer toggles when released outside.
+- **Toggle key survives implement selection:** the registration guard now also accepts `isActiveForInputIgnoreSelection` — selecting an attached implement in the vehicle chain no longer kills the action path on the root vehicle (gamepads had no fallback to save them there).
+- **Fallback key resolution hardened:** modifier keys are skipped (a binding like LCtrl+X no longer makes the fallback listen to LCtrl), and if the action is rebound to gamepad/mouse with no keyboard key left, the fallback disarms with one log line instead of silently polling the old default key. The resolver now logs errors instead of swallowing them.
+- Map exit resets the complete fallback/input state (no ghost toggle on the next map load), the two independent registration warnings no longer suppress each other, the toggle log line is capped like the registration log, and the per-frame key polling now skips dedicated servers and caches its capability check.
+
+### Docs
+- Stale comments from the 1.4.1.x registration saga rewritten (spec header, registration docstring, history, loadMap) — they still described the EnhancedVehicle attempt instead of the shipped vehicle-API + fallback solution.
+- README credit for HappyLooser; author link cleanup.
+
+*Built locally by Dredd (Percy's 12-point review backlog + the movable-HUD spec), to be live-tested by Tommy before release.*
+
 ## [1.4.1.6] — 2026-08-10
 
 ### Fixed
