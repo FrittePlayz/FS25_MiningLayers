@@ -19,6 +19,8 @@ Qu'un matériau existe — et que tu puisses le redéverser au sol — ne dépen
 
 Mining Layers emprunte donc une voie médiane pour rester jouable sur chaque carte : au chargement, le mod vérifie une fois ce que TA carte fournit réellement et ne propose que cela dans le sélecteur de couches (depuis la 1.4.3). Un `(!)` derrière un nom signifie : creuser, transporter et vendre fonctionnent, déverser non sur cette carte. Ce qui manque totalement est indiqué sous la coupe. Tu n'as donc aucune carte à tester au préalable — s'il manque quelque chose, c'est la carte, pas le mod.
 
+**À retenir : moins de mods = plus de places libres = plus de matériaux déversables.** Si un matériau qui te manque porte un `(!)`, une seule solution : retirer les mods qui apportent leurs propres matériaux de sol. La limite de 63 elle-même ne peut pas être relevée, elle est figée dans le jeu.
+
 ## Prérequis
 
 - **[TerraFarm](https://github.com/scfmod/FS25_TerraFarm)** de scfmod — disponible sur GitHub uniquement. Ne renomme pas son dossier : il doit rester `FS25_0_TerraFarm` (ordre de chargement).

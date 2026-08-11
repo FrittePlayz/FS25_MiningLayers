@@ -21,6 +21,8 @@ Whether a material exists at all — and whether you can dump it back onto the g
 
 Mining Layers therefore takes a middle road so it stays playable on every map: on map load it checks once what YOUR map actually provides and offers only that in the layer picker (since 1.4.3). A `(!)` behind a name means: digging, hauling and selling work, dumping does not on this map. Anything missing entirely is named under the cross-section. You never have to test a map first — if something is missing, it is the map, not the mod.
 
+**Rule of thumb: fewer mods = more free slots = more materials you can dump.** If a material you need carries a `(!)`, there is only one cure: drop mods that bring their own ground materials. The limit of 63 itself cannot be raised — it is built into the game.
+
 ## Requirements — read this first
 
 1. **TerraFarm** — available **only on GitHub**: [scfmod/FS25_TerraFarm](https://github.com/scfmod/FS25_TerraFarm).

@@ -21,6 +21,8 @@ Ob es ein Material überhaupt gibt — und ob du es wieder auf den Boden kippen 
 
 Mining Layers geht deshalb einen Mittelweg, damit er auf jeder Karte spielbar bleibt: Beim Kartenstart prüft der Mod einmal, was DEINE Karte wirklich hergibt, und bietet dir in der Schichten-Auswahl nur das an (seit 1.4.3). Ein `(!)` hinter dem Namen heißt: graben, fahren und verkaufen geht, abkippen auf dieser Karte nicht. Was ganz fehlt, steht als Hinweis unter dem Querschnitt. Du musst also keine Karte vorher testen — fehlt etwas, liegt es an der Karte, nicht am Mod.
 
+**Merksatz: Weniger Mods = mehr freie Plätze = mehr Materialien, die du abkippen kannst.** Trägt ein Material, das du brauchst, ein `(!)`, hilft nur eins: Mods aussortieren, die eigene Bodenmaterialien mitbringen. Die Grenze von 63 selbst kannst du nicht anheben, die steckt fest im Spiel.
+
 ## Voraussetzungen — zuerst lesen
 
 1. **TerraFarm** — gibt es **nur auf GitHub**: [scfmod/FS25_TerraFarm](https://github.com/scfmod/FS25_TerraFarm).
