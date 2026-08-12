@@ -165,6 +165,12 @@ function MiningLayers:freezeSurfaceAround(op)
     if written > 0 then
         self.surfaceMemoryWrites = self.surfaceMemoryWrites + written
 
+        -- Gelegentlich wegschreiben, damit ein Absturz nicht die Session kostet.
+        -- Gleiche Schwelle wie beim Halden-Gedaechtnis.
+        if self.surfaceMemoryWrites % 25 == 0 then
+            pcall(MiningLayers.saveSurfaceMemory, MiningLayers)
+        end
+
         if not self.surfaceFrozenLogged then
             self.surfaceFrozenLogged = true
             MiningLayers.log('Bezugshoehen-Raster aktiv: %d Zelle(n) beim ersten Grabkontakt eingefroren (Radius %.1f m).',

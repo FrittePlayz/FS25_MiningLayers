@@ -213,6 +213,12 @@ function MiningLayers:loadMap(filename)
         MiningLayers:loadMoundMemory()
     end)
 
+    -- Muss VOR installHooks stehen: sonst liefe der erste Grabvorgang gegen ein
+    -- leeres Raster und wuerde bereits abgesenktes Gelaende als gewachsen einfrieren.
+    MiningLayers.protectedCall('loadSurfaceMemory', function()
+        MiningLayers:loadSurfaceMemory()
+    end)
+
     -- Hooks erst nach der Konfiguration setzen: liegen keine Zonen vor,
     -- verhaelt sich das Graben exakt wie ohne Addon.
     MiningLayers.protectedCall('installHooks', function()
@@ -265,6 +271,10 @@ function MiningLayers:deleteMap()
     -- Halden-Gedaechtnis wegschreiben, bevor die Welt abgebaut wird.
     pcall(function()
         MiningLayers:saveMoundMemory()
+    end)
+
+    pcall(function()
+        MiningLayers:saveSurfaceMemory()
     end)
 
     if g_messageCenter ~= nil then
