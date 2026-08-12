@@ -86,6 +86,24 @@ MiningLayers.resolvedGlobal = nil
 MiningLayers.moundMemory = {}
 MiningLayers.moundMemoryDirty = false
 MiningLayers.moundMemoryWrites = 0
+---Bezugshoehen-Raster: 2-m-Zelle -> Hoehe des GEWACHSENEN Bodens.
+---Gefuellt beim Grabkontakt, VOR der Deformation (LayerHooks), fuer die ganze
+---Bounding-Box des Pinsels plus Marge. Einmal geschrieben, nie ueberschrieben:
+---sonst wandert die Geologie am Grubenrand mit nach unten.
+---Ersetzt die Ebene aus computeSurfaceY dort, wo Werte vorliegen; wo keine
+---vorliegen, bleibt die Ebene der Rueckfall (identisches Verhalten wie 1.4.x).
+---Gespeichert pro Spielstand unter modSettings.
+---@type table<string, number>
+MiningLayers.surfaceMemory = {}
+MiningLayers.surfaceMemoryDirty = false
+MiningLayers.surfaceMemoryWrites = 0
+---Einmal je Sitzung: meldet, dass das Raster ueberhaupt laeuft.
+MiningLayers.surfaceFrozenLogged = false
+---Marge um den Pinsel herum, in Metern. Der Quadrat-Pinsel deckt +/- radius in
+---X und Z ab (LandscapingInput.lua:50: addSoftSquareBrush mit radius * 2 als
+---Kantenlaenge), der Kreis ebenso. Zwei Meter Zuschlag = eine Rasterzelle
+---Sicherheit, damit der Rand nicht beim naechsten Zug abgesenkt eingefroren wird.
+MiningLayers.SURFACE_FREEZE_MARGIN = 2.0
 ---Gemeinsame Eintraege fuer erkannte Halden (ein Eintrag je Material, damit die
 ---Texturaufloesung gecacht bleibt).
 ---@type table<string, table>
@@ -1303,6 +1321,54 @@ function MiningLayers.getMoundCellFloor(cellX, cellZ, extraX, extraZ)
     end
 
     return minY
+end
+
+---Friert die Bezugshoehe einer Rasterzelle ein, falls noch nicht geschehen.
+---Gemessen wird die MITTE der Zelle: das Gelaende ist hier noch unberuehrt, und
+---der Mittelwert ist stabiler als ein Minimum ueber Bodenwellen (anders als beim
+---Halden-Gedaechtnis, wo unter dem wachsenden Haufen der tiefste Punkt zaehlt).
+---@param cellX number Zellindex X (floor(welt/2))
+---@param cellZ number Zellindex Z
+---@return boolean written
+function MiningLayers:freezeSurfaceCell(cellX, cellZ)
+    local key = cellX .. '_' .. cellZ
+
+    if self.surfaceMemory[key] ~= nil then
+        return false
+    end
+
+    local y = getTerrainHeightAtWorldPos(g_terrainNode, cellX * 2 + 1, 0, cellZ * 2 + 1)
+
+    if type(y) ~= 'number' then
+        return false
+    end
+
+    self.surfaceMemory[key] = y
+    self.surfaceMemoryDirty = true
+
+    return true
+end
+
+---Bezugshoehe an einem Weltpunkt: erst das Raster, sonst die Bereichs-Ebene,
+---sonst der Median. Der Rueckfall haelt das Verhalten von 1.4.x aufrecht, solange
+---eine Stelle noch nie begraben wurde - und traegt alte Spielstaende ohne Raster.
+---@param x number
+---@param z number
+---@param plane table? Ebene aus computeSurfaceY
+---@param fallbackY number? Median des Bereichs
+---@return number? surfacePointY
+function MiningLayers:getSurfacePointY(x, z, plane, fallbackY)
+    local cached = self.surfaceMemory[MiningLayers.moundCellKey(x, z)]
+
+    if cached ~= nil then
+        return cached
+    end
+
+    if plane ~= nil then
+        return MiningLayers.planeAt(plane, x, z)
+    end
+
+    return fallbackY
 end
 
 ---Merkt sich, welches Material an dieser Stelle abgekippt wurde.
