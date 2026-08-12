@@ -95,7 +95,7 @@ Combien de matériaux peuvent reposer au sol (height types) est fixé par votre 
 Une zone de sortie est assignée dans le menu machine : TerraFarm ne décharge alors que dedans. Depuis la 1.4.2, une zone de couches assignée en sortie tourne automatiquement en libre (une ligne de log le confirme). Pour décharger librement partout, mets la zone de sortie de la machine sur « non définie ».
 
 **Comment masquer (ou réafficher) l'affichage de profondeur ?**
-Appuie sur **Pavé num. 5** quand une machine est active (depuis la 1.4.1). Touche réassignable : Options → Commandes → Mining Layers. Pour démarrer sans affichage : `showHeightDisplay="false"` dans `modSettings/FS25_MiningLayers/miningLayers.xml`.
+Appuie sur **Pavé num. /** quand une machine est active (c'était Pavé num. 5 jusqu'à la 1.4.3). Touche réassignable : Options → Commandes → Mining Layers. Pour démarrer sans affichage : `showHeightDisplay="false"` dans `modSettings/FS25_MiningLayers/miningLayers.xml`.
 
 **Puis-je déplacer l'affichage pour éviter les conflits avec d'autres HUD ?**
 Oui — depuis la 1.4.2, appuie sur **Pavé num. *** (réassignable) : clique l'affichage pour le prendre, reclique pour le poser, clic droit remet à la position par défaut. La position s'enregistre automatiquement (dans `modSettings/FS25_MiningLayers/hud.xml`). Aucun mod HUD supplémentaire nécessaire.

@@ -126,10 +126,16 @@ Impostazioni: modSettings/FS25_MiningLayers/miningLayers.xml]]>
 
     <l10n filenamePrefix="l10n/l10n" />
 
-    <!-- Numpad 5 als Standard: TerraFarm belegt Num 0/4/8/9/Komma, die 5 liegt
-         direkt neben scfmods HUD-Taste (Num 4) und war auf den Testsystemen frei.
-         Num * (HUD verschieben) war bis 1.2.2.0 unsere alte Toggle-Taste und ist
-         seitdem frei. Umbelegen geht unter Optionen > Steuerung > Mining Layers. -->
+    <!-- Num / und Num *, gemessen statt geschaetzt (12.08.2026, 348 Mods + Profil).
+         Num 5 war bis 1.4.3 unsere Vorgabe und ist die falsche Wahl: dort liegt im
+         Basisspiel TOGGLE_WORK_LIGHT_FRONT. Vom Numpad bleiben genau zwei Tasten
+         frei - das Basisspiel nimmt 1/2/3 (Blinker), 5/6 (Arbeitslicht), 7/9
+         (Gruppen), Plus/Minus (Gaenge); TerraFarm nimmt 0/4/8/9/Komma.
+         Uebrig: Num / und Num *. Beide beansprucht kein einziger Mod.
+         KEINE Modifier-Kombination verwenden: der Direkt-Rueckfall ueber
+         Input.isKeyPressed ueberspringt Modifier-Tasten (seit 1.4.2) und wuerde
+         eine Kombination nicht bedienen.
+         Umbelegen geht unter Optionen > Steuerung > Mining Layers. -->
     <actions>
         <action name="ML_TOGGLE_HUD" />
         <action name="ML_HUD_MOVE" />
@@ -137,7 +143,7 @@ Impostazioni: modSettings/FS25_MiningLayers/miningLayers.xml]]>
 
     <inputBinding>
         <actionBinding action="ML_TOGGLE_HUD">
-            <binding device="KB_MOUSE_DEFAULT" input="KEY_KP_5" index="1" />
+            <binding device="KB_MOUSE_DEFAULT" input="KEY_KP_divide" index="1" />
         </actionBinding>
         <actionBinding action="ML_HUD_MOVE">
             <binding device="KB_MOUSE_DEFAULT" input="KEY_KP_multiply" index="1" />

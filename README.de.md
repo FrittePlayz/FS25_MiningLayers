@@ -94,7 +94,7 @@ Das ist **kein Defekt und kein Mod-Konflikt — es ist die vorgesehene Umschaltu
 - **Automatischer Grubenboden** — Zieltiefe = unterste Schichtgrenze, zieht bei Bereichs-Änderungen nach
 - **Hang- und Wasser-Behandlung** — geneigte Bezugsfläche am Hang, Grubenboden klemmt an der Wasserlinie
 - **Eigene Menüseite** — grafischer Schichten-Editor plus vollständige Ingame-Doku (Deutsch + Englisch)
-- **Tiefenanzeige & Tiefenlinien** — du weißt immer, wie tief du bist und was als Nächstes kommt; **Numpad 5** schaltet die Anzeige ein/aus (im Spiel umbelegbar)
+- **Tiefenanzeige & Tiefenlinien** — du weißt immer, wie tief du bist und was als Nächstes kommt; **Numpad /** schaltet die Anzeige ein/aus (im Spiel umbelegbar)
 - **Material-Check beim Start** — sagt dir, wie viele Bodenplätze diese Karte bietet und welche Materialien leer ausgingen
 - **Berg-Bonus** — am Steilhang liegt Paydirt oberflächennah: Wer die Anfahrt auf sich nimmt, wird belohnt
 - Multiplayer-freundliches Sponsorschild (siehe unten), kein Sync-Verkehr
@@ -185,7 +185,7 @@ Wie viele Materialien auf dem Boden liegen können (height types), legt deine Ka
 Im Maschinen-Menü ist ein Ausgabe-Bereich zugewiesen: TerraFarm kippt dann nur dorthin. Seit 1.4.2 läuft eine Schicht-Zone als Ausgabe-Bereich automatisch frei (eine Log-Zeile sagt es). Für freies Abkippen überall den Ausgabe-Bereich der Maschine auf „Nicht gesetzt" stellen.
 
 **Wie schalte ich die Tiefenanzeige aus (oder wieder ein)?**
-**Numpad 5** drücken, solange eine Maschine aktiv ist (seit 1.4.1). Die Taste ist umbelegbar: Optionen → Steuerung → Mining Layers. Soll die Anzeige von Anfang an aus sein: `showHeightDisplay="false"` in der `modSettings/FS25_MiningLayers/miningLayers.xml`.
+**Numpad /** drücken, solange eine Maschine aktiv ist (bis 1.4.3 war es Numpad 5). Die Taste ist umbelegbar: Optionen → Steuerung → Mining Layers. Soll die Anzeige von Anfang an aus sein: `showHeightDisplay="false"` in der `modSettings/FS25_MiningLayers/miningLayers.xml`.
 
 **Kann ich die Anzeige verschieben, damit sie nicht mit anderen HUD-Mods kollidiert?**
 Ja — seit 1.4.2 **Num *** drücken (umbelegbar): Anzeige anklicken zum Aufnehmen, zweiter Klick legt ab, Rechtsklick setzt auf Standard zurück. Die Position speichert automatisch (liegt in `modSettings/FS25_MiningLayers/hud.xml`). Kein zusätzlicher HUD-Mod nötig.

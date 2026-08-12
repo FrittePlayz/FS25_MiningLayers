@@ -82,7 +82,7 @@
         <text name="ml_helpQsDisplayTitle" text="La lettura a sinistra" />
         <text name="ml_helpQsDisplay1" text="Mentre la macchina è in funzione, la parte sinistra dello schermo indica la posizione attuale: altezza corrente, strato su cui si sta lavorando e quanti metri mancano al successivo." />
         <text name="ml_helpQsDisplayB1" text="Quella lettura è ciò che conta, non il campo dei materiali di TerraFarm. Il veicolo continua a mostrare le proprie impostazioni e vengono sovrascritte solo nel momento in cui si scava." />
-        <text name="ml_helpQsDisplayB2" text="È possibile spostarlo tramite i comandi displayPosX e displayPosY nel file miningLayers.xml, oppure disattivarlo con il comando showHeightDisplay." />
+        <text name="ml_helpQsDisplayB2" text="Spostalo direttamente in gioco: Num * (riassegnabile) attiva la modalità di spostamento con il cursore del mouse - prendi, rilascia, fatto. Disattivalo con Num / o con showHeightDisplay in miningLayers.xml." />
 
         <text name="ml_helpQsLayersTitle" text="Impostazione dei livelli personalizzati" />
         <text name="ml_helpQsLayers1" text="Pronto all'uso: terriccio superficiale, ghiaia sotto, poi terra aurifera e roccia sul fondo. Si adatta a quasi tutte le cave, quindi non c'è nulla da preparare." />

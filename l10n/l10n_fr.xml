@@ -93,7 +93,7 @@
         <text name="ml_helpQsDisplayTitle" text="L'affichage à gauche" />
         <text name="ml_helpQsDisplay1" text="Quand une machine est active, la gauche de l'écran te dit où tu en es : hauteur actuelle, couche en cours et combien de mètres restent jusqu'à la prochaine." />
         <text name="ml_helpQsDisplayB1" text="C'est cet affichage qui compte, pas le champ de matériau de TerraFarm. Le véhicule continue d'afficher son propre réglage et n'est remplacé qu'au moment où tu creuses." />
-        <text name="ml_helpQsDisplayB2" text="Déplace-le en jeu : Num * (réassignable) active le mode déplacement avec curseur souris - saisir, déposer, terminé. Désactive-le avec Num 5 ou showHeightDisplay dans miningLayers.xml." />
+        <text name="ml_helpQsDisplayB2" text="Déplace-le en jeu : Num * (réassignable) active le mode déplacement avec curseur souris - saisir, déposer, terminé. Désactive-le avec Num / ou showHeightDisplay dans miningLayers.xml." />
 
         <text name="ml_helpQsLayersTitle" text="Régler ses propres couches" />
         <text name="ml_helpQsLayers1" text="D'origine : terre végétale, gravier en dessous, puis le paydirt, roche tout en bas. Ça convient à presque toutes les fosses, tu n'as donc rien à régler." />

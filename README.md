@@ -94,7 +94,7 @@ This is **not a defect and not a mod conflict — it's the intended switch.** If
 - **Automatic pit floor** — target depth is set to the lowest layer boundary, follows area changes
 - **Slope & water handling** — tilted reference plane on hillsides, pit floor clamps to the waterline
 - **In-game menu page** — graphical layer editor plus full documentation (English + German)
-- **Depth display & depth lines** — always know how deep you are and what comes next; **Numpad 5** toggles the display (rebindable in the game options)
+- **Depth display & depth lines** — always know how deep you are and what comes next; **Numpad /** toggles the display, **Numpad ✱** moves it (both rebindable in the game options). ⚠️ Upgrading from an older version? A changed default only reaches profiles that do not know the action yet — if a key is missing, assign it once under Options → Controls → Mining Layers.
 - **Material check at startup** — tells you how many ground slots this map offers and which materials missed out
 - **Mountain bonus** — on steep slopes paydirt sits near the surface: hauling up the mountain gets rewarded
 - Multiplayer-friendly sponsor sign (see below), no sync traffic
@@ -185,7 +185,7 @@ How many materials can lie on the ground (height types) is set by your map, not 
 An output area is assigned in the machine menu: TerraFarm then dumps only inside that area. Since 1.4.2 a layer zone assigned as output runs free automatically (one log line says so). For free dumping anywhere, set the machine's output area to "not set".
 
 **How do I turn the depth display off (or back on)?**
-Press **Numpad 5** while a machine is active (since 1.4.1). The key is rebindable: Options → Controls → Mining Layers. To start with the display hidden, set `showHeightDisplay="false"` in `modSettings/FS25_MiningLayers/miningLayers.xml`.
+Press **Numpad /** while a machine is active (Numpad 5 before 1.5.0). The key is rebindable: Options → Controls → Mining Layers. To start with the display hidden, set `showHeightDisplay="false"` in `modSettings/FS25_MiningLayers/miningLayers.xml`.
 
 **Can I move the display so it does not overlap other HUD mods?**
 Yes — since 1.4.2 press **Num *** (rebindable): click the display to pick it up, click again to drop it, right-click resets to the default spot. The position saves automatically (stored in `modSettings/FS25_MiningLayers/hud.xml`). No extra HUD mod needed.

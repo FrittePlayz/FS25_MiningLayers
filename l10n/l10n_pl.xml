@@ -93,7 +93,7 @@
         <text name="ml_helpQsDisplayTitle" text="Wskaźnik po lewej" />
         <text name="ml_helpQsDisplay1" text="Gdy maszyna jest aktywna, lewa strona ekranu mówi ci, gdzie jesteś: aktualna wysokość, którą warstwę kopiesz i ile metrów zostało do następnej." />
         <text name="ml_helpQsDisplayB1" text="Liczy się ten wskaźnik, nie pole materiału TerraFarm. Pojazd nadal pokazuje własne ustawienie i jest nadpisywany tylko w momencie kopania." />
-        <text name="ml_helpQsDisplayB2" text="Przesuwaj go w grze: Num * (można zmienić) włącza tryb przesuwania z kursorem myszy - chwyć, upuść, gotowe. Wyłącz przez Num 5 albo showHeightDisplay w miningLayers.xml." />
+        <text name="ml_helpQsDisplayB2" text="Przesuwaj go w grze: Num * (można zmienić) włącza tryb przesuwania z kursorem myszy - chwyć, upuść, gotowe. Wyłącz przez Num / albo showHeightDisplay w miningLayers.xml." />
 
         <text name="ml_helpQsLayersTitle" text="Ustawianie własnych warstw" />
         <text name="ml_helpQsLayers1" text="Fabrycznie: humus, pod nim żwir, potem paydirt, na dole skała. To pasuje do prawie każdego wyrobiska, więc nie musisz nic ustawiać." />

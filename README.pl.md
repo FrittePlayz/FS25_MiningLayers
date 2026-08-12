@@ -95,7 +95,7 @@ Ile materiałów może leżeć na ziemi (height types), ustala twoja mapa, a nie
 W menu maszyny przypisany jest obszar wyjściowy: TerraFarm wysypuje wtedy tylko tam. Od 1.4.2 strefa warstw jako obszar wyjściowy działa automatycznie swobodnie (mówi o tym linia w logu). Żeby wysypywać swobodnie wszędzie, ustaw obszar wyjściowy maszyny na „nieustawiony".
 
 **Jak wyłączyć (albo włączyć) wskaźnik głębokości?**
-Naciśnij **Num 5**, gdy maszyna jest aktywna (od 1.4.1). Klawisz można zmienić: Opcje → Sterowanie → Mining Layers. Żeby wskaźnik był wyłączony od startu: `showHeightDisplay="false"` w `modSettings/FS25_MiningLayers/miningLayers.xml`.
+Naciśnij **Num /**, gdy maszyna jest aktywna (do 1.4.3 był to Num 5). Klawisz można zmienić: Opcje → Sterowanie → Mining Layers. Żeby wskaźnik był wyłączony od startu: `showHeightDisplay="false"` w `modSettings/FS25_MiningLayers/miningLayers.xml`.
 
 **Czy mogę przesunąć wskaźnik, żeby nie nachodził na inne HUD-y?**
 Tak — od 1.4.2 naciśnij **Num *** (klawisz do zmiany): kliknij wskaźnik, żeby go podnieść, drugi klik odkłada, prawy przycisk przywraca pozycję domyślną. Pozycja zapisuje się automatycznie (w `modSettings/FS25_MiningLayers/hud.xml`). Bez dodatkowego moda HUD.

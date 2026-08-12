@@ -108,7 +108,7 @@
         <text name="ml_helpQsDisplayTitle" text="Die Anzeige links" />
         <text name="ml_helpQsDisplay1" text="Solange eine Maschine aktiv ist, steht links im Bild, wo du gerade bist: aktuelle Höhe, welche Schicht du abbaust und wie viele Meter noch bis zur nächsten kommen." />
         <text name="ml_helpQsDisplayB1" text="Die Anzeige ist maßgeblich, nicht TerraFarms Materialfeld. Das Fahrzeug zeigt weiter seine eigene Einstellung an und wird erst im Moment des Grabens überschrieben." />
-        <text name="ml_helpQsDisplayB2" text="Verschieben geht direkt im Spiel: Num * (umbelegbar) schaltet den Verschiebe-Modus mit Mauszeiger - greifen, ablegen, fertig. Abschalten über Num 5 oder showHeightDisplay in der miningLayers.xml." />
+        <text name="ml_helpQsDisplayB2" text="Verschieben geht direkt im Spiel: Num * (umbelegbar) schaltet den Verschiebe-Modus mit Mauszeiger - greifen, ablegen, fertig. Abschalten über Num / oder showHeightDisplay in der miningLayers.xml." />
 
         <text name="ml_helpQsLayersTitle" text="Eigene Schichten festlegen" />
         <text name="ml_helpQsLayers1" text="Ab Werk gilt: Mutterboden, darunter Kies, darunter das Paydirt-Flöz, ganz unten Fels. Das passt für die allermeisten Gruben, du musst nichts einstellen." />

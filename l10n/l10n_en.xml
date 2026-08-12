@@ -93,7 +93,7 @@
         <text name="ml_helpQsDisplayTitle" text="The readout on the left" />
         <text name="ml_helpQsDisplay1" text="While a machine is active, the left of the screen tells you where you are: current height, which layer you are working and how many metres are left until the next one." />
         <text name="ml_helpQsDisplayB1" text="That readout is what counts, not TerraFarm's material field. The vehicle keeps showing its own setting and is only overridden at the moment you dig." />
-        <text name="ml_helpQsDisplayB2" text="Move it in game: Num * (rebindable) toggles the move mode with a mouse cursor - pick up, drop, done. Switch it off with Num 5 or showHeightDisplay in miningLayers.xml." />
+        <text name="ml_helpQsDisplayB2" text="Move it in game: Num * (rebindable) toggles the move mode with a mouse cursor - pick up, drop, done. Switch it off with Num / or showHeightDisplay in miningLayers.xml." />
 
         <text name="ml_helpQsLayersTitle" text="Setting your own layers" />
         <text name="ml_helpQsLayers1" text="Out of the box: topsoil, gravel below it, then paydirt, rock at the bottom. That fits almost any pit, so there is nothing you have to set up." />
