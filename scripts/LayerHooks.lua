@@ -119,6 +119,60 @@ function MiningLayers:logNoLayerReason(reason, vehicle)
     end
 end
 
+---Friert die Bezugshoehe rund um den Grabvorgang ein - VOR der Deformation.
+---
+---Gefroren wird die Bounding-Box ueber ALLE aktiven Grabknoten, je Knoten
+---[p +/- (radius + Marge)]. Achsenparallele Box statt Umkreis: beim Quadrat-
+---Pinsel liegt die Ecke bei radius * Wurzel(2), ein Umkreis liesse sie aus.
+---Die Box umschliesst Kreis- und Quadrat-Pinsel gleichermassen, die
+---Fallunterscheidung entfaellt.
+---
+---Die Marge ist der eigentliche Trick: Nachbarzellen werden mit eingefroren,
+---SOLANGE sie unberuehrt sind. Ohne sie bekaeme der Grubenrand seine
+---Bezugshoehe erst beim eigenen Erstkontakt - dann ist er durch die Zuege
+---daneben laengst abgesenkt, und die Geologie wandert nach unten mit.
+---@param op table
+function MiningLayers:freezeSurfaceAround(op)
+    local workArea = op ~= nil and op.workArea or nil
+
+    if workArea == nil or workArea.areaNodePosition == nil then
+        return
+    end
+
+    local radius = type(op.radius) == 'number' and op.radius or 0
+    local reach = radius + MiningLayers.SURFACE_FREEZE_MARGIN
+    local written = 0
+
+    for node, position in pairs(workArea.areaNodePosition) do
+        local active = workArea.areaNodeActive == nil or workArea.areaNodeActive[node]
+
+        if active and position ~= nil and position[1] ~= nil and position[3] ~= nil then
+            local minCellX = math.floor((position[1] - reach) / 2)
+            local maxCellX = math.floor((position[1] + reach) / 2)
+            local minCellZ = math.floor((position[3] - reach) / 2)
+            local maxCellZ = math.floor((position[3] + reach) / 2)
+
+            for cellX = minCellX, maxCellX do
+                for cellZ = minCellZ, maxCellZ do
+                    if self:freezeSurfaceCell(cellX, cellZ) then
+                        written = written + 1
+                    end
+                end
+            end
+        end
+    end
+
+    if written > 0 then
+        self.surfaceMemoryWrites = self.surfaceMemoryWrites + written
+
+        if not self.surfaceFrozenLogged then
+            self.surfaceFrozenLogged = true
+            MiningLayers.log('Bezugshoehen-Raster aktiv: %d Zelle(n) beim ersten Grabkontakt eingefroren (Radius %.1f m).',
+                written, radius)
+        end
+    end
+end
+
 ---Setzt das Schichtmaterial an einer laufenden Grab-Operation.
 ---@param op table LandscapingInput*-Instanz
 function MiningLayers:applyLayer(op)
@@ -131,6 +185,9 @@ function MiningLayers:applyLayer(op)
     if workArea == nil or workArea.rootNode == nil then
         return
     end
+
+    -- Bezugshoehe einfrieren, bevor irgendetwas gefragt oder verformt wird.
+    self:freezeSurfaceAround(op)
 
     local worldPosX, _, worldPosZ = getWorldTranslation(workArea.rootNode)
     local entry, terrainY, surfaceY, zoneName, reason = self:getLayerAt(op.vehicle, worldPosX, worldPosZ)
