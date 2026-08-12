@@ -206,15 +206,20 @@ MiningLayers.mapReport = nil
 ---@param blockedCount number davon ohne Gelaende-Typ
 function MiningLayers:buildMapReport(checkedCount, blockedCount)
     local pool = self.materialPool or { ok = {}, noTip = {}, missing = {} }
-    local affected = #pool.noTip + #pool.missing
     local rating
 
-    -- Schwelle an der ANZAHL betroffener Schicht-Materialien, nicht an einem
-    -- Verhaeltnis (Percy 19:25): 0 = still, 1-2 = eingeschraenkt, ab 3 deutlich.
-    -- Tommys 243er lag bei 3 (SOIL/LIMESTONE/PAYDIRT), die RGC-Karte bei 0.
-    if affected == 0 then
+    -- ⚠️ NUR noTip zaehlt fuer die Bewertung, NICHT missing (Oreos Server-Log,
+    -- 13.08.): dort war noTip = 0 und missing = 1 (SOIL), und der Mod behauptete
+    -- trotzdem, die Bodenplaetze seien voll. Zwei verschiedene Ursachen:
+    --   noTip   = Material da, aber kein Bodenplatz mehr frei -> Platzproblem
+    --   missing = niemand liefert das Material -> hat mit Plaetzen nichts zu tun
+    -- Schwelle an der ANZAHL (Percy 19:25): 0 = still, 1-2 = eingeschraenkt,
+    -- ab 3 deutlich. Tommys 243er lag bei 3, die RGC-Karte bei 0.
+    local slotAffected = #pool.noTip
+
+    if slotAffected == 0 then
         rating = MiningLayers.MAP_RATING_GOOD
-    elseif affected >= 3 then
+    elseif slotAffected >= 3 then
         rating = MiningLayers.MAP_RATING_STRONG
     else
         rating = MiningLayers.MAP_RATING_LIMITED
@@ -224,13 +229,18 @@ function MiningLayers:buildMapReport(checkedCount, blockedCount)
         rating = rating,
         checkedCount = checkedCount,
         blockedCount = blockedCount,
+        missingCount = #pool.missing,
     }
 
     MiningLayers.log('Kartenbericht: %d von %d Bergbau-Materialien ohne Gelaende-Typ; Schichten-Materialien %d nutzbar / %d nur graben / %d fehlen.',
         blockedCount, checkedCount, #pool.ok, #pool.noTip, #pool.missing)
 
     -- Im LOG darf es deutlich stehen - hier liest niemand zufaellig mit.
-    if rating == MiningLayers.MAP_RATING_GOOD then
+    if rating == MiningLayers.MAP_RATING_GOOD and #pool.missing > 0 then
+        MiningLayers.log('  -> Kein Platzproblem: alles, was diese Karte kennt, laesst sich auch abkippen.')
+        MiningLayers.log('     Fehlend ist nur, was weder Karte noch Mods liefern (%s) - das hat mit den Bodenplaetzen nichts zu tun.',
+            table.concat(pool.missing, ', '))
+    elseif rating == MiningLayers.MAP_RATING_GOOD then
         MiningLayers.log('  -> Voll geeignet: alle Schicht-Materialien lassen sich hier auch abkippen.')
     elseif rating == MiningLayers.MAP_RATING_LIMITED then
         MiningLayers.log('  -> Eingeschraenkt: Karte und Mods zusammen wollen mehr Bodenmaterialien, als diese Karte Plaetze hat (48 davon belegt das Basisspiel).')
@@ -260,7 +270,8 @@ function MiningLayers:getMapReportText()
 
     -- Ist alles in Ordnung, bleibt es bei dieser einen Zeile. Kein Kasten,
     -- keine Belehrung.
-    if report.rating == MiningLayers.MAP_RATING_GOOD then
+    -- Ist alles nutzbar UND nichts fehlt, bleibt es bei dieser einen Zeile.
+    if report.rating == MiningLayers.MAP_RATING_GOOD and #pool.missing == 0 then
         return table.concat(lines, '\n')
     end
 
@@ -278,7 +289,11 @@ function MiningLayers:getMapReportText()
 
     -- Erklaerung + Merksatz. Bei vielen Betroffenen zusaetzlich der Hinweis auf
     -- die Herkunft - als Erklaerung formuliert, nicht als Urteil ueber die Karte.
-    table.insert(lines, MiningLayers.getText('ml_mapAdvice', ''))
+    -- ⚠️ Die Platz-Erklaerung NUR, wenn es wirklich ein Platzproblem gibt. Fehlt ein
+    -- Material bloss, weil es niemand liefert, waere sie ein Fehlalarm.
+    if #pool.noTip > 0 then
+        table.insert(lines, MiningLayers.getText('ml_mapAdvice', ''))
+    end
 
     if report.rating == MiningLayers.MAP_RATING_STRONG then
         table.insert(lines, MiningLayers.getText('ml_mapManyOwn', ''))
