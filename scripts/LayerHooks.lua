@@ -132,33 +132,69 @@ end
 ---Bezugshoehe erst beim eigenen Erstkontakt - dann ist er durch die Zuege
 ---daneben laengst abgesenkt, und die Geologie wandert nach unten mit.
 ---@param op table
+---Friert alle Rasterzellen einer achsenparallelen Box um einen Punkt ein.
+---Achsenparallel statt Umkreis: beim Quadrat-Pinsel liegt die Ecke bei
+---radius * Wurzel(2), ein Umkreis liesse sie aus.
+---@param x number
+---@param z number
+---@param reach number Radius plus Marge, in Metern
+---@return number written
+function MiningLayers:freezeSurfaceBox(x, z, reach)
+    local written = 0
+
+    for cellX = math.floor((x - reach) / 2), math.floor((x + reach) / 2) do
+        for cellZ = math.floor((z - reach) / 2), math.floor((z + reach) / 2) do
+            if self:freezeSurfaceCell(cellX, cellZ) then
+                written = written + 1
+            end
+        end
+    end
+
+    return written
+end
+
 function MiningLayers:freezeSurfaceAround(op)
     local workArea = op ~= nil and op.workArea or nil
 
-    if workArea == nil or workArea.areaNodePosition == nil then
+    if workArea == nil then
         return
     end
 
     local radius = type(op.radius) == 'number' and op.radius or 0
     local reach = radius + MiningLayers.SURFACE_FREEZE_MARGIN
     local written = 0
+    local nodes = 0
+    local source = 'keine'
 
-    for node, position in pairs(workArea.areaNodePosition) do
-        local active = workArea.areaNodeActive == nil or workArea.areaNodeActive[node]
+    local positions = workArea.areaNodePosition
 
-        if active and position ~= nil and position[1] ~= nil and position[3] ~= nil then
-            local minCellX = math.floor((position[1] - reach) / 2)
-            local maxCellX = math.floor((position[1] + reach) / 2)
-            local minCellZ = math.floor((position[3] - reach) / 2)
-            local maxCellZ = math.floor((position[3] + reach) / 2)
+    if positions ~= nil then
+        for node, position in pairs(positions) do
+            local active = workArea.areaNodeActive == nil or workArea.areaNodeActive[node]
 
-            for cellX = minCellX, maxCellX do
-                for cellZ = minCellZ, maxCellZ do
-                    if self:freezeSurfaceCell(cellX, cellZ) then
-                        written = written + 1
-                    end
-                end
+            if active and position ~= nil and position[1] ~= nil and position[3] ~= nil then
+                nodes = nodes + 1
+                written = written + self:freezeSurfaceBox(position[1], position[3], reach)
             end
+        end
+
+        if nodes > 0 then
+            source = 'Knotensatz'
+        end
+    end
+
+    -- ⚠️ Rueckfall, gemessen noetig (Tommys Test 13.08., Keno City): beim Hook auf
+    -- class.new ist workArea.areaNodePosition noch NICHT aufgebaut - der Pinsel
+    -- fuellt ihn erst in apply(). Ohne diesen Zweig friert das Raster nie eine
+    -- Zelle ein, und die Bezugshoehe bleibt stumm auf der gemittelten Ebene.
+    -- Der Rootnode deckt weniger ab als der volle Knotensatz, aber die Marge
+    -- faengt einen guten Teil der Schaufelbreite mit.
+    if nodes == 0 and workArea.rootNode ~= nil then
+        local x, _, z = getWorldTranslation(workArea.rootNode)
+
+        if type(x) == 'number' and type(z) == 'number' then
+            source = 'Rootnode'
+            written = written + self:freezeSurfaceBox(x, z, reach)
         end
     end
 
@@ -170,12 +206,14 @@ function MiningLayers:freezeSurfaceAround(op)
         if self.surfaceMemoryWrites % 25 == 0 then
             pcall(MiningLayers.saveSurfaceMemory, MiningLayers)
         end
+    end
 
-        if not self.surfaceFrozenLogged then
-            self.surfaceFrozenLogged = true
-            MiningLayers.log('Bezugshoehen-Raster aktiv: %d Zelle(n) beim ersten Grabkontakt eingefroren (Radius %.1f m).',
-                written, radius)
-        end
+    -- Einmal je Sitzung, AUCH bei 0 Zellen: sonst ist im Spiel nicht zu sehen,
+    -- ob das Raster laeuft oder stumm aussteigt.
+    if not self.surfaceFrozenLogged then
+        self.surfaceFrozenLogged = true
+        MiningLayers.log('Bezugshoehen-Raster: %d Zelle(n) beim ersten Grabkontakt eingefroren (Quelle %s, %d Knoten, Radius %.1f m).',
+            written, source, nodes, radius)
     end
 end
 
