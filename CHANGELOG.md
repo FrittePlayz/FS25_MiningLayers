@@ -4,6 +4,19 @@ All notable changes to Mining Layers. Newest first.
 
 ## [Unreleased]
 
+## [1.4.3.0] — 2026-08-11
+
+### Added
+- **The layer editor now knows what your map can actually do.** On every map load the mod checks each of its eight materials once: is the fill type registered here at all, and can it be dumped back onto the ground? The material picker then offers only what this map has — anything the map does not know disappears from the list instead of producing a seam that never shows up. What is missing is named right under the cross-section ("Not available on this map: …"), so the map gets the blame, not the mod. No more testing map by map.
+- **Materials you can dig but not dump are marked `(!)`** — in the picker and in the cross-section — with one plain-language line explaining why: your mod list hit the engine's limit of 63 terrain materials, so digging, hauling and selling still work, only dumping back onto the ground does not. This is the case behind GitHub issue #3 (TacticalOreo, "cant dump gravel") and behind PAYDIRT/SOIL/LIMESTONE on the 243 Quarry map; it applies to the default layers as well, not just to named areas.
+- The fallback for an unknown seam material is no longer hardcoded to PAYDIRT: it walks the map's actual material pool, so a map without PAYDIRT no longer ends up with a pit that has no pay seam at all.
+- **Map report on the quickstart page: what THIS map can do.** Right at the top, before any general explanation, the mod now states which materials are usable here, which can only be dug and sold, and which are missing entirely — plus why (63 ground-material slots, 48 taken by the base game). Maps that bring a lot of their own ground materials — common for maps carried over from FS19/FS22 — run out of slots early; the report says so as an explanation, never as a verdict on the map. When everything works, it stays a single line.
+- **Dumping now works at any bucket height, on any map.** TerraFarm refuses to dump onto the ground while terrain sits within about half a metre below the bucket edge (and while a work node is inside the terrain) — on flat ground that is almost always, and the message it shows ("action cannot be performed here") points at the place instead of the height. That is why dumping worked over a dug pit and failed two metres away on untouched ground. Mining Layers lifts that check. Set `freeDumpHeight="false"` in `miningLayers.xml` for TerraFarm's original behaviour.
+
+### Fixed
+- **Saving in the editor no longer drops a hand-written `paintLayer`.** The editor rebuilt every layer from scratch, so a zone with `paintLayer="CONCRETE"` lost that attribute the moment you saved on that page — silently, and only visible later in the ground texture. Custom ground textures now survive editing; they are only dropped when you change that layer's material yourself (the setting would no longer match the layer). The "hand-written zone" warning was corrected accordingly — it still applies to fixed reference heights, not to paint layers.
+- **Layers whose material a map does not know are no longer erased from your configuration.** They used to be skipped on load and were therefore missing from the file after the next save — one trip to a map without PAYDIRT and the setup was gone for good. They now rest instead: inactive on that map, written back on save, active again on a map that has the material. Never two pay seams: a resting seam comes back as a normal layer if the stack already has one.
+
 ### Docs
 - FAQ from the 1.4.2.0 test day, in all four READMEs: dumping refused on flat ground (TerraFarm's ~0.5 m bucket-edge check), material in the bucket but not tippable (the 63 height-type limit), output-area behavior for free dumping. The move-display answer now describes the Num * move mode instead of the old config-file-only way.
 

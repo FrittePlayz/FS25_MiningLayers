@@ -483,14 +483,22 @@ function MiningLayers:finishLayerWizard()
     local seam = g_fillTypeManager:getFillTypeByName(seamName)
 
     -- Kennt die Karte das gewaehlte Material nicht (COAL und LIMESTONE bringt
-    -- nicht jede mit), faellt das Floez auf PAYDIRT zurueck. Eine Grube ganz ohne
-    -- Nutzschicht waere ein stiller Totalausfall.
-    if seam == nil and seamName ~= 'PAYDIRT' then
-        MiningLayers.log('Schichten-Editor: fillType "%s" kennt diese Karte nicht - Floez bleibt PAYDIRT.',
-            seamName)
+    -- nicht jede mit), sucht der Mod das naechstbeste aus dem Material-Pool
+    -- dieser Karte. Eine Grube ganz ohne Nutzschicht waere ein stiller
+    -- Totalausfall.
+    if seam == nil then
+        -- Seit 1.4.3 ueber den Material-Pool statt stur PAYDIRT (siehe
+        -- getFallbackSeamMaterial): auf Karten ohne PAYDIRT entstand sonst
+        -- eine Grube ganz ohne Nutzschicht.
+        local fallback = MiningLayers:getFallbackSeamMaterial()
 
-        seamName = 'PAYDIRT'
-        seam = g_fillTypeManager:getFillTypeByName(seamName)
+        if fallback ~= nil then
+            MiningLayers.log('Schichten-Editor: fillType "%s" kennt diese Karte nicht - Floez wird %s.',
+                seamName, fallback)
+
+            seamName = fallback
+            seam = g_fillTypeManager:getFillTypeByName(seamName)
+        end
     end
 
     if seam ~= nil then
@@ -547,6 +555,56 @@ end
 -- Konfiguration schreiben
 --------------------------------------------------------------------------------
 
+---Die Schichten einer Zone in Schreibreihenfolge - inklusive der Eintraege,
+---deren Material diese Karte nicht kennt (die ruhen nur, siehe
+---keepUnavailableLayer). Sortiert nach Tiefe; die Sohle ohne depth bleibt
+---unten. Ohne diese Merkliste raeumt ein Speichern auf der falschen Karte die
+---Konfiguration aus - dieselbe Klasse Fehler wie der verlorene paintLayer.
+---@param zone table
+---@return table[]
+local function layersForWriting(zone)
+    local list = {}
+
+    for _, layer in ipairs(zone.layers or {}) do
+        table.insert(list, layer)
+    end
+
+    local kept = type(MiningLayers.keptLayers) == 'table'
+        and MiningLayers.keptLayers[MiningLayers.getZoneKey(zone) or ''] or nil
+
+    if kept == nil or #kept.layers == 0 then
+        return list
+    end
+
+    local hasSeam = false
+
+    for _, layer in ipairs(list) do
+        if layer.seam then
+            hasSeam = true
+            break
+        end
+    end
+
+    for _, layer in ipairs(kept.layers) do
+        table.insert(list, {
+            fillTypeName = layer.fillTypeName,
+            depth = layer.depth,
+            aboveY = layer.aboveY,
+            paintLayerName = layer.paintLayerName,
+            -- Zwei Nutzschichten waeren ein Widerspruch: liegt schon eine im
+            -- Stapel, kommt die ruhende als normale Schicht zurueck.
+            seam = layer.seam and not hasSeam or nil,
+        })
+    end
+
+    -- Ohne depth = endlose Sohle, gehoert immer nach unten.
+    table.sort(list, function(a, b)
+        return (a.depth or math.huge) < (b.depth or math.huge)
+    end)
+
+    return list
+end
+
 ---@param xmlId number
 ---@param zoneKey string
 ---@param zone table
@@ -564,7 +622,7 @@ local function writeZone(xmlId, zoneKey, zone)
         setXMLString(xmlId, zoneKey .. '#surfaceY', string.format('%.2f', zone.surfaceY))
     end
 
-    for i, layer in ipairs(zone.layers or {}) do
+    for i, layer in ipairs(layersForWriting(zone)) do
         local layerKey = string.format('%s.layer(%d)', zoneKey, i - 1)
 
         setXMLString(xmlId, layerKey .. '#fillType', layer.fillTypeName)
@@ -618,23 +676,54 @@ function MiningLayers:saveConfigFile()
     setXMLString(xmlId, 'miningLayers#autoTargetHeight', bool(self.autoTargetHeight))
     setXMLString(xmlId, 'miningLayers#showDepthLines', bool(self.showDepthLines))
     setXMLString(xmlId, 'miningLayers#syncVehicleMaterial', bool(self.syncVehicleMaterial))
+    setXMLString(xmlId, 'miningLayers#freeDumpHeight', bool(self.freeDumpHeight))
+    setXMLString(xmlId, 'miningLayers#dumpDiagnostics', bool(self.dumpDiagnostics))
     setXMLString(xmlId, 'miningLayers#sponsorSign', bool(self.sponsorSign))
     setXMLString(xmlId, 'miningLayers#displayPosX', string.format('%.4f', self.displayPosX))
     setXMLString(xmlId, 'miningLayers#displayPosY', string.format('%.4f', self.displayPosY))
 
+    local written = {}
+
     if self.defaultZone ~= nil then
         writeZone(xmlId, 'miningLayers.defaultZone', self.defaultZone)
+        written['default'] = true
     end
 
     local i = 0
 
     for _, zone in pairs(self.zonesByKey) do
         writeZone(xmlId, string.format('miningLayers.zone(%d)', i), zone)
+        written[MiningLayers.getZoneKey(zone) or ''] = true
         i = i + 1
     end
 
     if self.globalZone ~= nil then
         writeZone(xmlId, 'miningLayers.globalZone', self.globalZone)
+        written['global'] = true
+    end
+
+    -- Zonen, von denen diese Karte KEIN einziges Material kennt, existieren zur
+    -- Laufzeit gar nicht - ihre Schichten liegen nur in der Merkliste. Ohne
+    -- diesen Durchgang waeren sie nach dem ersten Speichern weg.
+    if type(self.keptLayers) == 'table' then
+        for key, kept in pairs(self.keptLayers) do
+            if not written[key] and #kept.layers > 0 then
+                local zone = { kind = kept.kind, area = kept.area, layers = {} }
+                local zoneKey
+
+                if kept.kind == 'default' then
+                    zoneKey = 'miningLayers.defaultZone'
+                elseif kept.kind == 'global' then
+                    zoneKey = 'miningLayers.globalZone'
+                else
+                    zoneKey = string.format('miningLayers.zone(%d)', i)
+                    i = i + 1
+                end
+
+                writeZone(xmlId, zoneKey, zone)
+                written[key] = true
+            end
+        end
     end
 
     saveXMLFile(xmlId)

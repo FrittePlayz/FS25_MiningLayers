@@ -55,6 +55,21 @@
     unangetastet. / TerraFarm's vehicle material selection follows the layer while
     digging. Piles and manual areas are never touched.
 
+    freeDumpHeight: Hebt TerraFarms Hoehenpruefung fuers Abkippen auf. Im Original
+    ist Abladen gesperrt, sobald das Gelaende naeher als etwa einen halben Meter
+    unter der Schaufel liegt - auf ebenem Boden also fast immer, und die Meldung
+    ("Aktion kann hier nicht ausgefuehrt werden") zeigt dabei auf den Ort statt auf
+    die Hoehe. Mit "true" kippst du auf jeder Hoehe ab. Auf "false" gilt wieder
+    TerraFarms Originalverhalten. / lifts TerraFarm's height check for dumping:
+    by default TerraFarm refuses to dump when the ground is closer than about half
+    a metre below the bucket - which on flat ground is almost always. Set to "false"
+    for TerraFarm's original behaviour.
+
+    dumpDiagnostics: schreibt bei jedem Abkippversuch eine DIAG-Zeile ins log.txt
+    (Betriebsart, Liter rein/raus, Zustand der Pruefpunkte). Nur zur Fehlersuche -
+    im Alltag "false". / writes a DIAG line to log.txt on every dump attempt.
+    Troubleshooting only, keep it "false" for normal play.
+
     displayPosX / displayPosY: Lage der Hoehenanzeige (0,0 = links unten).
     TerraFarms eigenes HUD sitzt oben rechts. Im Spiel schaltet Numpad 5 die
     Anzeige ein/aus (Taste umbelegbar unter Optionen > Steuerung); hier steht
@@ -78,6 +93,8 @@
               autoTargetHeight="true"
               showDepthLines="true"
               syncVehicleMaterial="true"
+              freeDumpHeight="true"
+              dumpDiagnostics="false"
               sponsorSign="true"
               displayPosX="0.012"
               displayPosY="0.55">

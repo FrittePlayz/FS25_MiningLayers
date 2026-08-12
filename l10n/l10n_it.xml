@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<l10n>
+    <texts>
+        <text name="ml_decimalSeparator" text="." />
+        <text name="ml_heightHere" text="Altezza qui" />
+        <text name="ml_zone" text="Zona" />
+        <text name="ml_layer" text="Strato" />
+        <text name="ml_depth" text="Profondità" />
+        <text name="ml_until" text="a" />
+        <text name="ml_stillNeeded" text="altro" />
+        <text name="ml_noLayers" text="Nessun strato in questo punto" />
+        <text name="ml_above" text="è" />
+        <text name="ml_aboveRef" text="sopra l'altezza di riferimento" />
+        <text name="ml_overrideHint" text="Il materiale %s di TerraFarm non ha alcun effetto qui: è lo strato a decidere" />
+        <text name="ml_manualArea" text="Il materiale presente in quest'area è lo stesso della TerraFarm, quest'area NON ha strati" />
+        <text name="ml_zoneOff" text="livelli disabilitati per quest'area" />
+        <text name="ml_spoil" text="accumulato (al di sopra dell'altezza di riferimento) - Si applica la selezione TerraFarm" />
+        <text name="ml_pathArea" text="Area del percorso = TerraFarm, i livelli funzionano solo nelle aree poligonali" />
+        <text name="ml_moundKnown" text="mucchio riconosciuto - prendi quello che è stato scaricato qui" />
+        <text name="ml_tip1" text="disegna un'area, lascia i campi vuoti: la mod imposta il fondo della fossa" />
+        <text name="ml_tip2" text="Inserendo un materiale in un'area si ottiene stesso materiale della TerraFarm senza strati (costruzione)" />
+        <text name="ml_tip3" text="svuotare la benna prima di cambiare strato: una benna, un materiale" />
+        <text name="ml_tip4" text="la mod ricorda i mucchi: tu raccogli ciò che è stato scaricato" />
+        <text name="ml_tip5" text="colore della linea = materiale che inizia da lì; rosso = fondo della fossa" />
+        <text name="ml_tip6" text="il display mostra la distanza dal livello successivo" />
+
+        <text name="input_ML_TOGGLE_HUD" text="Visualizzazione livelli di mining: attiva/disattiva" />
+
+        <text name="ml_uiLayers" text="Strati" />
+        <text name="ml_uiNoLayers" text="senza strati" />
+        <text name="ml_uiBelow" text="sotto" />
+        <text name="ml_uiIntro" text="Ridefinire gli strati? Attuale: %s. L'editor richiede il materiale e il limite inferiore di ogni strato di copertura in metri, quindi il filone produttivo sottostante (PAYDIRT per impostazione predefinita, anche carbone o calcare vanno bene). Il substrato roccioso in fondo rimane fisso: è lì che termina lo scavo." />
+        <text name="ml_uiDepthTitle" text="%s: limite inferiore in metri sotto la superficie" />
+        <text name="ml_uiDone" text="Nuovi strati: %s. Entra in vigore immediatamente per ogni area sprovvista di una propria zona." />
+        <text name="ml_uiMore" text="Aggiungere un altro strato di sovraccarico sotto? No = fino al filone di produzione. La mod posiziona la base di roccia finale automaticamente." />
+        <text name="ml_uiNoPaydirt" text="Il materiale aurifero non appartiene al sovraccarico, il filone si trova al di sotto di esso. Il filone aurifero è l'ultimo passaggio, puoi sceglierlo lì." />
+        <text name="ml_uiNotAllowed" text="%s Non è un materiale di sovraccarico. Disponibile: TERRA, SUOLO, GHIAIA, SABBIA, PIETRA, CARBONE, CALCARE." />
+        <text name="ml_uiSeamNext" text="Sei strati di copertura sono più che sufficienti. Ora scegli il filone produttivo al di sotto di essi: la roccia di base sottostante rimane fissa." />
+        <text name="ml_uiSeamNotAllowed" text="%s Non funziona come filone produttivo. Disponibile: TERRA AZIENDALE, CARBONE, CALCARE, PIETRA, GHIAIA, SABBIA, TERRA, SUOLO." />
+
+        <!-- ===================== Menu page: tabs ===================== -->
+        <text name="ml_tabQuickstart" text="Avvio rapido" />
+        <text name="ml_tabManual" text="Manuale" />
+        <text name="ml_tabTips" text="Suggerimenti e veicoli" />
+        <text name="ml_tabEditor" text="Strati" />
+
+        <!-- ===================== Tab 4: layer editor ===================== -->
+        <text name="ml_edSummarySection" text="Profilo risultante" />
+        <text name="ml_edScope" text="Stai modificando lo standard: si applica a tutte le aree senza livelli propri, comprese quelle già disegnate. Per assegnare livelli propri a una singola fossa, seleziona semplicemente quell'area in 'Si applica a' sopra." />
+        <text name="ml_helpManEditor4" text="Standard ed eccezioni: ciò che salvi con 'Tutte le aree' è lo standard: si applica ad ogni area senza livelli propri, retroattivamente anche a quelli esistenti. Se una singola area deve essere diversa, selezionala sopra in 'Si applica a' e salva i suoi livelli direttamente nell'editor, senza bisogno di modificare i files." />
+        <text name="ml_edTargetSection" text="Si applica a" />
+        <text name="ml_edTarget" text="Area" />
+        <text name="ml_edTargetDefault" text="Tutte le aree (default)" />
+        <text name="ml_edScopeArea" text="Questi livelli si applicano solo a %s. Tutte le altre aree mantengono le impostazioni predefinite. Tornando a 'Tutte le aree' qui sopra, modificherai nuovamente le impostazioni predefinite." />
+        <text name="ml_edSavedArea" text="Livelli salvati per %s. Si applicano solo a quest'area." />
+        <text name="ml_edActive" text="Questa area" />
+        <text name="ml_edActiveOn" text="Strati di estrazione (stratificati)" />
+        <text name="ml_edActiveOff" text="TerraFarm base (senza strati)" />
+        <text name="ml_edSavedOff" text="I livelli sono disattivati ​​per %s. TerraFarm normale si applica di nuovo lì." />
+        <text name="ml_helpQsBothWaysTitle" text="Due modalità: decidi tu per ogni area" />
+        <text name="ml_helpQsBothWays1" text="Lascia vuoti i campi dei materiali nell'area di TerraFarm e Mining Layers farà il suo lavoro: ciò che finisce nella benna dipende da quanto in profondità scavi. Questo è il caso normale per uno scavo." />
+        <text name="ml_helpQsBothWays2" text="Inserendo un materiale nell'area, si ottiene TerraFarm base, senza strati. Perfetto per cantieri edili, costruzione di strade e livellamento: ovunque sia necessario movimentare terreno e utilizzare sempre lo stesso materiale." />
+        <text name="ml_helpQsBothWays3" text="Ottieni lo stesso risultato dalla scheda Livelli: seleziona un'area e impostala su TerraFarm base. Entrambi i percorsi portano allo stesso risultato, scegli quello che preferisci." />
+        <text name="ml_edForeign" text="⚠ Questa zona è stata creata manualmente nel file miningLayers.xml e può essere visualizzata qui solo in forma semplificata. Il salvataggio la riscrive secondo lo schema predefinito dell'editor; elementi aggiuntivi come texture del terreno personalizzate o un'altezza di riferimento fissa andranno persi." />
+        <text name="ml_edLayerSection" text="Strati" />
+        <text name="ml_edLayer" text="Strato" />
+        <text name="ml_edMaterial" text="Materiale" />
+        <text name="ml_edThickness" text="Spessore" />
+        <text name="ml_edSave" text="Salva" />
+        <text name="ml_edAdd" text="Aggiungi strato" />
+        <text name="ml_edRemove" text="Rimuovi strato" />
+        <text name="ml_edSaved" text="Livelli salvati. Si applicano immediatamente ad ogni area senza una zona specifica." />
+        <text name="ml_edHint" text="Il contorno luminoso indica lo strato che stai modificando. Il filone di estrazione è l'ultima riga fissa: materiale selezionabile (TERRA AZIENDALE per impostazione predefinita, ma vanno bene anche carbone o calcare), spessore e posizione fissi. La roccia sottostante si inserisce automaticamente. Spessore minimo: 1 m per lo strato superiore, 1,5 m per ogni strato sottostante; con macchinari di grandi dimensioni è meglio arrivare a 2 m. Non dimenticare di salvare: premendo ESC o Indietro si esce dalla pagina e tutto ciò che è stato salvato dall'ultima volta viene eliminato." />
+        <text name="ml_edSeamEntry" text="Filone produttivo: %s" />
+
+        <!-- ===================== Tab 1: quick start ===================== -->
+        <text name="ml_helpQsSetupTitle" text="Configurazione in un solo passaggio" />
+        <text name="ml_helpQsSetup1" text="Disegna un'area TerraFarm intorno al tuo scavo e lascia vuoti i campi al suo interno. Questa è tutta la configurazione. Scava in qualsiasi punto di quell'area e il materiale verrà estratto dalla profondità invece che dall'impostazione del veicolo." />
+        <text name="ml_helpQsSetup2" text="La mod calcola automaticamente l'altezza di riferimento: legge le altezze del terreno nei punti d'angolo della tua area e ne ricava la superficie. Non c'è bisogno di leggere nulla, né di inserire dati. Se invece inserisci un materiale per l'area, otterrai TerraFarm nella sua versione base, senza strati. Utile per i lavori di costruzione." />
+
+        <text name="ml_helpQsStockNote" text="Ogni immagine qui mostra la mod così come viene rilasciata: terreno superficiale, ghiaia, terra aurifera, roccia, senza che nessuno abbia impostato manualmente un singolo strato. Questo è ciò che si ottiene una volta disegnata l'area. L'aggiunta di strati personalizzati è un'opzione, non un requisito." />
+        <text name="ml_helpQsDisplayTitle" text="La lettura a sinistra" />
+        <text name="ml_helpQsDisplay1" text="Mentre la macchina è in funzione, la parte sinistra dello schermo indica la posizione attuale: altezza corrente, strato su cui si sta lavorando e quanti metri mancano al successivo." />
+        <text name="ml_helpQsDisplayB1" text="Quella lettura è ciò che conta, non il campo dei materiali di TerraFarm. Il veicolo continua a mostrare le proprie impostazioni e vengono sovrascritte solo nel momento in cui si scava." />
+        <text name="ml_helpQsDisplayB2" text="È possibile spostarlo tramite i comandi displayPosX e displayPosY nel file miningLayers.xml, oppure disattivarlo con il comando showHeightDisplay." />
+
+        <text name="ml_helpQsLayersTitle" text="Impostazione dei livelli personalizzati" />
+        <text name="ml_helpQsLayers1" text="Pronto all'uso: terriccio superficiale, ghiaia sotto, poi terra aurifera e roccia sul fondo. Si adatta a quasi tutte le cave, quindi non c'è nulla da preparare." />
+        <text name="ml_helpQsWizardButton" text="Imposta i livelli" />
+        <text name="ml_helpQsWizardHint" text="Non sei obbligato a farlo, però. Non fare nulla e verrà applicato il nostro profilo predefinito, che si adatta a quasi tutte le fosse. Lo vuoi diverso? Vai alla scheda Livelli, crea il tuo profilo personalizzato e guardalo prendere forma man mano che procedi." />
+        <text name="ml_helpQsLayersScope" text="Si modificano gli strati di copertura e il filone aurifero sottostante (di default TERRA AURIFERA, ma funzionano anche carbone o calcare). La sua posizione rimane fissa: chiunque voglia il minerale deve scavare attraverso la copertura, offrendo un'esperienza di gioco mineraria realistica anziché materiali ottenibili con la semplice pressione di un pulsante. La roccia sul fondo viene posizionata dalla mod stessa." />
+
+        <text name="ml_helpQsMistakesTitle" text="I tre errori da evitare quando si disegna un'area" />
+        <text name="ml_helpQsWarnWater" text="Lago o costa: i punti d'angolo nell'acqua misurano il fondale. Il piano di riferimento si inclina e si incontra la roccia in corrispondenza della riva. Mantenere l'area prevalentemente sulla terraferma." />
+        <text name="ml_helpQsWarnRidge" text="Cresta montuosa: un'area tracciata attraverso la cresta trasforma il piano di riferimento in una corda e spinge il terreno aurifero verso la superficie. Su un ripido pendio remoto che rappresenta il bonus montano previsto, sulla collina dietro la tua fattoria non lo è. Disegna le aree di pendio su UN solo versante." />
+        <text name="ml_helpQsRidgeCaption" text="Su una parete ripida si legge così: strato di GHIAIA a 15,7 m, solo 2,3 m rimasti per raggiungere la roccia più profonda. Salite sulla montagna e ci arriverete prima. È fatto apposta." />
+        <text name="ml_helpQsWarnRiver" text="Attraversamento del fiume: con angoli su entrambe le sponde, il letto del fiume al centro si trova molto al di sotto del piano di riferimento e il fondo della cava finisce sotto il letto, quindi la cava si allaga. Disegna le aree lungo il fiume, mai attraverso di esso." />
+
+        <!-- ===================== Tab 2: manual ===================== -->
+        <text name="ml_helpManWhatTitle" text="Cosa cambia la mod" />
+        <text name="ml_helpManWhat1" text="In FS25 si imposta sul veicolo cosa raccoglie la benna, indipendentemente dalla profondità di scavo. Questa mod, invece, introduce gli strati del terreno: ciò che si raccoglie dipende dalla profondità a cui si trova il punto di scavo." />
+        <text name="ml_helpManWhat2" text="Si tratta di un componente aggiuntivo completamente runtime per TerraFarm. Nessun file di TerraFarm viene modificato e non viene incluso alcun codice di terze parti. Senza TerraFarm, la mod non produce alcun effetto." />
+
+        <text name="ml_helpManLayersTitle" text="Gli strati" />
+        <text name="ml_helpManLayers1" text="Di default, dall'alto verso il basso: TERRA, poi GHIAIA, poi MINERALE UTILE (PAYDIRT), poi PIETRA. La roccia è in fondo alla lista. È una scelta deliberata, non una mancanza." />
+        <text name="ml_helpManLayersB1" text="Le profondità rappresentano i limiti inferiori, espressi in metri, al di sotto della superficie, non le altezze assolute sul livello del mare." />
+        <text name="ml_helpManLayersB2" text="Lo strato inferiore non ha bisogno di confini, continua verso il basso all'infinito." />
+        <text name="ml_helpManLayersB3" text="Ogni livello ha una texture del terreno corrispondente, così puoi vedere dove ti trovi nella buca. Usa PaintLayer per impostarla manualmente per ogni livello." />
+        <text name="ml_helpManLayers2" text="I livelli vengono applicati per area. Un'area senza una propria zona eredita i livelli predefiniti, mentre un'area con un materiale inserito non ne eredita alcuno." />
+
+        <text name="ml_helpManMoundTitle" text="Cumuli di detriti e riempimento" />
+        <text name="ml_helpManMound1" text="La mod ricorda dove hai depositato gli oggetti. Se raccogli un cumulo, otterrai esattamente ciò che contiene, non la geologia sottostante. Questa informazione rimane valida ovunque sulla mappa finché il cumulo non viene rimosso." />
+        <text name="ml_helpManMoundB1" text="Riempi il tuo buco e riprendi lo stesso materiale di riempimento. Solo al di sotto si applicano nuovamente gli strati." />
+        <text name="ml_helpManMoundB2" text="Scavando sotto la base di un cumulo, il cumulo termina in quel punto, riportando alla luce la geologia. Questo impedisce di dover spalare materiale all'infinito da un cratere." />
+        <text name="ml_helpManMoundB3" text="Svuotare la benna prima di cambiare strato. Un contenitore può contenere un solo tipo di materiale e, con il vecchio carico ancora al suo interno, la benna non potrà contenere il nuovo materiale." />
+
+        <text name="ml_helpManEditorTitle" text="Impostazione dei livelli personalizzati" />
+        <text name="ml_helpManEditor1" text="La scheda Livelli è dove si crea il proprio profilo. La sezione trasversale è a sinistra, il livello, il materiale e lo spessore a destra. Massimo sei livelli di copertura; disponibili: TERRA, SUOLO, GHIAIA, SABBIA, PIETRA, CARBONE e CALCARE. Spessore minimo: 1 m per il livello superiore, 1,5 m per ogni livello sottostante: gli strati più sottili interferiscono con il sollevamento del cumulo di materiale di scavo. Con macchinari di grandi dimensioni, 2 m è la scelta migliore." />
+        <text name="ml_helpManEditor3" text="Uscire dalla pagina con ESC o il pulsante Indietro. Attenzione: le modifiche non vengono salvate. Solo il pulsante Salva scrive i livelli e li applica immediatamente all'obiettivo scelto sopra: lo standard o la singola area. Esci prima e il vecchio stato tornerà la prossima volta che lo apri." />
+        <text name="ml_helpManEditor2" text="Non è possibile selezionare PAYDIRT come strato di copertura: il materiale redditizio si trova sempre AL DI SOTTO dello strato di copertura. Come strato produttivo (ultima riga nell'editor) è possibile selezionare CARBONE, CALCARE, PIETRA, GHIAIA, SABBIA, TERRA o SUOLO, oltre a PAYDIRT: per cave di ghiaia e zone carbonifere. Il substrato roccioso sottostante rimane fisso." />
+
+        <text name="ml_helpManFloorTitle" text="Il pavimento dello scavo" />
+        <text name="ml_helpManFloor1" text="La mod imposta automaticamente l'altezza target dell'area al fondo del tuo strato più profondo, quindi il livellamento non scava nel nulla. Ingrandisci l'area e il pavimento segue nella stessa sessione. Dopo aver ricaricato un salvataggio non lo fa più." />
+        <text name="ml_helpManFloor2" text="Questo è anche il motivo per cui non si può continuare a scavare all'infinito in riva al mare: al di sotto dello strato più profondo, lo scavo si interrompe. Senza un'area che definisca quel limite, l'altezza di riferimento diventa il livello del mare." />
+
+        <text name="ml_helpManConfigTitle" text="Configurazione manuale" />
+        <text name="ml_helpManConfig1" text="Tutto si trova in modSettings/FS25_MiningLayers/miningLayers.xml. Il file viene creato al primo avvio e rimane disponibile anche dopo gli aggiornamenti della mod. Prima che la procedura guidata salvi per la prima volta, la mod aggiunge un'estensione .bak accanto al file, una sola volta per sessione." />
+        <text name="ml_helpManConfig2" text="È anche in questa sezione che si attivano/disattivano la visualizzazione, le linee di profondità, il fondo automatico della fossa e la texture del terreno durante lo scarico. Le zone possono essere disattivate singolarmente o a ciascuna area possono essere assegnati livelli separati." />
+
+        <!-- ===================== Tab 3: tips and vehicles ===================== -->
+        <text name="ml_helpTipsTfTitle" text="TerraFarm insidie" />
+        <text name="ml_helpTipsTfB1" text="Disattiva 'defaultEnabled', altrimenti ogni veicolo di TerraFarm rovinerà il tuo giardino semplicemente passando." />
+        <text name="ml_helpTipsTfB2" text="L'abbassamento funziona solo all'interno del poligono quando è impostata l'opzione 'Limita area'. Il livellamento funziona anche all'esterno. Se non succede nulla, di solito ti trovi dal lato sbagliato della linea oppure il terreno ha già raggiunto l'altezza desiderata." />
+        <text name="ml_helpTipsTfB3" text="Una pala gommata riesce a scavare solo dai 30 ai 40 centimetri per passaggio. Costruisci una rampa. Lo strumento per la profondità è l'escavatore." />
+        <text name="ml_helpTipsTfB4" text="I tasti si trovano sul tastierino numerico; il tasto 9 apre le impostazioni globali. Dopo averle modificate, potrebbe essere necessario chiudere e riavviare il programma affinché le modifiche abbiano effetto." />
+        <text name="ml_helpTipsTfB6" text="Un bulldozer riesce a superare gli strati: abbassate la lama, impostate la modalità 'Spianatura' e fate passare il materiale abbastanza a lungo: più lungo è il passaggio, più in profondità arriverete ogni volta. L'immagine mostra il secondo strato (ghiaia) raggiunto solo con la lama, senza alcun ripper posteriore. Al confine: utilizzate prima i vecchi cumuli e svuotate la lama; fino ad allora, il vecchio materiale rimarrà al suo interno." />
+        <text name="ml_helpTipsTfB5" text="Without an area, lowering has no lower limit, because the target height is sea level. The hole still only gets as deep as you dig it, but an area gives you a defined floor." />
+
+        <text name="ml_helpTipsVehTitle" text="Quando un veicolo non scava" />
+        <text name="ml_helpTipsVeh1" text="Affinché un veicolo possa scavare, TerraFarm necessita di una configurazione specifica. Senza di essa non succede nulla, e questo non dipende né da TerraFarm né da questa mod." />
+        <text name="ml_helpTipsVehB1" text="Installa una configurazione per le macchine, ad esempio la versione ufficiale FS25_TerraFarmMachines di scfmod." />
+        <text name="ml_helpTipsVehB2" text="Molti pacchetti di veicoli minerari includono già le stesse voci per le macchine. Avere voci duplicate non migliora la situazione, anzi la peggiora. Scegline una." />
+        <text name="ml_helpTipsVehB3" text="Se una benna mostra le frecce ma non rimuove nulla, il problema è quella benna. Prova con un'altra sullo stesso escavatore: se funziona, il problema è la configurazione dell'utensile, non nella tua configurazione della mod MiningLayers." />
+        <text name="ml_helpTipsVeh2" text="È in fase di sviluppo un pacchetto di configurazione per le comuni macchine da miniera. Verrà rilasciato separatamente da questa mod." />
+
+        <text name="ml_helpTipsMapTitle" text="Dettagli della mappa" />
+        <text name="ml_helpTipsMapB1" text="FS25 gestisce solo 63 tipi di materiali. Con molte mod installate, alcuni di questi vengono esclusi e non possono più essere scaricati. La mod verifica questa situazione all'avvio e scrive i materiali interessati nel file di log." />
+        <text name="ml_helpTipsMapB2" text="I nomi delle texture del terreno variano a seconda della mappa. Al primo scavo, la mod scrive l'elenco della mappa nel registro. Prendi i valori di paintLayer da lì." />
+        <text name="ml_helpTipsMapB4" text="La mod funziona su qualsiasi mappa: per le texture dei layer, seleziona automaticamente il terreno più simile disponibile sulla mappa (nomi standard come GRAVEL, MOUNTAINROCK, MOSS_STONES). Se una mappa non offre nulla di adatto, la tua selezione di texture personalizzata rimane attiva: materiali, layer e cumuli continuano a funzionare." />
+        <text name="ml_helpTipsMapB3" text="Alcune mappe bloccano i letti dei fiumi impedendone la deformazione. Questa è una caratteristica della mappa stessa e non ha nulla a che vedere con la proprietà o con questa mod." />
+
+        <text name="ml_helpSponsorTitle" text="Con il supporto di farmersingles.de" />
+        <text name="ml_helpSponsor1" text="Questa mod è supportata da farmersingles.de, un sito di incontri per agricoltori. Per questo motivo, un piccolo cartello con il loro logo si trova in un angolo di ogni area. Lo diciamo apertamente, invece di nasconderlo." />
+        <text name="ml_helpSponsor2" text="Il cartello si trova sempre all'esterno dell'area di scavo e non blocca alcuna macchina. Se preferisci non averlo: imposta sponsorSign=false in miningLayers.xml e sparirà subito. Nient'altro riguardo alle modifiche alla mod e non lo chiederemo di nuovo." />
+        <text name="ml_helpTipsAboutTitle" text="Informazioni su questa mod" />
+        <text name="ml_helpTipsAbout1" text="Mining Layers è un componente aggiuntivo non ufficiale per TerraFarm creato da scfmod. Non esiste alcuna affiliazione con scfmod e non vengono distribuiti file di TerraFarm. TerraFarm è disponibile su GitHub, non su ModHub." />
+        <text name="ml_pageTitle" text="Mining Layers" />
+        <text name="ml_credits" text="Mining Layers by Tommy Honold, Farmersingles.de. Un progetto di FrittePlayz." />
+        <text name="ml_helpTipsAbout2" text="Questa mod è gratuita e rimarrà gratuita." />
+
+        <!-- Ergaenzt fuer 1.5.0: Keys aus 1.4.3.0/1.5.0.0, die es zum Zeitpunkt
+             der Spende noch nicht gab. -->
+        <text name="ml_edPoolNoTipMark" text="(!) = non scaricabile su questa mappa. La mappa ha esaurito i posti a terra — scavare e vendere funzionano comunque." />
+        <text name="ml_mapResourceTakesOver" text="Decide TerraFarm: il materiale della mappa per questo punto - lo stesso a ogni profondità" />
+        <text name="ml_tip7" text="Quali materiali esistono lo decidono la tua mappa e la tua lista di mod — (!) significa: scavare sì, scaricare no" />
+        <text name="ml_mapUsable" text="Utilizzabili su questa mappa: %s — puoi scavarli, trasportarli, venderli e riscaricarli a terra." />
+        <text name="ml_edPoolNoTipHere" text="⚠ (!) %s non può essere scaricato a terra su QUESTA mappa. Scavare, trasportare e vendere funzionano normalmente. Su questa mappa non è rimasto alcun posto a terra per esso — dipende dalla mappa e dalla tua lista di mod, non da questa mod." />
+        <text name="ml_noInputArea" text="nessuna area di ingresso assegnata - assegna la tua area come ingresso nel menu della macchina (Y)" />
+        <text name="ml_mapAdvice" text="Quanti materiali di terreno ci stanno lo decide la tua MAPPA: è lei a fissare la larghezza di canale, e il gioco base occupa già 48 posti. Quanti ne vengono occupati lo decide la tua LISTA DI MOD — il primo che si carica ottiene un posto. Quindi: meno mod libera posti, e una mappa costruita con più canali ne ha di più fin dall'inizio." />
+        <text name="input_ML_HUD_MOVE" text="Mining Layers: sposta il display (cursore del mouse)" />
+        <text name="ml_helpQsMap3" text="Due vie d'uscita se un materiale che ti serve porta un (!): togliere le mod che portano propri materiali di terreno, oppure giocare una mappa costruita con più canali. I 63 non sono una legge fissa del gioco — una mappa può essere costruita più larga, e alcune lo sono già. Quello che nessuna mod può fare è alzare il limite dall'esterno." />
+        <text name="ml_mapNoTipList" text="Solo scavare e vendere: %s. Riscaricarli a terra qui non funziona — non è rimasto loro alcun posto nel sistema del terreno." />
+        <text name="ml_edPoolMissing" text="Non disponibili su questa mappa: %s. Né la mappa né le tue mod forniscono questi materiali, perciò non vengono proposti qui." />
+        <text name="ml_edPoolHint" text="Regola pratica: meno mod = più posti liberi = più materiali che puoi scaricare." />
+        <text name="ml_mapSection" text="Cosa può fare questa mappa" />
+        <text name="ml_mapMissingList" text="Non presenti affatto: %s. Né la mappa né le tue mod li forniscono." />
+        <text name="ml_mapManyOwn" text="Questa mappa porta con sé un gran numero di materiali di terreno propri, perciò i posti finiscono presto. È tipico delle mappe portate da FS19 o FS22." />
+        <text name="ml_helpQsMap2" text="Mining Layers segue quindi una via di mezzo, per restare giocabile su ogni mappa: al caricamento controlla una volta cosa offre davvero LA TUA mappa e propone solo quello nella scelta degli strati. Un (!) dopo un nome significa: scavare, trasportare e vendere funzionano, scaricare no su questa mappa. Ciò che manca del tutto viene indicato sotto la sezione trasversale. Così non devi mai provare prima una mappa né cercare nulla — se manca qualcosa, è la mappa, non la mod." />
+        <text name="ml_hudMoveSample" text="display di esempio - in gioco qui compaiono le informazioni sugli strati" />
+        <text name="ml_helpQsMapTitle" text="Per prima cosa: quali materiali ha LA TUA mappa?" />
+        <text name="ml_hudMoveHint" text="clic sinistro: prendi/rilascia - clic destro: posizione predefinita - premi di nuovo il tasto: fatto" />
+        <text name="ml_helpQsMap1" text="Se un materiale esista e se tu possa riscaricarlo a terra non lo decide questa mod, ma la tua mappa insieme alla tua lista di mod. Dei materiali minerari il gioco base conosce solo STONE — DIRT, GRAVEL, SAND, COAL, LIMESTONE o PAYDIRT arrivano sempre da mappe o mod. In più ogni mappa ha un numero limitato di posti a terra: 48 li occupa già il gioco base, e quanti ce ne siano in tutto lo stabilisce la mappa stessa — molte ne hanno 63, quelle costruite più larghe di più. Quando una mappa li ha esauriti, un materiale puoi ancora scavarlo, trasportarlo e venderlo, ma non più scaricarlo." />
+        <text name="ml_mapNoData" text="Il rapporto sulla mappa è disponibile una volta caricata la mappa." />
+    </texts>
+</l10n>

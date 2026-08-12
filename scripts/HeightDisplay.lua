@@ -55,6 +55,9 @@ MiningLayers.TIPS = {
     { key = 'ml_tip4', fallback = 'Halden merkt sich der Mod - aufgenommen wird, was abgekippt wurde' },
     { key = 'ml_tip5', fallback = 'Linienfarbe = Material, das ab dort beginnt; rot = Grubenboden' },
     { key = 'ml_tip6', fallback = 'Anzeige links zeigt, wie weit es noch bis zur naechsten Schicht ist' },
+    -- Wichtigster Tipp fuer neue Spieler (1.4.3): Materialien haengen an Karte
+    -- + Modliste, nicht am Mod. Steht auch ganz vorn im Schnellstart.
+    { key = 'ml_tip7', fallback = 'Welche Materialien es gibt, entscheidet deine Karte samt Modliste - (!) heisst: graben ja, abkippen nein' },
 }
 
 ---Sekunden pro Tipp im News-Band. Bewusst EINE Konstante und leicht zu finden:
@@ -182,6 +185,18 @@ function MiningLayers:buildDisplayLines()
             else
                 table.insert(lines, MiningLayers.getText('ml_noLayers', 'keine Schichten an dieser Stelle'))
             end
+        end
+
+        -- Was STATTDESSEN passiert. Ohne diesen Satz sucht der Spieler den Fehler bei
+        -- uns ("der Mod uebernimmt nicht") - TerraFarm nimmt dann das Material, das der
+        -- KARTENERSTELLER der Bodentextur zugeordnet hat: LandscapingInput:applyMapResources
+        -- ueber getResourceLayerAtWorldPos(x, z). Die Abfrage kennt nur X und Z, also
+        -- kommt in JEDER Tiefe dasselbe Material - genau der Befund vom 11.08.
+        -- (Tommy: Beton aus jeder Tiefe / Oreo: Kokskohle nach Erde).
+        -- Ausnahme 'manual': dort gilt das ausdruecklich im Bereich gesetzte Material.
+        if reason ~= 'manual' then
+            table.insert(lines, '! ' .. MiningLayers.getText('ml_mapResourceTakesOver',
+                'TerraFarm entscheidet: Material der Karte an dieser Stelle - in jeder Tiefe gleich'))
         end
 
         self:appendTip(lines)

@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <modDesc descVersion="97">
     <author>Tommy Honold - Farmersingles.de - FrittePlayz</author>
-    <version>1.4.2.0</version>
+    <version>1.5.0.0</version>
 
     <title>
         <en>Mining Layers</en>
         <de>Mining Layers</de>
         <fr>Mining Layers</fr>
         <pl>Mining Layers</pl>
+        <it>Mining Layers</it>
     </title>
 
     <description>
@@ -22,7 +23,7 @@ Setup is one step: draw a TerraFarm area around the pit. The reference height is
 Also included:
 - Spoil pile memory: you pick back up what you dumped - with NO pile limit (dumped material becomes real terrain, not a base-game heap)
 - Height and depth readout while a machine is active (Numpad 5 toggles it on/off, rebindable in the game options)
-- Startup check that reports materials which cannot be dropped on this map (the 63 terrain type limit)
+- Startup check that reports materials which cannot be dropped on this map (the map ran out of ground slots)
 
 Requires TerraFarm by scfmod: github.com/scfmod/FS25_TerraFarm
 Not affiliated with scfmod. No TerraFarm files are shipped with this mod.
@@ -42,7 +43,7 @@ Einrichtung ist ein Schritt: einen TerraFarm-Bereich um die Grube ziehen. Die Be
 Ausserdem dabei:
 - Halden-Gedaechtnis: aufgenommen wird, was abgekippt wurde - OHNE Halden-Limit (abgekipptes Material wird echtes Gelaende, kein Basegame-Haufen)
 - Hoehen- und Tiefenanzeige, solange eine Maschine aktiv ist (Numpad 5 schaltet sie ein/aus, im Spiel umbelegbar)
-- Pruefung beim Start, welche Materialien sich auf dieser Karte nicht ablegen lassen (die 63-Gelaendetypen-Grenze)
+- Pruefung beim Start, welche Materialien sich auf dieser Karte nicht ablegen lassen (der Karte sind die Bodenplaetze ausgegangen)
 
 Benoetigt TerraFarm von scfmod: github.com/scfmod/FS25_TerraFarm
 Keine Verbindung zu scfmod. Es werden keine TerraFarm-Dateien mitgeliefert.
@@ -62,7 +63,7 @@ La mise en place tient en une etape : trace une zone TerraFarm autour de la foss
 Egalement inclus :
 - Memoire des tas : tu reprends ce que tu as deverse - SANS limite de tas (le materiau devient du vrai terrain, pas un tas du jeu de base)
 - Affichage de hauteur et de profondeur quand une machine est active (Pave num. 5 pour l'activer/desactiver, reassignable dans les options)
-- Verification au demarrage des materiaux qui ne peuvent pas etre deverses sur cette carte (la limite des 63 types de terrain)
+- Verification au demarrage des materiaux qui ne peuvent pas etre deverses sur cette carte (la carte n'a plus de place au sol)
 
 Necessite TerraFarm de scfmod : github.com/scfmod/FS25_TerraFarm
 Aucune affiliation avec scfmod. Aucun fichier TerraFarm n'est livre avec ce mod.
@@ -82,7 +83,7 @@ Konfiguracja to jeden krok: narysuj obszar TerraFarm wokol wyrobiska. Wysokosc o
 W zestawie takze:
 - Pamiec hald: odbierasz to, co wysypales - BEZ limitu hald (material staje sie prawdziwym terenem, nie sterta z gry bazowej)
 - Wskaznik wysokosci i glebokosci, gdy maszyna jest aktywna (Num 5 wlacza/wylacza, klawisz mozna zmienic w opcjach)
-- Kontrola przy starcie, ktorych materialow nie da sie wysypac na tej mapie (limit 63 typow terenu)
+- Kontrola przy starcie, ktorych materialow nie da sie wysypac na tej mapie (mapie skonczyly sie miejsca na materialy terenu)
 
 Wymaga TerraFarm od scfmod: github.com/scfmod/FS25_TerraFarm
 Brak powiazania ze scfmod. Zadne pliki TerraFarm nie sa dolaczane.
@@ -91,6 +92,28 @@ Mining Layers - Tommy Honold, Farmersingles.de. Projekt FrittePlayz (YouTube).
 
 Ustawienia: modSettings/FS25_MiningLayers/miningLayers.xml]]>
         </pl>
+        <it>
+            <![CDATA[PER TERRAFARM E LE MAPPE MINERARIE (Yukon Back Country e altre mappe RGC).
+Addon non ufficiale per TerraFarm di scfmod.
+
+In FS25 scegli tu il materiale, a qualsiasi profondita. Questo addon mette strati nel terreno: prima terreno vegetale, poi ghiaia, piu in basso paydirt. Le profondita si impostano in metri sotto la superficie, per ogni area TerraFarm.
+
+La configurazione e un solo passo: traccia un'area TerraFarm attorno alla fossa. L'altezza di riferimento viene presa automaticamente dal contorno dell'area - niente da rilevare, niente da inserire. Funziona su qualsiasi mappa, senza modificare la mappa.
+
+Incluso anche:
+- Memoria dei cumuli: riprendi cio che hai scaricato - SENZA limite di cumuli (il materiale diventa terreno vero, non un mucchio del gioco base)
+- Indicatore di altezza e profondita quando una macchina e attiva (Num 5 per attivare/disattivare, riassegnabile nelle opzioni)
+- Controllo all'avvio dei materiali che non si possono scaricare su questa mappa (la mappa ha esaurito i posti a terra)
+
+Richiede TerraFarm di scfmod: github.com/scfmod/FS25_TerraFarm
+Nessuna affiliazione con scfmod. Nessun file di TerraFarm e incluso in questa mod.
+
+Mining Layers di Tommy Honold, Farmersingles.de. Un progetto FrittePlayz (YouTube).
+
+Traduzione italiana: marcols13.
+
+Impostazioni: modSettings/FS25_MiningLayers/miningLayers.xml]]>
+        </it>
     </description>
 
     <iconFilename>icon_miningLayers.png</iconFilename>

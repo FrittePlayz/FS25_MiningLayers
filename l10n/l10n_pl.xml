@@ -9,6 +9,7 @@
         <text name="ml_until" text="do" />
         <text name="ml_stillNeeded" text="jeszcze" />
         <text name="ml_noLayers" text="brak warstw w tym miejscu" />
+        <text name="ml_mapResourceTakesOver" text="TerraFarm decyduje: materiał mapy w tym miejscu - taki sam na każdej głębokości" />
         <text name="ml_above" text="czyli" />
         <text name="ml_aboveRef" text="powyżej wysokości odniesienia" />
         <text name="ml_overrideHint" text="Materiał TerraFarm %s nie działa tutaj - decyduje warstwa" />
@@ -23,6 +24,7 @@
         <text name="ml_tip4" text="mod pamięta hałdy - podnosisz to, co wysypano" />
         <text name="ml_tip5" text="kolor linii = materiał zaczynający się od tego miejsca; czerwony = dno wyrobiska" />
         <text name="ml_tip6" text="wskaźnik pokazuje, ile zostało do następnej warstwy" />
+        <text name="ml_tip7" text="To, jakie materiały istnieją, zależy od twojej mapy i listy modów — (!) znaczy: kopać tak, wysypywać nie" />
 
         <text name="input_ML_TOGGLE_HUD" text="Mining Layers: wskaźnik wł./wył." />
         <text name="input_ML_HUD_MOVE" text="Mining Layers: przesuń wskaźnik (kursor myszy)" />
@@ -65,7 +67,7 @@
         <text name="ml_helpQsBothWays1" text="Zostaw pola materiału obszaru TerraFarm PUSTE, a Mining Layers robi swoje: to, co ląduje w łyżce, zależy od głębokości kopania. To normalny przypadek dla wyrobiska." />
         <text name="ml_helpQsBothWays2" text="Wpisz zamiast tego materiał w obszarze, a dostajesz zwykły TerraFarm bez warstw. W sam raz na place budowy, budowę dróg i niwelację — wszędzie tam, gdzie chcesz tylko przemieszczać ziemię i zawsze potrzebujesz tego samego materiału." />
         <text name="ml_helpQsBothWays3" text="Ten sam wynik osiągniesz z zakładki Warstwy: wybierz tam obszar i ustaw go na &quot;Zwykły TerraFarm&quot;. Obie drogi prowadzą w to samo miejsce, wybierz którą wolisz." />
-        <text name="ml_edForeign" text="⚠ Ta strefa została napisana ręcznie w miningLayers.xml i może być tu pokazana tylko w uproszczonej formie. Zapisanie przepisze ją na schemat edytora; dodatki jak własne tekstury podłoża czy stała wysokość odniesienia przepadną." />
+        <text name="ml_edForeign" text="⚠ Ta strefa została napisana ręcznie w miningLayers.xml i może być tu pokazana tylko w uproszczonej formie. Zapisanie przepisze ją na schemat edytora; stała wysokość odniesienia przepadnie. Własne tekstury podłoża (paintLayer) zostaną zachowane." />
         <text name="ml_edLayerSection" text="Warstwy" />
         <text name="ml_edLayer" text="Warstwa" />
         <text name="ml_edMaterial" text="Materiał" />
@@ -76,6 +78,11 @@
         <text name="ml_edSaved" text="Warstwy zapisane. Obowiązują od razu dla każdego obszaru bez własnej strefy." />
         <text name="ml_edHint" text="Jasna obwódka to warstwa, którą właśnie edytujesz. Pokład to stały ostatni wiersz: materiał do wyboru (domyślnie PAYDIRT, węgiel lub wapień też działają), grubość i położenie stałe. Skała pod spodem ustawia się sama. Minimalna grubość: 1 m dla najwyższej warstwy, 1,5 m dla każdej niższej — przy dużych maszynach lepiej 2 m. Nie zapomnij zapisać: ESC lub Wstecz opuszcza stronę i wszystko od ostatniego zapisu przepada." />
         <text name="ml_edSeamEntry" text="Pokład: %s" />
+        <!-- Material-Pool dieser Karte (1.4.3) -->
+        <text name="ml_edPoolNoTipHere" text="⚠ (!) %s nie da się wysypać na ziemię na TEJ mapie. Kopanie, transport i sprzedaż działają normalnie. Na tej mapie nie ma już wolnego miejsca na materiał terenu — to kwestia mapy i twojej listy modów, nie tego moda." />
+        <text name="ml_edPoolNoTipMark" text="(!) = nie da się wysypać na tej mapie. Tej mapie skończyły się miejsca na materiały terenu — kopanie i sprzedaż nadal działają." />
+        <text name="ml_edPoolMissing" text="Niedostępne na tej mapie: %s. Ani mapa, ani mody nie dostarczają tych materiałów, więc nie ma ich w wyborze." />
+        <text name="ml_edPoolHint" text="Zapamiętaj: mniej modów = więcej wolnych miejsc = więcej materiałów do wysypania." />
 
         <!-- ===================== Tab 1: quick start ===================== -->
         <text name="ml_helpQsSetupTitle" text="Konfiguracja w jednym kroku" />
@@ -148,7 +155,7 @@
         <text name="ml_helpTipsVeh2" text="Paczka konfiguracji dla popularnych maszyn górniczych jest w przygotowaniu. Wyjdzie osobno od tego moda." />
 
         <text name="ml_helpTipsMapTitle" text="Specyfika map" />
-        <text name="ml_helpTipsMapB1" text="FS25 obsługuje tylko 63 typy materiałów. Przy wielu zainstalowanych modach niektóre wypadają poza koniec i nie dają się już wysypywać. Mod sprawdza to przy starcie i zapisuje dotknięte materiały do logu." />
+        <text name="ml_helpTipsMapB1" text="Ile materiałów terenu jest możliwych, ustala mapa, a nie mod — wiele dopuszcza 63, szerzej zbudowane więcej, a podstawowa gra zajmuje już 48. Przy wielu modach reszta znika szybko i ostatnich nie da się już wysypywać. Mod sprawdza to przy starcie i zapisuje dotknięte materiały do logu." />
         <text name="ml_helpTipsMapB2" text="Nazwy tekstur podłoża różnią się na każdej mapie. Przy pierwszym kopaniu mod zapisuje listę twojej mapy do logu. Stamtąd bierz wartości paintLayer." />
         <text name="ml_helpTipsMapB4" text="Mod działa na każdej mapie: dla tekstur warstw automatycznie wybiera najbliższe podłoże, jakie mapa oferuje (standardowe nazwy jak GRAVEL, MOUNTAINROCK, MOSS_STONES). Jeśli mapa nie ma nic pasującego, po prostu zostaje aktywny twój własny wybór tekstury - materiały, warstwy i hałdy nadal działają." />
         <text name="ml_helpTipsMapB3" text="Niektóre mapy blokują koryta rzek przed deformacją. To block mapa samej mapy i nie ma nic wspólnego z własnością ani z tym modem." />
@@ -159,7 +166,20 @@
         <text name="ml_helpTipsAboutTitle" text="O tym modzie" />
         <text name="ml_helpTipsAbout1" text="Mining Layers to nieoficjalny dodatek do TerraFarm od scfmod. Nie ma żadnego powiązania ze scfmod i żadne pliki TerraFarm nie są dołączane. TerraFarm jest dostępny na GitHubie, nie w ModHubie." />
         <text name="ml_pageTitle" text="Mining Layers" />
-        <text name="ml_credits" text="Mining Layers - Tommy Honold, Farmersingles.de. Projekt FrittePlayz." />
+        <text name="ml_credits" text="Mining Layers - Tommy Honold. Projekt FrittePlayz." />
+        <!-- Reiter 1, ganz vorn: Materialien haengen an Karte + Modliste (1.4.3) -->
+        <text name="ml_helpQsMapTitle" text="Najpierw: jakie materiały ma TWOJA mapa?" />
+        <text name="ml_helpQsMap1" text="O tym, czy materiał w ogóle istnieje i czy da się go wysypać z powrotem na ziemię, nie decyduje ten mod, lecz twoja mapa razem z listą modów. Z materiałów górniczych podstawowa gra zna tylko STONE — DIRT, GRAVEL, SAND, COAL, LIMESTONE czy PAYDIRT zawsze pochodzą z map lub modów. Do tego każda mapa ma ograniczoną liczbę miejsc na materiały terenu: 48 zajmuje już podstawowa gra, a ile jest ich łącznie, ustala sama mapa — wiele ma 63, szerzej zbudowane więcej. Gdy mapie skończą się miejsca, materiał nadal wykopiesz, przewieziesz i sprzedasz, ale już nie wysypiesz." />
+        <text name="ml_helpQsMap2" text="Dlatego Mining Layers idzie drogą pośrednią, by pozostać grywalnym na każdej mapie: przy wczytywaniu mapy mod sprawdza raz, co TWOJA mapa naprawdę oferuje, i tylko to pokazuje w wyborze warstw. (!) za nazwą znaczy: kopanie, transport i sprzedaż działają, wysypywanie na tej mapie nie. Czego brakuje całkowicie, jest wypisane pod przekrojem. Nie musisz więc wcześniej testować map ani niczego sprawdzać — jeśli czegoś brak, to wina mapy, nie moda." />
+        <text name="ml_helpQsMap3" text="Dwa wyjścia, jeśli potrzebny ci materiał ma (!): usunąć mody wnoszące własne materiały terenu albo grać na mapie zbudowanej z większą liczbą kanałów. Limit 63 nie jest sztywnym prawem gry — mapę można zbudować szerzej i niektóre już takie są. Czego nie potrafi żaden mod, to podnieść go z zewnątrz." />
+        <!-- Kartenbericht (1.4.3) -->
+        <text name="ml_mapSection" text="Co potrafi ta mapa" />
+        <text name="ml_mapNoData" text="Raport mapy będzie dostępny po jej wczytaniu." />
+        <text name="ml_mapUsable" text="Dostępne na tej mapie: %s — możesz je kopać, przewozić, sprzedawać i wysypywać z powrotem na ziemię." />
+        <text name="ml_mapNoTipList" text="Tylko kopanie i sprzedaż: %s. Wysypanie ich z powrotem na ziemię tu nie zadziała — zabrakło dla nich miejsca w systemie terenu." />
+        <text name="ml_mapMissingList" text="W ogóle nieobecne: %s. Ani mapa, ani mody ich nie dostarczają." />
+        <text name="ml_mapAdvice" text="Ile materiałów terenu się zmieści, decyduje twoja MAPA: to ona ustala szerokość kanału, a podstawowa gra zajmuje już 48 miejsc. Ile z nich jest zajętych, decyduje twoja LISTA MODÓW — kto pierwszy się wczyta, dostaje miejsce. Czyli: mniej modów zwalnia miejsca, a mapa zbudowana z większą liczbą kanałów ma ich od początku więcej." />
+        <text name="ml_mapManyOwn" text="Ta mapa sama wnosi bardzo dużo materiałów terenu, więc miejsca kończą się szybko. To typowe dla map przeniesionych z FS19 lub FS22." />
         <text name="ml_helpTipsAbout2" text="Ten mod jest darmowy i taki pozostanie." />
     </texts>
 </l10n>

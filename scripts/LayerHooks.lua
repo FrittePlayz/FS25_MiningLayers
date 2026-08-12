@@ -68,6 +68,57 @@ function MiningLayers:syncStable(kind, value, apply)
     end
 end
 
+---Protokolliert EINMAL je Grund, warum an dieser Stelle keine Schicht greift - und was
+---stattdessen passiert. Bis 1.4.3 kehrte applyLayer stumm zurueck; der Spieler sah nur
+---"der Mod uebernimmt nicht" und wir hatten im Log nichts zum Nachsehen. Genau das hat
+---am 11.08. zwei Fehldiagnosen gekostet (Percy: Fallback-Bug, ich: Halden-Gedaechtnis).
+---
+---⚠️ Drosselung je MELDUNGSART, nicht gegen die zuletzt geschriebene Zeile: zwei
+---abwechselnde Gruende heben eine solche Sperre gegenseitig auf (Diagnose-Vorfall vom
+---11.08., 18.308 Zeilen in 12 Minuten).
+---@param reason string? 'manual' | 'off' | 'spoil' | 'path' | nil
+---@param vehicle table?
+function MiningLayers:logNoLayerReason(reason, vehicle)
+    if type(self.loggedNoLayerReasons) ~= 'table' then
+        self.loggedNoLayerReasons = {}
+    end
+
+    local key = reason or 'none'
+
+    -- Ohne Grund UND ohne Eingabe-Bereich ist es der haeufigste Supportfall
+    -- (raver 10.08.) - den trennen wir vom allgemeinen "keine Schicht hier".
+    if reason == nil and vehicle ~= nil and MiningLayers.isCallable(vehicle.getMachineInputArea) then
+        local area, isEnabled = vehicle:getMachineInputArea()
+
+        if area == nil or not isEnabled then
+            key = 'noInputArea'
+        end
+    end
+
+    if self.loggedNoLayerReasons[key] then
+        return
+    end
+
+    self.loggedNoLayerReasons[key] = true
+
+    local texts = {
+        manual      = 'Material im Bereich gesetzt (Handbetrieb) - der Bereich hat keine Schichten.',
+        off         = 'Schichten fuer diesen Bereich abgeschaltet.',
+        spoil       = 'ueber der Bezugshoehe (Aufschuettung) - dort gilt kein gewachsener Boden.',
+        path        = 'Pfad-Bereich - Schichten gibt es nur in Polygon-Bereichen.',
+        noInputArea = 'die Maschine hat KEINEN Eingabe-Bereich zugewiesen (Maschinen-Menue, Standard Y).',
+        none        = 'an dieser Stelle greift keine Schicht.'
+    }
+
+    MiningLayers.log('Keine Schicht: %s', texts[key] or texts.none)
+
+    -- Der zweite Satz ist der wichtigere: was JETZT das Material bestimmt.
+    if key ~= 'manual' then
+        MiningLayers.log('  -> TerraFarm entscheidet (applyMapResources): Material der Karte an')
+        MiningLayers.log('     dieser Stelle. Die Abfrage kennt nur X/Z - in jeder Tiefe dasselbe.')
+    end
+end
+
 ---Setzt das Schichtmaterial an einer laufenden Grab-Operation.
 ---@param op table LandscapingInput*-Instanz
 function MiningLayers:applyLayer(op)
@@ -82,7 +133,7 @@ function MiningLayers:applyLayer(op)
     end
 
     local worldPosX, _, worldPosZ = getWorldTranslation(workArea.rootNode)
-    local entry, terrainY, surfaceY, zoneName = self:getLayerAt(op.vehicle, worldPosX, worldPosZ)
+    local entry, terrainY, surfaceY, zoneName, reason = self:getLayerAt(op.vehicle, worldPosX, worldPosZ)
 
     -- Einmalig festhalten, was hier ermittelt wurde. Das ist die Rueckfallebene der
     -- Anzeige: sie haengt an einem anderen Codepfad und traegt auch dann, wenn im
@@ -90,6 +141,9 @@ function MiningLayers:applyLayer(op)
     self:logFirstReading(entry, terrainY, surfaceY, zoneName)
 
     if entry == nil then
+        -- Nicht mehr stumm: sagen, warum nichts greift und was stattdessen zaehlt.
+        self:logNoLayerReason(reason, op.vehicle)
+
         return
     end
 
@@ -327,6 +381,91 @@ end
 MiningLayers.freeDumpLogged = false
 MiningLayers.freeDumpHookInstalled = false
 
+-- ⚠️ Beim Laden setzen, nicht erst in deleteMap: beim ERSTEN Kartenstart hat
+-- deleteMap noch nie gelaufen, und ein nil-Zugriff auf die Tabelle waere ein
+-- Fehler mitten im Abkipp-Pfad.
+MiningLayers.freeHeightLogged = false
+MiningLayers.freeHeightHookInstalled = false
+---@type table<string, boolean> je Material einmal melden, nicht je Frame
+MiningLayers.freeHeightBlockedLogged = {}
+
+--------------------------------------------------------------------------------
+-- Abkipp-Diagnose (1.4.3-TEST)
+--------------------------------------------------------------------------------
+--
+-- Warum: Am 11.08. blieb offen, WARUM Abkippen auf ebenem Boden nichts tut,
+-- waehrend es in einer Grube laeuft. Es gibt drei voneinander unabhaengige
+-- Pruefpunkte, und im Spiel sehen alle gleich aus (nichts passiert oder
+-- "Aktion kann hier nicht ausgefuehrt werden"):
+--   1. das Basisspiel (Abwurfstrahl muss den Boden erreichen),
+--   2. TerraFarms Hoehenpruefung (getCanOutputToTerrain, seit 1.4.3 von uns
+--      uebersteuert),
+--   3. die Ausgabe-Operation selbst: LandscapingOutputFlatten:apply() laeuft nur,
+--      wenn ein Arbeitsknoten UNTER der Zielhoehe liegt - sonst kehrt sie
+--      wortlos um. Mit einem Ausgabe-Bereich ist diese Zielhoehe der Grubenboden.
+--
+-- Statt weiter zu raten, schreibt dieser Build je Versuch eine Zeile mit
+-- Betriebsart, Litern rein/raus und Zustand der Pruefpunkte. Gedrosselt: gleiche
+-- Meldung hoechstens alle 2 Sekunden, sonst laeuft das Log voll.
+--
+-- ⚠️ VOR DEM RELEASE: dumpDiagnostics standardmaessig auf false stellen.
+--
+
+---@type table<string, number> Zeitstempel je Meldungsart
+MiningLayers.diagLastTimes = {}
+MiningLayers.diagHooksInstalled = false
+
+---@param message string
+function MiningLayers.diag(message)
+    if not MiningLayers.dumpDiagnostics then
+        return
+    end
+
+    local now = (type(g_time) == 'number') and g_time or 0
+
+    -- ⚠️ Je Meldungsart drosseln, nicht gegen die zuletzt geschriebene Zeile:
+    -- zwei abwechselnde Meldungen heben eine solche Sperre gegenseitig auf.
+    -- Genau das ist am 11.08. passiert - 18.000 Zeilen in 12 Minuten.
+    local key = message:match('^[^:(]+') or message
+
+    if MiningLayers.diagLastTimes[key] ~= nil
+        and (now - MiningLayers.diagLastTimes[key]) < 2000 then
+        return
+    end
+
+    MiningLayers.diagLastTimes[key] = now
+
+    MiningLayers.log('DIAG %s', message)
+end
+
+---Klartextname der Betriebsart (RAISE/FLATTEN/SMOOTH/PAINT/MATERIAL/LOWER).
+---Die Zahl allein sagt beim Lesen des Logs niemandem etwas.
+---@param vehicle table?
+---@return string
+function MiningLayers.diagOutputMode(vehicle)
+    if type(vehicle) ~= 'table' or not MiningLayers.isCallable(vehicle.getOutputMode) then
+        return '?'
+    end
+
+    local ok, mode = pcall(vehicle.getOutputMode, vehicle)
+
+    if not ok then
+        return '?'
+    end
+
+    local machineClass = MiningLayers.tf('Machine')
+
+    if type(machineClass) == 'table' and type(machineClass.MODE) == 'table' then
+        for name, value in pairs(machineClass.MODE) do
+            if value == mode then
+                return tostring(name)
+            end
+        end
+    end
+
+    return tostring(mode)
+end
+
 ---Haengt sich an die Ausgabe-Funktionen von MachineWorkArea (RAISE/FLATTEN/
 ---SMOOTH). Greift der Bypass, wird getMachineOutputArea am Fahrzeug fuer die
 ---Dauer des Original-Aufrufs durch "kein Bereich" ersetzt - der Original-Code
@@ -374,6 +513,11 @@ function MiningLayers:installFreeDumpHook()
                         vehicle.getMachineOutputArea = originalGetArea
 
                         if okCall then
+                            MiningLayers.diag(string.format(
+                                '%s (Bereich umgangen, "%s"): Modus %s, angefragt %.0f l, abgelegt %.0f l',
+                                fnName, tostring(areaName), MiningLayers.diagOutputMode(vehicle),
+                                tonumber(liters) or -1, tonumber(result) or -1))
+
                             return result
                         end
 
@@ -384,7 +528,16 @@ function MiningLayers:installFreeDumpHook()
                     end
                 end
 
-                return original(workArea, liters, fillTypeIndex)
+                local plain = original(workArea, liters, fillTypeIndex)
+
+                -- Ohne Bypass: genau hier entscheidet sich, ob die Ausgabe-
+                -- Operation wortlos umkehrt (0 l trotz voller Schaufel).
+                MiningLayers.diag(string.format(
+                    '%s (kein Bypass): Modus %s, angefragt %.0f l, abgelegt %.0f l',
+                    fnName, MiningLayers.diagOutputMode(workArea.vehicle),
+                    tonumber(liters) or -1, tonumber(plain) or -1))
+
+                return plain
             end
 
             hooked = true
@@ -394,6 +547,193 @@ function MiningLayers:installFreeDumpHook()
     MiningLayers.freeDumpHookInstalled = hooked
 
     return hooked
+end
+
+---Hebt TerraFarms Hoehensperre fuers Abkippen auf (1.4.3, Tommys Vorgabe:
+---"muss auf jeder Hoehe auf jeder Karte gehen").
+---
+---Mechanik im Original (`MachineWorkArea:getCanOutputToTerrain`, gegen den
+---Quelltext von TerraFarm 1.6.3.0 gelesen) - ZWEI Sperren, beide reine
+---Hoehenfragen:
+---  1. `isAreaNodeActive` / `outputNodeActive`: wahr, sobald das Gelaende AN
+---     ODER UEBER einem Arbeitsknoten liegt (Schaufel steckt im Boden).
+---  2. Ein Strahl senkrecht unter dem Ausgabeknoten: trifft er innerhalb von
+---     `raycastDistance` (Vorgabe 0,5 m) Gelaende, ist Abkippen gesperrt.
+---Sperre 2 ist die, ueber die jeder stolpert: auf ebenem Boden liegt das
+---Gelaende naeher als einen halben Meter unter der Schaufelkante, also
+---verweigert das Spiel mit "Aktion kann hier nicht ausgefuehrt werden" - und
+---der Text zeigt auf den ORT, obwohl es die Hoehe ist. Ueber einer Grube geht
+---es, zwei Meter daneben nicht (Tommys Live-Gegenprobe 11.08.).
+---
+---Wir schalten beide ab statt nur die Distanz zu senken: eine kleinere Distanz
+---waere wieder eine willkuerliche Grenze, an der Nutzer haengenbleiben.
+---Abschaltbar ueber `freeDumpHeight="false"` in der miningLayers.xml - falls
+---sich im Betrieb doch ein Nachteil zeigt, ohne neuen Build.
+---Das Material, das gerade in der Schaufel liegt - aber nur, wenn es sich auf
+---dieser Karte NICHT ablegen laesst. Sonst nil.
+---@param workArea table
+---@return string? fillTypeName
+function MiningLayers.getUntippableLoad(workArea)
+    local vehicle = type(workArea) == 'table' and workArea.vehicle or nil
+    local spec = type(vehicle) == 'table' and vehicle.spec_machine or nil
+
+    if type(spec) ~= 'table' or not MiningLayers.isCallable(vehicle.getFillUnitFillType) then
+        return nil
+    end
+
+    -- TerraFarm merkt sich den Index beim Laden (Machine.lua:375); der
+    -- dischargeNode ist der Rueckfall, falls das mal umgebaut wird.
+    local unitIndex = spec.fillUnitIndex
+        or (type(spec.dischargeNode) == 'table' and spec.dischargeNode.fillUnitIndex or nil)
+
+    if unitIndex == nil then
+        return nil
+    end
+
+    local ok, fillTypeIndex = pcall(vehicle.getFillUnitFillType, vehicle, unitIndex)
+
+    if not ok or type(fillTypeIndex) ~= 'number' or fillTypeIndex <= 0 then
+        return nil
+    end
+
+    -- ⚠️ FillType.UNKNOWN ist NICHT 0, sondern 1 - eine leere Schaufel meldet
+    -- also einen gueltigen Index, und die Ablegbarkeits-Pruefung sagt darauf
+    -- "nein". Ohne diese Zeile blockiert der Schutz genau dann, wenn gar kein
+    -- Material im Weg ist (live im Log: 'UNKNOWN hat keinen Gelaende-Typ').
+    local unknown = (FillType ~= nil and FillType.UNKNOWN) or 1
+
+    if fillTypeIndex == unknown then
+        return nil
+    end
+
+    if MiningLayers:getIsFillTypeTippable(fillTypeIndex) ~= false then
+        return nil
+    end
+
+    local fillType = g_fillTypeManager ~= nil
+        and g_fillTypeManager:getFillTypeByIndex(fillTypeIndex) or nil
+    local name = fillType ~= nil and fillType.name or tostring(fillTypeIndex)
+
+    -- Zweiter Gurt: manche Fassungen melden den Namen statt des Index.
+    if name == 'UNKNOWN' then
+        return nil
+    end
+
+    return name
+end
+
+---@return boolean
+function MiningLayers:installFreeHeightHook()
+    if MiningLayers.freeHeightHookInstalled then
+        return true
+    end
+
+    local workAreaClass = MiningLayers.tf('MachineWorkArea')
+
+    if type(workAreaClass) ~= 'table' then
+        return false
+    end
+
+    local original = workAreaClass.getCanOutputToTerrain
+
+    if not MiningLayers.isCallable(original) then
+        return false
+    end
+
+    workAreaClass.getCanOutputToTerrain = function(workArea, ...)
+        if MiningLayers.active and MiningLayers.freeDumpHeight then
+            -- ⚠️ NICHT uebersteuern, wenn das Material gar keinen Gelaende-Typ
+            -- hat, weil der Karte die Bodenplaetze ausgingen. Sonst sagt TerraFarm
+            -- "du darfst kippen", die
+            -- Engine kann es aber nirgends hinlegen: 0 Liter, keine Meldung -
+            -- genau die stille Falle, die wir beim Ausgabe-Bereich gerade
+            -- beseitigt haben. Mit false kommt die ehrliche Absage des Spiels
+            -- zurueck, passend zur (!)-Marke in der Schichten-Auswahl.
+            local blockedName = MiningLayers.getUntippableLoad(workArea)
+
+            if blockedName ~= nil then
+                if MiningLayers.freeHeightBlockedLogged[blockedName] == nil then
+                    MiningLayers.freeHeightBlockedLogged[blockedName] = true
+                    MiningLayers.log('Abkipp-Hoehe: "%s" hat auf dieser Karte keinen Gelaende-Typ - Abkippen bleibt gesperrt (Hoehe ist nicht die Ursache).',
+                        blockedName)
+                end
+
+                return false
+            end
+
+            if not MiningLayers.freeHeightLogged then
+                MiningLayers.freeHeightLogged = true
+                MiningLayers.log('Abkipp-Hoehe frei: TerraFarms Hoehenpruefung (0,5 m unter der Schaufel) ist aufgehoben - Abkippen geht auf jeder Hoehe.')
+            end
+
+            -- Nur im Diagnosebetrieb das Original zusaetzlich fragen: es
+            -- raycastet, das kostet. Dafuer steht dann im Log, ob unsere
+            -- Uebersteuerung ueberhaupt etwas geaendert haette.
+            if MiningLayers.dumpDiagnostics then
+                local okOrig, origResult = pcall(original, workArea, ...)
+
+                MiningLayers.diag(string.format(
+                    'Hoehenpruefung: Original haette %s gesagt (Knoten im Boden: %s / Ausgabeknoten im Boden: %s) - wir sagen ja',
+                    okOrig and tostring(origResult) or 'FEHLER',
+                    tostring(workArea.isAreaNodeActive), tostring(workArea.outputNodeActive)))
+            end
+
+            return true
+        end
+
+        return original(workArea, ...)
+    end
+
+    MiningLayers.freeHeightHookInstalled = true
+
+    return true
+end
+
+---Legt sich um TerraFarms Entscheidung "darf diese Maschine auf den Boden
+---abladen" und schreibt ihr Ergebnis ins Log. Das ist die Stelle, an der die
+---Meldung "Aktion kann hier nicht ausgefuehrt werden" entsteht - hier trennt
+---sich Basisspiel (superFunc) von TerraFarm.
+---
+---⚠️ Wirkt nur, wenn diese Datei laeuft, BEVOR die Fahrzeuge ihre
+---Spezialisierung binden (TerraFarm haengt die Funktion je Fahrzeug in onLoad
+---an). Bleibt das Log leer, ist genau das die Erkenntnis - dann muessen wir am
+---Fahrzeug statt an der Klasse ansetzen.
+---@return boolean
+function MiningLayers:installDumpDiagnostics()
+    if MiningLayers.diagHooksInstalled or not MiningLayers.dumpDiagnostics then
+        return MiningLayers.diagHooksInstalled
+    end
+
+    local machineClass = MiningLayers.tf('Machine')
+
+    if type(machineClass) ~= 'table' or not MiningLayers.isCallable(machineClass.getCanDischargeToGround) then
+        return false
+    end
+
+    local original = machineClass.getCanDischargeToGround
+
+    -- Signatur wie im Original: (self, superFunc, dischargeNode) - TerraFarm
+    -- haengt sie ueber Utils.overwrittenFunction ein.
+    machineClass.getCanDischargeToGround = function(vehicle, superFunc, dischargeNode)
+        local okCall, result = pcall(original, vehicle, superFunc, dischargeNode)
+
+        if okCall then
+            MiningLayers.diag(string.format(
+                'Abladen erlaubt? %s (Modus %s, Strahl trifft Boden: %s)',
+                tostring(result), MiningLayers.diagOutputMode(vehicle),
+                tostring(dischargeNode ~= nil and dischargeNode.dischargeHitTerrain)))
+
+            return result
+        end
+
+        MiningLayers.log('DIAG FEHLER in getCanDischargeToGround: %s', tostring(result))
+
+        return superFunc(vehicle, dischargeNode)
+    end
+
+    MiningLayers.diagHooksInstalled = true
+
+    return true
 end
 
 function MiningLayers:installHooks()
@@ -443,5 +783,24 @@ function MiningLayers:installHooks()
         MiningLayers.log('Abkipp-Schutz aktiv: Schicht-Zone als Ausgabe-Bereich blockiert das Kippen nicht mehr.')
     else
         MiningLayers.log('WARNUNG: MachineWorkArea nicht gefunden - Abkipp-Schutz bleibt aus.')
+    end
+
+    if self.freeDumpHeight then
+        if self:installFreeHeightHook() then
+            MiningLayers.log('Abkipp-Hoehe: TerraFarms Hoehenpruefung wird aufgehoben (freeDumpHeight="true").')
+        else
+            MiningLayers.log('WARNUNG: MachineWorkArea nicht gefunden - Hoehenpruefung bleibt wie im Original.')
+        end
+    else
+        MiningLayers.log('Abkipp-Hoehe: TerraFarms Hoehenpruefung bleibt aktiv (freeDumpHeight="false").')
+    end
+
+    if self.dumpDiagnostics then
+        MiningLayers.log('*** ABKIPP-DIAGNOSE AKTIV (dumpDiagnostics="true") - schreibt DIAG-Zeilen ins Log.')
+        MiningLayers.log('    Nur fuer die Fehlersuche gedacht; zum Abschalten in der miningLayers.xml auf "false".')
+
+        if not self:installDumpDiagnostics() then
+            MiningLayers.log('    Hinweis: Machine.getCanDischargeToGround nicht greifbar - die Zeile "Abladen erlaubt?" fehlt dann.')
+        end
     end
 end

@@ -58,6 +58,8 @@
         <GuiElement profile="fs25_subCategorySelectorTabbedContainer" id="subCategoryPages[4]">
             <Bitmap profile="mlEditor_canvas" id="editorCanvas" />
 
+            <Text profile="mlEditor_pool" id="editorPool" text="" />
+
             <Text profile="mlEditor_hint" id="editorHint" text="" />
 
             <!--
@@ -205,12 +207,30 @@
 
         <!-- ========== Reiter 4: Schichten-Editor ========== -->
 
-        <!-- Zeichenflaeche. Bleibt leer; das Lua liest absPosition/absSize und malt hinein. -->
+        <!-- Zeichenflaeche. Bleibt leer; das Lua liest absPosition/absSize und malt hinein.
+             ⚠️ 1.4.3: von 660px auf 580px verkleinert, damit darunter der
+             Material-Hinweis dieser Karte Platz hat. Die Balken rechnen in
+             Anteilen der Flaeche - die Hoehe darf sich also aendern. -->
         <Profile name="mlEditor_canvas" extends="baseReference" with="anchorTopLeft">
-            <size value="620px 660px" />
+            <size value="620px 560px" />
             <position value="40px -40px" />
             <imageColor value="0 0 0 0.25" />
             <imageSliceId value="gui.colorPreset" />
+        </Profile>
+
+        <!-- Was diese Karte an Material hergibt (1.4.3). Steht bewusst direkt
+             unter dem Querschnitt: dort sucht man, warum ein Material fehlt. -->
+        <Profile name="mlEditor_pool" extends="textDefault" with="anchorTopLeft">
+            <size value="620px 100px" />
+            <position value="40px -608px" />
+            <textSize value="13px" />
+            <textColor value="0.95 0.75 0.2 1" />
+            <textAlignment value="left" />
+            <textVerticalAlignment value="top" />
+            <!-- 6 Zeilen: Warnung (bis 2) + fehlende Materialien (bis 2) +
+                 Merksatz (1) passen damit auch in FR/PL noch hinein. -->
+            <textMaxNumLines value="6" />
+            <textAutoWidth value="false" />
         </Profile>
 
         <Profile name="mlEditor_hint" extends="textDefault" with="anchorTopLeft">

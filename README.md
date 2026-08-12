@@ -95,14 +95,14 @@ This is **not a defect and not a mod conflict — it's the intended switch.** If
 - **Slope & water handling** — tilted reference plane on hillsides, pit floor clamps to the waterline
 - **In-game menu page** — graphical layer editor plus full documentation (English + German)
 - **Depth display & depth lines** — always know how deep you are and what comes next; **Numpad 5** toggles the display (rebindable in the game options)
-- **Material check at startup** — warns about the engine's 63 terrain material limit
+- **Material check at startup** — tells you how many ground slots this map offers and which materials missed out
 - **Mountain bonus** — on steep slopes paydirt sits near the surface: hauling up the mountain gets rewarded
 - Multiplayer-friendly sponsor sign (see below), no sync traffic
 
 ## Pitfalls worth knowing
 
 - **Layer thickness: don't go thin.** The editor enforces 1 m for the top layer and 1.5 m for every layer below — thinner layers break spoil pile pickup. **With big machines (PC 8000 class), 2 m per layer digs noticeably smoother.**
-- **63 terrain materials is a hard engine limit.** Base game + map + mods share it; additional fill type mods may get kicked out. The startup check tells you where you stand.
+- **Ground material slots are limited — by the MAP, not by the game.** The map sets the channel width of its height density map; the count follows 2^n-1, so 6 bit gives 63 slots, 7 bit gives 127 and 8 bit gives 255. Measured so far: 63 on a 6-bit map (the engine names that number itself) and 83 occupied slots on a 7-bit map with no rejection at all. The base game takes 48, and map plus mods share the rest. So a wide map has room where a narrow one does not. The startup check tells you where you stand; `grep addDensityMapHeightType log.txt` names every material that missed out.
 - **Lowering only works inside the polygon** (TerraFarm design). A wheel loader only cuts ~30–40 cm per pass — drive a ramp into the pit; the excavator is the depth tool.
 - **One slope face per area.** Areas drawn across a ridge or far into a lake stretch the reference plane — draw shoreline areas mostly over land.
 - **Some maps block terraforming** at riverbeds and map edges (engine blocked-area map). No mod can dig there.
@@ -179,7 +179,7 @@ No. Dumped material becomes real terrain via TerraFarm, not a base-game heap —
 TerraFarm checks straight down from the bucket edge: if terrain is closer than about 0.5 m, ground-dumping is blocked (dig-pose protection). What counts is the distance below the edge, not how high the boom is — over an excavated hollow it works even with a low boom; on flat ground lift briefly until the message disappears. There is an upper limit too: the dump still has to hit the ground. So: edge clear by a good half metre, but low enough to drop.
 
 **Material sits in the bucket but will not tip onto the ground?**
-FS25 caps materials that can lie on the ground (height types) at 63 — base game, map and all mods share that pool. When it is full, late-registered fill types lose their slot: they work in the bucket and sell fine, but cannot be tipped onto the terrain. Your log then shows `maximum number (63) of height types already registered`, and since 1.4.2 the mod warns per zone when a layer material is affected. The only fix is trimming fill-type-heavy mods.
+How many materials can lie on the ground (height types) is set by your map, not by the game: the channel width of its height density map decides, following 2^n-1 — 6 bit gives 63 slots, 7 bit gives 127, 8 bit gives 255. The 63 are confirmed by the engine's own error message; on a 7-bit map we measured 83 occupied slots without a single rejection, so the ceiling there is higher but its exact value is calculated, not measured. The base game already uses 48; the map's own materials are registered before any mod's, and whatever is left goes to the mod list in load order. When a map runs out, late-registered fill types lose their slot: they work in the bucket and sell fine, but cannot be tipped onto the terrain. Your log then shows `maximum number (63) of height types already registered` — one line per rejected material, so `grep addDensityMapHeightType log.txt` gives you the full list. Since 1.4.2 the mod warns per zone when a layer material is affected. Two ways out: trim fill-type-heavy mods, or play a map built with more channels. Measured example: on a 6-bit map ten materials were rejected, while the same mod list on a 7-bit map registered 83 height types with none rejected.
 
 **Why does my machine only dump inside one area — or nowhere at all?**
 An output area is assigned in the machine menu: TerraFarm then dumps only inside that area. Since 1.4.2 a layer zone assigned as output runs free automatically (one log line says so). For free dumping anywhere, set the machine's output area to "not set".

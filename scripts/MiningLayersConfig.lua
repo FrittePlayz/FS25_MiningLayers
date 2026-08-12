@@ -44,6 +44,12 @@ MiningLayers.MOUND_BELOW_BASE_TOLERANCE = 0.15
 MiningLayers.showDepthLines = true
 -- TerraFarms Fahrzeug-Auswahl (HUD rechts) springt beim Graben auf die Schicht um.
 MiningLayers.syncVehicleMaterial = true
+---Hebt TerraFarms Hoehenpruefung fuers Abkippen auf (1.4.3). Vorgabe an; wer
+---das Originalverhalten will, setzt es in der miningLayers.xml auf false.
+MiningLayers.freeDumpHeight = true
+---Schreibt bei jedem Abkippversuch eine DIAG-Zeile ins Log. Reines Werkzeug fuer
+---die Fehlersuche, deshalb aus: der Abkipp-Pfad laeuft mehrmals pro Sekunde.
+MiningLayers.dumpDiagnostics = false
 
 MiningLayers.displayPosX = 0.012
 MiningLayers.displayPosY = 0.55
@@ -174,6 +180,57 @@ function MiningLayers:prepareConfigFile()
     return templatePath
 end
 
+---Schluessel einer Zone fuer die Merkliste unten. Muss ohne das Zonen-Objekt
+---auskommen koennen, deshalb aus kind + area statt aus der Tabellenadresse.
+---@param zone table?
+---@return string?
+function MiningLayers.getZoneKey(zone)
+    if type(zone) ~= 'table' then
+        return nil
+    end
+
+    if zone.kind == 'default' then
+        return 'default'
+    end
+
+    if zone.kind == 'global' then
+        return 'global'
+    end
+
+    if type(zone.area) == 'string' then
+        return zone.area:lower()
+    end
+
+    return nil
+end
+
+---Hebt eine Schicht auf, deren Material diese Karte nicht kennt. Sie laeuft
+---nicht mit (kein fillTypeIndex), wird beim Speichern aber wieder in die Datei
+---geschrieben. Liegt bewusst NEBEN dem Zonen-Objekt: faellt eine Zone ganz weg,
+---weil kein einziges Material verfuegbar ist, ueberlebt die Merkliste trotzdem.
+---@param zone table
+---@param entry table
+function MiningLayers:keepUnavailableLayer(zone, entry)
+    local key = MiningLayers.getZoneKey(zone)
+
+    if key == nil then
+        return
+    end
+
+    if type(self.keptLayers) ~= 'table' then
+        self.keptLayers = {}
+    end
+
+    local kept = self.keptLayers[key]
+
+    if kept == nil then
+        kept = { kind = zone.kind, area = zone.area, layers = {} }
+        self.keptLayers[key] = kept
+    end
+
+    table.insert(kept.layers, entry)
+end
+
 ---@param xmlFile table
 ---@param key string
 ---@param kind string
@@ -208,7 +265,20 @@ function MiningLayers:loadZone(xmlFile, key, kind)
             local fillType = g_fillTypeManager:getFillTypeByName(fillTypeName)
 
             if fillType == nil then
-                MiningLayers.log('WARNUNG %s: fillType "%s" ist unbekannt - uebersprungen.', layerKey, fillTypeName)
+                -- Uebersprungen heisst NUR: laeuft auf dieser Karte nicht mit.
+                -- Der Eintrag wird trotzdem aufgehoben und beim naechsten
+                -- Speichern zurueckgeschrieben - sonst raeumt ein Ausflug auf
+                -- eine Karte ohne PAYDIRT die Konfiguration dauerhaft aus (1.4.3).
+                MiningLayers.log('WARNUNG %s: fillType "%s" ist auf dieser Karte unbekannt - Schicht ruht (bleibt erhalten).',
+                    layerKey, fillTypeName)
+
+                MiningLayers:keepUnavailableLayer(zone, {
+                    fillTypeName = fillTypeName,
+                    depth = depth,
+                    aboveY = aboveY,
+                    paintLayerName = xmlFile:getString(layerKey .. '#paintLayer'),
+                    seam = MiningLayers.getXmlBool(xmlFile, layerKey .. '#seam', false),
+                })
             else
                 table.insert(zone.layers, {
                     fillTypeName = fillTypeName,
@@ -233,6 +303,27 @@ function MiningLayers:loadZone(xmlFile, key, kind)
         return nil
     end
 
+    -- ⚠️ Schicht-Stapel ohne unbegrenzte Bodenschicht: Wer TIEFER graebt als die unterste
+    -- Grenze, faellt aus den Schichten heraus - findLayer liefert dann nil und TerraFarm
+    -- uebernimmt (Material der Karten-Bodentextur, in jeder Tiefe gleich). Der Editor legt
+    -- die Bodenschicht immer an (LayerEditor.lua:409, "der endlose Fels darunter"),
+    -- handgeschriebene XML kann sie vergessen. Nur warnen, nicht stillschweigend
+    -- ergaenzen - welches Material dort gelten soll, koennen wir nicht raten.
+    local hasBottomLayer = false
+
+    for _, layer in ipairs(zone.layers) do
+        if layer.depth == nil and layer.aboveY == nil then
+            hasBottomLayer = true
+            break
+        end
+    end
+
+    if not hasBottomLayer then
+        MiningLayers.log('WARNUNG %s: keine unbegrenzte Bodenschicht. Unterhalb der letzten', key)
+        MiningLayers.log('  Grenze greift KEINE Schicht mehr - dort uebernimmt TerraFarm.')
+        MiningLayers.log('  Abhilfe: einen <layer fillType="..."/> OHNE depth/aboveY ergaenzen.')
+    end
+
     return zone
 end
 
@@ -242,6 +333,9 @@ function MiningLayers:loadConfig()
     self.globalZone = nil
     self.resolvedByArea = {}
     self.resolvedGlobal = nil
+    -- Schichten, deren Material diese Karte nicht kennt: ruhen, gehen aber
+    -- nicht verloren (siehe keepUnavailableLayer).
+    self.keptLayers = {}
 
     local path = self:prepareConfigFile()
     local xmlFile = XMLFile.loadIfExists('miningLayersConfig', path)
@@ -258,6 +352,8 @@ function MiningLayers:loadConfig()
     self.autoTargetHeight = MiningLayers.getXmlBool(xmlFile, 'miningLayers#autoTargetHeight', true)
     self.showDepthLines = MiningLayers.getXmlBool(xmlFile, 'miningLayers#showDepthLines', true)
     self.syncVehicleMaterial = MiningLayers.getXmlBool(xmlFile, 'miningLayers#syncVehicleMaterial', true)
+    self.freeDumpHeight = MiningLayers.getXmlBool(xmlFile, 'miningLayers#freeDumpHeight', true)
+    self.dumpDiagnostics = MiningLayers.getXmlBool(xmlFile, 'miningLayers#dumpDiagnostics', false)
     self.sponsorSign = MiningLayers.getXmlBool(xmlFile, 'miningLayers#sponsorSign', true)
     self.displayPosX = MiningLayers.getXmlNumber(xmlFile, 'miningLayers#displayPosX') or self.displayPosX
     self.displayPosY = MiningLayers.getXmlNumber(xmlFile, 'miningLayers#displayPosY') or self.displayPosY

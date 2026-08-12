@@ -9,6 +9,7 @@
         <text name="ml_until" text="à" />
         <text name="ml_stillNeeded" text="encore" />
         <text name="ml_noLayers" text="pas de couches à cet endroit" />
+        <text name="ml_mapResourceTakesOver" text="TerraFarm décide : le matériau de la carte à cet endroit - identique à toute profondeur" />
         <text name="ml_above" text="soit" />
         <text name="ml_aboveRef" text="au-dessus de la hauteur de référence" />
         <text name="ml_overrideHint" text="Le matériau TerraFarm %s est sans effet ici - la couche décide" />
@@ -23,6 +24,7 @@
         <text name="ml_tip4" text="le mod mémorise les tas - tu reprends ce qui a été déversé" />
         <text name="ml_tip5" text="couleur de ligne = matériau qui commence là ; rouge = fond de fosse" />
         <text name="ml_tip6" text="l'affichage indique la distance jusqu'à la prochaine couche" />
+        <text name="ml_tip7" text="Les matériaux disponibles dépendent de votre carte et de vos mods — (!) signifie : creuser oui, déverser non" />
 
         <text name="input_ML_TOGGLE_HUD" text="Mining Layers : affichage act./désact." />
         <text name="input_ML_HUD_MOVE" text="Mining Layers : déplacer l'affichage (curseur souris)" />
@@ -65,7 +67,7 @@
         <text name="ml_helpQsBothWays1" text="Laisse les champs de matériau de la zone TerraFarm VIDES et Mining Layers fait son travail : ce qui finit dans le godet dépend de la profondeur à laquelle tu creuses. C'est le cas normal pour une fosse." />
         <text name="ml_helpQsBothWays2" text="Renseigne un matériau sur la zone à la place et tu obtiens le TerraFarm classique sans couches. Exactement ce qu'il faut pour les chantiers, la construction de routes et le nivellement — partout où tu veux juste déplacer de la terre avec toujours le même matériau." />
         <text name="ml_helpQsBothWays3" text="Tu obtiens le même résultat depuis l'onglet Couches : choisis-y une zone et mets-la sur &quot;TerraFarm classique&quot;. Les deux chemins mènent au même endroit, prends celui que tu préfères." />
-        <text name="ml_edForeign" text="⚠ Cette zone a été écrite à la main dans miningLayers.xml et ne peut être affichée ici que sous forme simplifiée. Sauvegarder la réécrit dans le schéma de l'éditeur ; les extras comme des textures de sol personnalisées ou une hauteur de référence fixe sont perdus." />
+        <text name="ml_edForeign" text="⚠ Cette zone a été écrite à la main dans miningLayers.xml et ne peut être affichée ici que sous forme simplifiée. Sauvegarder la réécrit dans le schéma de l'éditeur ; une hauteur de référence fixe est perdue. Les textures de sol personnalisées (paintLayer) sont conservées." />
         <text name="ml_edLayerSection" text="Couches" />
         <text name="ml_edLayer" text="Couche" />
         <text name="ml_edMaterial" text="Matériau" />
@@ -76,6 +78,11 @@
         <text name="ml_edSaved" text="Couches sauvegardées. Elles s'appliquent immédiatement à toute zone sans zone propre." />
         <text name="ml_edHint" text="Le contour clair marque la couche que tu édites. Le filon est la dernière ligne, fixe : matériau au choix (PAYDIRT par défaut, le charbon ou le calcaire marchent aussi), épaisseur et position fixes. La roche en dessous se place toute seule. Épaisseur minimale : 1 m pour la couche du haut, 1,5 m pour chaque couche en dessous — avec de grosses machines, vise plutôt 2 m. N'oublie pas de sauvegarder : ESC ou Retour quitte la page et tout ce qui suit ta dernière sauvegarde est perdu." />
         <text name="ml_edSeamEntry" text="Filon : %s" />
+        <!-- Material-Pool dieser Karte (1.4.3) -->
+        <text name="ml_edPoolNoTipHere" text="⚠ (!) %s ne peut pas être déversé au sol sur CETTE carte. Creuser, transporter et vendre fonctionnent normalement. Cette carte n'a plus aucune place au sol pour lui — cela vient de la carte et de votre liste de mods, pas de ce mod." />
+        <text name="ml_edPoolNoTipMark" text="(!) = ne peut pas être déversé sur cette carte. Cette carte n'a plus de place au sol — creuser et vendre restent possibles." />
+        <text name="ml_edPoolMissing" text="Indisponible sur cette carte : %s. Ni la carte ni vos mods ne fournissent ces matériaux, ils ne sont donc pas proposés ici." />
+        <text name="ml_edPoolHint" text="À retenir : moins de mods = plus de places libres = plus de matériaux déversables." />
 
         <!-- ===================== Tab 1: quick start ===================== -->
         <text name="ml_helpQsSetupTitle" text="Mise en place en une étape" />
@@ -148,7 +155,7 @@
         <text name="ml_helpTipsVeh2" text="Un pack de configurations pour les machines minières courantes est en préparation. Il sortira séparément de ce mod." />
 
         <text name="ml_helpTipsMapTitle" text="Spécificités des cartes" />
-        <text name="ml_helpTipsMapB1" text="FS25 ne gère que 63 types de matériaux. Avec beaucoup de mods installés, certains tombent au bout et ne peuvent plus être déversés. Le mod le vérifie au démarrage et écrit les matériaux concernés dans le log." />
+        <text name="ml_helpTipsMapB1" text="Le nombre de matériaux de sol possibles est fixé par la carte, pas par le mod — beaucoup en permettent 63, les cartes plus larges davantage, et le jeu de base en occupe déjà 48. Avec beaucoup de mods le reste part vite et les derniers ne peuvent plus être déversés. Le mod le vérifie au démarrage et écrit les matériaux concernés dans le log." />
         <text name="ml_helpTipsMapB2" text="Les noms de textures de sol diffèrent sur chaque carte. Au premier creusement, le mod écrit la liste de ta carte dans le log. Prends-y les valeurs paintLayer." />
         <text name="ml_helpTipsMapB4" text="Le mod tourne sur n'importe quelle carte : pour les textures de couches, il choisit automatiquement le sol le plus proche que la carte propose (noms standard comme GRAVEL, MOUNTAINROCK, MOSS_STONES). Si une carte n'a rien de convenable, ta propre sélection de texture reste simplement active - matériaux, couches et tas fonctionnent toujours." />
         <text name="ml_helpTipsMapB3" text="Certaines cartes verrouillent les lits de rivière contre la déformation. C'est la block map de la carte elle-même et ça n'a rien à voir avec la propriété ou avec ce mod." />
@@ -159,7 +166,20 @@
         <text name="ml_helpTipsAboutTitle" text="À propos de ce mod" />
         <text name="ml_helpTipsAbout1" text="Mining Layers est un addon non officiel pour TerraFarm de scfmod. Il n'y a aucune affiliation avec scfmod et aucun fichier TerraFarm n'est livré. TerraFarm est disponible sur GitHub, pas sur le ModHub." />
         <text name="ml_pageTitle" text="Mining Layers" />
-        <text name="ml_credits" text="Mining Layers par Tommy Honold, Farmersingles.de. Un projet FrittePlayz." />
+        <text name="ml_credits" text="Mining Layers par Tommy Honold. Un projet FrittePlayz." />
+        <!-- Reiter 1, ganz vorn: Materialien haengen an Karte + Modliste (1.4.3) -->
+        <text name="ml_helpQsMapTitle" text="D'abord : quels matériaux propose VOTRE carte ?" />
+        <text name="ml_helpQsMap1" text="Qu'un matériau existe et que vous puissiez le redéverser au sol ne dépend pas de ce mod, mais de votre carte et de votre liste de mods. Parmi les matériaux miniers, le jeu de base ne connaît que STONE — DIRT, GRAVEL, SAND, COAL, LIMESTONE ou PAYDIRT viennent toujours de cartes ou de mods. S'ajoute que chaque carte dispose d'un nombre limité de places au sol : le jeu de base en occupe déjà 48, et le total est fixé par la carte elle-même — beaucoup en ont 63, les plus larges davantage. Quand une carte n'en a plus, vous pouvez encore creuser, transporter et vendre un matériau, mais plus le déverser." />
+        <text name="ml_helpQsMap2" text="Mining Layers emprunte donc une voie médiane pour rester jouable sur chaque carte : au chargement, le mod vérifie une fois ce que VOTRE carte fournit réellement et ne propose que cela dans le sélecteur de couches. Un (!) derrière un nom signifie : creuser, transporter et vendre fonctionnent, déverser non sur cette carte. Ce qui manque totalement est indiqué sous la coupe. Vous n'avez donc aucune carte à tester au préalable — s'il manque quelque chose, c'est la carte, pas le mod." />
+        <text name="ml_helpQsMap3" text="Deux solutions si un matériau qui vous manque porte un (!) : retirer les mods qui apportent leurs propres matériaux de sol, ou jouer une carte construite avec plus de canaux. Les 63 ne sont pas une loi figée du jeu : une carte peut être construite plus large, et certaines le sont déjà. Ce qu'aucun mod ne peut faire, c'est relever la limite de l'extérieur." />
+        <!-- Kartenbericht (1.4.3) -->
+        <text name="ml_mapSection" text="Ce que cette carte permet" />
+        <text name="ml_mapNoData" text="Le rapport de carte est disponible une fois la carte chargée." />
+        <text name="ml_mapUsable" text="Utilisables sur cette carte : %s — vous pouvez les creuser, transporter, vendre et redéverser au sol." />
+        <text name="ml_mapNoTipList" text="Creuser et vendre uniquement : %s. Les redéverser au sol ne fonctionne pas ici — il ne restait plus de place dans le système de terrain." />
+        <text name="ml_mapMissingList" text="Totalement absents : %s. Ni la carte ni vos mods ne les fournissent." />
+        <text name="ml_mapAdvice" text="Combien de matériaux de sol peuvent tenir, c'est votre CARTE qui le décide : elle fixe la largeur de canal, et le jeu de base occupe déjà 48 places. Combien sont occupées, c'est votre LISTE DE MODS — le premier chargé obtient une place. Donc : moins de mods libère des places, et une carte construite avec plus de canaux en a davantage dès le départ." />
+        <text name="ml_mapManyOwn" text="Cette carte apporte elle-même un grand nombre de matériaux de sol, les places partent donc très vite. C'est typique des cartes reprises de FS19 ou FS22." />
         <text name="ml_helpTipsAbout2" text="Ce mod est gratuit et le restera." />
     </texts>
 </l10n>

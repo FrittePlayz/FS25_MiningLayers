@@ -15,7 +15,7 @@
 
 MiningLayers = {}
 
-MiningLayers.VERSION = '1.4.2.0'
+MiningLayers.VERSION = '1.5.0.0'
 MiningLayers.LOG_PREFIX = '[MiningLayers] '
 
 MiningLayers.MOD_NAME = g_currentModName
@@ -219,9 +219,25 @@ function MiningLayers:loadMap(filename)
         MiningLayers:installHooks()
     end)
 
+    -- Material-Pool VOR der Materialpruefung: die Schichten-Auswahl baut darauf
+    -- auf, und die Pruefung darunter darf ihn nicht mitreissen, wenn sie
+    -- ausfaellt (eigener protectedCall).
+    MiningLayers.protectedCall('buildMaterialPool', function()
+        MiningLayers:buildMaterialPool()
+    end)
+
     MiningLayers.protectedCall('runMaterialCheck', function()
         MiningLayers:runMaterialCheck()
     end)
+
+    -- Der Kartenbericht entsteht normalerweise am Ende der Materialpruefung.
+    -- Ist die abgeschaltet (checkMaterials="false") oder bricht sie ab, bauen
+    -- wir ihn hier aus dem Pool allein - die Menueseite soll nie leer bleiben.
+    if MiningLayers.mapReport == nil then
+        MiningLayers.protectedCall('buildMapReport', function()
+            MiningLayers:buildMapReport(0, 0)
+        end)
+    end
 
     MiningLayers.protectedCall('resolveAllAreas', function()
         MiningLayers:resolveAllAreas()
@@ -298,6 +314,20 @@ function MiningLayers:deleteMap()
     MiningLayers.globalRegisterLogged = false
     MiningLayers.hudMoveHintLogged = false
     MiningLayers.freeDumpLogged = false
+    MiningLayers.freeHeightLogged = false
+    MiningLayers.freeHeightBlockedLogged = {}
+    MiningLayers.diagLastTimes = {}
+    MiningLayers.mapReport = nil
+    -- Sonst schweigt die "keine Schicht"-Diagnose beim zweiten Kartenstart derselben
+    -- Sitzung, obwohl sie greifen muesste (Percys Review 1.5.0).
+    MiningLayers.loggedNoLayerReasons = {}
+
+    -- ⚠️ Kartenbezogene Daten muessen hier mit weg: bleibt der Material-Pool der
+    -- vorigen Karte stehen und schlaegt der neue Aufbau fehl (protectedCall),
+    -- filtert die Schichten-Auswahl beim naechsten Spielstand nach der ALTEN
+    -- Karte. Gleiche Regel wie bei den Log-Flags (Percys Review 1.4.3).
+    MiningLayers.materialPool = nil
+    MiningLayers.keptLayers = {}
 
     MiningLayers.active = false
 end
