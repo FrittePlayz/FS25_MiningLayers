@@ -1618,6 +1618,102 @@ function MiningLayers:saveMoundMemory()
     self.moundMemoryDirty = false
 end
 
+---Pfad des Bezugshoehen-Rasters, je Spielstand getrennt wie beim Halden-Gedaechtnis.
+---@return string?
+function MiningLayers:getSurfaceMemoryPath()
+    if self.SETTINGS_DIRECTORY == nil then
+        return nil
+    end
+
+    local index = ''
+
+    if g_currentMission ~= nil and g_currentMission.missionInfo ~= nil
+        and g_currentMission.missionInfo.savegameIndex ~= nil then
+        index = tostring(g_currentMission.missionInfo.savegameIndex)
+    end
+
+    return self.SETTINGS_DIRECTORY .. 'surfaceMemory' .. index .. '.xml'
+end
+
+---Schreibt das Bezugshoehen-Raster auf Platte.
+function MiningLayers:saveSurfaceMemory()
+    if not self.surfaceMemoryDirty then
+        return
+    end
+
+    local path = self:getSurfaceMemoryPath()
+
+    if path == nil or not MiningLayers.isCallable(createXMLFile)
+        or not MiningLayers.isCallable(setXMLString) or not MiningLayers.isCallable(saveXMLFile) then
+        return
+    end
+
+    local xmlId = createXMLFile('miningLayersSurface', path, 'surface')
+
+    if xmlId == nil or xmlId == 0 then
+        return
+    end
+
+    local i = 0
+
+    for key, y in pairs(self.surfaceMemory) do
+        local base = string.format('surface.s(%d)', i)
+        setXMLString(xmlId, base .. '#k', key)
+        setXMLString(xmlId, base .. '#y', string.format('%.2f', y))
+        i = i + 1
+    end
+
+    saveXMLFile(xmlId)
+    delete(xmlId)
+    self.surfaceMemoryDirty = false
+end
+
+---Laedt das Bezugshoehen-Raster dieses Spielstands.
+function MiningLayers:loadSurfaceMemory()
+    self.surfaceMemory = {}
+
+    local path = self:getSurfaceMemoryPath()
+
+    if path == nil or not MiningLayers.isCallable(loadXMLFile)
+        or not MiningLayers.isCallable(fileExists) or not fileExists(path)
+        or not MiningLayers.isCallable(getXMLString) then
+        return
+    end
+
+    local xmlId = loadXMLFile('miningLayersSurface', path)
+
+    if xmlId == nil or xmlId == 0 then
+        return
+    end
+
+    local i = 0
+    local count = 0
+
+    while true do
+        local base = string.format('surface.s(%d)', i)
+        local key = getXMLString(xmlId, base .. '#k')
+
+        if key == nil then
+            break
+        end
+
+        local y = tonumber(getXMLString(xmlId, base .. '#y') or '')
+
+        if y ~= nil then
+            self.surfaceMemory[key] = y
+            count = count + 1
+        end
+
+        i = i + 1
+    end
+
+    delete(xmlId)
+
+    if count > 0 then
+        MiningLayers.log('Bezugshoehen-Raster geladen: %d Zelle(n).', count)
+    end
+end
+
 ---Laedt das Halden-Gedaechtnis dieses Spielstands.
 function MiningLayers:loadMoundMemory()
     self.moundMemory = {}
@@ -1779,11 +1875,7 @@ function MiningLayers:getLayerAt(vehicle, worldPosX, worldPosZ)
     local moundEntry = moundFill ~= nil and self:getSpoilEntry(moundFill) or nil
 
     if moundEntry ~= nil then
-        local surfacePointY = surfaceY
-
-        if plane ~= nil then
-            surfacePointY = MiningLayers.planeAt(plane, worldPosX, worldPosZ)
-        end
+        local surfacePointY = self:getSurfacePointY(worldPosX, worldPosZ, plane, surfaceY)
 
         local zoneName = 'Halde'
 
@@ -1795,12 +1887,10 @@ function MiningLayers:getLayerAt(vehicle, worldPosX, worldPosZ)
     end
 
     if area ~= nil and resolved ~= nil and resolved ~= false then
-        -- Bezugsflaeche an DIESEM Punkt: am Hang geneigt, sonst der Median.
-        local surfacePointY = surfaceY
-
-        if plane ~= nil then
-            surfacePointY = MiningLayers.planeAt(plane, worldPosX, worldPosZ)
-        end
+        -- Bezugsflaeche an DIESEM Punkt: erst das eingefrorene Raster, sonst die
+        -- geneigte Ebene, sonst der Median. Das Raster kennt die Kuppe, die Ebene
+        -- mittelt sie weg - deshalb hat es Vorrang.
+        local surfacePointY = self:getSurfacePointY(worldPosX, worldPosZ, plane, surfaceY)
 
         -- Ueber der Bezugsflaeche liegt kein gewachsener Boden, sondern Abraum.
         -- Nur noch Rueckfall fuer UNBEKANNTE Halden (vor der Installation
@@ -1815,12 +1905,14 @@ function MiningLayers:getLayerAt(vehicle, worldPosX, worldPosZ)
 
     if self.resolvedGlobal ~= nil then
         local globalSurfaceY = self.globalZone ~= nil and self.globalZone.surfaceY or nil
+        -- Ohne Bereich gibt es keine Ebene: entweder das Raster oder der feste Wert.
+        local surfacePointY = self:getSurfacePointY(worldPosX, worldPosZ, nil, globalSurfaceY)
 
-        if globalSurfaceY ~= nil and terrainY > globalSurfaceY + MiningLayers.SPOIL_TOLERANCE then
-            return nil, terrainY, globalSurfaceY, 'globalZone', 'spoil'
+        if surfacePointY ~= nil and terrainY > surfacePointY + MiningLayers.SPOIL_TOLERANCE then
+            return nil, terrainY, surfacePointY, 'globalZone', 'spoil'
         end
 
-        return self:findLayer(self.resolvedGlobal, terrainY, globalSurfaceY), terrainY, globalSurfaceY, 'globalZone'
+        return self:findLayer(self.resolvedGlobal, terrainY, surfacePointY), terrainY, surfacePointY, 'globalZone'
     end
 
     return nil, terrainY, nil, nil
