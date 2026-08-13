@@ -313,10 +313,16 @@ function MiningLayers:getNextLayerBelow(vehicle, terrainY, zoneName, worldPosX, 
             resolved, surfaceY, _, plane = self:getResolvedForArea(area)
             surfacePointY = surfaceY
 
-            -- Am Hang folgen die Grenzen der geneigten Bezugsflaeche - die Anzeige
-            -- muss dieselbe Rechnung machen wie das Graben (getLayerAt).
-            if plane ~= nil and worldPosX ~= nil and worldPosZ ~= nil then
-                surfacePointY = MiningLayers.planeAt(plane, worldPosX, worldPosZ)
+            -- Die Anzeige MUSS dieselbe Rechnung machen wie das Graben. Seit dem
+            -- Bezugshoehen-Raster heisst das: erst das Raster, dann die geneigte
+            -- Ebene, dann der Median - also derselbe Weg wie in getLayerAt.
+            -- ⚠️ Diese Stelle stand nicht in der Task-4-Liste und rechnete
+            -- weiter auf der Ebene: die Schicht kam aus dem Raster, die Tiefe
+            -- und "noch X m bis" aus der Ebene. Gemessen bei Tommys Terrassen-
+            -- test 13.08. - 2,0 m oben gegen 1,2 m unten, obwohl beide dieselbe
+            -- defaultZone benutzen.
+            if worldPosX ~= nil and worldPosZ ~= nil then
+                surfacePointY = self:getSurfacePointY(worldPosX, worldPosZ, plane, surfaceY)
             end
         end
     end
@@ -842,12 +848,11 @@ function MiningLayers:drawDepthLines()
         end
     end
 
+    -- Auch die Tiefenlinien folgen dem Raster, sonst zeichnet die Anzeige andere
+    -- Grenzen, als das Graben anwendet. An unberuehrten Randpunkten liefert
+    -- getSurfacePointY ohnehin die Ebene zurueck - dort aendert sich nichts.
     local function surfaceAt(p)
-        if plane ~= nil then
-            return MiningLayers.planeAt(plane, p[1], p[3])
-        end
-
-        return surfaceY
+        return MiningLayers:getSurfacePointY(p[1], p[3], plane, surfaceY)
     end
 
     for i, entry in ipairs(resolved) do

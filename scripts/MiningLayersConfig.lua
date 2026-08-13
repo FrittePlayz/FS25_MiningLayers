@@ -97,6 +97,8 @@ MiningLayers.moundMemoryWrites = 0
 MiningLayers.surfaceMemory = {}
 MiningLayers.surfaceMemoryDirty = false
 MiningLayers.surfaceMemoryWrites = 0
+---Letzter bereits weggeschriebener 25er-Block (Schwelle ohne Modulo-Falle).
+MiningLayers.surfaceMemorySavedBlock = 0
 ---Einmal je Sitzung: meldet, dass das Raster ueberhaupt laeuft.
 MiningLayers.surfaceFrozenLogged = false
 ---Marge um den Pinsel herum, in Metern. Der Quadrat-Pinsel deckt +/- radius in

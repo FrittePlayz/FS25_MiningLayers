@@ -202,8 +202,14 @@ function MiningLayers:freezeSurfaceAround(op)
         self.surfaceMemoryWrites = self.surfaceMemoryWrites + written
 
         -- Gelegentlich wegschreiben, damit ein Absturz nicht die Session kostet.
-        -- Gleiche Schwelle wie beim Halden-Gedaechtnis.
-        if self.surfaceMemoryWrites % 25 == 0 then
+        -- ⚠️ NICHT auf "% 25 == 0" pruefen: die Zellen kommen im Block (Tommys
+        -- Test: 30 auf einmal), der Zaehler springt ueber das Vielfache hinweg
+        -- und die Bedingung trifft nie zu. Gemessen am 13.08. - 30 Zellen im
+        -- Speicher, keine Datei auf der Platte bis zum Beenden.
+        local block = math.floor(self.surfaceMemoryWrites / 25)
+
+        if block > (self.surfaceMemorySavedBlock or 0) then
+            self.surfaceMemorySavedBlock = block
             pcall(MiningLayers.saveSurfaceMemory, MiningLayers)
         end
     end
