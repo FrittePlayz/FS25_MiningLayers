@@ -213,6 +213,10 @@ Wohin der Mod geht. Das sind **Vorhaben, keine Versprechen** — keine Termine, 
 
 1. **Slot-Diagnose** — zur Laufzeit alle Materialien durchzählen und melden, wie viel deine Karte wirklich fasst. Der höchste belegte Index beweist die Kanalbreite besser als jede Schätzung: liegt er über 63, wurde die Karte mit mehr als sechs Kanälen gebaut. Kommt zusammen mit der *zweiten* Decke, auf die wir auf einem Dedicated Server gestoßen sind — 255 Filltypes, ein anderes Limit mit einem anderen Symptom.
 2. **Schichten ohne gezogenen Bereich** — das Bezugshöhen-Raster kam mit 1.5.0 und macht es erst möglich; offen ist der Schritt, ganz ohne TerraFarm-Bereich zu arbeiten. Die meisten Spieler graben frei, statt vorher ein Polygon zu ziehen — das ist der Unterschied zwischen einem Mod für Leute, die die Anleitung lesen, und einem Mod, der einfach funktioniert.
+### V2 — Director's Cut
+
+Alles darüber bringt dich in die Grube. Alles darunter ist Tiefe für die, die schon drinstehen, und kommt mit der nächsten großen Version. Kostenlos wie der Rest — der Name meint den Umfang, keinen Preis.
+
 3. **Editor** — die Materialien anbieten, die deine Karte tatsächlich mitbringt, statt Handarbeit in der `miningLayers.xml`; den Kartenbericht auf die Schichten-Seite holen; Halden sichtbar machen und je Zone zurücksetzen.
 4. **Mehrspieler** — teilweise getestet. Der Mod läuft auf einem Dedicated Server: Zonen, Schichten und das Halden-Gedächtnis überstehen dort auch einen Neustart. Ungetestet ist die Client-Sicht — bis die geprüft ist, gilt Mehrspieler als unbewiesen.
 5. **Materialhärte & passendes Werkzeug** — Fels soll sich nicht wie Erde graben: langsamer, oder erst nach Aufreißen/Hämmern. Zum Einordnen: Weder TerraFarm noch das Basisspiel kennen so etwas wie Materialhärte (der `hardness`-Wert des Engine-Pinsels ist die Randschärfe, nicht die Festigkeit) — das wird also kompletter Eigenbau.
@@ -230,7 +234,7 @@ Andere Meinung zur Reihenfolge oder eine Idee, die fehlt? [Diskussion oder Issue
 
 ## Sponsor
 
-Mining Layers wird unterstützt von **farmersingles.de** — der Singlebörse für Landwirte. 🚜❤️
+Mining Layers wird unterstützt von **[farmersingles.de](https://farmersingles.de)** — der Singlebörse für Landwirte. 🚜❤️
 Im Spiel zeigt sich das als kleines Schild am Grubenrand. Nicht gewünscht? `sponsorSign="false"` in der Config — das Schild verschwindet sofort, ohne Neustart.
 
 ## Fehler & Fragen
@@ -253,7 +257,7 @@ Nicht dein Ding? Ein ⭐ auf dieses Repo, ein Fehlerbericht oder eine Empfehlung
 
 - **Autor:** Tommy Honold
 - **Italienische Übersetzung:** **marcols13** — beigesteuert über [Discussion #1](https://github.com/FrittePlayz/FS25_MiningLayers/discussions/1), danke!
-- **Sponsor:** farmersingles.de — die Singlebörse für Landwirte
+- **Sponsor:** [farmersingles.de](https://farmersingles.de) — die Singlebörse für Landwirte
 - Ein **[FrittePlayz](https://www.youtube.com/@FrittePlayz)**-Projekt (YouTube)
 - Baut auf **[TerraFarm](https://github.com/scfmod/FS25_TerraFarm)** von scfmod auf (wird benötigt, separat installieren) — inoffizielles Addon, keine Verbindung zu scfmod oder GIANTS Software.
 - HUD-Verschieben nach dem Vorbild von **HappyLoosers HL Hud System** (bekannt aus FS25_ProductionInfoHud) — eigene Implementierung, kein übernommener Code. Danke fürs offene Teilen des Systems!

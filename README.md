@@ -213,6 +213,10 @@ Where this mod is headed. These are **intentions, not promises** — no dates, a
 
 1. **Slot diagnosis** — count every fill type at runtime and report what your map can actually hold. The highest index in use proves the channel width better than any guess: an index above 63 means the map was built with more than six channels. Comes together with the *second* ceiling we ran into on a dedicated server — 255 fill types, a different limit with a different symptom.
 2. **Layers without a drawn area** — the surface reference grid landed in 1.5.0 and made this possible; the remaining step is to work outside a TerraFarm area at all. Most players dig freely rather than drawing a polygon first, so this is the difference between a mod for people who read the manual and a mod that just works.
+### V2 — Director's Cut
+
+Everything above gets you into the pit. Everything below is depth for people already standing in one, and it lands in the next big version. Free like the rest of the mod — the name is about scope, not a price tag.
+
 3. **Editor** — offer the materials your map actually provides instead of hand-editing `miningLayers.xml`, put the map report on the layers page, and make spoil piles visible and resettable per zone.
 4. **Multiplayer** — partly tested. The mod runs on a dedicated server: zones, layers and the spoil memory all survive a restart there. What has not been tested is the client side, so treat multiplayer as unproven until it has been.
 5. **Material hardness & the right tool** — rock should not dig like soil: slower, or only after ripping/hammering it loose. Worth knowing: neither TerraFarm nor the base game has any notion of material hardness (the `hardness` value in the engine brush is edge softness, not rock strength), so this one is built from scratch.
@@ -230,7 +234,7 @@ Got an opinion on the order, or an idea that's missing? [Open a discussion or is
 
 ## Sponsor
 
-Mining Layers is supported by **farmersingles.de** — the dating site for farmers. 🚜❤️
+Mining Layers is supported by **[farmersingles.de](https://farmersingles.de)** — the dating site for farmers. 🚜❤️
 In game this shows as a small sign at the pit edge. Don't want it? Set `sponsorSign="false"` in the config — it disappears immediately, no restart needed.
 
 ## Bugs & questions
@@ -253,7 +257,7 @@ Not your thing? A ⭐ on this repo, a bug report, or telling a friend about the 
 
 - **Author:** Tommy Honold
 - **Italian translation:** **marcols13** — contributed via [Discussion #1](https://github.com/FrittePlayz/FS25_MiningLayers/discussions/1), thank you!
-- **Sponsor:** farmersingles.de — the dating site for farmers
+- **Sponsor:** [farmersingles.de](https://farmersingles.de) — the dating site for farmers
 - A **[FrittePlayz](https://www.youtube.com/@FrittePlayz)** project (YouTube)
 - Built on **[TerraFarm](https://github.com/scfmod/FS25_TerraFarm)** by scfmod (required, install separately) — unofficial add-on, no affiliation with scfmod or GIANTS Software.
 - HUD drag&drop mechanics inspired by **HappyLooser's HL Hud System** (as seen in FS25_ProductionInfoHud) — own implementation, no code copied. Thanks for openly sharing the system!
