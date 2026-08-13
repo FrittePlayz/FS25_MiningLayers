@@ -160,7 +160,6 @@ Jump to a question:
 17. [Can I move the display so it does not overlap other HUD mods?](#17-can-i-move-the-display-so-it-does-not-overlap-other-hud-mods)
 18. [Does it work on PS5 or Xbox?](#18-does-it-work-on-ps5-or-xbox)
 19. [Which languages are supported?](#19-which-languages-are-supported)
-20. [Is it really free?](#20-is-it-really-free)
 
 ---
 
@@ -241,10 +240,6 @@ No. Mining Layers is a script mod, and script mods only run on PC/Mac.
 #### 19. Which languages are supported?
 
 English, German, French, Polish and Italian — including the full in-game manual.
-
-#### 20. Is it really free?
-
-Yes. Free download from GitHub, no paywall, no early access. If you want to say thanks: [buy me fries](https://buymeacoffee.com/fritteplayz). 🍟
 
 ## Translations
 

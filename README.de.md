@@ -160,7 +160,6 @@ Direkt zur Frage:
 17. [Kann ich die Anzeige verschieben, damit sie nicht mit anderen HUD-Mods kollidiert?](#17-kann-ich-die-anzeige-verschieben-damit-sie-nicht-mit-anderen-hud-mods-kollidiert)
 18. [Läuft das auf PS5 oder Xbox?](#18-läuft-das-auf-ps5-oder-xbox)
 19. [Welche Sprachen gibt es?](#19-welche-sprachen-gibt-es)
-20. [Ist das wirklich kostenlos?](#20-ist-das-wirklich-kostenlos)
 
 ---
 
@@ -241,10 +240,6 @@ Nein. Mining Layers ist ein Script-Mod, und Script-Mods laufen nur auf PC/Mac.
 #### 19. Welche Sprachen gibt es?
 
 Deutsch, Englisch, Französisch, Polnisch und Italienisch — inklusive komplettem Ingame-Handbuch.
-
-#### 20. Ist das wirklich kostenlos?
-
-Ja. Gratis-Download auf GitHub, keine Paywall, kein Early Access. Wer Danke sagen will: [spendier mir Fritten](https://buymeacoffee.com/fritteplayz). 🍟
 
 ## Übersetzungen
 

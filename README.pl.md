@@ -68,7 +68,6 @@ Przejdź do pytania:
 17. [Czy mogę przesunąć wskaźnik, żeby nie nachodził na inne HUD-y?](#17-czy-mogę-przesunąć-wskaźnik-żeby-nie-nachodził-na-inne-hud-y)
 18. [Czy działa na PS5 albo Xboxie?](#18-czy-działa-na-ps5-albo-xboxie)
 19. [Jakie języki są dostępne?](#19-jakie-języki-są-dostępne)
-20. [Czy to naprawdę darmowe?](#20-czy-to-naprawdę-darmowe)
 
 ---
 
@@ -149,10 +148,6 @@ Nie. Mining Layers to mod skryptowy, a mody skryptowe działają tylko na PC/Mac
 #### 19. Jakie języki są dostępne?
 
 Polski, angielski, niemiecki, francuski i włoski — z pełnym podręcznikiem w grze (włoski od marcols13).
-
-#### 20. Czy to naprawdę darmowe?
-
-Tak. Darmowe pobieranie z GitHuba, bez paywalla, bez early access. Chcesz podziękować? [Postaw mi frytki](https://buymeacoffee.com/fritteplayz). 🍟
 
 ## Tłumaczenie
 
