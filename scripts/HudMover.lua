@@ -21,7 +21,7 @@
 --     wird auf den Bildschirm geklemmt (Schutz nach Aufloesungswechsel).
 --
 -- Ueber denselben Registrierungs-Hook laeuft seit 1.4.2 ZUSAETZLICH die
--- Anzeige-Taste (Num 5) - Forschungspfad 3 fuer die offene Frage, warum die
+-- Anzeige-Taste (Num /) - Forschungspfad 3 fuer die offene Frage, warum die
 -- Binding-Aufloesung auf grossen Modlisten keine Callbacks liefert (Historie
 -- in HeightDisplay.lua).
 --
@@ -260,7 +260,7 @@ function MiningLayers.registerGlobalActionEvents()
 
     -- 1) Anzeige-Taste zusaetzlich global (Forschungspfad 3). Doppel-Callbacks
     --    mit der Fahrzeug-Spez dedupliziert onToggleActionInput. Bewusst OHNE
-    --    disableConflictingBindings: wir wollen anderen Mods auf Num 5 nichts
+    --    disableConflictingBindings: wir wollen anderen Mods auf Num / nichts
     --    wegnehmen, solange nicht bewiesen ist, dass dieser Pfad der Traeger ist.
     if InputAction.ML_TOGGLE_HUD ~= nil then
         local _, eventId = g_inputBinding:registerActionEvent(InputAction.ML_TOGGLE_HUD,

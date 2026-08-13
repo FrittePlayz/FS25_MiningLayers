@@ -257,7 +257,7 @@ function MiningLayers:loadMap(filename)
         MiningLayers:spawnSignsForAllAreas()
     end)
 
-    -- Anzeige-Taste (Standard Num 5): registriert sich ueber die eigene
+    -- Anzeige-Taste (Standard Num /): registriert sich ueber die eigene
     -- Fahrzeug-Spezialisierung (MiningLayersSpec) und zusaetzlich global via
     -- PlayerInputComponent (HudMover.lua). Greift beides nicht, toggelt der
     -- Direkt-Fallback in update(). installToggleKey meldet nur den Status;
@@ -362,14 +362,14 @@ end
 ---gelesen und nach jedem Menue-Schliessen neu aufgeloest (dort wird umbelegt).
 ---Modifier-Tasten (Shift/Ctrl/Alt) werden dabei uebersprungen, und ohne
 ---Tastatur-Belegung (Gamepad-/Maus-Umbelegung) wird der Fallback DISARMT statt
----still die alte Default-Taste weiterzupollen. Default: Num 5.
+---still die alte Default-Taste weiterzupollen. Default: Num / (bis 1.4.3 Num 5).
 ---Die Move-Taste des HUD-Verschiebens (HudMover.lua, Default Num *) nutzt
 ---denselben Mechanismus mit eigenem Zustand.
 MiningLayers.kp5WasDown = false
 MiningLayers.fallbackToggleLogged = false
 MiningLayers.fallbackDisarmedLogged = false
 MiningLayers.fallbackKey = nil
-MiningLayers.fallbackKeyName = 'KEY_KP_5'
+MiningLayers.fallbackKeyName = 'KEY_KP_divide'
 MiningLayers.fallbackArmed = false
 MiningLayers.fallbackResolved = false
 MiningLayers.fallbackDownTime = nil
@@ -455,7 +455,7 @@ end
 
 ---Loest beide Fallback-Tasten neu auf (Anzeige-Toggle + HUD-Verschieben).
 function MiningLayers.resolveFallbackKeys()
-    local key, keyName = MiningLayers.resolveActionKey('ML_TOGGLE_HUD', 'KEY_KP_5')
+    local key, keyName = MiningLayers.resolveActionKey('ML_TOGGLE_HUD', 'KEY_KP_divide')
 
     MiningLayers.fallbackKey = key
     MiningLayers.fallbackKeyName = keyName
@@ -570,7 +570,7 @@ function MiningLayers:update(dt)
     -- Auf dem Dedicated Server gibt es keine Tastatur und kein HUD.
     if MiningLayers.fallbackCapable == nil and Input ~= nil then
         MiningLayers.fallbackCapable = g_dedicatedServer == nil
-            and Input.KEY_KP_5 ~= nil
+            and Input.KEY_KP_divide ~= nil
             and MiningLayers.isCallable(Input.isKeyPressed)
 
         if not MiningLayers.fallbackCapable then

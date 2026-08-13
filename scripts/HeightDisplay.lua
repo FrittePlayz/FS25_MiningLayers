@@ -96,7 +96,7 @@ function MiningLayers:appendTip(lines)
 
     -- Kein Tasten-Hinweis im News-Band: die F1-Hilfe zeigt die Toggle-Taste
     -- mit der ECHTEN Belegung an (setActionEventText) - hier stuende sonst
-    -- "Num 5", obwohl der Spieler laengst umbelegt hat.
+    -- "Num /", obwohl der Spieler laengst umbelegt hat.
 end
 
 ---Sammelt die Zeilen fuer die Anzeige.
@@ -351,7 +351,7 @@ function MiningLayers:getNextLayerBelow(vehicle, terrainY, zoneName, worldPosX, 
 end
 
 --------------------------------------------------------------------------------
--- Toggle-Taste (Standard Num 5, im Spiel umbelegbar)
+-- Toggle-Taste (Standard Num /, im Spiel umbelegbar)
 --
 -- Geschichte, damit der naechste Anlauf nicht wieder dieselben Graeber findet:
 -- 1. Num * (vor 1.2.2.0): einmalige Registrierung beim Kartenstart - beim ersten
@@ -560,7 +560,7 @@ end
 ---Datei-Laden in main.lua - hier ist nur noch der Log-Report).
 function MiningLayers:installToggleKey()
     if type(MiningLayers.inputSpecCount) == 'number' and MiningLayers.inputSpecCount > 0 then
-        MiningLayers.log('Anzeige-Taste bereit: Eingabe-Spez auf %d Fahrzeugtypen (Standard Num 5, im Fahrzeug, umbelegbar).',
+        MiningLayers.log('Anzeige-Taste bereit: Eingabe-Spez auf %d Fahrzeugtypen (Standard Num /, im Fahrzeug, umbelegbar).',
             MiningLayers.inputSpecCount)
     else
         MiningLayers.log('WARNUNG: Eingabe-Spezialisierung nicht installiert - Anzeige-Taste ohne Funktion.')
