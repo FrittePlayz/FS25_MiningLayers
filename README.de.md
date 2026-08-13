@@ -211,11 +211,14 @@ Jede Version mit ihren Änderungen: [CHANGELOG.md](CHANGELOG.md)
 
 Wohin der Mod geht. Das sind **Vorhaben, keine Versprechen** — keine Termine, und alles hier kann sich ändern oder wegfallen.
 
-1. **Echte Tiefe** — die ursprüngliche Geländehöhe pro Punkt merken, statt mit festen Höhenbändern zu arbeiten. Schichten würden dann am Hang, im Tal und sogar ganz ohne gezogenen Bereich sauber sitzen.
-2. **Materialhärte & passendes Werkzeug** — Fels soll sich nicht wie Erde graben: langsamer, oder erst nach Aufreißen/Hämmern. Zum Einordnen: Weder TerraFarm noch das Basisspiel kennen so etwas wie Materialhärte (der `hardness`-Wert des Engine-Pinsels ist die Randschärfe, nicht die Festigkeit) — das wird also kompletter Eigenbau.
-3. **Ergiebigkeit** — magere Deckschicht, ergiebige Nutzschicht: mehr oder weniger Liter pro Kubikmeter, je nach Schicht.
-4. **Deckgestein** — eine harte Zwischenschicht über dem Paydirt-Flöz, Kombination aus 1 und 2.
-5. **Übergangsband an Schichtgrenzen** — eine kleine Toleranzzone, damit ein Werkzeug, das genau auf einer Grenze arbeitet, bei einem Material bleibt statt zwischen zweien hin- und herzuspringen (die Engine mag keine gemischten Materialien am Boden — danke an scfmod für den Hinweis in [#123](https://github.com/scfmod/FS25_TerraFarm/discussions/123)). Das Band wird im Schichten-Editor maßstäblich mitgezeichnet und erklärt sich damit selbst.
+1. **Slot-Diagnose** — zur Laufzeit alle Materialien durchzählen und melden, wie viel deine Karte wirklich fasst. Der höchste belegte Index beweist die Kanalbreite besser als jede Schätzung: liegt er über 63, wurde die Karte mit mehr als sechs Kanälen gebaut. Kommt zusammen mit der *zweiten* Decke, auf die wir auf einem Dedicated Server gestoßen sind — 255 Filltypes, ein anderes Limit mit einem anderen Symptom.
+2. **Schichten ohne gezogenen Bereich** — das Bezugshöhen-Raster kam mit 1.5.0 und macht es erst möglich; offen ist der Schritt, ganz ohne TerraFarm-Bereich zu arbeiten. Die meisten Spieler graben frei, statt vorher ein Polygon zu ziehen — das ist der Unterschied zwischen einem Mod für Leute, die die Anleitung lesen, und einem Mod, der einfach funktioniert.
+3. **Editor** — die Materialien anbieten, die deine Karte tatsächlich mitbringt, statt Handarbeit in der `miningLayers.xml`; den Kartenbericht auf die Schichten-Seite holen; Halden sichtbar machen und je Zone zurücksetzen.
+4. **Mehrspieler** — teilweise getestet. Der Mod läuft auf einem Dedicated Server: Zonen, Schichten und das Halden-Gedächtnis überstehen dort auch einen Neustart. Ungetestet ist die Client-Sicht — bis die geprüft ist, gilt Mehrspieler als unbewiesen.
+5. **Materialhärte & passendes Werkzeug** — Fels soll sich nicht wie Erde graben: langsamer, oder erst nach Aufreißen/Hämmern. Zum Einordnen: Weder TerraFarm noch das Basisspiel kennen so etwas wie Materialhärte (der `hardness`-Wert des Engine-Pinsels ist die Randschärfe, nicht die Festigkeit) — das wird also kompletter Eigenbau.
+6. **Ergiebigkeit** — magere Deckschicht, ergiebige Nutzschicht: mehr oder weniger Liter pro Kubikmeter, je nach Schicht.
+7. **Deckgestein** — eine harte Zwischenschicht über dem Paydirt-Flöz, Kombination aus 2 und 5.
+8. **Übergangsband an Schichtgrenzen** — eine kleine Toleranzzone, damit ein Werkzeug, das genau auf einer Grenze arbeitet, bei einem Material bleibt statt zwischen zweien hin- und herzuspringen (die Engine mag keine gemischten Materialien am Boden — danke an scfmod für den Hinweis in [#123](https://github.com/scfmod/FS25_TerraFarm/discussions/123)). Das Band wird im Schichten-Editor maßstäblich mitgezeichnet und erklärt sich damit selbst.
 
 ### Begleitprojekt (eigener Mod, geplant)
 
