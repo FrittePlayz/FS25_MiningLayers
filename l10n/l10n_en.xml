@@ -180,6 +180,6 @@
         <text name="ml_mapMissingList" text="Not present at all: %s. Neither the map nor your mods provide these." />
         <text name="ml_mapAdvice" text="How many ground materials fit is decided by your MAP: it sets the channel width, and the base game already uses 48 slots. How many are used up is decided by your MOD LIST — first to load gets a slot. So: fewer mods frees slots, and a map built with more channels has more of them to begin with." />
         <text name="ml_mapManyOwn" text="This map brings a large number of ground materials of its own, so the slots run out early. That is typical for maps carried over from FS19 or FS22." />
-        <text name="ml_helpTipsAbout2" text="This mod is free and stays free." />
+        <text name="ml_helpTipsAbout2" text="This mod is free so far." />
     </texts>
 </l10n>

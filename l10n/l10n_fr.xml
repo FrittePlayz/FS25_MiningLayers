@@ -180,6 +180,6 @@
         <text name="ml_mapMissingList" text="Totalement absents : %s. Ni la carte ni vos mods ne les fournissent." />
         <text name="ml_mapAdvice" text="Combien de matériaux de sol peuvent tenir, c'est votre CARTE qui le décide : elle fixe la largeur de canal, et le jeu de base occupe déjà 48 places. Combien sont occupées, c'est votre LISTE DE MODS — le premier chargé obtient une place. Donc : moins de mods libère des places, et une carte construite avec plus de canaux en a davantage dès le départ." />
         <text name="ml_mapManyOwn" text="Cette carte apporte elle-même un grand nombre de matériaux de sol, les places partent donc très vite. C'est typique des cartes reprises de FS19 ou FS22." />
-        <text name="ml_helpTipsAbout2" text="Ce mod est gratuit et le restera." />
+        <text name="ml_helpTipsAbout2" text="Ce mod est gratuit jusqu'ici." />
     </texts>
 </l10n>

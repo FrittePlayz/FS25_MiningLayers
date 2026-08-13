@@ -247,7 +247,7 @@ Fehler gefunden? [Issue aufmachen](../../issues) — **immer die `log.txt` anhä
   <a href="https://buymeacoffee.com/fritteplayz"><img src="https://img.shields.io/badge/Buy%20me%20fries-FFDD00?style=for-the-badge&logo=buymeacoffee&logoColor=black" alt="Buy me fries"></a>
 </p>
 
-Mining Layers ist kostenlos und bleibt es — keine Paywall, keine Vorabversionen gegen Geld, keine Werbung.
+Mining Layers ist bisher kostenlos — keine Paywall, keine Vorabversionen gegen Geld, keine Werbung.
 
 Dahinter stecken viele Abende: TerraFarms Quelltext lesen, Testgruben ausheben und Fehler jagen, die erst beim fünften Neuladen auftauchen. Wenn dir der Mod einen guten Nachmittag in der Grube gemacht hat, **[spendier mir eine Portion Pommes](https://buymeacoffee.com/fritteplayz)** — die fließt direkt in Testzeit und neue Features.
 

@@ -180,6 +180,6 @@
         <text name="ml_mapMissingList" text="W ogóle nieobecne: %s. Ani mapa, ani mody ich nie dostarczają." />
         <text name="ml_mapAdvice" text="Ile materiałów terenu się zmieści, decyduje twoja MAPA: to ona ustala szerokość kanału, a podstawowa gra zajmuje już 48 miejsc. Ile z nich jest zajętych, decyduje twoja LISTA MODÓW — kto pierwszy się wczyta, dostaje miejsce. Czyli: mniej modów zwalnia miejsca, a mapa zbudowana z większą liczbą kanałów ma ich od początku więcej." />
         <text name="ml_mapManyOwn" text="Ta mapa sama wnosi bardzo dużo materiałów terenu, więc miejsca kończą się szybko. To typowe dla map przeniesionych z FS19 lub FS22." />
-        <text name="ml_helpTipsAbout2" text="Ten mod jest darmowy i taki pozostanie." />
+        <text name="ml_helpTipsAbout2" text="Ten mod jest na razie darmowy." />
     </texts>
 </l10n>

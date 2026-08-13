@@ -247,7 +247,7 @@ Found a bug? [Open an issue](../../issues) — **always attach your `log.txt`** 
   <a href="https://buymeacoffee.com/fritteplayz"><img src="https://img.shields.io/badge/Buy%20me%20fries-FFDD00?style=for-the-badge&logo=buymeacoffee&logoColor=black" alt="Buy me fries"></a>
 </p>
 
-Mining Layers is free and stays free — no paywalled early access, no ads, no strings attached.
+Mining Layers is free so far — no paywalled early access, no ads, no strings attached.
 
 Behind it are a lot of evenings: reading TerraFarm's source, digging test pits, and hunting bugs that only show up after the fifth reload. If the mod gave you a good afternoon in the pit, **[buy me a portion of fries](https://buymeacoffee.com/fritteplayz)** — every one of them goes straight back into testing hours and new features.
 

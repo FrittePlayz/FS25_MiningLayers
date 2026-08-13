@@ -180,6 +180,6 @@
         <text name="ml_helpSponsor2" text="Das Schild steht immer außerhalb des Abbaubereichs und blockiert keine Maschine. Wenn du es nicht willst: sponsorSign=false in der miningLayers.xml, dann ist es sofort weg. Am Mod ändert sich dadurch nichts, und wir fragen auch nicht nach." />
         <text name="ml_helpTipsAboutTitle" text="Über diesen Mod" />
         <text name="ml_helpTipsAbout1" text="Mining Layers ist ein inoffizielles Addon für TerraFarm von scfmod. Es besteht keine Verbindung zu scfmod, und es werden keine TerraFarm-Dateien mitgeliefert. TerraFarm gibt es auf GitHub, nicht im ModHub." />
-        <text name="ml_helpTipsAbout2" text="Der Mod ist und bleibt kostenlos." />
+        <text name="ml_helpTipsAbout2" text="Der Mod ist bisher kostenlos." />
     </texts>
 </l10n>
