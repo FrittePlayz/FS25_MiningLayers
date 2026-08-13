@@ -227,7 +227,7 @@ Got an opinion on the order, or an idea that's missing? [Open a discussion or is
 
 ## Sponsor
 
-Mining Layers is supported by **[farmersingles.de](https://farmersingles.de)** — the dating site for farmers. 🚜❤️
+Mining Layers is supported by **farmersingles.de** — the dating site for farmers. 🚜❤️
 In game this shows as a small sign at the pit edge. Don't want it? Set `sponsorSign="false"` in the config — it disappears immediately, no restart needed.
 
 ## Bugs & questions
@@ -249,7 +249,7 @@ Not your thing? A ⭐ on this repo, a bug report, or telling a friend about the 
 ## Credits
 
 - **Author:** Tommy Honold
-- **Sponsor:** [farmersingles.de](https://farmersingles.de) — the dating site for farmers
+- **Sponsor:** farmersingles.de — the dating site for farmers
 - A **[FrittePlayz](https://www.youtube.com/@FrittePlayz)** project (YouTube)
 - Built on **[TerraFarm](https://github.com/scfmod/FS25_TerraFarm)** by scfmod (required, install separately) — unofficial add-on, no affiliation with scfmod or GIANTS Software.
 - HUD drag&drop mechanics inspired by **HappyLooser's HL Hud System** (as seen in FS25_ProductionInfoHud) — own implementation, no code copied. Thanks for openly sharing the system!

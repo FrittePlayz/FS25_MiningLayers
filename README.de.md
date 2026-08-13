@@ -227,7 +227,7 @@ Andere Meinung zur Reihenfolge oder eine Idee, die fehlt? [Diskussion oder Issue
 
 ## Sponsor
 
-Mining Layers wird unterstützt von **[farmersingles.de](https://farmersingles.de)** — der Singlebörse für Landwirte. 🚜❤️
+Mining Layers wird unterstützt von **farmersingles.de** — der Singlebörse für Landwirte. 🚜❤️
 Im Spiel zeigt sich das als kleines Schild am Grubenrand. Nicht gewünscht? `sponsorSign="false"` in der Config — das Schild verschwindet sofort, ohne Neustart.
 
 ## Fehler & Fragen
@@ -249,7 +249,7 @@ Nicht dein Ding? Ein ⭐ auf dieses Repo, ein Fehlerbericht oder eine Empfehlung
 ## Credits
 
 - **Autor:** Tommy Honold
-- **Sponsor:** [farmersingles.de](https://farmersingles.de) — die Singlebörse für Landwirte
+- **Sponsor:** farmersingles.de — die Singlebörse für Landwirte
 - Ein **[FrittePlayz](https://www.youtube.com/@FrittePlayz)**-Projekt (YouTube)
 - Baut auf **[TerraFarm](https://github.com/scfmod/FS25_TerraFarm)** von scfmod auf (wird benötigt, separat installieren) — inoffizielles Addon, keine Verbindung zu scfmod oder GIANTS Software.
 - HUD-Verschieben nach dem Vorbild von **HappyLoosers HL Hud System** (bekannt aus FS25_ProductionInfoHud) — eigene Implementierung, kein übernommener Code. Danke fürs offene Teilen des Systems!
