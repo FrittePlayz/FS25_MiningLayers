@@ -1,8 +1,9 @@
 # Mining Layers (FS25)
 
-[![Buy me fries](https://img.shields.io/badge/Buy%20me%20fries-FFDD00?style=for-the-badge&logo=buymeacoffee&logoColor=black)](https://buymeacoffee.com/fritteplayz)
+[![Download](https://img.shields.io/badge/⬇%20Download-latest%20release-2d8a4e?style=for-the-badge&logo=github&logoColor=white)](https://github.com/FrittePlayz/FS25_MiningLayers/releases/latest)
 [![Latest release](https://img.shields.io/github/v/release/FrittePlayz/FS25_MiningLayers?style=for-the-badge&color=2d8a4e)](https://github.com/FrittePlayz/FS25_MiningLayers/releases)
 [![Languages](https://img.shields.io/badge/in--game-EN%20·%20DE%20·%20FR%20·%20PL%20·%20IT-2d8a4e?style=for-the-badge)](#)
+[![Buy me fries](https://img.shields.io/badge/Buy%20me%20fries-FFDD00?style=for-the-badge&logo=buymeacoffee&logoColor=black)](https://buymeacoffee.com/fritteplayz)
 
 ![Mining Layers — material by digging depth, or make your own gravel pit](docs/images/00_header.jpg)
 
@@ -75,7 +76,7 @@ After starting, you'll find a new **Mining Layers** page in the ESC menu — wit
 
 Mining Layers runs on any map. Layer textures automatically pick the closest ground texture the map offers (standard names like `GRAVEL`, `MOUNTAINROCK`, `MOSS_STONES`). If a map has nothing suitable, the player's own texture selection stays active — materials, layers and mounds work regardless. On the first dig the mod writes the map's full texture list to the log, so you can set your own `paintLayer` overrides.
 
-## ⚠️ Two ways per area — read this before you judge the mod
+## ⚠️ Two material fields per area — the one thing to get right
 
 The single most common point of confusion. In the TerraFarm menu → **Landscaping areas** → select your area, there are **two material fields**: **Terraform** and **Discharge** (set via *Change material*). Both default to **"Not set"**.
 

@@ -1,8 +1,9 @@
 # Mining Layers (FS25)
 
-[![Buy me fries](https://img.shields.io/badge/Buy%20me%20fries-FFDD00?style=for-the-badge&logo=buymeacoffee&logoColor=black)](https://buymeacoffee.com/fritteplayz)
+[![Download](https://img.shields.io/badge/⬇%20Download-latest%20release-2d8a4e?style=for-the-badge&logo=github&logoColor=white)](https://github.com/FrittePlayz/FS25_MiningLayers/releases/latest)
 [![Latest release](https://img.shields.io/github/v/release/FrittePlayz/FS25_MiningLayers?style=for-the-badge&color=2d8a4e)](https://github.com/FrittePlayz/FS25_MiningLayers/releases)
 [![Sprachen](https://img.shields.io/badge/in--game-DE%20·%20EN%20·%20FR%20·%20PL%20·%20IT-2d8a4e?style=for-the-badge)](#)
+[![Buy me fries](https://img.shields.io/badge/Buy%20me%20fries-FFDD00?style=for-the-badge&logo=buymeacoffee&logoColor=black)](https://buymeacoffee.com/fritteplayz)
 
 ![Mining Layers — Material nach Grabtiefe, oder bau deine eigene Kiesgrube](docs/images/00_header.jpg)
 
@@ -75,7 +76,7 @@ Nach dem Start findest du eine neue Seite **Mining Layers** im ESC-Menü — mit
 
 Mining Layers läuft auf jeder Karte. Die Schicht-Texturen suchen sich automatisch die passendste Bodentextur, die die Karte anbietet (Standardnamen wie `GRAVEL`, `MOUNTAINROCK`, `MOSS_STONES`). Hat eine Karte nichts Passendes, bleibt einfach die eigene Texturauswahl aktiv — Materialien, Schichten und Halden funktionieren davon unabhängig. Beim ersten Graben schreibt der Mod die vollständige Texturliste der Karte ins Log, damit du eigene `paintLayer`-Vorgaben setzen kannst.
 
-## ⚠️ Zwei Wege je Bereich — lesen, bevor du den Mod für kaputt hältst
+## ⚠️ Zwei Materialfelder je Bereich — das eine, was man richtig machen muss
 
 Der häufigste Verwirrungspunkt überhaupt. Im TerraFarm-Menü → **Landscaping areas** → Bereich auswählen gibt es **zwei Materialfelder**: **Terraformen** und **Abladen** (gesetzt über *Material ändern*). Beide stehen ab Werk auf **„Not set"**.
 
