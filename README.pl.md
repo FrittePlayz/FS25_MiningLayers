@@ -9,7 +9,7 @@
 **Prawdziwy górniczy gameplay dla Farming Simulator 25 — przekop się przez warstwy geologiczne albo zbuduj własną żwirownię w FS25.**
 Materiał w łyżce zależy od głębokości kopania, nie od ręcznego wyboru: najpierw humus, potem żwir, potem pokład, na dole lita skała. Od wersji 1.4.0 pokład jest wybieralny — kopalnia węgla, żwirownia albo kamieniołom wapienia, na każdej mapie, bez edycji mapy. **Mod i podręcznik w grze są w całości po polsku** (tłumaczenie maszynowe — poprawki mile widziane!).
 
-🇬🇧 [English](README.md) · 🇩🇪 [Deutsch](README.de.md) · 🇫🇷 [Français](README.fr.md) — *kompaktowa strona PL; szczegółowa dokumentacja jest w wersji angielskiej, pełny podręcznik w grze — po polsku.*
+🇬🇧 [English](README.md) · 🇩🇪 [Deutsch](README.de.md) · 🇫🇷 [Français](README.fr.md) · 🇮🇹 [Italiano](README.it.md) — *kompaktowa strona PL; szczegółowa dokumentacja jest w wersji angielskiej, pełny podręcznik w grze — po polsku.*
 
 ---
 

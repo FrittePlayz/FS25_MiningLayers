@@ -11,7 +11,7 @@ Material is determined by digging depth, not by hand selection: topsoil first, t
 
 Mining Layers builds on **[TerraFarm](https://github.com/scfmod/FS25_TerraFarm)** by scfmod, which it requires to run. Unofficial add-on, not affiliated with scfmod.
 
-🇩🇪 [Deutsch](README.de.md) · 🇫🇷 [Français](README.fr.md) · 🇵🇱 [Polski](README.pl.md)
+🇩🇪 [Deutsch](README.de.md) · 🇫🇷 [Français](README.fr.md) · 🇵🇱 [Polski](README.pl.md) · 🇮🇹 [Italiano](README.it.md)
 
 ---
 
@@ -93,7 +93,7 @@ This is **not a defect and not a mod conflict — it's the intended switch.** If
 - **Spoil pile memory** — what you dump is what you pick back up. No material cheating: dig a pile below its base and you hit geology again (crater-cheat protection included)
 - **Automatic pit floor** — target depth is set to the lowest layer boundary, follows area changes
 - **Slope & water handling** — tilted reference plane on hillsides, pit floor clamps to the waterline
-- **In-game menu page** — graphical layer editor plus full documentation (English + German)
+- **In-game menu page** — graphical layer editor plus the full manual in all five languages
 - **Depth display & depth lines** — always know how deep you are and what comes next; **Numpad /** toggles the display, **Numpad ✱** moves it (both rebindable in the game options). ⚠️ Upgrading from an older version? A changed default only reaches profiles that do not know the action yet — if a key is missing, assign it once under Options → Controls → Mining Layers.
 - **Material check at startup** — tells you how many ground slots this map offers and which materials missed out
 - **Mountain bonus** — on steep slopes paydirt sits near the surface: hauling up the mountain gets rewarded
