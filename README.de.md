@@ -13,6 +13,8 @@ Mining Layers baut auf **[TerraFarm](https://github.com/scfmod/FS25_TerraFarm)**
 
 🇬🇧 [English](README.md) · 🇫🇷 [Français](README.fr.md) · 🇵🇱 [Polski](README.pl.md) · 🇮🇹 [Italiano](README.it.md)
 
+**[Voraussetzungen](#voraussetzungen--zuerst-lesen) · [Installation](#installation) · [Erste Grube](#schritt-für-schritt-deine-erste-grube) · [FAQ](#faq) · [Changelog](#changelog) · [Roadmap](#roadmap)**
+
 ---
 
 ## Voraussetzungen — zuerst lesen
