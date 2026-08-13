@@ -2,12 +2,12 @@
 
 [![Buy me fries](https://img.shields.io/badge/Buy%20me%20fries-FFDD00?style=for-the-badge&logo=buymeacoffee&logoColor=black)](https://buymeacoffee.com/fritteplayz)
 [![Latest release](https://img.shields.io/github/v/release/FrittePlayz/FS25_MiningLayers?style=for-the-badge&color=2d8a4e)](https://github.com/FrittePlayz/FS25_MiningLayers/releases)
-[![Languages](https://img.shields.io/badge/in--game-EN%20·%20DE%20·%20FR%20·%20PL-2d8a4e?style=for-the-badge)](#)
+[![Languages](https://img.shields.io/badge/in--game-EN%20·%20DE%20·%20FR%20·%20PL%20·%20IT-2d8a4e?style=for-the-badge)](#)
 
 ![Mining Layers — material by digging depth, or make your own gravel pit](docs/images/00_header.jpg)
 
 **Real mining gameplay for Farming Simulator 25 — dig through geological layers, or make your own gravel pit in FS25.**
-Material is determined by digging depth, not by hand selection: topsoil first, then gravel, then paydirt, then rock. Since 1.4.0 the pay seam is selectable — build a coal mine, a gravel pit or a limestone quarry on any map. Per-pit geology, spoil piles that remember what you dumped, and an in-game editor. Works on **any map** — no map editing required. **The mod and its in-game manual are fully available in English, German, French and Polish.**
+Material is determined by digging depth, not by hand selection: topsoil first, then gravel, then paydirt, then rock. Since 1.4.0 the pay seam is selectable — build a coal mine, a gravel pit or a limestone quarry on any map. Per-pit geology, spoil piles that remember what you dumped, and an in-game editor. Works on **any map** — no map editing required. **The mod and its in-game manual are fully available in English, German, French, Polish and Italian.**
 
 Mining Layers builds on **[TerraFarm](https://github.com/scfmod/FS25_TerraFarm)** by scfmod, which it requires to run. Unofficial add-on, not affiliated with scfmod.
 
@@ -194,14 +194,14 @@ Yes — since 1.4.2 press **Num *** (rebindable): click the display to pick it u
 No. Mining Layers is a script mod, and script mods only run on PC/Mac.
 
 **Which languages are supported?**
-English, German, French and Polish — including the full in-game manual.
+English, German, French, Polish and Italian — including the full in-game manual.
 
 **Is it really free?**
 Yes. Free download from GitHub, no paywall, no early access. If you want to say thanks: [buy me fries](https://buymeacoffee.com/fritteplayz). 🍟
 
 ## Translations
 
-The mod and its in-game manual are available in **English, German, French and Polish** (FR/PL machine-translated — corrections welcome!). Which language should come next? **[Vote in the poll](https://github.com/FrittePlayz/FS25_MiningLayers/discussions/1)** — or translate it yourself: the language files are plain XML (`l10n/`), no coding needed, and you'll be credited.
+The mod and its in-game manual are available in **English, German, French, Polish and Italian** (Italian contributed by **marcols13**; FR/PL machine-translated — corrections welcome!). Which language should come next? **[Vote in the poll](https://github.com/FrittePlayz/FS25_MiningLayers/discussions/1)** — or translate it yourself: the language files are plain XML (`l10n/`), no coding needed, and you'll be credited.
 
 ## Changelog
 
@@ -249,6 +249,7 @@ Not your thing? A ⭐ on this repo, a bug report, or telling a friend about the 
 ## Credits
 
 - **Author:** Tommy Honold
+- **Italian translation:** **marcols13** — contributed via [Discussion #1](https://github.com/FrittePlayz/FS25_MiningLayers/discussions/1), thank you!
 - **Sponsor:** farmersingles.de — the dating site for farmers
 - A **[FrittePlayz](https://www.youtube.com/@FrittePlayz)** project (YouTube)
 - Built on **[TerraFarm](https://github.com/scfmod/FS25_TerraFarm)** by scfmod (required, install separately) — unofficial add-on, no affiliation with scfmod or GIANTS Software.

@@ -2,12 +2,12 @@
 
 [![Buy me fries](https://img.shields.io/badge/Buy%20me%20fries-FFDD00?style=for-the-badge&logo=buymeacoffee&logoColor=black)](https://buymeacoffee.com/fritteplayz)
 [![Latest release](https://img.shields.io/github/v/release/FrittePlayz/FS25_MiningLayers?style=for-the-badge&color=2d8a4e)](https://github.com/FrittePlayz/FS25_MiningLayers/releases)
-[![Sprachen](https://img.shields.io/badge/in--game-DE%20·%20EN%20·%20FR%20·%20PL-2d8a4e?style=for-the-badge)](#)
+[![Sprachen](https://img.shields.io/badge/in--game-DE%20·%20EN%20·%20FR%20·%20PL%20·%20IT-2d8a4e?style=for-the-badge)](#)
 
 ![Mining Layers — Material nach Grabtiefe, oder bau deine eigene Kiesgrube](docs/images/00_header.jpg)
 
 **Echtes Bergbau-Gameplay für den Landwirtschafts-Simulator 25 — grab dich durch geologische Schichten, oder bau deine eigene Kiesgrube im LS25.**
-Das Material bestimmt die Grabtiefe, nicht die Handauswahl: erst Mutterboden, dann Kies, dann Paydirt, dann Fels. Seit 1.4.0 ist die Nutzschicht wählbar — Kohlegrube, Kiesgrube oder Kalksteinbruch, auf jeder Karte. Eigene Geologie pro Grube, Halden mit Gedächtnis und ein Ingame-Editor. Läuft auf **jeder Karte** — ohne Map-Bearbeitung. **Mod und Ingame-Handbuch gibt es vollständig auf Deutsch, Englisch, Französisch und Polnisch.**
+Das Material bestimmt die Grabtiefe, nicht die Handauswahl: erst Mutterboden, dann Kies, dann Paydirt, dann Fels. Seit 1.4.0 ist die Nutzschicht wählbar — Kohlegrube, Kiesgrube oder Kalksteinbruch, auf jeder Karte. Eigene Geologie pro Grube, Halden mit Gedächtnis und ein Ingame-Editor. Läuft auf **jeder Karte** — ohne Map-Bearbeitung. **Mod und Ingame-Handbuch gibt es vollständig auf Deutsch, Englisch, Französisch, Polnisch und Italienisch.**
 
 Mining Layers baut auf **[TerraFarm](https://github.com/scfmod/FS25_TerraFarm)** von scfmod auf und benötigt es zum Laufen. Inoffizielles Addon, keine Verbindung zu scfmod.
 
@@ -194,14 +194,14 @@ Ja — seit 1.4.2 **Num *** drücken (umbelegbar): Anzeige anklicken zum Aufnehm
 Nein. Mining Layers ist ein Script-Mod, und Script-Mods laufen nur auf PC/Mac.
 
 **Welche Sprachen gibt es?**
-Deutsch, Englisch, Französisch und Polnisch — inklusive komplettem Ingame-Handbuch.
+Deutsch, Englisch, Französisch, Polnisch und Italienisch — inklusive komplettem Ingame-Handbuch.
 
 **Ist das wirklich kostenlos?**
 Ja. Gratis-Download auf GitHub, keine Paywall, kein Early Access. Wer Danke sagen will: [spendier mir Fritten](https://buymeacoffee.com/fritteplayz). 🍟
 
 ## Übersetzungen
 
-Mod und In-Game-Handbuch gibt es auf **Deutsch, Englisch, Französisch und Polnisch** (FR/PL maschinell übersetzt — Korrekturen willkommen!). Welche Sprache soll als Nächstes kommen? **[Stimm in der Umfrage ab](https://github.com/FrittePlayz/FS25_MiningLayers/discussions/1)** — oder übersetz selbst: Die Sprachdateien sind einfaches XML (`l10n/`), kein Code nötig, und du wirst in den Credits genannt.
+Mod und In-Game-Handbuch gibt es auf **Deutsch, Englisch, Französisch, Polnisch und Italienisch** (Italienisch von **marcols13**; FR/PL maschinell übersetzt — Korrekturen willkommen!). Welche Sprache soll als Nächstes kommen? **[Stimm in der Umfrage ab](https://github.com/FrittePlayz/FS25_MiningLayers/discussions/1)** — oder übersetz selbst: Die Sprachdateien sind einfaches XML (`l10n/`), kein Code nötig, und du wirst in den Credits genannt.
 
 ## Changelog
 
@@ -249,6 +249,7 @@ Nicht dein Ding? Ein ⭐ auf dieses Repo, ein Fehlerbericht oder eine Empfehlung
 ## Credits
 
 - **Autor:** Tommy Honold
+- **Italienische Übersetzung:** **marcols13** — beigesteuert über [Discussion #1](https://github.com/FrittePlayz/FS25_MiningLayers/discussions/1), danke!
 - **Sponsor:** farmersingles.de — die Singlebörse für Landwirte
 - Ein **[FrittePlayz](https://www.youtube.com/@FrittePlayz)**-Projekt (YouTube)
 - Baut auf **[TerraFarm](https://github.com/scfmod/FS25_TerraFarm)** von scfmod auf (wird benötigt, separat installieren) — inoffizielles Addon, keine Verbindung zu scfmod oder GIANTS Software.

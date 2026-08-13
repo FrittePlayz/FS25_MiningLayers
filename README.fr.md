@@ -2,7 +2,7 @@
 
 [![Buy me fries](https://img.shields.io/badge/Buy%20me%20fries-FFDD00?style=for-the-badge&logo=buymeacoffee&logoColor=black)](https://buymeacoffee.com/fritteplayz)
 [![Latest release](https://img.shields.io/github/v/release/FrittePlayz/FS25_MiningLayers?style=for-the-badge&color=2d8a4e)](https://github.com/FrittePlayz/FS25_MiningLayers/releases)
-[![Langues](https://img.shields.io/badge/en--jeu-FR%20·%20EN%20·%20DE%20·%20PL-2d8a4e?style=for-the-badge)](#)
+[![Langues](https://img.shields.io/badge/en--jeu-FR%20·%20EN%20·%20DE%20·%20PL%20·%20IT-2d8a4e?style=for-the-badge)](#)
 
 ![Mining Layers — le matériau dépend de la profondeur, ou crée ta propre gravière](docs/images/00_header.jpg)
 
@@ -104,7 +104,7 @@ Oui — depuis la 1.4.2, appuie sur **Pavé num. *** (réassignable) : clique l'
 Non. Mining Layers est un mod script, et les mods script ne tournent que sur PC/Mac.
 
 **Quelles langues sont disponibles ?**
-Français, anglais, allemand et polonais — manuel en jeu complet inclus.
+Français, anglais, allemand, polonais et italien — manuel en jeu complet inclus (italien par marcols13).
 
 **C'est vraiment gratuit ?**
 Oui. Téléchargement gratuit sur GitHub, pas de paywall, pas d'accès anticipé. Pour dire merci : [offre-moi des frites](https://buymeacoffee.com/fritteplayz). 🍟
