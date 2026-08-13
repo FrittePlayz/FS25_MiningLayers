@@ -104,7 +104,6 @@ This is **not a defect and not a mod conflict — it's the intended switch.** If
 - **Layer thickness: don't go thin.** The editor enforces 1 m for the top layer and 1.5 m for every layer below — thinner layers break spoil pile pickup. **With big machines (PC 8000 class), 2 m per layer digs noticeably smoother.**
 - **Ground material slots are limited — by the MAP, not by the game.** The map sets the channel width of its height density map; the count follows 2^n-1, so 6 bit gives 63 slots, 7 bit gives 127 and 8 bit gives 255. Measured so far: 63 on a 6-bit map (the engine names that number itself) and 83 occupied slots on a 7-bit map with no rejection at all. The base game takes 48, and map plus mods share the rest. So a wide map has room where a narrow one does not. The startup check tells you where you stand; `grep addDensityMapHeightType log.txt` names every material that missed out.
 - **Lowering only works inside the polygon** (TerraFarm design). A wheel loader only cuts ~30–40 cm per pass — drive a ramp into the pit; the excavator is the depth tool.
-- **One slope face per area.** Areas drawn across a ridge or far into a lake stretch the reference plane — draw shoreline areas mostly over land.
 - **Some maps block terraforming** at riverbeds and map edges (engine blocked-area map). No mod can dig there.
 - Runtime terrain texture names differ from the names in `map.i3d` — the mod resolves this automatically; override per layer via `paintLayer="..."` if you want a specific look.
 
