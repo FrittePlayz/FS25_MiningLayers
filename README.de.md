@@ -215,7 +215,7 @@ Wohin der Mod geht. Das sind **Vorhaben, keine Versprechen** — keine Termine, 
 2. **Schichten ohne gezogenen Bereich** — das Bezugshöhen-Raster kam mit 1.5.0 und macht es erst möglich; offen ist der Schritt, ganz ohne TerraFarm-Bereich zu arbeiten. Die meisten Spieler graben frei, statt vorher ein Polygon zu ziehen — das ist der Unterschied zwischen einem Mod für Leute, die die Anleitung lesen, und einem Mod, der einfach funktioniert.
 ### V2 — Director's Cut
 
-Alles darüber bringt dich in die Grube. Alles darunter ist Tiefe für die, die schon drinstehen, und kommt mit der nächsten großen Version. Kostenlos wie der Rest — der Name meint den Umfang, keinen Preis.
+Alles darüber bringt dich in die Grube. Alles darunter ist Tiefe für die, die schon drinstehen, und kommt mit der nächsten großen Version.
 
 3. **Editor** — die Materialien anbieten, die deine Karte tatsächlich mitbringt, statt Handarbeit in der `miningLayers.xml`; den Kartenbericht auf die Schichten-Seite holen; Halden sichtbar machen und je Zone zurücksetzen.
 4. **Mehrspieler** — teilweise getestet. Der Mod läuft auf einem Dedicated Server: Zonen, Schichten und das Halden-Gedächtnis überstehen dort auch einen Neustart. Ungetestet ist die Client-Sicht — bis die geprüft ist, gilt Mehrspieler als unbewiesen.

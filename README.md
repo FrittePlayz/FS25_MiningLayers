@@ -215,7 +215,7 @@ Where this mod is headed. These are **intentions, not promises** — no dates, a
 2. **Layers without a drawn area** — the surface reference grid landed in 1.5.0 and made this possible; the remaining step is to work outside a TerraFarm area at all. Most players dig freely rather than drawing a polygon first, so this is the difference between a mod for people who read the manual and a mod that just works.
 ### V2 — Director's Cut
 
-Everything above gets you into the pit. Everything below is depth for people already standing in one, and it lands in the next big version. Free like the rest of the mod — the name is about scope, not a price tag.
+Everything above gets you into the pit. Everything below is depth for people already standing in one, and it lands in the next big version.
 
 3. **Editor** — offer the materials your map actually provides instead of hand-editing `miningLayers.xml`, put the map report on the layers page, and make spoil piles visible and resettable per zone.
 4. **Multiplayer** — partly tested. The mod runs on a dedicated server: zones, layers and the spoil memory all survive a restart there. What has not been tested is the client side, so treat multiplayer as unproven until it has been.
