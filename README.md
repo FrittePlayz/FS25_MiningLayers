@@ -137,66 +137,111 @@ One catch: PAYDIRT, COAL and LIMESTONE are not base-game fill types — your map
 
 ## FAQ
 
-**Does Mining Layers work on any map?**
+Jump to a question:
+
+1. [Does Mining Layers work on any map?](#1-does-mining-layers-work-on-any-map)
+2. [Do I need a new savegame?](#2-do-i-need-a-new-savegame)
+3. [How do I make a gravel pit in FS25?](#3-how-do-i-make-a-gravel-pit-in-fs25)
+4. [How do I mine coal in FS25?](#4-how-do-i-mine-coal-in-fs25)
+5. [Does Mining Layers add a paydirt fill type to my map?](#5-does-mining-layers-add-a-paydirt-fill-type-to-my-map)
+6. [Can I set up my own layers — more dirt, different soil types?](#6-can-i-set-up-my-own-layers--more-dirt-different-soil-types)
+7. [Why is my excavator not digging?](#7-why-is-my-excavator-not-digging)
+8. [Why do I always get the same material, no matter how deep I dig?](#8-why-do-i-always-get-the-same-material-no-matter-how-deep-i-dig)
+9. [Why do I get no layers, even though I drew an area? (top 3 causes)](#9-why-do-i-get-no-layers-even-though-i-drew-an-area-top-3-causes)
+10. [How deep can I dig?](#10-how-deep-can-i-dig)
+11. [How thick should my layers be?](#11-how-thick-should-my-layers-be)
+12. [Is there a pile limit — how much can I dump?](#12-is-there-a-pile-limit--how-much-can-i-dump)
+13. [Dumping on the ground says "action not possible"?](#13-dumping-on-the-ground-says-action-not-possible)
+14. [Material sits in the bucket but will not tip onto the ground?](#14-material-sits-in-the-bucket-but-will-not-tip-onto-the-ground)
+15. [Why does my machine only dump inside one area — or nowhere at all?](#15-why-does-my-machine-only-dump-inside-one-area--or-nowhere-at-all)
+16. [How do I turn the depth display off (or back on)?](#16-how-do-i-turn-the-depth-display-off-or-back-on)
+17. [Can I move the display so it does not overlap other HUD mods?](#17-can-i-move-the-display-so-it-does-not-overlap-other-hud-mods)
+18. [Does it work on PS5 or Xbox?](#18-does-it-work-on-ps5-or-xbox)
+19. [Which languages are supported?](#19-which-languages-are-supported)
+20. [Is it really free?](#20-is-it-really-free)
+
+---
+
+#### 1. Does Mining Layers work on any map?
+
 Yes. No map editing is needed: draw a TerraFarm area around your future pit and start digging. For layer textures the mod automatically picks the closest ground texture the map offers; if nothing fits, your own texture selection simply stays active.
 
-**Do I need a new savegame?**
+#### 2. Do I need a new savegame?
+
 No. Mining Layers works with existing saves — install, enable both mods for the savegame, keep playing. Existing TerraFarm areas keep working; areas without a material set simply get layers.
 
-**How do I make a gravel pit in FS25?**
+#### 3. How do I make a gravel pit in FS25?
+
 Install TerraFarm and Mining Layers, draw a TerraFarm area, then open ESC menu → Mining Layers → Layers and set DIRT on top with LIMESTONE or STONE as the pay seam. Since 1.4.0 the seam material is selectable right in the editor — no XML needed.
 
-**How do I mine coal in FS25?**
+#### 4. How do I mine coal in FS25?
+
 Pick COAL as the pay seam in the layer editor. Note: COAL is not a base-game fill type — your map or a mining mod has to provide it (RGC maps like Yukon Back Country do).
 
-**Does Mining Layers add a paydirt fill type to my map?**
+#### 5. Does Mining Layers add a paydirt fill type to my map?
+
 No — the mod never registers fill types. It only uses what the base game, your map and your other mods already provide. PAYDIRT itself is not a base-game fill type: mining maps and mining mods bring it, which is why it is often there anyway. No paydirt in your game? Pick a seam material your map does know in the layer editor — the startup log lists them all.
 
-**Can I set up my own layers — more dirt, different soil types?**
+#### 6. Can I set up my own layers — more dirt, different soil types?
+
 Yes, that is the core feature. ESC menu → Mining Layers → Layers: per pit you pick material AND thickness of every overburden layer. More dirt? Make the DIRT layer 4 m instead of 2. Variety? Stack DIRT over SOIL over gravel. Anything your map knows as a material works, and the pay seam at the bottom is selectable too. Minimums: 1 m for the top layer, 1.5 m below (2 m digs smoother with big machines).
 
-**Why is my excavator not digging?**
+#### 7. Why is my excavator not digging?
+
 TerraFarm needs a machine configuration for that vehicle — without one, nothing happens (that is not a Mining Layers issue). Install a config pack such as scfmod's FS25_TerraFarmMachines, and avoid duplicate machine entries from several packs.
 
-**Why do I always get the same material, no matter how deep I dig?**
+#### 8. Why do I always get the same material, no matter how deep I dig?
+
 A material is set on your TerraFarm area — that switches the area to plain TerraFarm without layers (by design, for construction work). Leave the material fields empty and the layers take over.
 
-**Why do I get no layers, even though I drew an area? (top 3 causes)**
+#### 9. Why do I get no layers, even though I drew an area? (top 3 causes)
+
 1. **The machine has no input area assigned.** TerraFarm links areas to the MACHINE, not to your position: machine settings (default `Y`) → select your area as input. Saved per machine and savegame — this is the number one support case; the TerraFarm HUD then shows your area instead of just a material.
 2. **A material is set in the area** → the area is plain TerraFarm on purpose (construction mode). Leave the material fields empty.
 3. **You are digging outside the area polygon** (or on a path area — paths never get layers).
 
-**How deep can I dig?**
+#### 10. How deep can I dig?
+
 Down to the bedrock below your deepest layer — there digging ends on purpose. That is what makes it mining instead of a bottomless money hole.
 
-**How thick should my layers be?**
+#### 11. How thick should my layers be?
+
 At least 1.5 m (the editor enforces 1 m for the top layer, 1.5 m below). With big machines like the PC 8000, 2 m per layer digs noticeably smoother.
 
-**Is there a pile limit — how much can I dump?**
+#### 12. Is there a pile limit — how much can I dump?
+
 No. Dumped material becomes real terrain via TerraFarm, not a base-game heap — so no heap capacity applies. The pile memory is a 2 m grid per savegame with no cap on pile count or size. One thing to know: each 2 m cell remembers ONE material (the last dump wins), so don't mix materials on the same spot if you want them back separately.
 
-**Dumping on the ground says "action not possible"?**
+#### 13. Dumping on the ground says "action not possible"?
+
 TerraFarm checks straight down from the bucket edge: if terrain is closer than about 0.5 m, ground-dumping is blocked (dig-pose protection). What counts is the distance below the edge, not how high the boom is — over an excavated hollow it works even with a low boom; on flat ground lift briefly until the message disappears. There is an upper limit too: the dump still has to hit the ground. So: edge clear by a good half metre, but low enough to drop.
 
-**Material sits in the bucket but will not tip onto the ground?**
+#### 14. Material sits in the bucket but will not tip onto the ground?
+
 How many materials can lie on the ground (height types) is set by your map, not by the game: the channel width of its height density map decides, following 2^n-1 — 6 bit gives 63 slots, 7 bit gives 127, 8 bit gives 255. The 63 are confirmed by the engine's own error message; on a 7-bit map we measured 83 occupied slots without a single rejection, so the ceiling there is higher but its exact value is calculated, not measured. The base game already uses 48; the map's own materials are registered before any mod's, and whatever is left goes to the mod list in load order. When a map runs out, late-registered fill types lose their slot: they work in the bucket and sell fine, but cannot be tipped onto the terrain. Your log then shows `maximum number (63) of height types already registered` — one line per rejected material, so `grep addDensityMapHeightType log.txt` gives you the full list. Since 1.4.2 the mod warns per zone when a layer material is affected. Two ways out: trim fill-type-heavy mods, or play a map built with more channels. Measured example: on a 6-bit map ten materials were rejected, while the same mod list on a 7-bit map registered 83 height types with none rejected.
 
-**Why does my machine only dump inside one area — or nowhere at all?**
+#### 15. Why does my machine only dump inside one area — or nowhere at all?
+
 An output area is assigned in the machine menu: TerraFarm then dumps only inside that area. Since 1.4.2 a layer zone assigned as output runs free automatically (one log line says so). For free dumping anywhere, set the machine's output area to "not set".
 
-**How do I turn the depth display off (or back on)?**
+#### 16. How do I turn the depth display off (or back on)?
+
 Press **Numpad /** while a machine is active (Numpad 5 before 1.5.0). The key is rebindable: Options → Controls → Mining Layers. To start with the display hidden, set `showHeightDisplay="false"` in `modSettings/FS25_MiningLayers/miningLayers.xml`.
 
-**Can I move the display so it does not overlap other HUD mods?**
+#### 17. Can I move the display so it does not overlap other HUD mods?
+
 Yes — since 1.4.2 press **Num *** (rebindable): click the display to pick it up, click again to drop it, right-click resets to the default spot. The position saves automatically (stored in `modSettings/FS25_MiningLayers/hud.xml`). No extra HUD mod needed.
 
-**Does it work on PS5 or Xbox?**
+#### 18. Does it work on PS5 or Xbox?
+
 No. Mining Layers is a script mod, and script mods only run on PC/Mac.
 
-**Which languages are supported?**
+#### 19. Which languages are supported?
+
 English, German, French, Polish and Italian — including the full in-game manual.
 
-**Is it really free?**
+#### 20. Is it really free?
+
 Yes. Free download from GitHub, no paywall, no early access. If you want to say thanks: [buy me fries](https://buymeacoffee.com/fritteplayz). 🍟
 
 ## Translations

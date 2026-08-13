@@ -47,66 +47,111 @@ Co najmniej 1,5 m na warstwę (edytor wymusza 1 m dla najwyższej, 1,5 m dla ni�
 
 ## FAQ
 
-**Czy Mining Layers działa na każdej mapie?**
+Przejdź do pytania:
+
+1. [Czy Mining Layers działa na każdej mapie?](#1-czy-mining-layers-działa-na-każdej-mapie)
+2. [Czy potrzebny jest nowy zapis gry?](#2-czy-potrzebny-jest-nowy-zapis-gry)
+3. [Jak zbudować żwirownię w FS25?](#3-jak-zbudować-żwirownię-w-fs25)
+4. [Jak wydobywać węgiel w FS25?](#4-jak-wydobywać-węgiel-w-fs25)
+5. [Czy Mining Layers dodaje materiał paydirt do mojej mapy?](#5-czy-mining-layers-dodaje-materiał-paydirt-do-mojej-mapy)
+6. [Czy mogę ustawić własne warstwy — więcej ziemi, różne rodzaje gleby?](#6-czy-mogę-ustawić-własne-warstwy--więcej-ziemi-różne-rodzaje-gleby)
+7. [Dlaczego moja koparka nie kopie?](#7-dlaczego-moja-koparka-nie-kopie)
+8. [Dlaczego zawsze dostaję ten sam materiał, niezależnie od głębokości?](#8-dlaczego-zawsze-dostaję-ten-sam-materiał-niezależnie-od-głębokości)
+9. [Dlaczego nie ma warstw, chociaż narysowałem obszar? (3 najczęstsze przyczyny)](#9-dlaczego-nie-ma-warstw-chociaż-narysowałem-obszar-3-najczęstsze-przyczyny)
+10. [Jak głęboko można kopać?](#10-jak-głęboko-można-kopać)
+11. [Jak grube powinny być warstwy?](#11-jak-grube-powinny-być-warstwy)
+12. [Czy jest limit hałd — ile mogę wysypać?](#12-czy-jest-limit-hałd--ile-mogę-wysypać)
+13. [Zrzucanie na ziemię pokazuje „akcja niemożliwa"?](#13-zrzucanie-na-ziemię-pokazuje-akcja-niemożliwa)
+14. [Materiał jest w łyżce, ale nie da się go wysypać na ziemię?](#14-materiał-jest-w-łyżce-ale-nie-da-się-go-wysypać-na-ziemię)
+15. [Czemu maszyna wysypuje tylko w jednym obszarze — albo nigdzie?](#15-czemu-maszyna-wysypuje-tylko-w-jednym-obszarze--albo-nigdzie)
+16. [Jak wyłączyć (albo włączyć) wskaźnik głębokości?](#16-jak-wyłączyć-albo-włączyć-wskaźnik-głębokości)
+17. [Czy mogę przesunąć wskaźnik, żeby nie nachodził na inne HUD-y?](#17-czy-mogę-przesunąć-wskaźnik-żeby-nie-nachodził-na-inne-hud-y)
+18. [Czy działa na PS5 albo Xboxie?](#18-czy-działa-na-ps5-albo-xboxie)
+19. [Jakie języki są dostępne?](#19-jakie-języki-są-dostępne)
+20. [Czy to naprawdę darmowe?](#20-czy-to-naprawdę-darmowe)
+
+---
+
+#### 1. Czy Mining Layers działa na każdej mapie?
+
 Tak. Bez edycji mapy: narysuj obszar TerraFarm wokół wyrobiska i kop. Dla tekstur mod automatycznie bierze najbliższe podłoże, jakie mapa oferuje; jeśli nic nie pasuje, po prostu zostaje aktywny twój własny wybór tekstury.
 
-**Czy potrzebny jest nowy zapis gry?**
+#### 2. Czy potrzebny jest nowy zapis gry?
+
 Nie. Mining Layers działa z istniejącymi zapisami — zainstaluj, włącz oba mody w zapisie i graj dalej. Istniejące obszary TerraFarm działają dalej; obszary bez wpisanego materiału po prostu dostają warstwy.
 
-**Jak zbudować żwirownię w FS25?**
+#### 3. Jak zbudować żwirownię w FS25?
+
 Zainstaluj TerraFarm i Mining Layers, narysuj obszar, potem menu ESC → Mining Layers → Warstwy: DIRT na górze, LIMESTONE lub STONE jako pokład. Od 1.4.0 wszystko ustawisz w edytorze — bez XML.
 
-**Jak wydobywać węgiel w FS25?**
+#### 4. Jak wydobywać węgiel w FS25?
+
 Wybierz COAL jako pokład w edytorze warstw. Uwaga: COAL nie jest materiałem z podstawki — mapa albo mod górniczy musi go dostarczyć.
 
-**Czy Mining Layers dodaje materiał paydirt do mojej mapy?**
+#### 5. Czy Mining Layers dodaje materiał paydirt do mojej mapy?
+
 Nie — mod w ogóle nie rejestruje materiałów. Korzysta tylko z tego, co dają gra podstawowa, mapa i twoje inne mody. Sam PAYDIRT nie jest materiałem z podstawki: dostarczają go mapy i mody górnicze, dlatego często i tak jest dostępny. Nie masz paydirtu w grze? Wybierz w edytorze pokład, który twoja mapa zna — log wypisuje wszystkie przy starcie.
 
-**Czy mogę ustawić własne warstwy — więcej ziemi, różne rodzaje gleby?**
+#### 6. Czy mogę ustawić własne warstwy — więcej ziemi, różne rodzaje gleby?
+
 Tak, to sedno moda. Menu ESC → Mining Layers → Warstwy: dla każdego wyrobiska wybierasz materiał I grubość każdej warstwy nadkładu. Więcej ziemi? Ustaw warstwę DIRT na 4 m zamiast 2. Różnorodność? Ułóż DIRT na SOIL na żwirze. Działa wszystko, co twoja mapa zna jako materiał, a pokład na dole też jest do wyboru. Minimalne grubości: 1 m na górze, 1,5 m niżej (przy dużych maszynach 2 m kopie się lepiej).
 
-**Dlaczego moja koparka nie kopie?**
+#### 7. Dlaczego moja koparka nie kopie?
+
 TerraFarm potrzebuje konfiguracji maszyny dla tego pojazdu — bez niej nic się nie dzieje (to nie problem Mining Layers). Zainstaluj paczkę konfiguracji, np. FS25_TerraFarmMachines, i unikaj zdublowanych wpisów z kilku paczek.
 
-**Dlaczego zawsze dostaję ten sam materiał, niezależnie od głębokości?**
+#### 8. Dlaczego zawsze dostaję ten sam materiał, niezależnie od głębokości?
+
 W obszarze TerraFarm jest wpisany materiał — obszar działa wtedy jak zwykły TerraFarm bez warstw (celowo, do budów). Zostaw pola materiału puste, a warstwy przejmą robotę.
 
-**Dlaczego nie ma warstw, chociaż narysowałem obszar? (3 najczęstsze przyczyny)**
+#### 9. Dlaczego nie ma warstw, chociaż narysowałem obszar? (3 najczęstsze przyczyny)
+
 1. **Maszyna nie ma przypisanego obszaru wejściowego.** TerraFarm wiąże obszary z MASZYNĄ, nie z twoją pozycją: ustawienia maszyny (domyślnie `Y`) → wybierz swój obszar jako wejście. Zapisywane per maszyna i zapis gry — najczęstszy przypadek supportu; HUD TerraFarm pokazuje wtedy twój obszar zamiast samego materiału.
 2. **W obszarze wpisany jest materiał** → obszar celowo działa jak zwykły TerraFarm (tryb budowy). Zostaw pola materiału puste.
 3. **Kopiesz poza wielokątem obszaru** (albo w obszarze ścieżki — ścieżki nigdy nie mają warstw).
 
-**Jak głęboko można kopać?**
+#### 10. Jak głęboko można kopać?
+
 Do litej skały pod najgłębszą warstwą — tam koniec, celowo. Właśnie to czyni z tego górnictwo, a nie bezdenną dziurę z pieniędzmi.
 
-**Jak grube powinny być warstwy?**
+#### 11. Jak grube powinny być warstwy?
+
 Co najmniej 1,5 m (edytor wymusza 1 m na górze, 1,5 m niżej). Przy dużych maszynach klasy PC 8000 lepiej 2 m na warstwę.
 
-**Czy jest limit hałd — ile mogę wysypać?**
+#### 12. Czy jest limit hałd — ile mogę wysypać?
+
 Nie. Wysypany materiał staje się przez TerraFarm prawdziwym terenem, a nie stertą z gry bazowej — limit pojemności z gry nie obowiązuje. Pamięć hałd to siatka 2 m na zapis gry, bez limitu liczby ani wielkości. Jedno zastrzeżenie: każda komórka 2 m pamięta JEDEN materiał (wygrywa ostatni wysyp) — nie mieszaj materiałów w tym samym miejscu, jeśli chcesz je odzyskać osobno.
 
-**Zrzucanie na ziemię pokazuje „akcja niemożliwa"?**
+#### 13. Zrzucanie na ziemię pokazuje „akcja niemożliwa"?
+
 TerraFarm sprawdza pionowo pod krawędzią łyżki: jeśli teren jest bliżej niż ok. 0,5 m, zrzut na ziemię jest zablokowany (ochrona pozycji kopania). Liczy się odstęp pod krawędzią, nie wysokość wysięgnika — nad wykopanym zagłębieniem działa nawet z nisko opuszczonym wysięgnikiem; na płaskim gruncie unieś łyżkę na chwilę, aż komunikat zniknie. Jest też górna granica: zrzut musi jeszcze trafić w ziemię. Czyli: krawędź ponad pół metra nad gruntem, ale dość nisko do zrzutu.
 
-**Materiał jest w łyżce, ale nie da się go wysypać na ziemię?**
+#### 14. Materiał jest w łyżce, ale nie da się go wysypać na ziemię?
+
 Ile materiałów może leżeć na ziemi (height types), ustala twoja mapa, a nie gra: decyduje szerokość kanału jej height density map, według 2^n-1 — 6 bitów daje 63 miejsca, 7 bitów daje 127, 8 bitów daje 255. Liczbę 63 potwierdza sam komunikat błędu gry; na mapie 7-bitowej zmierzyliśmy 83 zajęte miejsca bez ani jednego odrzucenia, sufit jest więc wyżej, ale jego dokładna wartość jest wyliczona, nie zmierzona. Gra podstawowa zajmuje już 48; własne materiały mapy rejestrowane są przed materiałami modów, a reszta trafia do listy modów w kolejności wczytywania. Gdy mapie skończą się miejsca, później rejestrowane materiały tracą swoje: działają w łyżce i można je sprzedać, ale nie da się ich wysypać na teren. W logu widać wtedy `maximum number (63) of height types already registered` — po jednej linii na odrzucony materiał, więc `grep addDensityMapHeightType log.txt` daje pełną listę. Od 1.4.2 mod ostrzega dla każdej strefy, gdy dotyczy to materiału warstwy. Dwa wyjścia: odchudzić mody z wieloma materiałami albo grać na mapie zbudowanej z większą liczbą kanałów. Zmierzony przykład: na mapie 6-bitowej odrzucono dziesięć materiałów, podczas gdy ta sama lista modów na mapie 7-bitowej zarejestrowała 83 height types bez ani jednego odrzucenia.
 
-**Czemu maszyna wysypuje tylko w jednym obszarze — albo nigdzie?**
+#### 15. Czemu maszyna wysypuje tylko w jednym obszarze — albo nigdzie?
+
 W menu maszyny przypisany jest obszar wyjściowy: TerraFarm wysypuje wtedy tylko tam. Od 1.4.2 strefa warstw jako obszar wyjściowy działa automatycznie swobodnie (mówi o tym linia w logu). Żeby wysypywać swobodnie wszędzie, ustaw obszar wyjściowy maszyny na „nieustawiony".
 
-**Jak wyłączyć (albo włączyć) wskaźnik głębokości?**
+#### 16. Jak wyłączyć (albo włączyć) wskaźnik głębokości?
+
 Naciśnij **Num /**, gdy maszyna jest aktywna (do 1.4.3 był to Num 5). Klawisz można zmienić: Opcje → Sterowanie → Mining Layers. Żeby wskaźnik był wyłączony od startu: `showHeightDisplay="false"` w `modSettings/FS25_MiningLayers/miningLayers.xml`.
 
-**Czy mogę przesunąć wskaźnik, żeby nie nachodził na inne HUD-y?**
+#### 17. Czy mogę przesunąć wskaźnik, żeby nie nachodził na inne HUD-y?
+
 Tak — od 1.4.2 naciśnij **Num *** (klawisz do zmiany): kliknij wskaźnik, żeby go podnieść, drugi klik odkłada, prawy przycisk przywraca pozycję domyślną. Pozycja zapisuje się automatycznie (w `modSettings/FS25_MiningLayers/hud.xml`). Bez dodatkowego moda HUD.
 
-**Czy działa na PS5 albo Xboxie?**
+#### 18. Czy działa na PS5 albo Xboxie?
+
 Nie. Mining Layers to mod skryptowy, a mody skryptowe działają tylko na PC/Mac.
 
-**Jakie języki są dostępne?**
+#### 19. Jakie języki są dostępne?
+
 Polski, angielski, niemiecki, francuski i włoski — z pełnym podręcznikiem w grze (włoski od marcols13).
 
-**Czy to naprawdę darmowe?**
+#### 20. Czy to naprawdę darmowe?
+
 Tak. Darmowe pobieranie z GitHuba, bez paywalla, bez early access. Chcesz podziękować? [Postaw mi frytki](https://buymeacoffee.com/fritteplayz). 🍟
 
 ## Tłumaczenie

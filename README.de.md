@@ -137,66 +137,111 @@ Ein Haken: PAYDIRT, COAL und LIMESTONE sind keine Basisspiel-Materialien — Kar
 
 ## FAQ
 
-**Läuft Mining Layers auf jeder Karte?**
+Direkt zur Frage:
+
+1. [Läuft Mining Layers auf jeder Karte?](#1-läuft-mining-layers-auf-jeder-karte)
+2. [Brauche ich einen neuen Spielstand?](#2-brauche-ich-einen-neuen-spielstand)
+3. [Wie baue ich eine Kiesgrube im LS25?](#3-wie-baue-ich-eine-kiesgrube-im-ls25)
+4. [Wie baue ich Kohle ab?](#4-wie-baue-ich-kohle-ab)
+5. [Fügt Mining Layers meiner Karte ein Paydirt-Material hinzu?](#5-fügt-mining-layers-meiner-karte-ein-paydirt-material-hinzu)
+6. [Kann ich eigene Schichten einstellen — mehr Erde, verschiedene Erdarten?](#6-kann-ich-eigene-schichten-einstellen--mehr-erde-verschiedene-erdarten)
+7. [Warum gräbt mein Bagger nicht?](#7-warum-gräbt-mein-bagger-nicht)
+8. [Warum bekomme ich immer dasselbe Material, egal wie tief ich grabe?](#8-warum-bekomme-ich-immer-dasselbe-material-egal-wie-tief-ich-grabe)
+9. [Warum kommen keine Schichten, obwohl ich einen Bereich gezogen habe? (Top-3-Ursachen)](#9-warum-kommen-keine-schichten-obwohl-ich-einen-bereich-gezogen-habe-top-3-ursachen)
+10. [Wie tief kann ich graben?](#10-wie-tief-kann-ich-graben)
+11. [Wie dick sollten die Schichten sein?](#11-wie-dick-sollten-die-schichten-sein)
+12. [Gibt es ein Halden-Limit — wie viel kann ich abkippen?](#12-gibt-es-ein-halden-limit--wie-viel-kann-ich-abkippen)
+13. [Abladen auf den Boden bringt „Aktion nicht ausführbar"?](#13-abladen-auf-den-boden-bringt-aktion-nicht-ausführbar)
+14. [Material liegt in der Schaufel, lässt sich aber nicht abkippen?](#14-material-liegt-in-der-schaufel-lässt-sich-aber-nicht-abkippen)
+15. [Warum kippt meine Maschine nur in einem Bereich ab — oder nirgends?](#15-warum-kippt-meine-maschine-nur-in-einem-bereich-ab--oder-nirgends)
+16. [Wie schalte ich die Tiefenanzeige aus (oder wieder ein)?](#16-wie-schalte-ich-die-tiefenanzeige-aus-oder-wieder-ein)
+17. [Kann ich die Anzeige verschieben, damit sie nicht mit anderen HUD-Mods kollidiert?](#17-kann-ich-die-anzeige-verschieben-damit-sie-nicht-mit-anderen-hud-mods-kollidiert)
+18. [Läuft das auf PS5 oder Xbox?](#18-läuft-das-auf-ps5-oder-xbox)
+19. [Welche Sprachen gibt es?](#19-welche-sprachen-gibt-es)
+20. [Ist das wirklich kostenlos?](#20-ist-das-wirklich-kostenlos)
+
+---
+
+#### 1. Läuft Mining Layers auf jeder Karte?
+
 Ja. Keine Map-Bearbeitung nötig: TerraFarm-Bereich um die künftige Grube ziehen und losgraben. Für die Schicht-Texturen nimmt der Mod automatisch die passendste Bodentextur der Karte; passt keine, bleibt einfach deine eigene Texturauswahl aktiv.
 
-**Brauche ich einen neuen Spielstand?**
+#### 2. Brauche ich einen neuen Spielstand?
+
 Nein. Mining Layers läuft mit bestehenden Savegames — installieren, beide Mods im Spielstand aktivieren, weiterspielen. Vorhandene TerraFarm-Bereiche funktionieren weiter; Bereiche ohne eingetragenes Material bekommen einfach Schichten.
 
-**Wie baue ich eine Kiesgrube im LS25?**
+#### 3. Wie baue ich eine Kiesgrube im LS25?
+
 TerraFarm und Mining Layers installieren, TerraFarm-Bereich ziehen, dann ESC-Menü → Mining Layers → Schichten: DIRT oben, LIMESTONE oder STONE als Nutzschicht. Seit 1.4.0 ist das Flöz-Material direkt im Editor wählbar — ganz ohne XML.
 
-**Wie baue ich Kohle ab?**
+#### 4. Wie baue ich Kohle ab?
+
 COAL als Nutzschicht im Schichten-Editor wählen. Achtung: COAL ist kein Basisspiel-Material — Karte oder ein Mining-Mod muss es mitbringen (RGC-Karten wie Yukon Back Country haben es).
 
-**Fügt Mining Layers meiner Karte ein Paydirt-Material hinzu?**
+#### 5. Fügt Mining Layers meiner Karte ein Paydirt-Material hinzu?
+
 Nein — der Mod registriert grundsätzlich keine Materialien. Er nutzt nur, was Basisspiel, Karte und deine anderen Mods schon mitbringen. PAYDIRT selbst ist kein Basisspiel-Material: Mining-Karten und Mining-Mods bringen es mit, deshalb ist es oft trotzdem da. Kein Paydirt im Spiel? Im Schichten-Editor eine Nutzschicht wählen, die deine Karte kennt — das Log listet beim Start alle auf.
 
-**Kann ich eigene Schichten einstellen — mehr Erde, verschiedene Erdarten?**
+#### 6. Kann ich eigene Schichten einstellen — mehr Erde, verschiedene Erdarten?
+
 Ja, genau das ist das Kernfeature. ESC-Menü → Mining Layers → Schichten: Pro Grube wählst du Material UND Dicke jeder Abraum-Schicht. Mehr Erde? DIRT-Schicht auf 4 m statt 2. Abwechslung? DIRT über SOIL über Kies stapeln. Es geht alles, was deine Karte als Material kennt, und das Flöz unten ist ebenfalls wählbar. Mindestdicken: 1 m oben, 1,5 m darunter (mit großen Maschinen gräbt sich 2 m besser).
 
-**Warum gräbt mein Bagger nicht?**
+#### 7. Warum gräbt mein Bagger nicht?
+
 TerraFarm braucht eine Maschinen-Konfiguration für das Fahrzeug — ohne passiert nichts (das liegt nicht an Mining Layers). Config-Paket installieren, z. B. scfmods FS25_TerraFarmMachines, und doppelte Maschinen-Einträge aus mehreren Paketen vermeiden.
 
-**Warum bekomme ich immer dasselbe Material, egal wie tief ich grabe?**
+#### 8. Warum bekomme ich immer dasselbe Material, egal wie tief ich grabe?
+
 Im TerraFarm-Bereich ist ein Material eingetragen — damit läuft der Bereich als normales TerraFarm ohne Schichten (Absicht, für Baustellen). Materialfelder leer lassen, dann greifen die Schichten.
 
-**Warum kommen keine Schichten, obwohl ich einen Bereich gezogen habe? (Top-3-Ursachen)**
+#### 9. Warum kommen keine Schichten, obwohl ich einen Bereich gezogen habe? (Top-3-Ursachen)
+
 1. **Die Maschine hat keinen Eingabe-Bereich zugewiesen.** TerraFarm koppelt Bereiche an die MASCHINE, nicht an deine Position: Maschinen-Einstellungen (Standard `Y`) → deinen Bereich als Eingabe wählen. Wird pro Maschine und Spielstand gespeichert — der häufigste Support-Fall; TerraFarms HUD zeigt dann deinen Bereich statt nur ein Material.
 2. **Im Bereich ist ein Material eingetragen** → der Bereich läuft absichtlich als normales TerraFarm (Baustellen-Modus). Materialfelder leer lassen.
 3. **Du gräbst außerhalb des Bereichs-Polygons** (oder in einem Pfad-Bereich — Pfade bekommen nie Schichten).
 
-**Wie tief kann ich graben?**
+#### 10. Wie tief kann ich graben?
+
 Bis zum Fels unter der tiefsten Schicht — dort ist bewusst Schluss. Genau das macht es zum Bergbau statt zum bodenlosen Geldloch.
 
-**Wie dick sollten die Schichten sein?**
+#### 11. Wie dick sollten die Schichten sein?
+
 Mindestens 1,5 m (der Editor erzwingt 1 m für die oberste, 1,5 m darunter). Bei großen Maschinen wie dem PC 8000 gräbt sich mit 2 m pro Schicht spürbar besser.
 
-**Gibt es ein Halden-Limit — wie viel kann ich abkippen?**
+#### 12. Gibt es ein Halden-Limit — wie viel kann ich abkippen?
+
 Nein. Abgekipptes Material wird über TerraFarm zu echtem Gelände, nicht zu einem Basegame-Haufen — ein Haufen-Limit des Spiels greift also nicht. Das Halden-Gedächtnis ist ein 2-m-Raster pro Spielstand, ohne Deckel für Anzahl oder Größe. Einzige Eigenheit: Jede 2-m-Zelle merkt sich EIN Material (der letzte Abwurf gewinnt) — Materialien am selben Fleck nicht mischen, wenn du sie getrennt zurückholen willst.
 
-**Abladen auf den Boden bringt „Aktion nicht ausführbar"?**
+#### 13. Abladen auf den Boden bringt „Aktion nicht ausführbar"?
+
 TerraFarm prüft senkrecht unter der Schaufelkante: Liegt Terrain näher als etwa 0,5 m, ist Boden-Abladen gesperrt (Grab-Posen-Schutz). Es zählt der Abstand unter der Kante, nicht die Höhe des Auslegers — über einer ausgehobenen Vertiefung geht es auch mit tiefem Ausleger; auf flachem Boden kurz anheben, bis die Meldung verschwindet. Nach oben gibt es eine zweite Grenze: Der Abwurf muss noch Boden treffen. Also: Kante gut einen halben Meter frei, aber niedrig genug zum Abwerfen.
 
-**Material liegt in der Schaufel, lässt sich aber nicht abkippen?**
+#### 14. Material liegt in der Schaufel, lässt sich aber nicht abkippen?
+
 Wie viele Materialien auf dem Boden liegen können (height types), legt deine Karte fest, nicht das Spiel: entscheidend ist die Kanalbreite ihrer Höhen-Density-Map, nach 2^n-1 — 6 Bit ergeben 63 Plätze, 7 Bit ergeben 127, 8 Bit ergeben 255. Die 63 bestätigt die Engine in ihrer eigenen Fehlermeldung; auf einer 7-Bit-Karte haben wir 83 belegte Plätze ohne eine einzige Ablehnung gemessen, die Decke liegt dort also höher — ihr genauer Wert ist gerechnet, nicht gemessen. 48 belegt das Basisspiel bereits; die kartenzeigenen Materialien werden vor allen Mod-Materialien registriert, und was übrig bleibt, geht in Ladereihenfolge an die Modliste. Sind die Plätze einer Karte weg, verlieren spät registrierte Materialien ihren Platz: Sie funktionieren in der Schaufel und lassen sich verkaufen, aber nicht aufs Gelände kippen. Im Log steht dann `maximum number (63) of height types already registered` — eine Zeile je abgelehntem Material, `grep addDensityMapHeightType log.txt` gibt dir also die vollständige Liste. Seit 1.4.2 warnt der Mod pro Zone, wenn ein Schichtmaterial betroffen ist. Zwei Wege raus: materiallastige Mods ausmisten, oder eine Karte spielen, die mit mehr Kanälen gebaut wurde. Gemessenes Beispiel: auf einer 6-Bit-Karte wurden zehn Materialien abgelehnt, während dieselbe Modliste auf einer 7-Bit-Karte 83 height types registrierte, ohne eine einzige Ablehnung.
 
-**Warum kippt meine Maschine nur in einem Bereich ab — oder nirgends?**
+#### 15. Warum kippt meine Maschine nur in einem Bereich ab — oder nirgends?
+
 Im Maschinen-Menü ist ein Ausgabe-Bereich zugewiesen: TerraFarm kippt dann nur dorthin. Seit 1.4.2 läuft eine Schicht-Zone als Ausgabe-Bereich automatisch frei (eine Log-Zeile sagt es). Für freies Abkippen überall den Ausgabe-Bereich der Maschine auf „Nicht gesetzt" stellen.
 
-**Wie schalte ich die Tiefenanzeige aus (oder wieder ein)?**
+#### 16. Wie schalte ich die Tiefenanzeige aus (oder wieder ein)?
+
 **Numpad /** drücken, solange eine Maschine aktiv ist (bis 1.4.3 war es Numpad 5). Die Taste ist umbelegbar: Optionen → Steuerung → Mining Layers. Soll die Anzeige von Anfang an aus sein: `showHeightDisplay="false"` in der `modSettings/FS25_MiningLayers/miningLayers.xml`.
 
-**Kann ich die Anzeige verschieben, damit sie nicht mit anderen HUD-Mods kollidiert?**
+#### 17. Kann ich die Anzeige verschieben, damit sie nicht mit anderen HUD-Mods kollidiert?
+
 Ja — seit 1.4.2 **Num *** drücken (umbelegbar): Anzeige anklicken zum Aufnehmen, zweiter Klick legt ab, Rechtsklick setzt auf Standard zurück. Die Position speichert automatisch (liegt in `modSettings/FS25_MiningLayers/hud.xml`). Kein zusätzlicher HUD-Mod nötig.
 
-**Läuft das auf PS5 oder Xbox?**
+#### 18. Läuft das auf PS5 oder Xbox?
+
 Nein. Mining Layers ist ein Script-Mod, und Script-Mods laufen nur auf PC/Mac.
 
-**Welche Sprachen gibt es?**
+#### 19. Welche Sprachen gibt es?
+
 Deutsch, Englisch, Französisch, Polnisch und Italienisch — inklusive komplettem Ingame-Handbuch.
 
-**Ist das wirklich kostenlos?**
+#### 20. Ist das wirklich kostenlos?
+
 Ja. Gratis-Download auf GitHub, keine Paywall, kein Early Access. Wer Danke sagen will: [spendier mir Fritten](https://buymeacoffee.com/fritteplayz). 🍟
 
 ## Übersetzungen
