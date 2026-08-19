@@ -5,7 +5,7 @@
 [![Languages](https://img.shields.io/badge/in--game-EN%20·%20DE%20·%20FR%20·%20PL%20·%20IT-2d8a4e?style=for-the-badge)](#)
 [![Buy me fries](https://img.shields.io/badge/Buy%20me%20fries-FFDD00?style=for-the-badge&logo=buymeacoffee&logoColor=black)](https://buymeacoffee.com/fritteplayz)
 
-![Mining Layers — material by digging depth, or make your own gravel pit](docs/images/00_header.jpg)
+![Mining Layers — material by digging depth, a TerraFarm add-on](docs/images/00_header.jpg)
 
 **Real mining gameplay for Farming Simulator 25 — dig through geological layers, or make your own gravel pit in FS25.**
 Material is determined by digging depth, not by hand selection: topsoil first, then gravel, then paydirt, then rock. Since 1.4.0 the pay seam is selectable — build a coal mine, a gravel pit or a limestone quarry on any map. Per-pit geology, spoil piles that remember what you dumped, and an in-game editor. Works on **any map** — no map editing required. **The mod and its in-game manual are fully available in English, German, French, Polish and Italian.**

@@ -4,7 +4,7 @@
 [![Latest release](https://img.shields.io/github/v/release/FrittePlayz/FS25_MiningLayers?style=for-the-badge&color=2d8a4e)](https://github.com/FrittePlayz/FS25_MiningLayers/releases)
 [![Języki](https://img.shields.io/badge/w--grze-PL%20·%20EN%20·%20DE%20·%20FR%20·%20IT-2d8a4e?style=for-the-badge)](#)
 
-![Mining Layers — materiał zależy od głębokości kopania, albo zbuduj własną żwirownię](docs/images/00_header.jpg)
+![Mining Layers — materiał zależy od głębokości kopania, dodatek do TerraFarm](docs/images/00_header.jpg)
 
 **Prawdziwy górniczy gameplay dla Farming Simulator 25 — przekop się przez warstwy geologiczne albo zbuduj własną żwirownię w FS25.**
 Materiał w łyżce zależy od głębokości kopania, nie od ręcznego wyboru: najpierw humus, potem żwir, potem pokład, na dole lita skała. Od wersji 1.4.0 pokład jest wybieralny — kopalnia węgla, żwirownia albo kamieniołom wapienia, na każdej mapie, bez edycji mapy. **Mod i podręcznik w grze są w całości po polsku** (tłumaczenie maszynowe — poprawki mile widziane!).

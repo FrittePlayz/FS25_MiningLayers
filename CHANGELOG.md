@@ -4,6 +4,12 @@ All notable changes to Mining Layers. Newest first.
 
 ## [Unreleased]
 
+### Changed
+- **New header image on all five mod pages.** Shows the 1.6 headline feature — digging without a
+  drawn area — with the in-game display as proof. The layer legend is back, now in English with a
+  note that the depths are configurable; the old header mixed English and German. Brand mark
+  updated to the current FrittePlayz logo.
+
 ## [1.5.0.0] — 2026-08-12
 
 ### Added
