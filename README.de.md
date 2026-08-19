@@ -291,6 +291,7 @@ Zwei Wünsche aus dem RGC-Discord, rund eine Woche nach dem 1.6-Release.
 
 - **Materialnamen in Materialfarbe** in der Höhenanzeige — dieselben Farben, die der Schichten-Editor schon nutzt.
 - **Abraum-Modus** — alles über dem Flöz gräbt und kippt als *ein* Material, nur das Flöz bleibt echt. Löst das Problem, für jede durchgrabene Schicht einen eigenen Kipper zu brauchen.
+- **Warnung vor der Schichtgrenze** — die Höhenanzeige nennt den Abstand zur nächsten Kante und färbt den Wert, je näher man kommt. Am Graben ändert das nichts; man sieht die Kante kommen, statt sie hinterher zu bemerken, wenn das falsche Material schon im Kipper liegt.
 
 ### FS25 Mining Layers-Director's Cut V2
 

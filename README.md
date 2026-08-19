@@ -290,6 +290,7 @@ Two requests from the RGC Discord, landing roughly a week after the 1.6 release.
 
 - **Material names in material colour** in the height display — the same colours the layer editor already uses.
 - **Overburden mode** — everything above the seam digs and dumps as *one* material, only the seam stays real. Solves having to bring a separate truck for every layer you cut through.
+- **A warning before you cross a boundary** — the height display says how far the next layer edge is and colours the reading as you approach it. It changes nothing about what you dig; it lets you see the edge coming instead of finding out afterwards, when the wrong material is already in the truck.
 
 ### FS25 Mining Layers-Director's Cut V2
 
