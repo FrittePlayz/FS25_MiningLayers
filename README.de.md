@@ -302,6 +302,7 @@ Alles, was dich in die Grube bringt, steht in der Version darüber. Alles darunt
 4. **Ergiebigkeit** — magere Deckschicht, ergiebige Nutzschicht: mehr oder weniger Liter pro Kubikmeter, je nach Schicht.
 5. **Deckgestein** — eine harte Zwischenschicht über dem Paydirt-Flöz, Kombination aus 4 und 3.
 6. **Übergangsband an Schichtgrenzen** — eine kleine Toleranzzone, damit ein Werkzeug, das genau auf einer Grenze arbeitet, bei einem Material bleibt statt zwischen zweien hin- und herzuspringen (die Engine mag keine gemischten Materialien am Boden — danke an scfmod für den Hinweis in [#123](https://github.com/scfmod/FS25_TerraFarm/discussions/123)). Das Band wird im Schichten-Editor maßstäblich mitgezeichnet und erklärt sich damit selbst.
+7. **Gemischte Schaufelladungen** — die Schaufel führt über eine Schichtgrenze hinweg ein Konto je Material (1.500 l Erde, 2.750 l Kies, 750 l Paydirt in einer 5.000-l-Ladung), statt beim Überschreiten der Kante schlagartig auf 100 % des neuen Materials zu springen. Abgekippt wird ein Mischmaterial, das eine Siebanlage wieder trennt. Vorschlag aus der Community.
 
 ### Begleitprojekt (eigener Mod, geplant)
 

@@ -5,6 +5,9 @@ All notable changes to Mining Layers. Newest first.
 ## [Unreleased]
 
 ### Changed
+- **Roadmap: mixed bucket loads** added to the Director's Cut — a per-material ledger in the bucket across a layer boundary, dumped as a mixed material that a screening plant separates. Community suggestion, too large for a point release (a fill unit holds one material, the mixed material needs its own ground slot, and dumping proportionally runs into the same engine limit scfmod flagged in TerraFarm #123).
+
+### Changed
 - **A Portuguese mod page** (`README.pt.md`), linked from the language switcher on all five other pages. The in-game manual has spoken Portuguese since 1.6.0; the page had not.
 
 ### Fixed

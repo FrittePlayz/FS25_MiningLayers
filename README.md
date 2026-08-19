@@ -301,6 +301,7 @@ Everything that gets you into the pit is in the version above. Everything below 
 4. **Yield** — a lean overburden and a rich seam: more or fewer liters per cubic meter depending on the layer you are in.
 5. **Caprock** — a hard band sitting on top of the paydirt seam, combining 4 and 3.
 6. **Transition band at layer boundaries** — a small tolerance zone so a tool working right on a boundary keeps delivering one material instead of flip-flopping between two (the engine dislikes mixed fill types on the ground — thanks to scfmod for flagging this in [#123](https://github.com/scfmod/FS25_TerraFarm/discussions/123)). The band will be drawn to scale in the layer editor, so it explains itself.
+7. **Mixed bucket loads** — the bucket keeps a ledger per material across a layer boundary (1,500 l of dirt, 2,750 l of gravel, 750 l of paydirt in one 5,000 l load) instead of switching to 100 % of the new material the moment the edge is crossed. Dumped as a mixed material that a screening plant separates again. Community suggestion.
 
 ### Companion project (separate mod, planned)
 
