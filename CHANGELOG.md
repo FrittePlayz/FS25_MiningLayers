@@ -4,6 +4,12 @@ All notable changes to Mining Layers. Newest first.
 
 ## [Unreleased]
 
+### Changed
+- **A Portuguese mod page** (`README.pt.md`), linked from the language switcher on all five other pages. The in-game manual has spoken Portuguese since 1.6.0; the page had not.
+
+### Fixed
+- **Eleven dead links in the FAQ index** on the English and German pages. The 1.6 FAQ entry *"Can I use everywhere and drawn areas at the same time?"* was inserted as number 9, which pushed every question after it up by one — the index still pointed at the old anchors, so jumping to any question from 9 on landed nowhere. The index is now generated from the headings themselves.
+
 ## [1.6.0.0] — 2026-08-16
 
 ### Late additions (folded in before release, 2026-08-18)

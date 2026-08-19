@@ -12,7 +12,7 @@ Das Material bestimmt die Grabtiefe, nicht die Handauswahl: erst Mutterboden, da
 
 Mining Layers baut auf **[TerraFarm](https://github.com/scfmod/FS25_TerraFarm)** von scfmod auf und benötigt es zum Laufen. Inoffizielles Addon, keine Verbindung zu scfmod.
 
-🇬🇧 [English](README.md) · 🇫🇷 [Français](README.fr.md) · 🇵🇱 [Polski](README.pl.md) · 🇮🇹 [Italiano](README.it.md)
+🇬🇧 [English](README.md) · 🇫🇷 [Français](README.fr.md) · 🇵🇱 [Polski](README.pl.md) · 🇮🇹 [Italiano](README.it.md) · 🇵🇹 [Português](README.pt.md)
 
 **[Video](#video-tutorial) · [Voraussetzungen](#voraussetzungen--zuerst-lesen) · [Installation](#installation) · [Erste Grube](#schritt-für-schritt-deine-erste-grube) · [FAQ](#faq) · [Changelog](#changelog) · [Roadmap](#roadmap)**
 
@@ -168,17 +168,18 @@ Direkt zur Frage:
 6. [Kann ich eigene Schichten einstellen — mehr Erde, verschiedene Erdarten?](#6-kann-ich-eigene-schichten-einstellen--mehr-erde-verschiedene-erdarten)
 7. [Warum gräbt mein Bagger nicht?](#7-warum-gräbt-mein-bagger-nicht)
 8. [Warum bekomme ich immer dasselbe Material, egal wie tief ich grabe?](#8-warum-bekomme-ich-immer-dasselbe-material-egal-wie-tief-ich-grabe)
-9. [Warum kommen keine Schichten, obwohl ich einen Bereich gezogen habe? (Top-3-Ursachen)](#9-warum-kommen-keine-schichten-obwohl-ich-einen-bereich-gezogen-habe-top-3-ursachen)
-10. [Wie tief kann ich graben?](#10-wie-tief-kann-ich-graben)
-11. [Wie dick sollten die Schichten sein?](#11-wie-dick-sollten-die-schichten-sein)
-12. [Gibt es ein Halden-Limit — wie viel kann ich abkippen?](#12-gibt-es-ein-halden-limit--wie-viel-kann-ich-abkippen)
-13. [Abladen auf den Boden bringt „Aktion nicht ausführbar"?](#13-abladen-auf-den-boden-bringt-aktion-nicht-ausführbar)
-14. [Material liegt in der Schaufel, lässt sich aber nicht abkippen?](#14-material-liegt-in-der-schaufel-lässt-sich-aber-nicht-abkippen)
-15. [Warum kippt meine Maschine nur in einem Bereich ab — oder nirgends?](#15-warum-kippt-meine-maschine-nur-in-einem-bereich-ab--oder-nirgends)
-16. [Wie schalte ich die Tiefenanzeige aus (oder wieder ein)?](#16-wie-schalte-ich-die-tiefenanzeige-aus-oder-wieder-ein)
-17. [Kann ich die Anzeige verschieben, damit sie nicht mit anderen HUD-Mods kollidiert?](#17-kann-ich-die-anzeige-verschieben-damit-sie-nicht-mit-anderen-hud-mods-kollidiert)
-18. [Läuft das auf PS5 oder Xbox?](#18-läuft-das-auf-ps5-oder-xbox)
-19. [Welche Sprachen gibt es?](#19-welche-sprachen-gibt-es)
+9. [Kann ich „überall" und gezogene Bereiche gleichzeitig benutzen? (1.6)](#9-kann-ich-überall-und-gezogene-bereiche-gleichzeitig-benutzen-16)
+10. [Warum kommen keine Schichten, obwohl ich einen Bereich gezogen habe? (Top-3-Ursachen)](#10-warum-kommen-keine-schichten-obwohl-ich-einen-bereich-gezogen-habe-top-3-ursachen)
+11. [Wie tief kann ich graben?](#11-wie-tief-kann-ich-graben)
+12. [Wie dick sollten die Schichten sein?](#12-wie-dick-sollten-die-schichten-sein)
+13. [Gibt es ein Halden-Limit — wie viel kann ich abkippen?](#13-gibt-es-ein-halden-limit--wie-viel-kann-ich-abkippen)
+14. [Abladen auf den Boden bringt „Aktion nicht ausführbar"?](#14-abladen-auf-den-boden-bringt-aktion-nicht-ausführbar)
+15. [Material liegt in der Schaufel, lässt sich aber nicht abkippen?](#15-material-liegt-in-der-schaufel-lässt-sich-aber-nicht-abkippen)
+16. [Warum kippt meine Maschine nur in einem Bereich ab — oder nirgends?](#16-warum-kippt-meine-maschine-nur-in-einem-bereich-ab--oder-nirgends)
+17. [Wie schalte ich die Tiefenanzeige aus (oder wieder ein)?](#17-wie-schalte-ich-die-tiefenanzeige-aus-oder-wieder-ein)
+18. [Kann ich die Anzeige verschieben, damit sie nicht mit anderen HUD-Mods kollidiert?](#18-kann-ich-die-anzeige-verschieben-damit-sie-nicht-mit-anderen-hud-mods-kollidiert)
+19. [Läuft das auf PS5 oder Xbox?](#19-läuft-das-auf-ps5-oder-xbox)
+20. [Welche Sprachen gibt es?](#20-welche-sprachen-gibt-es)
 
 ---
 

@@ -9,7 +9,7 @@
 **Vero gameplay minerario per Farming Simulator 25 — scava attraverso strati geologici, o crea la tua cava di ghiaia in FS25.**
 Il materiale nella benna dipende da quanto scavi in profondità, non da un menu a tendina: prima il terreno vegetale, poi la ghiaia, poi il filone, roccia madre sul fondo. Dalla 1.4.0 il filone è selezionabile — miniera di carbone, cava di ghiaia o cava di calcare, su qualsiasi mappa, senza modificarla. **La mod e il suo manuale in gioco esistono per intero in italiano**, tradotti da **marcols13**.
 
-🇬🇧 [English](README.md) · 🇩🇪 [Deutsch](README.de.md) · 🇫🇷 [Français](README.fr.md) · 🇵🇱 [Polski](README.pl.md) — *pagina IT compatta; la documentazione completa vive nella versione inglese, il manuale integrale è in gioco, in italiano.*
+🇬🇧 [English](README.md) · 🇩🇪 [Deutsch](README.de.md) · 🇫🇷 [Français](README.fr.md) · 🇵🇱 [Polski](README.pl.md) · 🇵🇹 [Português](README.pt.md) — *pagina IT compatta; la documentazione completa vive nella versione inglese, il manuale integrale è in gioco, in italiano.*
 
 ---
 

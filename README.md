@@ -12,7 +12,7 @@ Material is determined by digging depth, not by hand selection: topsoil first, t
 
 Mining Layers builds on **[TerraFarm](https://github.com/scfmod/FS25_TerraFarm)** by scfmod, which it requires to run. Unofficial add-on, not affiliated with scfmod.
 
-🇩🇪 [Deutsch](README.de.md) · 🇫🇷 [Français](README.fr.md) · 🇵🇱 [Polski](README.pl.md) · 🇮🇹 [Italiano](README.it.md)
+🇩🇪 [Deutsch](README.de.md) · 🇫🇷 [Français](README.fr.md) · 🇵🇱 [Polski](README.pl.md) · 🇮🇹 [Italiano](README.it.md) · 🇵🇹 [Português](README.pt.md)
 
 **[Video](#video-tutorial) · [Requirements](#requirements--read-this-first) · [Installation](#installation) · [First pit](#step-by-step-your-first-pit) · [FAQ](#faq) · [Changelog](#changelog) · [Roadmap](#roadmap)**
 
@@ -167,17 +167,18 @@ Jump to a question:
 6. [Can I set up my own layers — more dirt, different soil types?](#6-can-i-set-up-my-own-layers--more-dirt-different-soil-types)
 7. [Why is my excavator not digging?](#7-why-is-my-excavator-not-digging)
 8. [Why do I always get the same material, no matter how deep I dig?](#8-why-do-i-always-get-the-same-material-no-matter-how-deep-i-dig)
-9. [Why do I get no layers, even though I drew an area? (top 3 causes)](#9-why-do-i-get-no-layers-even-though-i-drew-an-area-top-3-causes)
-10. [How deep can I dig?](#10-how-deep-can-i-dig)
-11. [How thick should my layers be?](#11-how-thick-should-my-layers-be)
-12. [Is there a pile limit — how much can I dump?](#12-is-there-a-pile-limit--how-much-can-i-dump)
-13. [Dumping on the ground says "action not possible"?](#13-dumping-on-the-ground-says-action-not-possible)
-14. [Material sits in the bucket but will not tip onto the ground?](#14-material-sits-in-the-bucket-but-will-not-tip-onto-the-ground)
-15. [Why does my machine only dump inside one area — or nowhere at all?](#15-why-does-my-machine-only-dump-inside-one-area--or-nowhere-at-all)
-16. [How do I turn the depth display off (or back on)?](#16-how-do-i-turn-the-depth-display-off-or-back-on)
-17. [Can I move the display so it does not overlap other HUD mods?](#17-can-i-move-the-display-so-it-does-not-overlap-other-hud-mods)
-18. [Does it work on PS5 or Xbox?](#18-does-it-work-on-ps5-or-xbox)
-19. [Which languages are supported?](#19-which-languages-are-supported)
+9. [Can I use "everywhere" and drawn areas at the same time? (1.6)](#9-can-i-use-everywhere-and-drawn-areas-at-the-same-time-16)
+10. [Why do I get no layers, even though I drew an area? (top 3 causes)](#10-why-do-i-get-no-layers-even-though-i-drew-an-area-top-3-causes)
+11. [How deep can I dig?](#11-how-deep-can-i-dig)
+12. [How thick should my layers be?](#12-how-thick-should-my-layers-be)
+13. [Is there a pile limit — how much can I dump?](#13-is-there-a-pile-limit--how-much-can-i-dump)
+14. [Dumping on the ground says "action not possible"?](#14-dumping-on-the-ground-says-action-not-possible)
+15. [Material sits in the bucket but will not tip onto the ground?](#15-material-sits-in-the-bucket-but-will-not-tip-onto-the-ground)
+16. [Why does my machine only dump inside one area — or nowhere at all?](#16-why-does-my-machine-only-dump-inside-one-area--or-nowhere-at-all)
+17. [How do I turn the depth display off (or back on)?](#17-how-do-i-turn-the-depth-display-off-or-back-on)
+18. [Can I move the display so it does not overlap other HUD mods?](#18-can-i-move-the-display-so-it-does-not-overlap-other-hud-mods)
+19. [Does it work on PS5 or Xbox?](#19-does-it-work-on-ps5-or-xbox)
+20. [Which languages are supported?](#20-which-languages-are-supported)
 
 ---
 
