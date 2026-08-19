@@ -255,6 +255,13 @@ Wohin der Mod geht. Das sind **Vorhaben, keine Versprechen** — keine Termine, 
 
 1. **Slot-Diagnose** — zur Laufzeit alle Materialien durchzählen und melden, wie viel deine Karte wirklich fasst. Der höchste belegte Index beweist die Kanalbreite besser als jede Schätzung: liegt er über 63, wurde die Karte mit mehr als sechs Kanälen gebaut. Kommt zusammen mit der *zweiten* Decke, auf die wir auf einem Dedicated Server gestoßen sind — 255 Filltypes, ein anderes Limit mit einem anderen Symptom.
 2. **Schichten ohne gezogenen Bereich** — das Bezugshöhen-Raster kam mit 1.5.0 und macht es erst möglich; offen ist der Schritt, ganz ohne TerraFarm-Bereich zu arbeiten. Die meisten Spieler graben frei, statt vorher ein Polygon zu ziehen — das ist der Unterschied zwischen einem Mod für Leute, die die Anleitung lesen, und einem Mod, der einfach funktioniert.
+### v1.6.1 — Community / Oreo RGC Update
+
+Zwei Wünsche aus dem RGC-Discord, rund eine Woche nach dem 1.6-Release.
+
+- **Materialnamen in Materialfarbe** in der Höhenanzeige — dieselben Farben, die der Schichten-Editor schon nutzt.
+- **Abraum-Modus** — alles über dem Flöz gräbt und kippt als *ein* Material, nur das Flöz bleibt echt. Löst das Problem, für jede durchgrabene Schicht einen eigenen Kipper zu brauchen.
+
 ### FS25 Mining Layers-Director's Cut V2
 
 Alles darüber bringt dich in die Grube. Alles darunter ist Tiefe für die, die schon drinstehen, und kommt mit der nächsten großen Version.

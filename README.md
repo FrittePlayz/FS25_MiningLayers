@@ -255,6 +255,13 @@ Where this mod is headed. These are **intentions, not promises** — no dates, a
 
 1. **Slot diagnosis** — count every fill type at runtime and report what your map can actually hold. The highest index in use proves the channel width better than any guess: an index above 63 means the map was built with more than six channels. Comes together with the *second* ceiling we ran into on a dedicated server — 255 fill types, a different limit with a different symptom.
 2. **Layers without a drawn area** — the surface reference grid landed in 1.5.0 and made this possible; the remaining step is to work outside a TerraFarm area at all. Most players dig freely rather than drawing a polygon first, so this is the difference between a mod for people who read the manual and a mod that just works.
+### v1.6.1 — Community / Oreo RGC Update
+
+Two requests from the RGC Discord, landing roughly a week after the 1.6 release.
+
+- **Material names in material colour** in the height display — the same colours the layer editor already uses.
+- **Overburden mode** — everything above the seam digs and dumps as *one* material, only the seam stays real. Solves having to bring a separate truck for every layer you cut through.
+
 ### FS25 Mining Layers-Director's Cut V2
 
 Everything above gets you into the pit. Everything below is depth for people already standing in one, and it lands in the next big version.
