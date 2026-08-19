@@ -4,12 +4,19 @@
         <text name="ml_decimalSeparator" text="." />
         <text name="ml_heightHere" text="Height here" />
         <text name="ml_zone" text="Zone" />
+        <text name="ml_zoneEverywhere" text="Everywhere" />
         <text name="ml_layer" text="Layer" />
+        <text name="ml_targetHeight" text="Target height" />
+        <text name="ml_targetManual" text="set by you" />
+        <text name="ml_targetAuto" text="automatic" />
+        <text name="ml_targetCut" text="pit ends above the deepest layer (%s m) - lower the target height in the area editor" />
+        <text name="ml_digBlocked" text="the map blocks terrain changes at this spot - not the mod stopping you" />
+        <text name="ml_digNoEffect" text="digging moves nothing here - map block or target height reached" />
         <text name="ml_depth" text="Depth" />
         <text name="ml_until" text="to" />
         <text name="ml_stillNeeded" text="another" />
         <text name="ml_noLayers" text="no layers at this spot" />
-        <text name="ml_mapResourceTakesOver" text="TerraFarm decides: the map's material for this spot - the same at every depth" />
+        <text name="ml_mapResourceTakesOver" text="TerraFarm decides: your machine's material - or the map's, if map resources are switched on" />
         <text name="ml_above" text="is" />
         <text name="ml_aboveRef" text="above reference height" />
         <text name="ml_overrideHint" text="TerraFarm material %s has no effect here - the layer decides" />
@@ -28,7 +35,7 @@
 
         <text name="input_ML_TOGGLE_HUD" text="Mining Layers: display on/off" />
         <text name="input_ML_HUD_MOVE" text="Mining Layers: move display (mouse cursor)" />
-        <text name="ml_noInputArea" text="no input area assigned - assign your area as input in the machine menu (Y)" />
+        <text name="ml_noInputArea" text="no input area assigned - assign your area as input in the machine menu (Y), or switch the target “Everywhere” on under Layers in the menu" />
         <text name="ml_hudMoveHint" text="left click: pick up/drop - right click: default position - press the key again: done" />
         <text name="ml_hudMoveSample" text="sample display - in game the layer info shows here" />
 
@@ -53,6 +60,7 @@
         <!-- ===================== Tab 4: layer editor ===================== -->
         <text name="ml_edSummarySection" text="Resulting profile" />
         <text name="ml_edScope" text="You are editing the standard: it applies to every area without its own layers, including the ones already drawn. To give a single pit its own layers, simply pick that area under Applies to above." />
+        <text name="ml_edScopeGlobal" text="You are editing the layers for “Everywhere”: they apply across the whole map, with no area to draw. An area you have assigned to a machine takes priority — and where an area has a material entered, normal TerraFarm applies." />
         <text name="ml_helpManEditor4" text="Standard and exceptions: what you save with All areas is the standard — it applies to every area without its own layers, retroactively to the existing ones too. If a single pit should differ, pick it under Applies to above and save its layers — right in the editor, no file editing needed." />
         <text name="ml_edTargetSection" text="Applies to" />
         <text name="ml_edTarget" text="Area" />
@@ -131,8 +139,8 @@
         <text name="ml_helpManEditor2" text="You cannot pick PAYDIRT as overburden - the money material always sits BELOW the overburden. As the pay seam (last row in the editor) you can pick COAL, LIMESTONE, STONE, GRAVEL, SAND, DIRT or SOIL besides PAYDIRT: for gravel pits and coal country. The bedrock below stays fixed." />
 
         <text name="ml_helpManFloorTitle" text="The pit floor" />
-        <text name="ml_helpManFloor1" text="The mod sets the area's target height to the bottom of your deepest layer automatically, so levelling does not dig into nothing. Enlarge the area and the floor follows within the same session. After reloading a savegame it no longer does." />
-        <text name="ml_helpManFloor2" text="That is also why you cannot keep digging forever at the waterside: below the deepest layer it stops. Without an area that limit is missing, and the target height becomes sea level." />
+        <text name="ml_helpManFloor1" text="As long as you do not touch an area's target height yourself, the mod sets it below your deepest layer automatically - otherwise the pit ends where the editor put it while you were drawing: at ground level. Enlarge the area and the floor follows." />
+        <text name="ml_helpManFloor2" text="Set the target height yourself (type it in, or use up/down in the area editor) and it is yours from then on: the mod never touches it again. That is how you level a pad, a berm or a ramp. The display tells you which one applies - &quot;set by you&quot; or &quot;automatic&quot;." />
 
         <text name="ml_helpManConfigTitle" text="Configuring by hand" />
         <text name="ml_helpManConfig1" text="Everything lives in modSettings/FS25_MiningLayers/miningLayers.xml. The file is created on first start and survives mod updates. Before the wizard saves for the first time, the mod puts a .bak next to it once per session." />
@@ -176,10 +184,17 @@
         <text name="ml_mapSection" text="What this map can do" />
         <text name="ml_mapNoData" text="The map report is available once the map has loaded." />
         <text name="ml_mapUsable" text="Usable on this map: %s — you can dig, haul, sell and dump these back onto the ground." />
-        <text name="ml_mapNoTipList" text="Dig and sell only: %s. Dumping them back onto the ground does not work here — they got no slot left in the terrain system." />
+        <text name="ml_mapNoTipList" text="Dig and sell only: %s. Dumping back onto the ground does not work here — no ground slot left in the terrain system." />
         <text name="ml_mapMissingList" text="Not present at all: %s. Neither the map nor your mods provide these." />
         <text name="ml_mapAdvice" text="How many ground materials fit is decided by your MAP: it sets the channel width, and the base game already uses 48 slots. How many are used up is decided by your MOD LIST — first to load gets a slot. So: fewer mods frees slots, and a map built with more channels has more of them to begin with." />
         <text name="ml_mapManyOwn" text="This map brings a large number of ground materials of its own, so the slots run out early. That is typical for maps carried over from FS19 or FS22." />
         <text name="ml_helpTipsAbout2" text="This mod is free so far." />
+        <text name="ml_edTargetGlobal" text="Everywhere (no area needed)" />
+        <text name="ml_edSavedGlobalOn" text="Layers now apply everywhere, no drawn area needed. An area you assigned to a machine still takes priority." />
+        <text name="ml_edSavedGlobalOff" text="Layers apply inside drawn areas only. Your layer setup is kept." />
+        <text name="ml_slotReport" text="Ground slots: %d of %d materials on this installation have a terrain type." />
+        <text name="ml_noSurfaceYet" text="Reference height not set yet - it is taken the first time you dig here" />
+        <text name="ml_globalHint" text="Layers everywhere, no area needed: Layers tab, target &quot;Everywhere&quot;, switch to Mining Layers, save." />
+        <text name="ml_slotMap" text="This map has %d ground slots (%d channels) — %d in use." />
     </texts>
 </l10n>

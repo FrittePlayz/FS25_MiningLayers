@@ -108,6 +108,7 @@
         <GuiElement profile="mlFrame_templateBox" id="templateBox">
             <Text profile="mlFrame_sectionHeader" name="tplSection" text="" />
             <Text profile="mlFrame_paragraph" name="tplParagraph" text="" />
+            <Text profile="mlFrame_paragraphTall" name="tplParagraphTall" text="" />
             <Text profile="mlFrame_bullet" name="tplBullet" text="" />
             <Text profile="mlFrame_warning" name="tplWarning" text="" />
             <Bitmap profile="mlFrame_image" name="tplImage" />
@@ -174,6 +175,16 @@
             <textVerticalAlignment value="top" />
             <textMaxNumLines value="4" />
             <textAutoWidth value="false" />
+        </Profile>
+
+        <!-- Fuer den Kartenbericht: der einzige Absatz, der zur Laufzeit aus mehreren
+             Zeilen entsteht (bis zu ~12 bei schlechten Karten). Das 4-Zeilen-Profil der
+             statischen Absaetze schnitt ihn ab - Percys QC-Fund, 18.08. Die Hoehe wird
+             nach dem Befuellen auf den Text geschrumpft (refreshDynamicEntry); dieses
+             Profil ist nur die Obergrenze, damit nie wieder etwas fehlt. -->
+        <Profile name="mlFrame_paragraphTall" extends="mlFrame_paragraph">
+            <size value="1180px 300px" />
+            <textMaxNumLines value="14" />
         </Profile>
 
         <Profile name="mlFrame_bullet" extends="mlFrame_paragraph">

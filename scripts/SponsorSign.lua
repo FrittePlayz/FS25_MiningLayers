@@ -138,28 +138,28 @@ local function applyLogoTexture(node)
     local target = findChildByName(node, MiningLayers.SIGN_LOGO_NODE)
 
     if target == nil then
-        MiningLayers.log('Schild: Knoten "%s" nicht gefunden.', MiningLayers.SIGN_LOGO_NODE)
+        MiningLayers.log('Sign: node "%s" not found.', MiningLayers.SIGN_LOGO_NODE)
         return false
     end
 
     if not MiningLayers.isCallable(getMaterial)
         or not MiningLayers.isCallable(setMaterial)
         or not MiningLayers.isCallable(setMaterialDiffuseMapFromFile) then
-        MiningLayers.log('Schild: Engine bietet keinen Texturtausch an.')
+        MiningLayers.log('Sign: the engine offers no texture swap.')
         return false
     end
 
     local path = findSignTexture()
 
     if path == nil then
-        MiningLayers.log('Schild: Tafel-Textur fehlt.')
+        MiningLayers.log('Sign: board texture missing.')
         return false
     end
 
     local index = findLogoMaterialIndex(target)
 
     if index == nil then
-        MiningLayers.log('Schild: kein Material mit "%s" gefunden.', MiningLayers.SIGN_STOCK_LOGO)
+        MiningLayers.log('Sign: no material containing "%s" found.', MiningLayers.SIGN_STOCK_LOGO)
         return false
     end
 
@@ -258,7 +258,7 @@ function MiningLayers:spawnSign(area)
     -- Schild GAR NICHTS - weder Erfolg noch Fehler -, weil alle Abbruchpfade
     -- stumm waren. Ein stiller Abbruch ist beim Suchen wertlos.
     if not MiningLayers.sponsorSign then
-        MiningLayers.log('Schild: uebersprungen, sponsorSign steht auf false.')
+        MiningLayers.log('Sign: skipped, sponsorSign is set to false.')
         return false
     end
 
@@ -273,7 +273,7 @@ function MiningLayers:spawnSign(area)
     local id = area ~= nil and area.uniqueId or nil
 
     if id == nil then
-        MiningLayers.log('Schild: Bereich ohne uniqueId, uebersprungen.')
+        MiningLayers.log('Sign: area without a uniqueId, skipped.')
         return false
     end
 
@@ -290,7 +290,7 @@ function MiningLayers:spawnSign(area)
         local count = type(area.points) == 'table' and #area.points or 0
 
         if count > 0 then
-            MiningLayers.log('Schild: Bereich %s hat %d Punkte, aber keine brauchbaren Koordinaten.',
+            MiningLayers.log('Sign: area %s has %d points but no usable coordinates.',
                 tostring(id), count)
         end
 
@@ -298,12 +298,12 @@ function MiningLayers:spawnSign(area)
     end
 
     if size < MiningLayers.SIGN_MIN_AREA_SIZE then
-        MiningLayers.log('Schild: Bereich %s ist mit %.1f m zu klein (Mindestmass %.1f m).',
+        MiningLayers.log('Sign: area %s is too small at %.1f m (minimum %.1f m).',
             tostring(id), size, MiningLayers.SIGN_MIN_AREA_SIZE)
         return false
     end
 
-    MiningLayers.log('Schild: baue fuer Bereich %s (Kantenlaenge %.1f m).', tostring(id), size)
+    MiningLayers.log('Sign: building for area %s (edge length %.1f m).', tostring(id), size)
 
     local corner = area.points[1]
     local cornerX, cornerZ = corner[1], corner[3]
@@ -338,14 +338,14 @@ function MiningLayers:spawnSign(area)
     end
 
     if terrainNode == nil or not MiningLayers.isCallable(getTerrainHeightAtWorldPos) then
-        MiningLayers.log('Schild: kein Terrain-Knoten verfuegbar, Bereich %s uebersprungen.', tostring(id))
+        MiningLayers.log('Sign: no terrain node available, area %s skipped.', tostring(id))
         return false
     end
 
     local y = getTerrainHeightAtWorldPos(terrainNode, x, 0, z)
 
     if type(y) ~= 'number' then
-        MiningLayers.log('Schild: keine Gelaendehoehe bei x=%.1f z=%.1f, Bereich %s uebersprungen.', x, z, tostring(id))
+        MiningLayers.log('Sign: no terrain height at x=%.1f z=%.1f, area %s skipped.', x, z, tostring(id))
         return false
     end
 
@@ -400,7 +400,7 @@ function MiningLayers:spawnSign(area)
             MiningLayers.signLoadFailed = true
         end
 
-        MiningLayers.log('Schild: %s', reason)
+        MiningLayers.log('Sign: %s', reason)
 
         return false
     end
@@ -408,13 +408,13 @@ function MiningLayers:spawnSign(area)
     if not ok or node == nil then
         -- Dateibezogener Fehler: das trifft jeden Bereich gleich, also einmal
         -- merken und Ruhe geben.
-        return abort(string.format('%s liess sich nicht laden - Feature bleibt aus.',
+        return abort(string.format('%s could not be loaded - the feature stays off.',
             MiningLayers.SIGN_I3D), true)
     end
 
     -- Lieber kein Schild als eins mit dem fremden Logo der Vorlage.
     if not applyLogoTexture(node) then
-        return abort('Logo liess sich nicht setzen - Feature bleibt aus.', true)
+        return abort('the logo could not be set - the feature stays off.', true)
     end
 
     local placed = MiningLayers.protectedCall('placeSign', function()
@@ -425,10 +425,10 @@ function MiningLayers:spawnSign(area)
 
     if not placed then
         -- Nur dieser Bereich ist betroffen, nicht das Feature.
-        return abort(string.format('Bereich %s liess sich nicht platzieren.', tostring(id)), false)
+        return abort(string.format('area %s could not be placed.', tostring(id)), false)
     end
 
-    MiningLayers.log('Schild: steht bei x=%.1f z=%.1f (Bereich %s).', x, z, tostring(id))
+    MiningLayers.log('Sign: placed at x=%.1f z=%.1f (area %s).', x, z, tostring(id))
 
     return true
 end

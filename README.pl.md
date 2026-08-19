@@ -2,7 +2,7 @@
 
 [![Buy me fries](https://img.shields.io/badge/Buy%20me%20fries-FFDD00?style=for-the-badge&logo=buymeacoffee&logoColor=black)](https://buymeacoffee.com/fritteplayz)
 [![Latest release](https://img.shields.io/github/v/release/FrittePlayz/FS25_MiningLayers?style=for-the-badge&color=2d8a4e)](https://github.com/FrittePlayz/FS25_MiningLayers/releases)
-[![Języki](https://img.shields.io/badge/w--grze-PL%20·%20EN%20·%20DE%20·%20FR%20·%20IT-2d8a4e?style=for-the-badge)](#)
+[![Języki](https://img.shields.io/badge/w--grze-PL%20·%20EN%20·%20DE%20·%20FR%20·%20IT%20·%20PT-2d8a4e?style=for-the-badge)](#)
 
 ![Mining Layers — materiał zależy od głębokości kopania, dodatek do TerraFarm](docs/images/00_header.jpg)
 
@@ -10,6 +10,14 @@
 Materiał w łyżce zależy od głębokości kopania, nie od ręcznego wyboru: najpierw humus, potem żwir, potem pokład, na dole lita skała. Od wersji 1.4.0 pokład jest wybieralny — kopalnia węgla, żwirownia albo kamieniołom wapienia, na każdej mapie, bez edycji mapy. **Mod i podręcznik w grze są w całości po polsku** (tłumaczenie maszynowe — poprawki mile widziane!).
 
 🇬🇧 [English](README.md) · 🇩🇪 [Deutsch](README.de.md) · 🇫🇷 [Français](README.fr.md) · 🇮🇹 [Italiano](README.it.md) — *kompaktowa strona PL; szczegółowa dokumentacja jest w wersji angielskiej, pełny podręcznik w grze — po polsku.*
+
+---
+
+## Poradnik wideo
+
+[![Mining Layers 1.6 — pełny poradnik na YouTube](docs/images/14_video_tutorial.jpg)](https://www.youtube.com/watch?v=kR0h1_S8oHc)
+
+29 minut, od instalacji po dozer: sloty terenu, wysokość docelowa, przypadek wody — i kopanie bez narysowanego obszaru. Napisy po polsku, angielsku, niemiecku, francusku, włosku i portugalsku.
 
 ---
 
@@ -147,7 +155,7 @@ Nie. Mining Layers to mod skryptowy, a mody skryptowe działają tylko na PC/Mac
 
 #### 19. Jakie języki są dostępne?
 
-Polski, angielski, niemiecki, francuski i włoski — z pełnym podręcznikiem w grze (włoski od marcols13).
+Polski, angielski, niemiecki, francuski, włoski i portugalski — z pełnym podręcznikiem w grze (włoski od marcols13, portugalski od Alicopower).
 
 ## Tłumaczenie
 

@@ -38,13 +38,20 @@
     Abladetextur lieber selbst mit Num 8 steuerst.
 
     autoTargetHeight: setzt den Grubenboden (Target Height) eines Schicht-Bereichs
-    automatisch tief genug fuer alle Schichten, wenn er noch auf dem Auto-Wert des
-    Editors steht (= Gelaendehoehe, das hiesse "grab nichts"). Ein von Hand gesetzter
-    Boden bleibt unangetastet. Auf "false", wenn du das selbst steuern willst.
+    automatisch tief genug fuer alle Schichten. VORGABE: true - aber nur, solange du die
+    Zielhoehe nicht selbst eingestellt hast. Sobald du sie im Bereichseditor eintippst
+    oder mit Hoch/Runter aenderst, gehoert sie dir und der Mod fasst sie nie wieder an
+    (so planierst du Ebene, Berme, Rampe). Welche Hoehe gerade gilt und woher sie kommt,
+    steht in der Anzeige. Auf "false", wenn der Mod den Boden nie setzen soll - dann
+    sagt er nur Bescheid, wenn deine Hoehe die unterste Schicht abschneidet.
 
-    autoTargetHeight: automatically sets the pit floor of a layered area deep
-    enough for all layers if it is still at the editor's default (= surface height,
-    which would mean "dig nothing"). A manually set floor is never touched.
+    autoTargetHeight: automatically sets the pit floor of a layered area deep enough
+    for all layers. DEFAULT: true - but only for as long as you have not set the target
+    height yourself. The moment you type it in the area editor or change it with
+    up/down, it is yours and the mod never touches it again (that is how you level a
+    pad, a berm, a ramp). The display tells you which height applies and where it came
+    from. Set it to "false" to stop the mod from ever setting the floor - it then only
+    tells you when your height cuts off the lowest layer.
 
     showDepthLines: zeichnet die Schichtgrenzen als farbige Linien entlang der
     Bereichs-Umrandung (Farbe = Material, das ab dort beginnt) und den Grubenboden
@@ -166,22 +173,40 @@
     -->
 
     <!--
-        TESTZONE - normalerweise AUS lassen.
+        UEBERALL - Schichten ohne gezeichneten Bereich.
 
-        Sie gilt auf der GANZEN KARTE, auch ohne Bereich, mit einer einzigen
-        Bezugshoehe. In huegeligem Gelaende ist das unbrauchbar: im Tal liegt dann
-        ueberall Paydirt direkt unter der Grasnarbe, am Hang greifen die Schichten
-        nie. Nur zum Pruefen, ob der Mod ueberhaupt anspringt.
+        Gilt an jeder Stelle, an der die Maschine KEINEN Eingabe-Bereich
+        zugewiesen hat. Ein zugewiesener Bereich geht immer vor, und ein Bereich
+        mit enabled="false" oder mit von Hand gesetztem Material bleibt
+        ausgenommen - Baustellen und Rohrgraeben also weiterhin sauber.
 
-        surfaceY muss hier von Hand gesetzt werden - ohne Bereich gibt es nichts,
-        woraus der Mod sie ableiten koennte. Wert aus der Hoehenanzeige ablesen.
+        Die Bezugshoehe entsteht beim ersten Grabkontakt an Ort und Stelle
+        (Bezugshoehen-Raster) - die Schichten folgen damit dem Gelaende, im Tal
+        wie am Hang.
 
-        TEST ZONE - keep this off. Applies to the WHOLE MAP with one single
-        reference height. Only useful to verify the mod is running at all.
+        ⚠️ surfaceY NICHT setzen. Ein fester Wert legt alle Schichten auf eine
+        einzige Hoehe; das passt nur auf ebenem Boden. Der Wert 64.3 stand hier
+        bis 1.5.0 als Beispiel - wer ihn stehen laesst, bekommt im Tal Paydirt
+        unter der Grasnarbe und am Hang gar nichts.
+
+        Wer lieber mit gezeichneten Bereichen arbeitet: enabled="false" setzen.
+        Umschalten geht auch im Spiel: ESC-Menue -> Mining Layers -> Schichten,
+        Ziel "Ueberall" waehlen, umstellen, speichern.
+
+        ⚠️ Diese Vorlage wird NUR kopiert, wenn noch keine miningLayers.xml da ist.
+        Eine bestehende Konfiguration bleibt unangetastet - dort ist der Modus aus,
+        bis ihn jemand einschaltet. Ein Update aendert kein laufendes Spiel.
+
+        EVERYWHERE - layers without a drawn area. Applies wherever the machine has
+        no input area assigned; an assigned area always wins. The reference height
+        is taken from the terrain the first time you dig at that spot. Do NOT set
+        surfaceY - a fixed value puts every layer at one single height.
     -->
-    <globalZone enabled="false" surfaceY="64.3">
-        <layer depth="2" fillType="DIRT" />
-        <layer           fillType="PAYDIRT" />
+    <globalZone enabled="true">
+        <layer depth="2"  fillType="DIRT" />
+        <layer depth="6"  fillType="GRAVEL" />
+        <layer depth="12" fillType="PAYDIRT" />
+        <layer            fillType="STONE" />
     </globalZone>
 
 </miningLayers>

@@ -2,19 +2,27 @@
 
 [![Download](https://img.shields.io/badge/⬇%20Download-latest%20release-2d8a4e?style=for-the-badge&logo=github&logoColor=white)](https://github.com/FrittePlayz/FS25_MiningLayers/releases/latest)
 [![Latest release](https://img.shields.io/github/v/release/FrittePlayz/FS25_MiningLayers?style=for-the-badge&color=2d8a4e)](https://github.com/FrittePlayz/FS25_MiningLayers/releases)
-[![Sprachen](https://img.shields.io/badge/in--game-DE%20·%20EN%20·%20FR%20·%20PL%20·%20IT-2d8a4e?style=for-the-badge)](#)
+[![Sprachen](https://img.shields.io/badge/in--game-DE%20·%20EN%20·%20FR%20·%20PL%20·%20IT%20·%20PT-2d8a4e?style=for-the-badge)](#)
 [![Buy me fries](https://img.shields.io/badge/Buy%20me%20fries-FFDD00?style=for-the-badge&logo=buymeacoffee&logoColor=black)](https://buymeacoffee.com/fritteplayz)
 
 ![Mining Layers — Material nach Grabtiefe, ein TerraFarm-Add-on](docs/images/00_header.jpg)
 
 **Echtes Bergbau-Gameplay für den Landwirtschafts-Simulator 25 — grab dich durch geologische Schichten, oder bau deine eigene Kiesgrube im LS25.**
-Das Material bestimmt die Grabtiefe, nicht die Handauswahl: erst Mutterboden, dann Kies, dann Paydirt, dann Fels. Seit 1.4.0 ist die Nutzschicht wählbar — Kohlegrube, Kiesgrube oder Kalksteinbruch, auf jeder Karte. Eigene Geologie pro Grube, Halden mit Gedächtnis und ein Ingame-Editor. Läuft auf **jeder Karte** — ohne Map-Bearbeitung. **Mod und Ingame-Handbuch gibt es vollständig auf Deutsch, Englisch, Französisch, Polnisch und Italienisch.**
+Das Material bestimmt die Grabtiefe, nicht die Handauswahl: erst Mutterboden, dann Kies, dann Paydirt, dann Fels. Seit 1.4.0 ist die Nutzschicht wählbar — Kohlegrube, Kiesgrube oder Kalksteinbruch, auf jeder Karte. Eigene Geologie pro Grube, Halden mit Gedächtnis und ein Ingame-Editor. Läuft auf **jeder Karte** — ohne Map-Bearbeitung. **Mod und Ingame-Handbuch gibt es vollständig auf Deutsch, Englisch, Französisch, Polnisch, Italienisch und Portugiesisch.**
 
 Mining Layers baut auf **[TerraFarm](https://github.com/scfmod/FS25_TerraFarm)** von scfmod auf und benötigt es zum Laufen. Inoffizielles Addon, keine Verbindung zu scfmod.
 
 🇬🇧 [English](README.md) · 🇫🇷 [Français](README.fr.md) · 🇵🇱 [Polski](README.pl.md) · 🇮🇹 [Italiano](README.it.md)
 
-**[Voraussetzungen](#voraussetzungen--zuerst-lesen) · [Installation](#installation) · [Erste Grube](#schritt-für-schritt-deine-erste-grube) · [FAQ](#faq) · [Changelog](#changelog) · [Roadmap](#roadmap)**
+**[Video](#video-tutorial) · [Voraussetzungen](#voraussetzungen--zuerst-lesen) · [Installation](#installation) · [Erste Grube](#schritt-für-schritt-deine-erste-grube) · [FAQ](#faq) · [Changelog](#changelog) · [Roadmap](#roadmap)**
+
+---
+
+## Video-Tutorial
+
+[![Mining Layers 1.6 — das komplette Tutorial auf YouTube](docs/images/14_video_tutorial.jpg)](https://www.youtube.com/watch?v=kR0h1_S8oHc)
+
+29 Minuten, von der Installation bis zum Dozer: Bodenslots, Zielhöhe, der Sonderfall Wasser — und Graben ohne gezeichnete Area. Untertitel auf Deutsch, Englisch, Französisch, Polnisch, Italienisch und Portugiesisch.
 
 ---
 
@@ -72,6 +80,17 @@ Nach dem Start findest du eine neue Seite **Mining Layers** im ESC-Menü — mit
 
 ![Zweite Schicht mit dem Dozer-Schild](docs/images/13_dozer_second_layer.jpg)
 
+**9. ★ Auf eine genaue Höhe planieren — die Zielhöhe ist dein Boden.** Trag im Bereichseditor von
+TerraFarm den Grubenboden ein, und der Dozer planiert bis auf diese Höhe und hört dort auf. Eine
+ebene Fläche auf Geländeniveau, eine Berme auf halber Grubenhöhe, eine Rampe mit festem Gefälle —
+die Höhe, die du einträgst, ist die Höhe, die du bekommst. **Neu in 1.6:** Bis 1.5.0 hat der Mod
+diesen Wert selbst nach unten gezogen, sobald er nahe am Geländeniveau lag — aus der geplanten
+Ebene wurde eine Grube. Jetzt bleibt deine Zielhöhe stehen, und der Mod sagt nur noch im Log
+Bescheid, wenn sie die unterste Schicht abschneidet. Gemeldet von TacticalOreo:
+*„I was making a pad but it was not paying attention to the target height."*
+
+![Planieren auf die Zielhöhe](docs/images/14_dozer_target_height.jpg)
+
 ## Jede Karte
 
 Mining Layers läuft auf jeder Karte. Die Schicht-Texturen suchen sich automatisch die passendste Bodentextur, die die Karte anbietet (Standardnamen wie `GRAVEL`, `MOUNTAINROCK`, `MOSS_STONES`). Hat eine Karte nichts Passendes, bleibt einfach die eigene Texturauswahl aktiv — Materialien, Schichten und Halden funktionieren davon unabhängig. Beim ersten Graben schreibt der Mod die vollständige Texturliste der Karte ins Log, damit du eigene `paintLayer`-Vorgaben setzen kannst.
@@ -96,7 +115,7 @@ Das ist **kein Defekt und kein Mod-Konflikt — es ist die vorgesehene Umschaltu
 - **Halden-Gedächtnis** — was du abkippst, nimmst du auch wieder auf. Kein Material-Cheaten: Wer eine Halde unter ihre Basis durchgräbt, trifft wieder auf Geologie (Krater-Cheat-Sperre inklusive)
 - **Automatischer Grubenboden** — Zieltiefe = unterste Schichtgrenze, zieht bei Bereichs-Änderungen nach
 - **Hang- und Wasser-Behandlung** — geneigte Bezugsfläche am Hang, Grubenboden klemmt an der Wasserlinie
-- **Eigene Menüseite** — grafischer Schichten-Editor plus vollständiges Ingame-Handbuch in allen fünf Sprachen
+- **Eigene Menüseite** — grafischer Schichten-Editor plus vollständiges Ingame-Handbuch in allen sieben Sprachen
 - **Tiefenanzeige & Tiefenlinien** — du weißt immer, wie tief du bist und was als Nächstes kommt; **Numpad /** schaltet die Anzeige ein/aus (im Spiel umbelegbar)
 - **Material-Check beim Start** — sagt dir, wie viele Bodenplätze diese Karte bietet und welche Materialien leer ausgingen
 - **Berg-Bonus** — am Steilhang liegt Paydirt oberflächennah: Wer die Anfahrt auf sich nimmt, wird belohnt
@@ -195,55 +214,65 @@ TerraFarm braucht eine Maschinen-Konfiguration für das Fahrzeug — ohne passie
 
 Im TerraFarm-Bereich ist ein Material eingetragen — damit läuft der Bereich als normales TerraFarm ohne Schichten (Absicht, für Baustellen). Materialfelder leer lassen, dann greifen die Schichten.
 
-#### 9. Warum kommen keine Schichten, obwohl ich einen Bereich gezogen habe? (Top-3-Ursachen)
+#### 9. Kann ich „überall" und gezogene Bereiche gleichzeitig benutzen? (1.6)
+
+Ja, sie kommen sich nicht in die Quere. **Es entscheidet der Bereich, der der MASCHINE zugewiesen ist — nicht, wo du gerade stehst.**
+
+- Maschine mit zugewiesenem Eingabe-Bereich → die Schichten dieses Bereichs.
+- Maschine ohne Zuweisung → die globalen Schichten, überall auf der Karte.
+- Bereich mit `enabled="false"` oder mit von Hand gesetztem Material → weiterhin keine Schichten, auch wenn global an ist. Baustellen und Rohrgräben bleiben sauber.
+
+**Einschalten:** Eine frische Installation hat es schon an. Eine bestehende behält ihr Verhalten — einschalten unter **ESC → Mining Layers → Schichten**, Ziel **„Überall (ohne Bereich)"**, auf *Mining Layers* stellen, speichern. Wer stattdessen die `miningLayers.xml` von Hand ändert: `enabled="true"` setzen **und die `surfaceY`-Zeile löschen** — eine feste Bezugshöhe legt alle Schichten auf eine einzige Höhe und passt auf fast keine Karte. **Gar kein `globalZone`-Block in deiner Datei?** Das trifft jeden, der schon einmal im Schichten-Editor gespeichert hat — Speichern schreibt die Datei neu. Dann gibt es nichts von Hand zu ändern: den Schalter oben benutzen, der legt den Block an.
+
+#### 10. Warum kommen keine Schichten, obwohl ich einen Bereich gezogen habe? (Top-3-Ursachen)
 
 1. **Die Maschine hat keinen Eingabe-Bereich zugewiesen.** TerraFarm koppelt Bereiche an die MASCHINE, nicht an deine Position: Maschinen-Einstellungen (Standard `Y`) → deinen Bereich als Eingabe wählen. Wird pro Maschine und Spielstand gespeichert — der häufigste Support-Fall; TerraFarms HUD zeigt dann deinen Bereich statt nur ein Material.
 2. **Im Bereich ist ein Material eingetragen** → der Bereich läuft absichtlich als normales TerraFarm (Baustellen-Modus). Materialfelder leer lassen.
 3. **Du gräbst außerhalb des Bereichs-Polygons** (oder in einem Pfad-Bereich — Pfade bekommen nie Schichten).
 
-#### 10. Wie tief kann ich graben?
+#### 11. Wie tief kann ich graben?
 
 Bis zum Fels unter der tiefsten Schicht — dort ist bewusst Schluss. Genau das macht es zum Bergbau statt zum bodenlosen Geldloch.
 
-#### 11. Wie dick sollten die Schichten sein?
+#### 12. Wie dick sollten die Schichten sein?
 
 Mindestens 1,5 m (der Editor erzwingt 1 m für die oberste, 1,5 m darunter). Bei großen Maschinen wie dem PC 8000 gräbt sich mit 2 m pro Schicht spürbar besser.
 
-#### 12. Gibt es ein Halden-Limit — wie viel kann ich abkippen?
+#### 13. Gibt es ein Halden-Limit — wie viel kann ich abkippen?
 
 Nein. Abgekipptes Material wird über TerraFarm zu echtem Gelände, nicht zu einem Basegame-Haufen — ein Haufen-Limit des Spiels greift also nicht. Das Halden-Gedächtnis ist ein 2-m-Raster pro Spielstand, ohne Deckel für Anzahl oder Größe. Einzige Eigenheit: Jede 2-m-Zelle merkt sich EIN Material (der letzte Abwurf gewinnt) — Materialien am selben Fleck nicht mischen, wenn du sie getrennt zurückholen willst.
 
-#### 13. Abladen auf den Boden bringt „Aktion nicht ausführbar"?
+#### 14. Abladen auf den Boden bringt „Aktion nicht ausführbar"?
 
 TerraFarm prüft senkrecht unter der Schaufelkante: Liegt Terrain näher als etwa 0,5 m, ist Boden-Abladen gesperrt (Grab-Posen-Schutz). Es zählt der Abstand unter der Kante, nicht die Höhe des Auslegers — über einer ausgehobenen Vertiefung geht es auch mit tiefem Ausleger; auf flachem Boden kurz anheben, bis die Meldung verschwindet. Nach oben gibt es eine zweite Grenze: Der Abwurf muss noch Boden treffen. Also: Kante gut einen halben Meter frei, aber niedrig genug zum Abwerfen.
 
-#### 14. Material liegt in der Schaufel, lässt sich aber nicht abkippen?
+#### 15. Material liegt in der Schaufel, lässt sich aber nicht abkippen?
 
 Wie viele Materialien auf dem Boden liegen können (height types), legt deine Karte fest, nicht das Spiel: entscheidend ist die Kanalbreite ihrer Höhen-Density-Map, nach 2^n-1 — 6 Bit ergeben 63 Plätze, 7 Bit ergeben 127, 8 Bit ergeben 255. Die 63 bestätigt die Engine in ihrer eigenen Fehlermeldung; auf einer 7-Bit-Karte haben wir 83 belegte Plätze ohne eine einzige Ablehnung gemessen, die Decke liegt dort also höher — ihr genauer Wert ist gerechnet, nicht gemessen. 48 belegt das Basisspiel bereits; die kartenzeigenen Materialien werden vor allen Mod-Materialien registriert, und was übrig bleibt, geht in Ladereihenfolge an die Modliste. Sind die Plätze einer Karte weg, verlieren spät registrierte Materialien ihren Platz: Sie funktionieren in der Schaufel und lassen sich verkaufen, aber nicht aufs Gelände kippen. Im Log steht dann `maximum number (63) of height types already registered` — eine Zeile je abgelehntem Material, `grep addDensityMapHeightType log.txt` gibt dir also die vollständige Liste. Seit 1.4.2 warnt der Mod pro Zone, wenn ein Schichtmaterial betroffen ist. Zwei Wege raus: materiallastige Mods ausmisten, oder eine Karte spielen, die mit mehr Kanälen gebaut wurde. Gemessenes Beispiel: auf einer 6-Bit-Karte wurden zehn Materialien abgelehnt, während dieselbe Modliste auf einer 7-Bit-Karte 83 height types registrierte, ohne eine einzige Ablehnung.
 
-#### 15. Warum kippt meine Maschine nur in einem Bereich ab — oder nirgends?
+#### 16. Warum kippt meine Maschine nur in einem Bereich ab — oder nirgends?
 
 Im Maschinen-Menü ist ein Ausgabe-Bereich zugewiesen: TerraFarm kippt dann nur dorthin. Seit 1.4.2 läuft eine Schicht-Zone als Ausgabe-Bereich automatisch frei (eine Log-Zeile sagt es). Für freies Abkippen überall den Ausgabe-Bereich der Maschine auf „Nicht gesetzt" stellen.
 
-#### 16. Wie schalte ich die Tiefenanzeige aus (oder wieder ein)?
+#### 17. Wie schalte ich die Tiefenanzeige aus (oder wieder ein)?
 
 **Numpad /** drücken, solange eine Maschine aktiv ist (bis 1.4.3 war es Numpad 5). Die Taste ist umbelegbar: Optionen → Steuerung → Mining Layers. Soll die Anzeige von Anfang an aus sein: `showHeightDisplay="false"` in der `modSettings/FS25_MiningLayers/miningLayers.xml`.
 
-#### 17. Kann ich die Anzeige verschieben, damit sie nicht mit anderen HUD-Mods kollidiert?
+#### 18. Kann ich die Anzeige verschieben, damit sie nicht mit anderen HUD-Mods kollidiert?
 
 Ja — seit 1.4.2 **Num *** drücken (umbelegbar): Anzeige anklicken zum Aufnehmen, zweiter Klick legt ab, Rechtsklick setzt auf Standard zurück. Die Position speichert automatisch (liegt in `modSettings/FS25_MiningLayers/hud.xml`). Kein zusätzlicher HUD-Mod nötig.
 
-#### 18. Läuft das auf PS5 oder Xbox?
+#### 19. Läuft das auf PS5 oder Xbox?
 
 Nein. Mining Layers ist ein Script-Mod, und Script-Mods laufen nur auf PC/Mac.
 
-#### 19. Welche Sprachen gibt es?
+#### 20. Welche Sprachen gibt es?
 
-Deutsch, Englisch, Französisch, Polnisch und Italienisch — inklusive komplettem Ingame-Handbuch.
+Deutsch, Englisch, Französisch, Polnisch, Italienisch und Portugiesisch — inklusive komplettem Ingame-Handbuch.
 
 ## Übersetzungen
 
-Mod und In-Game-Handbuch gibt es auf **Deutsch, Englisch, Französisch, Polnisch und Italienisch** (Italienisch von **marcols13**; FR/PL maschinell übersetzt — Korrekturen willkommen!). Welche Sprache soll als Nächstes kommen? **[Stimm in der Umfrage ab](https://github.com/FrittePlayz/FS25_MiningLayers/discussions/1)** — oder übersetz selbst: Die Sprachdateien sind einfaches XML (`l10n/`), kein Code nötig, und du wirst in den Credits genannt.
+Mod und In-Game-Handbuch gibt es auf **Deutsch, Englisch, Französisch, Polnisch, Italienisch und Portugiesisch** (Italienisch von **marcols13**, Portugiesisch von **Alicopower**; FR/PL maschinell übersetzt — Korrekturen willkommen!). Welche Sprache soll als Nächstes kommen? **[Stimm in der Umfrage ab](https://github.com/FrittePlayz/FS25_MiningLayers/discussions/1)** — oder übersetz selbst: Die Sprachdateien sind einfaches XML (`l10n/`), kein Code nötig, und du wirst in den Credits genannt.
 
 ## Changelog
 
@@ -253,8 +282,8 @@ Jede Version mit ihren Änderungen: [CHANGELOG.md](CHANGELOG.md)
 
 Wohin der Mod geht. Das sind **Vorhaben, keine Versprechen** — keine Termine, und alles hier kann sich ändern oder wegfallen.
 
-1. **Slot-Diagnose** — zur Laufzeit alle Materialien durchzählen und melden, wie viel deine Karte wirklich fasst. Der höchste belegte Index beweist die Kanalbreite besser als jede Schätzung: liegt er über 63, wurde die Karte mit mehr als sechs Kanälen gebaut. Kommt zusammen mit der *zweiten* Decke, auf die wir auf einem Dedicated Server gestoßen sind — 255 Filltypes, ein anderes Limit mit einem anderen Symptom.
-2. **Schichten ohne gezogenen Bereich** — das Bezugshöhen-Raster kam mit 1.5.0 und macht es erst möglich; offen ist der Schritt, ganz ohne TerraFarm-Bereich zu arbeiten. Die meisten Spieler graben frei, statt vorher ein Polygon zu ziehen — das ist der Unterschied zwischen einem Mod für Leute, die die Anleitung lesen, und einem Mod, der einfach funktioniert.
+*Slot-Diagnose und Schichten ohne gezogenen Bereich sind mit 1.6.0 erschienen — siehe [Changelog](CHANGELOG.md).*
+
 ### v1.6.1 — Community / Oreo RGC Update
 
 Zwei Wünsche aus dem RGC-Discord, rund eine Woche nach dem 1.6-Release.
@@ -264,14 +293,14 @@ Zwei Wünsche aus dem RGC-Discord, rund eine Woche nach dem 1.6-Release.
 
 ### FS25 Mining Layers-Director's Cut V2
 
-Alles darüber bringt dich in die Grube. Alles darunter ist Tiefe für die, die schon drinstehen, und kommt mit der nächsten großen Version.
+Alles, was dich in die Grube bringt, steht in der Version darüber. Alles darunter ist Tiefe für die, die schon drinstehen, und kommt mit der nächsten großen Version.
 
-3. **Editor** — die Materialien anbieten, die deine Karte tatsächlich mitbringt, statt Handarbeit in der `miningLayers.xml`; den Kartenbericht auf die Schichten-Seite holen; Halden sichtbar machen und je Zone zurücksetzen.
-4. **Mehrspieler** — teilweise getestet. Der Mod läuft auf einem Dedicated Server: Zonen, Schichten und das Halden-Gedächtnis überstehen dort auch einen Neustart. Ungetestet ist die Client-Sicht — bis die geprüft ist, gilt Mehrspieler als unbewiesen.
-5. **Materialhärte & passendes Werkzeug** — Fels soll sich nicht wie Erde graben: langsamer, oder erst nach Aufreißen/Hämmern. Zum Einordnen: Weder TerraFarm noch das Basisspiel kennen so etwas wie Materialhärte (der `hardness`-Wert des Engine-Pinsels ist die Randschärfe, nicht die Festigkeit) — das wird also kompletter Eigenbau.
-6. **Ergiebigkeit** — magere Deckschicht, ergiebige Nutzschicht: mehr oder weniger Liter pro Kubikmeter, je nach Schicht.
-7. **Deckgestein** — eine harte Zwischenschicht über dem Paydirt-Flöz, Kombination aus 2 und 5.
-8. **Übergangsband an Schichtgrenzen** — eine kleine Toleranzzone, damit ein Werkzeug, das genau auf einer Grenze arbeitet, bei einem Material bleibt statt zwischen zweien hin- und herzuspringen (die Engine mag keine gemischten Materialien am Boden — danke an scfmod für den Hinweis in [#123](https://github.com/scfmod/FS25_TerraFarm/discussions/123)). Das Band wird im Schichten-Editor maßstäblich mitgezeichnet und erklärt sich damit selbst.
+1. **Editor** — die Materialien anbieten, die deine Karte tatsächlich mitbringt, statt Handarbeit in der `miningLayers.xml`; den Kartenbericht auf die Schichten-Seite holen; Halden sichtbar machen und je Zone zurücksetzen.
+2. **Mehrspieler** — teilweise getestet. Der Mod läuft auf einem Dedicated Server: Zonen, Schichten und das Halden-Gedächtnis überstehen dort auch einen Neustart. Ungetestet ist die Client-Sicht — bis die geprüft ist, gilt Mehrspieler als unbewiesen.
+3. **Materialhärte & passendes Werkzeug** — Fels soll sich nicht wie Erde graben: langsamer, oder erst nach Aufreißen/Hämmern. Zum Einordnen: Weder TerraFarm noch das Basisspiel kennen so etwas wie Materialhärte (der `hardness`-Wert des Engine-Pinsels ist die Randschärfe, nicht die Festigkeit) — das wird also kompletter Eigenbau.
+4. **Ergiebigkeit** — magere Deckschicht, ergiebige Nutzschicht: mehr oder weniger Liter pro Kubikmeter, je nach Schicht.
+5. **Deckgestein** — eine harte Zwischenschicht über dem Paydirt-Flöz, Kombination aus 4 und 3.
+6. **Übergangsband an Schichtgrenzen** — eine kleine Toleranzzone, damit ein Werkzeug, das genau auf einer Grenze arbeitet, bei einem Material bleibt statt zwischen zweien hin- und herzuspringen (die Engine mag keine gemischten Materialien am Boden — danke an scfmod für den Hinweis in [#123](https://github.com/scfmod/FS25_TerraFarm/discussions/123)). Das Band wird im Schichten-Editor maßstäblich mitgezeichnet und erklärt sich damit selbst.
 
 ### Begleitprojekt (eigener Mod, geplant)
 
@@ -306,6 +335,7 @@ Nicht dein Ding? Ein ⭐ auf dieses Repo, ein Fehlerbericht oder eine Empfehlung
 
 - **Autor:** Tommy Honold
 - **Italienische Übersetzung:** **marcols13** — beigesteuert über [Discussion #1](https://github.com/FrittePlayz/FS25_MiningLayers/discussions/1), danke!
+- **Portugiesische Übersetzung (pt/br):** **Alicopower** — beigesteuert über [Issue #7](https://github.com/FrittePlayz/FS25_MiningLayers/issues/7), danke!
 - **Sponsor:** [farmersingles.de](https://farmersingles.de) — die Singlebörse für Landwirte
 - Ein **[FrittePlayz](https://www.youtube.com/@FrittePlayz)**-Projekt (YouTube)
 - Baut auf **[TerraFarm](https://github.com/scfmod/FS25_TerraFarm)** von scfmod auf (wird benötigt, separat installieren) — inoffizielles Addon, keine Verbindung zu scfmod oder GIANTS Software.

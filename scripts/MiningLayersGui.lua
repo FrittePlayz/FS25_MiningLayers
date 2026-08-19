@@ -28,7 +28,7 @@ MiningLayers.menuPageGaveUp = false
 ---@return string reason
 local function menuPageDependenciesReady()
     if g_client == nil then
-        return false, 'kein Client (dedizierter Server)'
+        return false, 'no client (dedicated server)'
     end
 
     if g_gui == nil or not MiningLayers.isCallable(g_gui.loadGui) then
@@ -36,12 +36,12 @@ local function menuPageDependenciesReady()
     end
 
     if g_inGameMenu == nil or g_inGameMenu.pagingElement == nil then
-        return false, 'g_inGameMenu noch nicht aufgebaut'
+        return false, 'g_inGameMenu not built yet'
     end
 
     if not MiningLayers.isCallable(g_inGameMenu.registerPage)
         or not MiningLayers.isCallable(g_inGameMenu.addPageTab) then
-        return false, 'g_inGameMenu kann keine Seiten aufnehmen'
+        return false, 'g_inGameMenu cannot take pages'
     end
 
     -- Das Reiter-Symbol kommt aus TerraFarms Texturkatalog. Ohne ihn zeichnet
@@ -49,7 +49,7 @@ local function menuPageDependenciesReady()
     if g_overlayManager == nil
         or g_overlayManager.textureConfigs == nil
         or g_overlayManager.textureConfigs['terraFarm'] == nil then
-        return false, 'TerraFarm-Texturkatalog noch nicht registriert'
+        return false, 'TerraFarm texture catalogue not registered yet'
     end
 
     if TabbedMenuFrameElement == nil then
@@ -86,7 +86,7 @@ local function ensureIconTexture()
         return MiningLayers.ICON_SLICE_OWN
     end
 
-    MiningLayers.log('Eigenes Reiter-Symbol nicht geladen, nutze TerraFarms Symbol.')
+    MiningLayers.log('Own tab icon not loaded, using the TerraFarm icon.')
 
     return MiningLayers.ICON_SLICE_FALLBACK
 end
@@ -120,7 +120,7 @@ function MiningLayers:ensureMenuPage()
 
         if MiningLayers.menuPageAttempts >= MiningLayers.MENU_PAGE_MAX_ATTEMPTS then
             MiningLayers.menuPageGaveUp = true
-            MiningLayers.log('Menueseite nicht eingehaengt (%s) - Doku bleibt ueber die Mod-Beschreibung erreichbar.', reason)
+            MiningLayers.log('Menu page not hooked in (%s) - the documentation stays reachable through the mod description.', reason)
         end
 
         return
@@ -128,7 +128,7 @@ function MiningLayers:ensureMenuPage()
 
     if not sourceFrameClass() then
         MiningLayers.menuPageGaveUp = true
-        MiningLayers.log('Menueseite nicht eingehaengt: Frame-Klasse liess sich nicht laden.')
+        MiningLayers.log('Menu page not hooked in: the frame class could not be loaded.')
         return
     end
 
@@ -180,7 +180,7 @@ function MiningLayers:ensureMenuPage()
     MiningLayers.menuPage = pageController
     MiningLayers.menuPageInstalled = true
 
-    MiningLayers.log('Menueseite eingehaengt.')
+    MiningLayers.log('Menu page hooked in.')
 end
 
 ---Nimmt die Seite wieder heraus.

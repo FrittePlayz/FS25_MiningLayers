@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<l10n>
+    <texts>
+        <text name="ml_decimalSeparator" text="," />
+        <text name="ml_heightHere" text="Altura aqui" />
+        <text name="ml_zone" text="Zona" />
+        <text name="ml_zoneEverywhere" text="Em todo lugar" />
+        <text name="ml_layer" text="Camada" />
+        <text name="ml_targetHeight" text="Altura de destino" />
+        <text name="ml_targetManual" text="definida por você" />
+        <text name="ml_targetAuto" text="automática" />
+        <text name="ml_targetCut" text="a cava termina acima da camada mais profunda (%s m) - baixe a altura de destino no editor de área" />
+        <text name="ml_digBlocked" text="o mapa bloqueia alterações do terreno neste ponto - não é o mod" />
+        <text name="ml_digNoEffect" text="cavar não move nada aqui - bloqueio do mapa ou altura de destino atingida" />
+        <text name="ml_depth" text="Profundidade" />
+        <text name="ml_until" text="até" />
+        <text name="ml_stillNeeded" text="mais" />
+        <text name="ml_noLayers" text="sem camadas neste local" />
+        <text name="ml_mapResourceTakesOver" text="TerraFarm decide: o material da sua máquina — ou o do mapa, se os recursos do mapa estiverem ativados" />
+        <text name="ml_above" text="está" />
+        <text name="ml_aboveRef" text="acima da altura de referência" />
+        <text name="ml_overrideHint" text="O material do TerraFarm %s não tem efeito aqui — a camada decide" />
+        <text name="ml_manualArea" text="Material definido nesta área = TerraFarm simples, esta área NÃO tem camadas" />
+        <text name="ml_zoneOff" text="camadas desativadas para esta área" />
+        <text name="ml_spoil" text="acumulado (acima da altura de referência) — seleção do TerraFarm se aplica" />
+        <text name="ml_pathArea" text="Área de caminho = TerraFarm simples, camadas só funcionam em áreas poligonais" />
+        <text name="ml_moundKnown" text="pilha reconhecida — você pega o que foi despejado aqui" />
+        <text name="ml_tip1" text="desenhe uma área, deixe os campos vazios — o mod define o fundo da mina" />
+        <text name="ml_tip2" text="Inserir um material em uma área = TerraFarm simples sem camadas (construção)" />
+        <text name="ml_tip3" text="esvazie a caçamba antes de mudar de camada — uma caçamba, um material" />
+        <text name="ml_tip4" text="o mod lembra das pilhas — você recolhe o que foi despejado" />
+        <text name="ml_tip5" text="cor da linha = material iniciando ali; vermelho = fundo da mina" />
+        <text name="ml_tip6" text="a tela mostra a distância até a próxima camada" />
+        <text name="ml_tip7" text="Quais materiais existem é decidido pelo seu mapa + lista de mods — (!) significa: escavar sim, despejar não" />
+
+        <text name="input_ML_TOGGLE_HUD" text="Mining Layers: alternar exibição" />
+        <text name="input_ML_HUD_MOVE" text="Mining Layers: mover exibição (cursor do mouse)" />
+        <text name="ml_noInputArea" text="nenhuma área de entrada atribuída — atribua sua área no menu da máquina (Y), ou na aba Camadas escolha &quot;Em todo lugar&quot; em Aplica-se a" />
+        <text name="ml_hudMoveHint" text="clique esquerdo: pegar/soltar — clique direito: posição padrão — pressione a tecla novamente: pronto" />
+        <text name="ml_hudMoveSample" text="exibição de exemplo — no jogo as informações da camada aparecem aqui" />
+
+        <text name="ml_uiLayers" text="Camadas" />
+        <text name="ml_uiNoLayers" text="sem camadas" />
+        <text name="ml_uiBelow" text="abaixo" />
+        <text name="ml_uiIntro" text="Redefinir as camadas? Atual: %s. O editor solicita o material e o limite inferior em metros para cada camada de estéril, e depois o veio de minério abaixo delas (PAYDIRT por padrão, carvão ou calcário também funcionam). A rocha-mãe no fundo permanece fixa — onde a escavação termina." />
+        <text name="ml_uiDepthTitle" text="%s: limite inferior em metros abaixo da superfície" />
+        <text name="ml_uiDone" text="Novas camadas: %s. Tem efeito imediato para cada área sem sua própria zona." />
+        <text name="ml_uiMore" text="Adicionar outra camada de estéril abaixo? Não = ir para o veio de minério. O mod coloca a rocha-mãe por conta própria." />
+        <text name="ml_uiNoPaydirt" text="PAYDIRT não pertence ao estéril, o veio fica abaixo dele. O veio de minério é a última etapa, você pode escolhê-lo lá." />
+        <text name="ml_uiNotAllowed" text="%s não é um material de estéril. Disponíveis: DIRT, SOIL, GRAVEL, SAND, STONE, COAL, LIMESTONE." />
+        <text name="ml_uiSeamNext" text="Seis camadas de estéril são suficientes. Agora escolha o veio de minério abaixo delas — a rocha-mãe abaixo permanece fixa." />
+        <text name="ml_uiSeamNotAllowed" text="%s não funciona como veio de minério. Disponíveis: PAYDIRT, COAL, LIMESTONE, STONE, GRAVEL, SAND, DIRT, SOIL." />
+
+        <!-- ===================== Menu page: tabs ===================== -->
+        <text name="ml_tabQuickstart" text="Início rápido" />
+        <text name="ml_tabManual" text="Manual" />
+        <text name="ml_tabTips" text="Dicas e veículos" />
+        <text name="ml_tabEditor" text="Camadas" />
+
+        <!-- ===================== Tab 4: layer editor ===================== -->
+        <text name="ml_edSummarySection" text="Perfil resultante" />
+        <text name="ml_edScope" text="Você está editando o padrão: ele se aplica a todas as áreas sem camadas próprias, incluindo as já desenhadas. Para dar camadas próprias a uma mina, escolha essa área em Aplica-se a acima." />
+        <text name="ml_helpManEditor4" text="Padrão e exceções: o que você salva com Todas as áreas é o padrão — aplica-se a cada área sem camadas próprias, retroativamente às existentes. Se uma mina individual deve ser diferente, escolha-a em Aplica-se a acima e salve suas camadas — direto no editor, sem precisar editar arquivos." />
+        <text name="ml_edTargetSection" text="Aplica-se a" />
+        <text name="ml_edTarget" text="Área" />
+        <text name="ml_edTargetDefault" text="Todas as áreas (padrão)" />
+        <text name="ml_edScopeArea" text="Estas camadas se aplicam apenas a &quot;%s&quot;. Todas as outras mantêm o padrão. Volte para Todas as áreas acima para editar o padrão novamente." />
+        <text name="ml_edSavedArea" text="Camadas salvas para &quot;%s&quot;. Elas se aplicam apenas a esta área." />
+        <text name="ml_edActive" text="Esta área" />
+        <text name="ml_edActiveOn" text="Mining Layers (com camadas)" />
+        <text name="ml_edActiveOff" text="TerraFarm simples (sem camadas)" />
+        <text name="ml_edSavedOff" text="Camadas desativadas para &quot;%s&quot;. O TerraFarm simples se aplica aqui novamente." />
+        <text name="ml_helpQsBothWaysTitle" text="Duas opções — você decide por área" />
+        <text name="ml_helpQsBothWays1" text="Deixe os campos de material da área do TerraFarm VAZIOS e o Mining Layers faz o trabalho dele: o que vai para a caçamba depende da profundidade em que você escava. Esse é o caso normal para uma mina." />
+        <text name="ml_helpQsBothWays2" text="Insira um material na área e você terá o TerraFarm simples sem camadas. Perfeito para obras, construção de estradas e nivelamento — onde você só quer mover terra e sempre precisa do mesmo material." />
+        <text name="ml_helpQsBothWays3" text="Você obtém o mesmo resultado na aba Camadas: escolha uma área lá e defina para &quot;TerraFarm simples&quot;. Ambos os caminhos levam ao mesmo lugar, escolha o que preferir." />
+        <text name="ml_edForeign" text="⚠ Esta zona foi escrita manualmente em miningLayers.xml e só pode ser exibida aqui de forma simplificada. Salvar reescreve no esquema do próprio editor; uma altura de referência fixa é perdida. Texturas personalizadas de solo (paintLayer) são mantidas." />
+        <text name="ml_edLayerSection" text="Camadas" />
+        <text name="ml_edLayer" text="Camada" />
+        <text name="ml_edMaterial" text="Material" />
+        <text name="ml_edThickness" text="Espessura" />
+        <text name="ml_edSave" text="Salvar" />
+        <text name="ml_edAdd" text="Adicionar camada" />
+        <text name="ml_edRemove" text="Remover camada" />
+        <text name="ml_edSaved" text="Camadas salvas. Elas se aplicam imediatamente a todas as áreas sem zona própria." />
+        <text name="ml_edHint" text="O contorno brilhante marca a camada que você está editando. O veio de minério é a última linha fixa: material selecionável (PAYDIRT por padrão, carvão ou calcário também funcionam), espessura e posição fixas. A rocha abaixo entra sozinha. Espessura mínima: 1 m para a camada superior, 1,5 m para cada camada abaixo — com máquinas grandes prefira 2 m. Não se esqueça de salvar: ESC ou Voltar sai da página e tudo desde o último salvamento é descartado." />
+        <text name="ml_edSeamEntry" text="Veio de minério: %s" />
+        <!-- Material-Pool dieser Karte (1.4.3) -->
+        <text name="ml_edPoolNoTipHere" text="⚠ (!) %s não pode ser despejado de volta no solo NESTE mapa. Escavar, transportar e vender funcionam normalmente. Este mapa não tem mais slot de solo disponível para ele — isso é limitação do mapa + sua lista de mods, não deste mod." />
+        <text name="ml_edPoolNoTipMark" text="(!) = não pode ser despejado neste mapa. O mapa ficou sem slots de solo — escavar e vender ainda funcionam." />
+        <text name="ml_edPoolMissing" text="Não disponível neste mapa: %s. Nem o mapa nem seus mods fornecem estes materiais, então eles não são oferecidos aqui." />
+        <text name="ml_edPoolHint" text="Regra geral: menos mods = mais slots livres = mais materiais que você pode despejar." />
+
+        <!-- ===================== Tab 1: quick start ===================== -->
+        <text name="ml_helpQsSetupTitle" text="Configuração em um passo" />
+        <text name="ml_helpQsSetup1" text="Desenhe uma área do TerraFarm ao redor da sua mina e deixe os campos internos vazios. Essa é toda a configuração. Escave em qualquer lugar nessa área e o material virá da profundidade em vez da configuração do veículo. Importante: atribua a área à sua máquina como ÁREA DE ENTRADA (menu da máquina, padrão Y) — o TerraFarm vincula as áreas à máquina, não à sua posição." />
+        <text name="ml_helpQsSetup2" text="O mod calcula a altura de referência sozinho: ele lê as alturas do terreno nos vértices da sua área e deriva a superfície a partir delas. Nada para ler, nada para digitar. Se você digitar um material na área, terá o TerraFarm simples sem camadas. Útil para obras." />
+
+        <text name="ml_helpQsStockNote" text="Cada imagem aqui mostra o mod como ele vem de fábrica: camada superficial, cascalho, paydirt, rocha, sem ninguém ter configurado uma única camada manualmente. É isso que você recebe assim que a área é desenhada. Suas próprias camadas são uma opção, não um requisito." />
+        <text name="ml_helpQsDisplayTitle" text="A indicação no lado esquerdo" />
+        <text name="ml_helpQsDisplay1" text="Enquanto uma máquina estiver ativa, o lado esquerdo da tela informa onde você está: altura atual, em qual camada está trabalhando e quantos metros faltam até a próxima." />
+        <text name="ml_helpQsDisplayB1" text="Essa indicação é o que conta, não o campo de material do TerraFarm. O veículo continua mostrando sua própria configuração e só é sobrescrito no momento em que você escava." />
+        <text name="ml_helpQsDisplayB2" text="Mova-o no jogo: Num * (reconfigurável) alterna o modo de movimentação com o cursor do mouse — pegar, soltar, pronto. Desative com Num / ou showHeightDisplay no miningLayers.xml." />
+
+        <text name="ml_helpQsLayersTitle" text="Configurando suas próprias camadas" />
+        <text name="ml_helpQsLayers1" text="Pronto para uso: solo superficial, cascalho abaixo, depois paydirt, rocha no fundo. Isso se adapta a quase qualquer mina, então não há nada que você precise configurar." />
+        <text name="ml_helpQsWizardButton" text="Configurar camadas" />
+        <text name="ml_helpQsWizardHint" text="No entanto, você não precisa. Se não fizer nada, nosso padrão se aplica, o que serve para quase qualquer mina. Quer diferente? Vá para a aba Camadas, monte seu próprio perfil lá e veja ele tomar forma conforme avança." />
+        <text name="ml_helpQsLayersScope" text="Você edita as camadas de estéril e o veio de minério abaixo delas (PAYDIRT por padrão, carvão ou calcário também funcionam). Sua posição permanece fixa: quem quer o minério precisa escavar o estéril — jogabilidade real de mineração em vez de material ao apertar um botão. A rocha no fundo é inserida pelo próprio mod." />
+
+        <text name="ml_helpQsMistakesTitle" text="Os três erros ao desenhar uma área" />
+        <text name="ml_helpQsWarnWater" text="Lago ou margem: vértices na água medem o fundo. O plano de referência se inclina e você atinge rocha na linha da margem. Mantenha a área principalmente em terra firme." />
+        <text name="ml_helpQsWarnRidge" text="Cume de montanha: uma área desenhada através do cume transforma o plano de referência em uma corda e empurra o paydirt para perto da superfície. Em uma encosta remota esse é o bônus de montanha pretendido, no morro atrás da sua fazenda não é. Desenhe áreas de encosta em APENAS UMA face." />
+        <text name="ml_helpQsRidgeCaption" text="Em uma encosta íngreme aparece assim: camada CASCALHO a 15,7 m, apenas 2,3 m restantes para o paydirt. Faça o trajeto subindo a montanha e você chegará lá mais cedo. Isso é intencional." />
+        <text name="ml_helpQsWarnRiver" text="Travessia de rio: com cantos em ambas as margens, o leito do rio no meio fica muito abaixo do plano de referência e o fundo da mina termina abaixo do leito, inundando a mina. Desenhe áreas ao longo do rio, nunca cruzando-o." />
+
+        <!-- ===================== Tab 2: manual ===================== -->
+        <text name="ml_helpManWhatTitle" text="O que o mod altera" />
+        <text name="ml_helpManWhat1" text="No FS25 você define no veículo o que sua caçamba recolhe, não importa a profundidade em que escave. Este mod dá camadas ao solo: o que você obtém depende de quão abaixo da superfície está o seu ponto de escavação." />
+        <text name="ml_helpManWhat2" text="Este é um complemento puro em tempo de execução para o TerraFarm. Nenhum arquivo do TerraFarm é modificado e nenhum código de terceiros é enviado. Sem o TerraFarm o mod permanece inativo." />
+
+        <text name="ml_helpManLayersTitle" text="As camadas" />
+        <text name="ml_helpManLayers1" text="Padrão de cima para baixo: DIRT, depois GRAVEL, depois PAYDIRT, depois STONE. A rocha é o fim da linha. Isso é proposital, não uma limitação." />
+        <text name="ml_helpManLayersB1" text="As profundidades são limites inferiores em metros abaixo da superfície, não alturas absolutas acima do nível do mar." />
+        <text name="ml_helpManLayersB2" text="A camada do fundo não precisa de limite, ela continua para baixo sem fim." />
+        <text name="ml_helpManLayersB3" text="Cada camada recebe uma textura de solo correspondente para você ver onde está no buraco. Use paintLayer para definir você mesmo por camada." />
+        <text name="ml_helpManLayers2" text="As camadas se aplicam por área. Uma área sem zona própria herda as camadas padrão; uma área com material definido não recebe nenhuma." />
+
+        <text name="ml_helpManMoundTitle" text="Pilhas de entulho e reaterro" />
+        <text name="ml_helpManMound1" text="O mod lembra o que você despejou e onde. Pegue uma pilha de volta e você terá exatamente o que está nela, não a geologia por baixo. Isso vale para qualquer lugar no mapa até que a pilha acabe." />
+        <text name="ml_helpManMoundB1" text="Reaterre seu buraco e você retirará o aterro primeiro. Somente abaixo dele as camadas se aplicam novamente." />
+        <text name="ml_helpManMoundB2" text="Escave abaixo da base de uma pilha e a pilha acaba naquele ponto, então a geologia retorna. Isso impede que você retire material infinito de uma cratera." />
+        <text name="ml_helpManMoundB3" text="Esvazie a caçamba antes de mudar de camada. Um recipiente comporta apenas um tipo de material e, com a carga antiga dentro, a caçamba não aceitará o novo material." />
+
+        <text name="ml_helpManEditorTitle" text="Configurando suas próprias camadas" />
+        <text name="ml_helpManEditor1" text="A aba Camadas é onde você constrói seu próprio perfil. O corte transversal fica à esquerda; camada, material e espessura à direita. No máximo seis camadas de estéril; disponíveis: DIRT, SOIL, GRAVEL, SAND, STONE, COAL e LIMESTONE. Espessura mínima: 1 m para a camada superior, 1,5 m para cada camada abaixo dela — camadas mais finas quebram a coleta de pilhas. Com máquinas grandes, 2 m é a melhor escolha." />
+        <text name="ml_helpManEditor3" text="Saia da página com ESC ou o botão Voltar. Cuidado: alterado não significa salvo. Apenas o botão Salvar grava as camadas e as aplica imediatamente ao alvo escolhido acima — o padrão ou a área individual. Sair antes disso restaura o estado antigo da próxima vez que abrir." />
+        <text name="ml_helpManEditor2" text="Você não pode escolher PAYDIRT como estéril — o material valioso sempre fica ABAIXO do estéril. Como veio de minério (última linha no editor) você pode escolher COAL, LIMESTONE, STONE, GRAVEL, SAND, DIRT ou SOIL além de PAYDIRT: para pedreiras e regiões de carvão. A rocha-mãe abaixo permanece fixa." />
+
+        <text name="ml_helpManFloorTitle" text="O fundo da mina" />
+        <text name="ml_helpManFloor1" text="Enquanto você não mexer na altura de destino de uma área, o mod a coloca automaticamente abaixo da sua camada mais profunda - caso contrário a cava termina onde o editor a deixou durante o traçado: no nível do terreno. Aumente a área e o fundo acompanha." />
+        <text name="ml_helpManFloor2" text="Se você definir a altura de destino (digitando ou com cima/baixo no editor de área), a partir daí ela é sua: o mod nunca mais a altera. É assim que você nivela uma plataforma, uma banqueta ou uma rampa. O display mostra o que vale - &quot;definida por você&quot; ou &quot;automática&quot;." />
+
+        <text name="ml_helpManConfigTitle" text="Configurando manualmente" />
+        <text name="ml_helpManConfig1" text="Tudo fica em modSettings/FS25_MiningLayers/miningLayers.xml. O arquivo é criado na primeira inicialização e sobrevive a atualizações do mod. Antes do assistente salvar pela primeira vez, o mod cria um backup .bak uma vez por sessão." />
+        <text name="ml_helpManConfig2" text="É lá também que você alterna a exibição na tela, as linhas de profundidade, o fundo automático da mina e a textura do solo ao despejar. As zonas podem ser desativadas individualmente ou receber suas próprias camadas por área." />
+
+        <!-- ===================== Tab 3: tips and vehicles ===================== -->
+        <text name="ml_helpTipsTfTitle" text="Armadilhas do TerraFarm" />
+        <text name="ml_helpTipsTfB1" text="Desative defaultEnabled, caso contrário, qualquer veículo TerraFarm revirará seu pátio apenas ao dirigir." />
+        <text name="ml_helpTipsTfB2" text="O rebaixamento só funciona dentro do polígono quando Restrict area está ativado. O nivelamento funciona fora também. Se nada acontecer, você geralmente está do lado errado da linha. Ou o solo já está na altura alvo." />
+        <text name="ml_helpTipsTfB3" text="Uma pá carregadeira só consegue cerca de 30 a 40 centímetros por passada. Construa uma rampa. A ferramenta ideal para profundidade é a escavadeira." />
+        <text name="ml_helpTipsTfB4" text="As teclas ficam no teclado numérico, Num 9 abre as configurações globais. Após alterá-las, pode ser necessário sair e reiniciar limpo antes que façam efeito." />
+        <text name="ml_helpTipsTfB6" text="Um trator de esteira (dozer) também passa pelas camadas: abaixe a lâmina, modo Aplanar, e faça o trajeto longo o suficiente — quanto mais longa a passada, mais fundo você chega a cada vez. A imagem mostra a segunda camada (cascalho) alcançada apenas com a lâmina — sem escarificador traseiro. Na fronteira: use as pilhas antigas primeiro e esvazie a lâmina, até lá o material antigo permanece nela." />
+        <text name="ml_helpTipsTfB5" text="Sem uma área, o rebaixamento não tem limite inferior, pois a altura alvo é o nível do mar. O buraco ainda só fica tão fundo quanto você escava, mas uma área fornece um fundo definido." />
+
+        <text name="ml_helpTipsVehTitle" text="Quando um veículo não escava" />
+        <text name="ml_helpTipsVeh1" text="Para um veículo escavar, o TerraFarm precisa de uma configuração de máquina para ele. Sem uma, nada acontece, e a culpa não é do TerraFarm nem deste mod." />
+        <text name="ml_helpTipsVehB1" text="Instale um pacote de configuração de máquinas, por exemplo o FS25_TerraFarmMachines oficial de scfmod." />
+        <text name="ml_helpTipsVehB2" text="Muitos pacotes de veículos de mineração trazem suas próprias entradas de máquina. Entradas duplicadas não melhoram, pioram. Escolha uma." />
+        <text name="ml_helpTipsVehB3" text="Se uma caçamba mostra as setas mas não remove nada, o problema é nela. Tente outra na mesma escavadeira: se funcionar, a entrada da ferramenta está incorreta, não a sua configuração." />
+        <text name="ml_helpTipsVeh2" text="Um pacote de configuração para máquinas de mineração comuns está em desenvolvimento. Ele será lançado separadamente deste mod." />
+
+        <text name="ml_helpTipsMapTitle" text="Especificidades do mapa" />
+        <text name="ml_helpTipsMapB1" text="Quantos materiais de solo são possíveis é definido pelo mapa, não pelo mod — muitos permitem 63, outros maiores permitem mais, e o jogo base já usa 48. Com muitos mods o restante acaba rápido e os últimos não podem mais ser despejados. O mod verifica isso na inicialização e grava os materiais afetados no log." />
+        <text name="ml_helpTipsMapB2" text="Os nomes das texturas de solo mudam em cada mapa. Na sua primeira escavação, o mod grava a lista do seu mapa no log. Pegue os valores de paintLayer de lá." />
+        <text name="ml_helpTipsMapB4" text="O mod roda em qualquer mapa: para texturas de camada, ele escolhe automaticamente o solo mais próximo que o mapa oferece (nomes padrão como GRAVEL, MOUNTAINROCK, MOSS_STONES). Se um mapa não tiver nada adequado, sua seleção de textura simplesmente permanece ativa — materiais, camadas e pilhas continuam funcionando." />
+        <text name="ml_helpTipsMapB3" text="Alguns mapas bloqueiam leitos de rios contra deformação. Esse é um bloqueio do próprio mapa e não tem relação com propriedade da terra nem com este mod." />
+
+        <text name="ml_helpSponsorTitle" text="Apoiado por farmersingles.de" />
+        <text name="ml_helpSponsor1" text="Este mod é apoiado por farmersingles.de, um site de namoro para agricultores. É por isso que uma pequena placa com o logotipo deles fica em um canto de cada área. Dizemos isso abertamente em vez de esconder." />
+        <text name="ml_helpSponsor2" text="A placa sempre fica fora da área de escavação e não bloqueia nenhuma máquina. Se preferir não tê-la: defina sponsorSign=false no miningLayers.xml e ela sumirá imediatamente. Nada mais no mod altera e não perguntaremos novamente." />
+        <text name="ml_helpTipsAboutTitle" text="Sobre este mod" />
+        <text name="ml_helpTipsAbout1" text="Mining Layers é um complemento não oficial para o TerraFarm de scfmod. Não há afiliação com scfmod e nenhum arquivo do TerraFarm é fornecido. O TerraFarm está disponível no GitHub, não no ModHub." />
+        <text name="ml_pageTitle" text="Mining Layers" />
+        <text name="ml_credits" text="Mining Layers por Tommy Honold. Um projeto FrittePlayz." />
+        
+        <!-- Reiter 1, ganz vorn: Materialien haengen an Karte + Modliste (1.4.3) -->
+        <text name="ml_helpQsMapTitle" text="Primeiro: quais materiais o SEU mapa possui?" />
+        <text name="ml_helpQsMap1" text="Se um material existe e se você pode despejá-lo de volta no solo não é decidido por este mod, mas pelo seu mapa junto com sua lista de mods. Dos materiais de mineração, o jogo base só conhece STONE — DIRT, GRAVEL, SAND, COAL, LIMESTONE ou PAYDIRT sempre vêm de mapas ou mods. Além disso, cada mapa tem um número limitado de slots de solo: o jogo base já usa 48 deles, e quantos existem no total é definido pelo próprio mapa — muitos têm 63, mapas maiores têm mais. Quando o mapa esgota os slots, você ainda pode escavar, transportar e vender um material, mas não despejá-lo." />
+        <text name="ml_helpQsMap2" text="O Mining Layers toma um caminho intermediário para continuar jogável em qualquer mapa: ao carregar o mapa, ele verifica uma vez o que o SEU mapa realmente fornece e oferece apenas isso no seletor de camadas. Um (!) atrás do nome significa: escavar, transportar e vender funcionam, despejar não neste mapa. Qualquer coisa ausente por completo é listada abaixo do corte transversal. Assim você nunca precisa testar um mapa primeiro ou pesquisar — se algo falta, é o mapa, não o mod." />
+        <text name="ml_helpQsMap3" text="Duas saídas se um material necessário tiver um (!): remova mods que trazem seus próprios materiais de solo, ou jogue em um mapa construído com mais canais. Os 63 não são uma lei fixa do jogo — um mapa pode ser construído mais amplo, e alguns já são. O que nenhum mod pode fazer é aumentar isso por fora." />
+        
+        <!-- Kartenbericht (1.4.3) -->
+        <text name="ml_mapSection" text="O que este mapa pode fazer" />
+        <text name="ml_mapNoData" text="O relatório do mapa fica disponível assim que o mapa é carregado." />
+        <text name="ml_mapUsable" text="Utilizável neste mapa: %s — você pode escavar, transportar, vender e despejar de volta no solo." />
+        <text name="ml_mapNoTipList" text="Apenas escavar e vender: %s. Despejar de volta no solo não funciona aqui — não resta slot livre no sistema de terreno." />
+        <text name="ml_mapMissingList" text="Não presente de forma alguma: %s. Nem o mapa nem seus mods fornecem estes." />
+        <text name="ml_mapAdvice" text="Quantos materiais de solo cabem é decidido pelo seu MAPA: ele define a largura do canal, e o jogo base já usa 48 slots. Quantos são usados é decidido pela sua LISTA DE MODS — o primeiro a carregar pega o slot. Portanto: menos mods libera slots, e um mapa construído com mais canais tem mais slots desde o início." />
+        <text name="ml_mapManyOwn" text="Este mapa traz um grande número de materiais de solo próprios, então os slots esgotam cedo. Isso é típico para mapas convertidos do FS19 ou FS22." />
+        <text name="ml_helpTipsAbout2" text="Este mod é gratuito e continuará gratuito." />
+        <!-- ===== Ergaenzt fuer 1.6.0.0 (nicht Teil von Alicopowers Abgabe vom 15.08.) ===== -->
+        <text name="ml_edTargetGlobal" text="Em todo lugar (sem área)" />
+        <text name="ml_edScopeGlobal" text="Você está editando as camadas para &quot;Em todo lugar&quot;: elas valem no mapa inteiro, sem precisar desenhar uma área. Uma área que você atribuiu a uma máquina tem prioridade — e onde a área tem um material definido, vale o TerraFarm normal." />
+        <text name="ml_edSavedGlobalOn" text="As camadas agora valem em todo lugar, sem área desenhada. Uma área que você atribuiu a uma máquina continua tendo prioridade." />
+        <text name="ml_edSavedGlobalOff" text="As camadas valem apenas dentro das áreas desenhadas. Sua configuração de camadas é mantida." />
+        <text name="ml_globalHint" text="Camadas em todo lugar, sem área: aba Camadas, em Aplica-se a escolha &quot;Em todo lugar&quot;, mude para Mining Layers, salve." />
+        <text name="ml_noSurfaceYet" text="Altura de referência ainda não definida — ela é criada no primeiro contato de escavação aqui" />
+        <text name="ml_slotReport" text="Espaços de solo: %d de %d materiais desta instalação têm um tipo de terreno." />
+        <text name="ml_slotMap" text="Este mapa tem %d espaços de solo (%d canais) — %d em uso." />
+    </texts>
+</l10n>

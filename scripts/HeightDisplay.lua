@@ -164,6 +164,30 @@ function MiningLayers:buildDisplayLines()
         elseif reason == 'path' then
             table.insert(lines, '! ' .. MiningLayers.getText('ml_pathArea',
                 'Pfad-Bereich = normales TerraFarm, Schichten gibt es nur in Polygon-Bereichen'))
+        elseif reason == 'noSurface' then
+            -- ⚠️ Muss VOR dem else stehen: sonst landet der Fall in der
+            -- Eingabe-Bereich-Diagnose und die Anzeige raet dem Spieler, einen
+            -- Bereich zuzuweisen - obwohl er gerade ohne Bereich unterwegs ist
+            -- und nur noch keine Schaufel im Boden hatte.
+            --
+            -- Erst die Zone, dann der Hinweis (Tommys Befund 16.08. am eigenen
+            -- Screenshot): ohne die Zone-Zeile sieht der Spieler beim Herumfahren nur
+            -- eine Meldung und nicht, DASS hier ueberhaupt Schichten gelten. Mit ihr
+            -- liest es sich als "gleich geht's los" statt "hier ist nichts eingestellt".
+            -- Bewusst dieselbe Beschriftung wie unten im Normalfall.
+            local zoneLabel
+
+            if zoneName == nil or zoneName == 'globalZone' then
+                zoneLabel = MiningLayers.getText('ml_zoneEverywhere', 'Ueberall')
+            else
+                zoneLabel = tostring(zoneName)
+            end
+
+            table.insert(lines, string.format('%s: %s',
+                MiningLayers.getText('ml_zone', 'Zone'), zoneLabel))
+
+            table.insert(lines, '! ' .. MiningLayers.getText('ml_noSurfaceYet',
+                'Bezugshoehe noch nicht gesetzt - sie entsteht beim ersten Grabkontakt hier'))
         else
             -- raver-Supportfall 10.08.: haeufigste Ursache fuer "keine Schichten"
             -- ist eine Maschine OHNE zugewiesenen Eingabe-Bereich - das sagen wir
@@ -188,15 +212,25 @@ function MiningLayers:buildDisplayLines()
         end
 
         -- Was STATTDESSEN passiert. Ohne diesen Satz sucht der Spieler den Fehler bei
-        -- uns ("der Mod uebernimmt nicht") - TerraFarm nimmt dann das Material, das der
-        -- KARTENERSTELLER der Bodentextur zugeordnet hat: LandscapingInput:applyMapResources
-        -- ueber getResourceLayerAtWorldPos(x, z). Die Abfrage kennt nur X und Z, also
-        -- kommt in JEDER Tiefe dasselbe Material - genau der Befund vom 11.08.
-        -- (Tommy: Beton aus jeder Tiefe / Oreo: Kokskohle nach Erde).
+        -- uns ("der Mod uebernimmt nicht") - dann entscheidet TerraFarm. Normalfall ist das
+        -- Material der MASCHINE (LandscapingBase.lua:69). Nur wenn die Karte Ressourcen
+        -- mitbringt und beide Schalter an sind - global und an der Maschine
+        -- (LandscapingBase.lua:72) - greift applyMapResources und nimmt das Material, das
+        -- der KARTENERSTELLER der Bodentextur zugeordnet hat (LandscapingInput.lua:75,
+        -- getResourceLayerAtWorldPos kennt nur X und Z, also in JEDER Tiefe dasselbe -
+        -- der Befund vom 11.08., Tommy: Beton aus jeder Tiefe / Oreo: Kokskohle nach Erde).
         -- Ausnahme 'manual': dort gilt das ausdruecklich im Bereich gesetzte Material.
-        if reason ~= 'manual' then
+        --
+        -- ⚠️ Ausnahme 'noSurface' (Tommys Befund 16.08., Nachtest): dort ist der Satz
+        -- schlicht falsch. applyLayer friert die Bezugshoehe VOR der Abfrage ein
+        -- (LayerHooks.lua:272, dann :275) - wer hier graebt, bekommt im selben Moment
+        -- seine Schicht. Der Satz beschriebe einen Fall, der beim Graben nie eintritt,
+        -- und liest sich wie "der Mod ist hier nicht zustaendig" - genau die Sorge, die
+        -- der globale Modus ausraeumen soll. Es bleibt die Zeile darueber, die richtig
+        -- sagt, dass die Hoehe beim ersten Grabkontakt entsteht.
+        if reason ~= 'manual' and reason ~= 'noSurface' then
             table.insert(lines, '! ' .. MiningLayers.getText('ml_mapResourceTakesOver',
-                'TerraFarm entscheidet: Material der Karte an dieser Stelle - in jeder Tiefe gleich'))
+                'TerraFarm entscheidet: Material deiner Maschine - oder das der Karte, wenn Kartenressourcen eingeschaltet sind'))
         end
 
         self:appendTip(lines)
@@ -204,11 +238,73 @@ function MiningLayers:buildDisplayLines()
         return lines
     end
 
-    table.insert(lines, string.format('%s: %s   %s: %s',
-        MiningLayers.getText('ml_zone', 'Zone'),
-        tostring(zoneName),
-        MiningLayers.getText('ml_layer', 'Schicht'),
-        entry.fillTypeName))
+    -- ⚠️ 'globalZone' ist unser XML-Begriff, kein Wort fuer den Spieler - und in keiner
+    -- Sprachdatei uebersetzbar, weil er aus dem Code kommt (MiningLayersConfig:2007).
+    -- Gefunden im Sprachdurchgang 16.08. (Tommy, franzoesische Sitzung).
+    --
+    -- Angezeigt wird stattdessen dasselbe Wort, das im Editor als Ziel steht: "Ueberall".
+    -- Tommys Entscheid - gar nichts anzuzeigen waere die stillere Loesung gewesen, aber dann
+    -- sieht der Spieler nicht, DASS der globale Modus greift. Genau diese Rueckmeldung fehlt
+    -- bei "warum passiert nichts?". Menue und HUD benutzen jetzt dasselbe Wort.
+    if zoneName == nil or zoneName == 'globalZone' then
+        table.insert(lines, string.format('%s: %s   %s: %s',
+            MiningLayers.getText('ml_zone', 'Zone'),
+            MiningLayers.getText('ml_zoneEverywhere', 'Ueberall'),
+            MiningLayers.getText('ml_layer', 'Schicht'),
+            entry.fillTypeName))
+    else
+        table.insert(lines, string.format('%s: %s   %s: %s',
+            MiningLayers.getText('ml_zone', 'Zone'),
+            tostring(zoneName),
+            MiningLayers.getText('ml_layer', 'Schicht'),
+            entry.fillTypeName))
+    end
+
+    -- ★ Zielhoehe des Bereichs - die Auskunft, die bis 1.6.0 nur im Log stand.
+    --
+    -- Ohne sie merkt niemand, dass ein frisch gezeichneter Bereich seine Zielhoehe vom
+    -- Editor auf Gelaendehoehe bekommt (PolygonEditor:createPoint) und die Grube damit
+    -- sofort wieder aufhoert. Wer vorher ohne Bereich gegraben hat - dort gibt es gar
+    -- keine Untergrenze -, sieht sonst nur, dass es "ploetzlich nicht mehr geht".
+    -- Tommy, 18.08., am eigenen Testbereich.
+    local status = zoneName ~= nil and MiningLayers.targetStatusByZone ~= nil
+        and MiningLayers.targetStatusByZone[tostring(zoneName)] or nil
+
+    if status ~= nil and status.y ~= nil then
+        local origin = status.manual
+            and MiningLayers.getText('ml_targetManual', 'von dir')
+            or MiningLayers.getText('ml_targetAuto', 'automatisch')
+
+        table.insert(lines, string.format('%s: %s m (%s)',
+            MiningLayers.getText('ml_targetHeight', 'Zielhoehe'),
+            MiningLayers.formatNumber(status.y),
+            origin))
+
+        -- Nur wenn die Hoehe wirklich etwas abschneidet. Sonst waere die Zeile Rauschen.
+        if status.cut and status.deepest ~= nil then
+            local template = MiningLayers.getText('ml_targetCut',
+                'Grube endet ueber der tiefsten Schicht (%s m) - Zielhoehe im Bereichseditor tiefer setzen')
+            local ok, text = pcall(string.format, template, MiningLayers.formatNumber(status.deepest))
+
+            table.insert(lines, '! ' .. (ok and text or template))
+        end
+    end
+
+    -- ★ Abgelehnter Gelaendeeingriff in den letzten 3 Sekunden: DAS ist die Antwort
+    -- auf "warum passiert nichts?", wenn die Karte eine Zone sperrt. TerraFarm
+    -- verschluckt den Fehlzustand stumm (Befund 18.08., alter Riverspot); die
+    -- Diagnose-Hook in LayerHooks merkt sich den Zeitpunkt.
+    if MiningLayers.deformBlockedAt ~= nil and type(g_time) == 'number'
+        and g_time - MiningLayers.deformBlockedAt < 3000 then
+        table.insert(lines, '! ' .. MiningLayers.getText('ml_digBlocked',
+            'Karte blockiert Gelaendeaenderung an dieser Stelle - kein Mod-Stopp'))
+    elseif MiningLayers.deformZeroAt ~= nil and type(g_time) == 'number'
+        and g_time - MiningLayers.deformZeroAt < 3000 then
+        -- Engine meldet Erfolg, bewegt aber nichts (Serie): Kartensperre nach
+        -- TerraFarm-Bauart (max. Verschiebung 0) oder Boden schon auf Zielhoehe.
+        table.insert(lines, '! ' .. MiningLayers.getText('ml_digNoEffect',
+            'Graben bewegt hier nichts - Kartensperre oder Zielhoehe erreicht'))
+    end
 
     -- Erkannte Halde: das Gedaechtnis weiss, was hier liegt.
     if entry.isMound then
@@ -296,7 +392,20 @@ function MiningLayers:getNextLayerBelow(vehicle, terrainY, zoneName, worldPosX, 
 
     if zoneName == 'globalZone' then
         resolved = self.resolvedGlobal
-        surfacePointY = self.globalZone ~= nil and self.globalZone.surfaceY or nil
+
+        -- ⚠️ Dieselbe Falle wie beim Bereichs-Zweig unten, nur eine Version spaeter:
+        -- hier stand `= self.globalZone.surfaceY`, also der feste Wert aus der XML.
+        -- Seit die globale Zone ohne festen Wert laufen darf, ist der im Normalfall
+        -- nil - die Anzeige haette geschwiegen, waehrend das Graben laeuft. Also
+        -- derselbe Weg wie in getLayerAt: erst das Raster, dann der feste Wert.
+        -- Keine geneigte Ebene, weil es ohne Bereich keine Umrandung zum Fitten gibt.
+        local globalSurfaceY = self.globalZone ~= nil and self.globalZone.surfaceY or nil
+
+        if worldPosX ~= nil and worldPosZ ~= nil then
+            surfacePointY = self:getSurfacePointY(worldPosX, worldPosZ, nil, globalSurfaceY)
+        else
+            surfacePointY = globalSurfaceY
+        end
     else
         local area = nil
 
@@ -402,11 +511,11 @@ function MiningLayers.actionToggleHud()
     MiningLayers.toggleLogCount = MiningLayers.toggleLogCount + 1
 
     if MiningLayers.toggleLogCount <= MiningLayers.TOGGLE_LOG_LIMIT then
-        MiningLayers.log('Anzeige-Taste gedrueckt - Anzeige jetzt %s.',
-            MiningLayers.showHeightDisplay and 'AN' or 'AUS')
+        MiningLayers.log('Display key pressed - display is now %s.',
+            MiningLayers.showHeightDisplay and 'ON' or 'OFF')
 
         if MiningLayers.toggleLogCount == MiningLayers.TOGGLE_LOG_LIMIT then
-            MiningLayers.log('  (weitere Toggle-Zeilen werden unterdrueckt)')
+            MiningLayers.log('  (further toggle lines are suppressed)')
         end
     end
 
@@ -433,7 +542,7 @@ function MiningLayers.onToggleActionInput(sourceName)
         -- Deduplizierung real exerziert wird (Percys Review, Testfrage 1).
         if not MiningLayers.toggleDupLogged then
             MiningLayers.toggleDupLogged = true
-            MiningLayers.log('Anzeige-Taste: Duplikat-Callback via Pfad "%s" (%d ms nach dem ersten) - dedupliziert.',
+            MiningLayers.log('Display key: duplicate callback via path "%s" (%d ms after the first) - deduplicated.',
                 sourceName, now - MiningLayers.lastActionToggleTime)
         end
 
@@ -447,7 +556,7 @@ function MiningLayers.onToggleActionInput(sourceName)
     -- Pfad festhalten, WELCHER Weg auf dieser Modliste Callbacks liefert.
     if not MiningLayers.toggleSourceLogged[sourceName] then
         MiningLayers.toggleSourceLogged[sourceName] = true
-        MiningLayers.log('Anzeige-Taste: Callback ueber Pfad "%s".', sourceName)
+        MiningLayers.log('Display key: callback through path "%s".', sourceName)
     end
 
     MiningLayers.actionToggleHud()
@@ -484,8 +593,8 @@ function MiningLayers:registerToggleActionEvent(vehicle, isActiveForInput)
         -- nicht uebernommen. Einmal klar ins Log statt still zu schweigen.
         if not MiningLayers.toggleActionMissingLogged then
             MiningLayers.toggleActionMissingLogged = true
-            MiningLayers.log('WARNUNG: Action ML_TOGGLE_HUD ist im Spiel nicht angekommen - Taste ohne Funktion.')
-            MiningLayers.log('  Anzeige bleibt per showHeightDisplay="false" in der miningLayers.xml schaltbar.')
+            MiningLayers.log('WARNING: action ML_TOGGLE_HUD never arrived in the game - the key does nothing.')
+            MiningLayers.log('  The display can still be switched with showHeightDisplay="false" in miningLayers.xml.')
         end
 
         return
@@ -501,7 +610,7 @@ function MiningLayers:registerToggleActionEvent(vehicle, isActiveForInput)
         or not MiningLayers.isCallable(vehicle.clearActionEventsTable) then
         if not MiningLayers.toggleVehicleApiMissingLogged then
             MiningLayers.toggleVehicleApiMissingLogged = true
-            MiningLayers.log('WARNUNG: Fahrzeug ohne addActionEvent/clearActionEventsTable - Anzeige-Taste bleibt aus.')
+            MiningLayers.log('WARNING: vehicle without addActionEvent/clearActionEventsTable - the display key stays off.')
         end
 
         return
@@ -526,7 +635,7 @@ function MiningLayers:registerToggleActionEvent(vehicle, isActiveForInput)
 
     if MiningLayers.toggleRegisterCount <= MiningLayers.TOGGLE_LOG_LIMIT then
         -- Diagnose (Dredd): Kontextname zeigt, WO das Event gelandet ist.
-        local contextName = 'unbekannt'
+        local contextName = 'unknown'
 
         if MiningLayers.isCallable(g_inputBinding.getContextName) then
             local okCtx, ctx = pcall(g_inputBinding.getContextName, g_inputBinding)
@@ -536,11 +645,11 @@ function MiningLayers:registerToggleActionEvent(vehicle, isActiveForInput)
             end
         end
 
-        MiningLayers.log('Anzeige-Taste: Registrierung #%d, success=%s, eventId=%s, Kontext=%s',
+        MiningLayers.log('Display key: registration #%d, success=%s, eventId=%s, context=%s',
             MiningLayers.toggleRegisterCount, tostring(success), tostring(eventId), contextName)
 
         if MiningLayers.toggleRegisterCount == MiningLayers.TOGGLE_LOG_LIMIT then
-            MiningLayers.log('  (weitere Registrierungs-Zeilen werden unterdrueckt)')
+            MiningLayers.log('  (further registration lines are suppressed)')
         end
     end
 
@@ -560,11 +669,11 @@ end
 ---Datei-Laden in main.lua - hier ist nur noch der Log-Report).
 function MiningLayers:installToggleKey()
     if type(MiningLayers.inputSpecCount) == 'number' and MiningLayers.inputSpecCount > 0 then
-        MiningLayers.log('Anzeige-Taste bereit: Eingabe-Spez auf %d Fahrzeugtypen (Standard Num /, im Fahrzeug, umbelegbar).',
+        MiningLayers.log('Display key ready: input specialization on %d vehicle types (default Num /, inside a vehicle, rebindable).',
             MiningLayers.inputSpecCount)
     else
-        MiningLayers.log('WARNUNG: Eingabe-Spezialisierung nicht installiert - Anzeige-Taste ohne Funktion.')
-        MiningLayers.log('  Anzeige weiterhin per showHeightDisplay="false" in der miningLayers.xml schaltbar.')
+        MiningLayers.log('WARNING: input specialization not installed - the display key does nothing.')
+        MiningLayers.log('  The display remains switchable with showHeightDisplay="false" in miningLayers.xml.')
     end
 end
 
@@ -587,8 +696,8 @@ function MiningLayers:drawHeightDisplay()
     if not ok then
         if not MiningLayers.displayErrorReported then
             MiningLayers.displayErrorReported = true
-            MiningLayers.log('FEHLER in der Anzeige: %s', tostring(lines))
-            MiningLayers.log('  Anzeige wird abgeschaltet, die Schichten laufen weiter.')
+            MiningLayers.log('ERROR in the display: %s', tostring(lines))
+            MiningLayers.log('  The display is switched off, the layers keep running.')
             self.showHeightDisplay = false
         end
 
@@ -888,8 +997,8 @@ function MiningLayers:drawDepthLinesSafe()
 
     if not ok and not MiningLayers.depthLinesErrorReported then
         MiningLayers.depthLinesErrorReported = true
-        MiningLayers.log('FEHLER in den Tiefenlinien: %s', tostring(err))
-        MiningLayers.log('  Tiefenlinien werden abgeschaltet, alles andere laeuft weiter.')
+        MiningLayers.log('ERROR in the depth lines: %s', tostring(err))
+        MiningLayers.log('  The depth lines are switched off, everything else keeps running.')
         self.showDepthLines = false
     end
 end
@@ -913,15 +1022,15 @@ function MiningLayers:logFirstReading(entry, terrainY, surfaceY, zoneName)
     MiningLayers.firstReadingLogged = true
 
     if entry == nil then
-        MiningLayers.log('Erster Grabvorgang: Hoehe %.1f m, keine Schicht zustaendig (Material unveraendert).', terrainY)
+        MiningLayers.log('First dig: height %.1f m, no layer applies (material unchanged).', terrainY)
         return
     end
 
     if surfaceY ~= nil then
-        MiningLayers.log('Erster Grabvorgang: Hoehe %.1f m, Tiefe %.1f m, Zone %s -> %s',
+        MiningLayers.log('First dig: height %.1f m, depth %.1f m, zone %s -> %s',
             terrainY, surfaceY - terrainY, tostring(zoneName), entry.fillTypeName)
     else
-        MiningLayers.log('Erster Grabvorgang: Hoehe %.1f m, Zone %s -> %s',
+        MiningLayers.log('First dig: height %.1f m, zone %s -> %s',
             terrainY, tostring(zoneName), entry.fillTypeName)
     end
 end

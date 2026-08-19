@@ -43,8 +43,10 @@ InGameMenuMiningLayersFrame.CONTENT = {
         -- Der Kartenbericht steht ganz vorn: erst was DIESE Karte kann, dann die
         -- allgemeine Erklaerung dahinter (Tommy 11.08.: "Overview, was die Karte
         -- kann, am Anfang").
-        { type = 'section',   text = 'ml_mapSection' },
-        { type = 'paragraph', dynamic = 'mapReport' },
+        { type = 'section',   text = 'ml_mapSection', frame = 'mapReport' },
+        -- paragraphTall statt paragraph: als einziger Laufzeit-Absatz sprengt der
+        -- Bericht das 4-Zeilen-Profil der statischen (Percys Fund: Satz abgeschnitten).
+        { type = 'paragraphTall', dynamic = 'mapReport', frame = 'mapReport' },
         { type = 'spacer' },
 
         { type = 'section',   text = 'ml_helpQsMapTitle' },
@@ -56,6 +58,11 @@ InGameMenuMiningLayersFrame.CONTENT = {
         { type = 'spacer' },
 
         { type = 'section',   text = 'ml_helpQsSetupTitle' },
+        -- ★ Steht VOR der Bereichsanleitung: seit 1.6 braucht es fuer den ersten
+        -- Zug gar keinen Bereich mehr. Wer den Mod frisch installiert, soll das
+        -- lesen, bevor er anfaengt Polygone zu ziehen - genau daran ist FS Miner
+        -- haengengeblieben (15.08.).
+        { type = 'paragraph', text = 'ml_globalHint' },
         { type = 'paragraph', text = 'ml_helpQsSetup1' },
         { type = 'paragraph', text = 'ml_helpQsStockNote' },
         { type = 'image',     file = 'ml_help_01_area' },
@@ -313,6 +320,7 @@ function InGameMenuMiningLayersFrame:collectTemplates()
     local names = {
         section   = 'tplSection',
         paragraph = 'tplParagraph',
+        paragraphTall = 'tplParagraphTall',
         bullet    = 'tplBullet',
         warning   = 'tplWarning',
         image     = 'tplImage',
@@ -372,6 +380,18 @@ function InGameMenuMiningLayersFrame:buildEntry(layout, entry)
 
     element:setVisible(true)
 
+    -- Eintraege mit demselben frame-Namen bilden zusammen einen umrandeten Kasten.
+    -- Der Rahmen wird NICHT ins Layout eingebaut, sondern in draw() ueber die
+    -- Bildschirmposition dieser Elemente gemalt (siehe drawEntryFrame): ein
+    -- eingebautes Rahmen-Element muesste seine Hoehe vorher kennen, und die steht
+    -- beim Kartenbericht erst zur Laufzeit fest.
+    if entry.frame ~= nil then
+        self.frameGroups = self.frameGroups or {}
+        self.frameGroups[entry.frame] = self.frameGroups[entry.frame] or {}
+
+        table.insert(self.frameGroups[entry.frame], element)
+    end
+
     if entry.type == 'image' then
         if MiningLayers.isCallable(element.setImageFilename) then
             element:setImageFilename(imagePath)
@@ -387,7 +407,19 @@ function InGameMenuMiningLayersFrame:buildEntry(layout, entry)
 
         self:refreshDynamicEntry(entry.dynamic)
     else
-        element:setText(MiningLayers.getText(entry.text, entry.text))
+        local text = MiningLayers.getText(entry.text, entry.text)
+
+        -- Aufzaehlungen sind 24 px eingerueckt (Profil mlFrame_bullet), hatten aber kein
+        -- Zeichen davor - der Einzug wirkte dadurch willkuerlich statt als Liste.
+        -- Tommys Befund aus dem Sprachdurchgang 16.08. ("die Schrift ist unterschiedlich
+        -- eingerueckt"), sprachunabhaengig.
+        -- Das Zeichen steht hier und NICHT in den Sprachdateien: sonst muesste es in sieben
+        -- Dateien gepflegt werden und fehlte bei jeder neuen Uebersetzung.
+        if entry.type == 'bullet' then
+            text = '· ' .. text
+        end
+
+        element:setText(text)
     end
 end
 
@@ -402,6 +434,27 @@ function InGameMenuMiningLayersFrame:refreshDynamicEntry(name)
 
     if name == 'mapReport' then
         element:setText(MiningLayers:getMapReportText())
+
+        -- Nach dem Befuellen auf die tatsaechliche Texthoehe schrumpfen: das hohe
+        -- Vorlagen-Profil ist nur die Obergrenze. Ohne das Schrumpfen staende auf
+        -- guten Karten (eine Zeile Bericht) ein leerer 300px-Block samt Rahmen.
+        -- Schlaegt der Weg fehl, bleibt der hohe Block - abgeschnitten wird nie.
+        MiningLayers.protectedCall('resizeMapReport', function()
+            if MiningLayers.isCallable(element.getTextHeight) and MiningLayers.isCallable(element.setSize) then
+                local height = element:getTextHeight()
+
+                if type(height) == 'number' and height > 0 then
+                    element:setSize(nil, height + 8 * (g_pixelSizeScaledY or 0.001))
+
+                    local layout = self.contentLayout ~= nil
+                        and self.contentLayout[InGameMenuMiningLayersFrame.QUICKSTART_PAGE] or nil
+
+                    if layout ~= nil and MiningLayers.isCallable(layout.invalidateLayout) then
+                        layout:invalidateLayout()
+                    end
+                end
+            end
+        end)
     end
 end
 
@@ -474,8 +527,8 @@ function InGameMenuMiningLayersFrame:onFrameClose()
     -- aus der Konfiguration auf. Im Log stand darueber bisher nichts, deshalb war
     -- "nicht gespeichert" von "falsches Ziel gewaehlt" nicht zu unterscheiden.
     if self.editorDirty then
-        MiningLayers.log('WARNUNG: Schichten-Seite mit UNGESPEICHERTEN Aenderungen verlassen -')
-        MiningLayers.log('  nichts uebernommen. Aenderungen gelten erst nach "Speichern".')
+        MiningLayers.log('WARNING: left the layers page with UNSAVED changes -')
+        MiningLayers.log('  nothing was applied. Changes only take effect after "Save".')
     end
 
     self.isOpen = false
@@ -548,6 +601,20 @@ end
 -- ======================================================================
 
 InGameMenuMiningLayersFrame.EDITOR_PAGE = 4
+InGameMenuMiningLayersFrame.QUICKSTART_PAGE = 1
+
+---Auf welcher Seite ein Kasten gezeichnet wird. Ohne Eintrag bleibt die Gruppe
+---ungezeichnet - ein Rahmen auf der falschen Seite schwebte ueber fremdem Text.
+InGameMenuMiningLayersFrame.FRAME_PAGES = {
+    mapReport = InGameMenuMiningLayersFrame.QUICKSTART_PAGE,
+}
+
+---Rot wie in der Anleitung: der Kartenbericht ist die Stelle, auf die der Blick
+---zuerst fallen soll (Tommy, 18.08.). Die Farbe ist KEIN Alarm - sie steht auch
+---auf einer Karte, auf der alles nutzbar ist.
+InGameMenuMiningLayersFrame.FRAME_COLOR = { 0.85, 0.15, 0.15, 1 }
+InGameMenuMiningLayersFrame.FRAME_PADDING = 10
+InGameMenuMiningLayersFrame.FRAME_EDGE = 2
 
 ---Reihenfolge bewusst fest verdrahtet: `pairs()` ueber EDITOR_MATERIALS haette
 ---in Lua keine festgelegte Reihenfolge, die Auswahl saehe je Start anders aus.
@@ -684,19 +751,34 @@ end
 ---Baut die Liste der Ziele: Standard plus jeder Polygon-Bereich der Karte.
 function InGameMenuMiningLayersFrame:buildTargetList()
     self.targets = {
-        { key = nil, label = MiningLayers.getText('ml_edTargetDefault', 'All areas (default)') },
+        { key = nil, rank = 0, label = MiningLayers.getText('ml_edTargetDefault', 'All areas (default)') },
+        -- ★ Der Schalter fuer "ueberall, ohne gezeichneten Bereich". Bewusst als
+        -- Ziel im vorhandenen Editor statt als eigenes Bedienelement: so bekommt
+        -- er Ein/Aus, Schichtbearbeitung und Speichern geschenkt - und der Nutzer
+        -- lernt keine zweite Bedienung.
+        -- ⚠️ isGlobal statt eines Schluessels: Bereichsschluessel sind
+        -- kleingeschriebene Bereichsnamen, ein Sentinel-String koennte mit einem
+        -- echten Bereich kollidieren.
+        { key = nil, rank = 1, isGlobal = true,
+          label = MiningLayers.getText('ml_edTargetGlobal', 'Everywhere (no area needed)') },
     }
 
     for _, area in pairs(MiningLayers.getLandscapingAreas()) do
         -- Pfad-Bereiche haben eine Breite und bekommen nie Schichten.
         if area ~= nil and area.width == nil and area.name ~= nil then
-            table.insert(self.targets, { key = area.name:lower(), label = area.name })
+            table.insert(self.targets, { key = area.name:lower(), rank = 2, label = area.name })
         end
     end
 
+    -- ⚠️ Nach rank sortieren, nicht nach "key == nil": zwei Eintraege ohne
+    -- Schluessel haetten in der alten Fassung beide `true` geliefert - eine
+    -- widerspruechliche Ordnung, an der Lua mit "invalid order function" aussteigt.
+    -- Die Regel dazu steht ausgeschrieben in MiningLayersConfig.lua bei resolveZone.
     table.sort(self.targets, function(a, b)
-        if a.key == nil then return true end
-        if b.key == nil then return false end
+        if a.rank ~= b.rank then
+            return a.rank < b.rank
+        end
+
         return a.label < b.label
     end)
 
@@ -706,6 +788,13 @@ end
 ---@return table? zone
 function InGameMenuMiningLayersFrame:getTargetZone()
     local target = self.targets and self.targets[self.targetIndex] or nil
+
+    if target ~= nil and target.isGlobal then
+        -- Eingeschaltet liegt sie in globalZone, ausgeschaltet in globalZoneOff -
+        -- beide mit ihren Schichten, damit Aus- und wieder Einschalten die
+        -- Konfiguration nicht kostet.
+        return MiningLayers.globalZone or MiningLayers.globalZoneOff
+    end
 
     if target == nil or target.key == nil then
         return MiningLayers.defaultZone
@@ -726,6 +815,15 @@ function InGameMenuMiningLayersFrame:loadEditorFromConfig()
     -- Ein Bereich kann komplett ohne Schichten laufen (normales TerraFarm).
     -- Dafuer gibt es in der Konfiguration die disabled-Zone.
     self.editActive = not (ownZone ~= nil and ownZone.disabled == true)
+
+    -- ⚠️ Beim globalen Ziel heisst "gar keine Zone" AUS, nicht AN. Bestandsnutzer
+    -- haben den Block je nach Vorgeschichte gar nicht in der Datei (der Editor
+    -- schreibt sie neu), und ein Update darf ihr Spiel nicht von selbst umstellen.
+    local target = self.targets and self.targets[self.targetIndex] or nil
+
+    if target ~= nil and target.isGlobal and ownZone == nil then
+        self.editActive = false
+    end
 
     local zone = ownZone or MiningLayers.defaultZone
     local layers = zone ~= nil and type(zone.layers) == 'table' and zone.layers or {}
@@ -942,7 +1040,10 @@ function InGameMenuMiningLayersFrame:updateEditorOptions()
         local target = self.targets and self.targets[self.targetIndex] or nil
 
         if MiningLayers.isCallable(self.activeOption.setDisabled) then
-            self.activeOption:setDisabled(target == nil or target.key == nil)
+            -- Nur "alle Bereiche" laesst sich nicht abschalten. Das globale Ziel
+            -- schon - es IST der Schalter.
+            self.activeOption:setDisabled(target == nil
+                or (target.key == nil and not target.isGlobal))
         end
     end
 
@@ -1061,7 +1162,13 @@ function InGameMenuMiningLayersFrame:updateEditorSummary()
 
         local text
 
-        if key == nil then
+        -- ⚠️ Das globale Ziel hat key = nil UND isGlobal = true (:700). Bis 1.6 fiel es
+        -- deshalb in den defaultZone-Zweig und behauptete unten in Gelb das genaue
+        -- Gegenteil dessen, was es tut ("gilt fuer alle Bereiche ohne eigene Schichten").
+        -- isGlobal zuerst pruefen, sonst gewinnt der Schluessel-Zweig.
+        if target ~= nil and target.isGlobal then
+            text = MiningLayers.getText('ml_edScopeGlobal', '')
+        elseif key == nil then
             text = MiningLayers.getText('ml_edScope', '')
         else
             local template = MiningLayers.getText('ml_edScopeArea', '')
@@ -1340,7 +1447,7 @@ function InGameMenuMiningLayersFrame:onClickSaveLayers()
     end
 
     if #skipped > 0 then
-        MiningLayers.log('Editor: %d Schicht(en) nicht gespeichert, Material unbekannt: %s',
+        MiningLayers.log('Editor: %d layer(s) not saved, material unknown: %s',
             #skipped, table.concat(skipped, ', '))
     end
 
@@ -1361,13 +1468,13 @@ function InGameMenuMiningLayersFrame:onClickSaveLayers()
         local fallback = MiningLayers:getFallbackSeamMaterial()
 
         if fallback ~= nil then
-            MiningLayers.log('Editor: fillType "%s" kennt diese Karte nicht - Floez wird %s.',
+            MiningLayers.log('Editor: this map does not know fill type "%s" - the pay seam becomes %s.',
                 seamName, fallback)
 
             seamName = fallback
             seam = g_fillTypeManager:getFillTypeByName(seamName)
         else
-            MiningLayers.log('Editor: WARNUNG - diese Karte kennt kein einziges Nutzschicht-Material.')
+            MiningLayers.log('Editor: WARNING - this map knows not a single pay seam material.')
         end
     end
 
@@ -1397,19 +1504,48 @@ function InGameMenuMiningLayersFrame:onClickSaveLayers()
     local target = self.targets and self.targets[self.targetIndex] or nil
     local key = target ~= nil and target.key or nil
 
-    if key == nil then
+    if target ~= nil and target.isGlobal then
+        -- ★ Der Schalter. Zwei Dinge sind hier entscheidend:
+        -- 1. KEIN surfaceY. Die Vorlage trug frueher ein festes surfaceY="64.3" -
+        --    wer den Block von Hand einschaltete, legte damit die Schichten auf
+        --    eine Hoehe, die zu keiner Karte passt. Ohne den Wert holt sich der
+        --    Mod die Bezugshoehe pro Ort aus dem Raster.
+        -- 2. Ausgeschaltet MIT Schichten aufheben, nicht wegwerfen - sonst kostet
+        --    ein versehentliches Ausschalten die ganze Konfiguration.
+        if self.editActive then
+            MiningLayers.globalZone = {
+                kind = 'global',
+                enabled = true,
+                layers = layers,
+            }
+            MiningLayers.globalZoneOff = nil
+            MiningLayers.resolvedGlobal = MiningLayers:resolveZone(
+                MiningLayers.globalZone, nil, 'globalZone')
+        else
+            MiningLayers.globalZoneOff = {
+                kind = 'global',
+                disabled = true,
+                layers = layers,
+            }
+            MiningLayers.globalZone = nil
+            MiningLayers.resolvedGlobal = nil
+        end
+    elseif key == nil then
         MiningLayers.defaultZone = {
             kind = 'default',
             enabled = true,
             layers = layers,
         }
     elseif not self.editActive then
-        -- Bereich ausdruecklich ohne Schichten: dieselbe Marker-Zone, die auch
-        -- die Konfigurationsdatei kennt. Sie hat bewusst KEIN layers-Feld.
+        -- Bereich ausdruecklich ohne Schichten. Ausgeschaltet MIT Schichten aufheben,
+        -- genau wie beim globalen Ziel oben - sonst kostet ein Ausschalten die ganze
+        -- Konfiguration und der Nutzer bekommt beim Wiedereinschalten die Vorgabe.
+        -- Bis 1.5.0 stand hier eine Marker-Zone ohne layers-Feld.
         MiningLayers.zonesByKey[key] = {
             kind = 'area',
             area = target.label,
             disabled = true,
+            layers = layers,
         }
     else
         MiningLayers.zonesByKey[key] = {
@@ -1433,15 +1569,18 @@ function InGameMenuMiningLayersFrame:onClickSaveLayers()
     -- nichts darueber, ob und WOFUER je gespeichert wurde. Ohne diese Zeile ist "nicht
     -- gespeichert" von "falsches Ziel gewaehlt" nicht zu unterscheiden.
     local targetLabel
+    local isGlobal = target ~= nil and target.isGlobal or false
 
-    if key == nil then
-        targetLabel = 'defaultZone (gilt fuer alle Bereiche ohne eigene Schichten)'
+    if isGlobal then
+        targetLabel = 'globalZone (everywhere that no machine has an area)'
+    elseif key == nil then
+        targetLabel = 'defaultZone (applies to every area without its own layers)'
     else
         targetLabel = string.format('Bereich "%s"', tostring(target.label))
     end
 
-    if key ~= nil and not self.editActive then
-        MiningLayers.log('Schichten gespeichert fuer %s: ausgeschaltet.', targetLabel)
+    if (key ~= nil or isGlobal) and not self.editActive then
+        MiningLayers.log('Layers saved for %s: switched off.', targetLabel)
     else
         local names = {}
 
@@ -1449,7 +1588,7 @@ function InGameMenuMiningLayersFrame:onClickSaveLayers()
             table.insert(names, tostring(layer.fillTypeName))
         end
 
-        MiningLayers.log('Schichten gespeichert fuer %s: %s', targetLabel,
+        MiningLayers.log('Layers saved for %s: %s', targetLabel,
             #names > 0 and table.concat(names, ', ') or '(keine)')
     end
 
@@ -1458,7 +1597,11 @@ function InGameMenuMiningLayersFrame:onClickSaveLayers()
     if InfoDialog ~= nil and MiningLayers.isCallable(InfoDialog.show) then
         local message
 
-        if key == nil then
+        if isGlobal then
+            message = MiningLayers.getText(self.editActive and 'ml_edSavedGlobalOn' or 'ml_edSavedGlobalOff',
+                self.editActive and 'Layers now apply everywhere - no area needed.'
+                or 'Layers apply only inside drawn areas again.')
+        elseif key == nil then
             message = MiningLayers.getText('ml_edSaved', 'Layers saved.')
         elseif not self.editActive then
             local template = MiningLayers.getText('ml_edSavedOff', 'Layers are off for %s.')
@@ -1595,13 +1738,125 @@ function InGameMenuMiningLayersFrame:drawLayerGraph()
     setTextColor(1, 1, 1, 1)
 end
 
+---Malt einen Rahmen um eine Eintragsgruppe (siehe entry.frame in CONTENT).
+---
+---Gezeichnet statt eingebaut: der Kartenbericht steht erst zur Laufzeit fest, ein
+---Rahmen-Element im ScrollingLayout muesste seine Hoehe aber vorher kennen. Ueber
+---absPosition/absSize passt der Kasten immer, und er wandert beim Scrollen mit -
+---dieselbe Technik wie beim Schichten-Querschnitt.
+---@param name string
+function InGameMenuMiningLayersFrame:drawEntryFrame(name)
+    local group = self.frameGroups ~= nil and self.frameGroups[name] or nil
+
+    if group == nil or #group == 0 or not MiningLayers.isCallable(drawFilledRect) then
+        return
+    end
+
+    -- Ein Pixel in Bildschirmanteilen. Ohne die Globals bleibt der Rahmen weg,
+    -- statt mit geratenen Werten quer ueber die Seite zu laufen.
+    local pixelX = g_pixelSizeScaledX or g_pixelSizeX
+    local pixelY = g_pixelSizeScaledY or g_pixelSizeY
+
+    if type(pixelX) ~= 'number' or type(pixelY) ~= 'number' or pixelX <= 0 or pixelY <= 0 then
+        return
+    end
+
+    local left, right, top, bottom
+
+    for _, element in ipairs(group) do
+        local visible = true
+
+        if MiningLayers.isCallable(element.getIsVisible) then
+            visible = element:getIsVisible()
+        end
+
+        if visible and element.absPosition ~= nil and element.absSize ~= nil then
+            -- absPosition ist die LINKE UNTERE Ecke, absSize die Groesse.
+            local x, y = element.absPosition[1], element.absPosition[2]
+            local w, h = element.absSize[1], element.absSize[2]
+
+            left = (left == nil) and x or math.min(left, x)
+            bottom = (bottom == nil) and y or math.min(bottom, y)
+            right = (right == nil) and (x + w) or math.max(right, x + w)
+            top = (top == nil) and (y + h) or math.max(top, y + h)
+        end
+    end
+
+    if left == nil or right <= left or top <= bottom then
+        return
+    end
+
+    local padX = InGameMenuMiningLayersFrame.FRAME_PADDING * pixelX
+    local padY = InGameMenuMiningLayersFrame.FRAME_PADDING * pixelY
+
+    left = left - padX
+    right = right + padX
+    top = top + padY
+    bottom = bottom - padY
+
+    -- ⚠️ Am sichtbaren Bereich des Layouts abschneiden: der Bericht steht ganz
+    -- oben, beim Scrollen laeuft er unter die Reiterleiste. Ein ungeclippter
+    -- Rahmen wuerde dort weiterhin ueber der Leiste liegen.
+    local layout = self.contentLayout ~= nil
+        and self.contentLayout[InGameMenuMiningLayersFrame.QUICKSTART_PAGE] or nil
+    local drawTop, drawBottom = true, true
+
+    if layout ~= nil and layout.absPosition ~= nil and layout.absSize ~= nil then
+        local clipBottom = layout.absPosition[2]
+        local clipTop = clipBottom + layout.absSize[2]
+
+        if bottom >= clipTop or top <= clipBottom then
+            return
+        end
+
+        if top > clipTop then
+            top = clipTop
+            drawTop = false
+        end
+
+        if bottom < clipBottom then
+            bottom = clipBottom
+            drawBottom = false
+        end
+    end
+
+    local color = InGameMenuMiningLayersFrame.FRAME_COLOR
+    local edgeX = InGameMenuMiningLayersFrame.FRAME_EDGE * pixelX
+    local edgeY = InGameMenuMiningLayersFrame.FRAME_EDGE * pixelY
+    local width, height = right - left, top - bottom
+
+    if drawTop then
+        drawFilledRect(left, top - edgeY, width, edgeY, color[1], color[2], color[3], color[4])
+    end
+
+    if drawBottom then
+        drawFilledRect(left, bottom, width, edgeY, color[1], color[2], color[3], color[4])
+    end
+
+    drawFilledRect(left, bottom, edgeX, height, color[1], color[2], color[3], color[4])
+    drawFilledRect(right - edgeX, bottom, edgeX, height, color[1], color[2], color[3], color[4])
+end
+
 function InGameMenuMiningLayersFrame:draw()
     self:superClass().draw(self)
 
-    if self.subCategoryPaging ~= nil
-        and self.subCategoryPaging:getState() == InGameMenuMiningLayersFrame.EDITOR_PAGE then
+    if self.subCategoryPaging == nil then
+        return
+    end
+
+    local page = self.subCategoryPaging:getState()
+
+    if page == InGameMenuMiningLayersFrame.EDITOR_PAGE then
         MiningLayers.protectedCall('drawLayerGraph', function()
             self:drawLayerGraph()
         end)
+    end
+
+    for name, framePage in pairs(InGameMenuMiningLayersFrame.FRAME_PAGES) do
+        if page == framePage then
+            MiningLayers.protectedCall('drawEntryFrame', function()
+                self:drawEntryFrame(name)
+            end)
+        end
     end
 end

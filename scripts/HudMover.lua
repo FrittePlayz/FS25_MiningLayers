@@ -135,7 +135,7 @@ function MiningLayers.setHudMoveMode(on)
     if on then
         if not MiningLayers.hudMoveHintLogged then
             MiningLayers.hudMoveHintLogged = true
-            MiningLayers.log('HUD-Verschieben an: Linksklick greifen/ablegen, Rechtsklick Standardposition, Taste erneut = fertig.')
+            MiningLayers.log('Move display on: left-click to grab/drop, right-click for the default position, key again = done.')
         end
     else
         -- Beim Verlassen immer sichern - auch wenn die Box noch gegriffen war.
@@ -294,7 +294,7 @@ function MiningLayers.registerGlobalActionEvents()
 
     if not MiningLayers.globalRegisterLogged then
         MiningLayers.globalRegisterLogged = true
-        MiningLayers.log('Globale Tasten-Registrierung aktiv (Anzeige + HUD-Verschieben, HL-Muster).')
+        MiningLayers.log('Global key registration active (display + move display, HL pattern).')
     end
 end
 
@@ -312,5 +312,5 @@ if PlayerInputComponent ~= nil and Utils ~= nil
         end)
 else
     print((MiningLayers.LOG_PREFIX or '[MiningLayers] ')
-        .. 'WARNUNG: PlayerInputComponent nicht verfuegbar - Move-Taste laeuft nur ueber den Direkt-Fallback.')
+        .. 'WARNING: PlayerInputComponent not available - the move key runs through the direct fallback only.')
 end

@@ -2,7 +2,7 @@
 
 [![Buy me fries](https://img.shields.io/badge/Buy%20me%20fries-FFDD00?style=for-the-badge&logo=buymeacoffee&logoColor=black)](https://buymeacoffee.com/fritteplayz)
 [![Latest release](https://img.shields.io/github/v/release/FrittePlayz/FS25_MiningLayers?style=for-the-badge&color=2d8a4e)](https://github.com/FrittePlayz/FS25_MiningLayers/releases)
-[![Langues](https://img.shields.io/badge/en--jeu-FR%20·%20EN%20·%20DE%20·%20PL%20·%20IT-2d8a4e?style=for-the-badge)](#)
+[![Langues](https://img.shields.io/badge/en--jeu-FR%20·%20EN%20·%20DE%20·%20PL%20·%20IT%20·%20PT-2d8a4e?style=for-the-badge)](#)
 
 ![Mining Layers — le matériau dépend de la profondeur, un add-on TerraFarm](docs/images/00_header.jpg)
 
@@ -10,6 +10,14 @@
 Le matériau dans ton godet dépend de la profondeur, pas d'un menu déroulant : terre végétale d'abord, puis gravier, puis le filon, socle rocheux en bas. Depuis la 1.4.0 le filon est sélectionnable — mine de charbon, gravière ou carrière de calcaire, sur n'importe quelle carte, sans édition de carte. **Le mod et son manuel en jeu existent intégralement en français** (traduction automatique — corrections bienvenues !).
 
 🇬🇧 [English](README.md) · 🇩🇪 [Deutsch](README.de.md) · 🇵🇱 [Polski](README.pl.md) · 🇮🇹 [Italiano](README.it.md) — *page FR compacte ; la documentation détaillée vit dans la version anglaise, le manuel complet est en jeu, en français.*
+
+---
+
+## Tutoriel vidéo
+
+[![Mining Layers 1.6 — le tutoriel complet sur YouTube](docs/images/14_video_tutorial.jpg)](https://www.youtube.com/watch?v=kR0h1_S8oHc)
+
+29 minutes, de l'installation au dozer : les slots de terrain, la hauteur cible, le cas de l'eau — et creuser sans zone dessinée. Sous-titres en français, anglais, allemand, polonais, italien et portugais.
 
 ---
 
@@ -147,7 +155,7 @@ Non. Mining Layers est un mod script, et les mods script ne tournent que sur PC/
 
 #### 19. Quelles langues sont disponibles ?
 
-Français, anglais, allemand, polonais et italien — manuel en jeu complet inclus (italien par marcols13).
+Français, anglais, allemand, polonais, italien et portugais — manuel en jeu complet inclus (italien par marcols13, portugais par Alicopower).
 
 ## Traduction
 

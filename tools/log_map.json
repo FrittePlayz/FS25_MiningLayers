@@ -1,0 +1,42 @@
+{
+  "scripts/LayerHooks.lua": {
+    "Material im Bereich gesetzt (Handbetrieb) - der Bereich hat keine Schichten.": "a material is set on the area (manual mode) - the area has no layers.",
+    "Schichten fuer diesen Bereich abgeschaltet.": "layers are switched off for this area.",
+    "ueber der Bezugshoehe (Aufschuettung) - dort gilt kein gewachsener Boden.": "above the reference height (dumped material) - no grown ground applies there.",
+    "Pfad-Bereich - Schichten gibt es nur in Polygon-Bereichen.": "path area - layers only exist in polygon areas.",
+    "die Maschine hat KEINEN Eingabe-Bereich zugewiesen (Maschinen-Menue, Standard Y).": "the machine has NO input area assigned (machine menu, default Y).",
+    "Bezugshoehe noch nicht gesetzt - sie entsteht beim ersten Grabkontakt an dieser Stelle.": "reference height not set yet - it is created on the first bucket contact at this spot.",
+    "an dieser Stelle greift keine Schicht.": "no layer applies at this spot.",
+    "%s (Bereich umgangen, \"%s\"): Modus %s, angefragt %.0f l, abgelegt %.0f l": "%s (area bypassed, \"%s\"): mode %s, requested %.0f l, placed %.0f l",
+    "%s (kein Bypass): Modus %s, angefragt %.0f l, abgelegt %.0f l": "%s (no bypass): mode %s, requested %.0f l, placed %.0f l",
+    "nicht geprueft (steht nicht in der Schichten-Auswahl)": "not checked (it is not in the layer selection)",
+    "bereits als \"nur graben/verkaufen\" gemeldet": "already reported as dig-and-sell-only",
+    "als der Karte unbekannt gemeldet": "reported as unknown to the map"
+  },
+  "scripts/MiningLayersGui.lua": {
+    "kein Client (dedizierter Server)": "no client (dedicated server)",
+    "g_inGameMenu noch nicht aufgebaut": "g_inGameMenu not built yet",
+    "g_inGameMenu kann keine Seiten aufnehmen": "g_inGameMenu cannot take pages",
+    "TerraFarm-Texturkatalog noch nicht registriert": "TerraFarm texture catalogue not registered yet"
+  },
+  "scripts/SponsorSign.lua": {
+    "%s liess sich nicht laden - Feature bleibt aus.": "%s could not be loaded - the feature stays off.",
+    "Logo liess sich nicht setzen - Feature bleibt aus.": "the logo could not be set - the feature stays off.",
+    "Bereich %s liess sich nicht platzieren.": "area %s could not be placed."
+  },
+  "scripts/gui/InGameMenuMiningLayersFrame.lua": {
+    "globalZone (ueberall, wo keine Maschine einen Bereich hat)": "globalZone (everywhere that no machine has an area)",
+    "defaultZone (gilt fuer alle Bereiche ohne eigene Schichten)": "defaultZone (applies to every area without its own layers)"
+  },
+  "scripts/main.lua": {
+    "g_modIsLoaded nicht verfuegbar": "g_modIsLoaded not available",
+    "keine Mod-Umgebung mit g_modSettings und LandscapingInputFlatten": "no mod environment with g_modSettings and LandscapingInputFlatten",
+    "WARNUNG: TypeManager/Utils fehlen beim Laden - Anzeige-Taste bleibt aus.": "WARNING: TypeManager/Utils missing at load time - the display key stays off."
+  },
+  "scripts/HudMover.lua": {
+    "WARNUNG: PlayerInputComponent nicht verfuegbar - Move-Taste laeuft nur ueber den Direkt-Fallback.": "WARNING: PlayerInputComponent not available - the move key runs through the direct fallback only."
+  },
+  "scripts/LayerEditor.lua": {
+    "NEIN - nur fuer diese Sitzung": "NO - for this session only"
+  }
+}

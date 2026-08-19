@@ -4,7 +4,14 @@
         <text name="ml_decimalSeparator" text="." />
         <text name="ml_heightHere" text="Altezza qui" />
         <text name="ml_zone" text="Zona" />
+        <text name="ml_zoneEverywhere" text="Ovunque" />
         <text name="ml_layer" text="Strato" />
+        <text name="ml_targetHeight" text="Altezza target" />
+        <text name="ml_targetManual" text="impostata da te" />
+        <text name="ml_targetAuto" text="automatica" />
+        <text name="ml_targetCut" text="lo scavo finisce sopra lo strato più profondo (%s m) - abbassa l'altezza target nell'editor area" />
+        <text name="ml_digBlocked" text="la mappa blocca le modifiche del terreno in questo punto - non è la mod" />
+        <text name="ml_digNoEffect" text="scavare non sposta nulla qui - blocco della mappa o altezza target raggiunta" />
         <text name="ml_depth" text="Profondità" />
         <text name="ml_until" text="a" />
         <text name="ml_stillNeeded" text="altro" />
@@ -47,6 +54,7 @@
         <!-- ===================== Tab 4: layer editor ===================== -->
         <text name="ml_edSummarySection" text="Profilo risultante" />
         <text name="ml_edScope" text="Stai modificando lo standard: si applica a tutte le aree senza livelli propri, comprese quelle già disegnate. Per assegnare livelli propri a una singola fossa, seleziona semplicemente quell'area in 'Si applica a' sopra." />
+        <text name="ml_edScopeGlobal" text="Stai modificando i livelli per “Ovunque”: valgono su tutta la mappa, senza dover disegnare un'area. Un'area che hai assegnato a una macchina ha la precedenza — e dove nell'area è indicato un materiale, vale il normale TerraFarm." />
         <text name="ml_helpManEditor4" text="Standard ed eccezioni: ciò che salvi con 'Tutte le aree' è lo standard: si applica ad ogni area senza livelli propri, retroattivamente anche a quelli esistenti. Se una singola area deve essere diversa, selezionala sopra in 'Si applica a' e salva i suoi livelli direttamente nell'editor, senza bisogno di modificare i files." />
         <text name="ml_edTargetSection" text="Si applica a" />
         <text name="ml_edTarget" text="Area" />
@@ -120,8 +128,8 @@
         <text name="ml_helpManEditor2" text="Non è possibile selezionare PAYDIRT come strato di copertura: il materiale redditizio si trova sempre AL DI SOTTO dello strato di copertura. Come strato produttivo (ultima riga nell'editor) è possibile selezionare CARBONE, CALCARE, PIETRA, GHIAIA, SABBIA, TERRA o SUOLO, oltre a PAYDIRT: per cave di ghiaia e zone carbonifere. Il substrato roccioso sottostante rimane fisso." />
 
         <text name="ml_helpManFloorTitle" text="Il pavimento dello scavo" />
-        <text name="ml_helpManFloor1" text="La mod imposta automaticamente l'altezza target dell'area al fondo del tuo strato più profondo, quindi il livellamento non scava nel nulla. Ingrandisci l'area e il pavimento segue nella stessa sessione. Dopo aver ricaricato un salvataggio non lo fa più." />
-        <text name="ml_helpManFloor2" text="Questo è anche il motivo per cui non si può continuare a scavare all'infinito in riva al mare: al di sotto dello strato più profondo, lo scavo si interrompe. Senza un'area che definisca quel limite, l'altezza di riferimento diventa il livello del mare." />
+        <text name="ml_helpManFloor1" text="Finché non tocchi tu stesso l'altezza target di un'area, la mod la imposta automaticamente sotto il tuo strato più profondo - altrimenti lo scavo finisce dove l'editor l'ha lasciata durante il tracciamento: a livello del terreno. Se allarghi l'area, il fondo segue." />
+        <text name="ml_helpManFloor2" text="Se imposti tu l'altezza target (digitandola o con su/giù nell'editor area), da quel momento è tua: la mod non la tocca più. È così che livelli una piazzola, una berma o una rampa. Il display mostra cosa vale - &quot;impostata da te&quot; o &quot;automatica&quot;." />
 
         <text name="ml_helpManConfigTitle" text="Configurazione manuale" />
         <text name="ml_helpManConfig1" text="Tutto si trova in modSettings/FS25_MiningLayers/miningLayers.xml. Il file viene creato al primo avvio e rimane disponibile anche dopo gli aggiornamenti della mod. Prima che la procedura guidata salvi per la prima volta, la mod aggiunge un'estensione .bak accanto al file, una sola volta per sessione." />
@@ -161,15 +169,15 @@
         <!-- Ergaenzt fuer 1.5.0: Keys aus 1.4.3.0/1.5.0.0, die es zum Zeitpunkt
              der Spende noch nicht gab. -->
         <text name="ml_edPoolNoTipMark" text="(!) = non scaricabile su questa mappa. La mappa ha esaurito i posti a terra — scavare e vendere funzionano comunque." />
-        <text name="ml_mapResourceTakesOver" text="Decide TerraFarm: il materiale della mappa per questo punto - lo stesso a ogni profondità" />
+        <text name="ml_mapResourceTakesOver" text="Decide TerraFarm: il materiale della tua macchina - o quello della mappa, se le risorse della mappa sono attive" />
         <text name="ml_tip7" text="Quali materiali esistono lo decidono la tua mappa e la tua lista di mod — (!) significa: scavare sì, scaricare no" />
         <text name="ml_mapUsable" text="Utilizzabili su questa mappa: %s — puoi scavarli, trasportarli, venderli e riscaricarli a terra." />
         <text name="ml_edPoolNoTipHere" text="⚠ (!) %s non può essere scaricato a terra su QUESTA mappa. Scavare, trasportare e vendere funzionano normalmente. Su questa mappa non è rimasto alcun posto a terra per esso — dipende dalla mappa e dalla tua lista di mod, non da questa mod." />
-        <text name="ml_noInputArea" text="nessuna area di ingresso assegnata - assegna la tua area come ingresso nel menu della macchina (Y)" />
+        <text name="ml_noInputArea" text="nessuna area di ingresso assegnata - assegna la tua area come ingresso nel menu della macchina (Y), oppure attiva la destinazione “Ovunque” sotto Livelli nel menu" />
         <text name="ml_mapAdvice" text="Quanti materiali di terreno ci stanno lo decide la tua MAPPA: è lei a fissare la larghezza di canale, e il gioco base occupa già 48 posti. Quanti ne vengono occupati lo decide la tua LISTA DI MOD — il primo che si carica ottiene un posto. Quindi: meno mod libera posti, e una mappa costruita con più canali ne ha di più fin dall'inizio." />
         <text name="input_ML_HUD_MOVE" text="Mining Layers: sposta il display (cursore del mouse)" />
         <text name="ml_helpQsMap3" text="Due vie d'uscita se un materiale che ti serve porta un (!): togliere le mod che portano propri materiali di terreno, oppure giocare una mappa costruita con più canali. I 63 non sono una legge fissa del gioco — una mappa può essere costruita più larga, e alcune lo sono già. Quello che nessuna mod può fare è alzare il limite dall'esterno." />
-        <text name="ml_mapNoTipList" text="Solo scavare e vendere: %s. Riscaricarli a terra qui non funziona — non è rimasto loro alcun posto nel sistema del terreno." />
+        <text name="ml_mapNoTipList" text="Solo scavare e vendere: %s. Riscaricare a terra qui non funziona — nessun posto libero rimasto nel sistema del terreno." />
         <text name="ml_edPoolMissing" text="Non disponibili su questa mappa: %s. Né la mappa né le tue mod forniscono questi materiali, perciò non vengono proposti qui." />
         <text name="ml_edPoolHint" text="Regola pratica: meno mod = più posti liberi = più materiali che puoi scaricare." />
         <text name="ml_mapSection" text="Cosa può fare questa mappa" />
@@ -181,5 +189,12 @@
         <text name="ml_hudMoveHint" text="clic sinistro: prendi/rilascia - clic destro: posizione predefinita - premi di nuovo il tasto: fatto" />
         <text name="ml_helpQsMap1" text="Se un materiale esista e se tu possa riscaricarlo a terra non lo decide questa mod, ma la tua mappa insieme alla tua lista di mod. Dei materiali minerari il gioco base conosce solo STONE — DIRT, GRAVEL, SAND, COAL, LIMESTONE o PAYDIRT arrivano sempre da mappe o mod. In più ogni mappa ha un numero limitato di posti a terra: 48 li occupa già il gioco base, e quanti ce ne siano in tutto lo stabilisce la mappa stessa — molte ne hanno 63, quelle costruite più larghe di più. Quando una mappa li ha esauriti, un materiale puoi ancora scavarlo, trasportarlo e venderlo, ma non più scaricarlo." />
         <text name="ml_mapNoData" text="Il rapporto sulla mappa è disponibile una volta caricata la mappa." />
+        <text name="ml_edTargetGlobal" text="Ovunque (senza area disegnata)" />
+        <text name="ml_edSavedGlobalOn" text="Gli strati valgono ora ovunque, senza area disegnata. Un&apos;area assegnata a una macchina ha comunque la precedenza." />
+        <text name="ml_edSavedGlobalOff" text="Gli strati valgono solo nelle aree disegnate. La tua configurazione resta salvata." />
+        <text name="ml_slotReport" text="Posti nel terreno: %d materiali su %d hanno un tipo di terreno in questa installazione." />
+        <text name="ml_noSurfaceYet" text="Altezza di riferimento non ancora definita - viene presa al primo scavo in questo punto" />
+        <text name="ml_globalHint" text="Strati ovunque, senza area: scheda Strati, destinazione &quot;Ovunque&quot;, imposta su Mining Layers, salva." />
+        <text name="ml_slotMap" text="Questa mappa ha %d posti nel terreno (%d canali) — %d occupati." />
     </texts>
 </l10n>

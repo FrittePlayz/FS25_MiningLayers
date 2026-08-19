@@ -4,12 +4,19 @@
         <text name="ml_decimalSeparator" text="," />
         <text name="ml_heightHere" text="Wysokość tutaj" />
         <text name="ml_zone" text="Strefa" />
+        <text name="ml_zoneEverywhere" text="Wszędzie" />
         <text name="ml_layer" text="Warstwa" />
+        <text name="ml_targetHeight" text="Wysokość docelowa" />
+        <text name="ml_targetManual" text="ustawiona przez ciebie" />
+        <text name="ml_targetAuto" text="automatycznie" />
+        <text name="ml_targetCut" text="wykop kończy się nad najgłębszą warstwą (%s m) - obniż wysokość docelową w edytorze obszaru" />
+        <text name="ml_digBlocked" text="mapa blokuje zmiany terenu w tym miejscu - to nie mod cię zatrzymuje" />
+        <text name="ml_digNoEffect" text="kopanie nic tu nie przesuwa - blokada mapy albo osiągnięta wysokość docelowa" />
         <text name="ml_depth" text="Głębokość" />
         <text name="ml_until" text="do" />
         <text name="ml_stillNeeded" text="jeszcze" />
         <text name="ml_noLayers" text="brak warstw w tym miejscu" />
-        <text name="ml_mapResourceTakesOver" text="TerraFarm decyduje: materiał mapy w tym miejscu - taki sam na każdej głębokości" />
+        <text name="ml_mapResourceTakesOver" text="TerraFarm decyduje: materiał twojej maszyny - albo mapy, jeśli zasoby mapy są włączone" />
         <text name="ml_above" text="czyli" />
         <text name="ml_aboveRef" text="powyżej wysokości odniesienia" />
         <text name="ml_overrideHint" text="Materiał TerraFarm %s nie działa tutaj - decyduje warstwa" />
@@ -28,7 +35,7 @@
 
         <text name="input_ML_TOGGLE_HUD" text="Mining Layers: wskaźnik wł./wył." />
         <text name="input_ML_HUD_MOVE" text="Mining Layers: przesuń wskaźnik (kursor myszy)" />
-        <text name="ml_noInputArea" text="nie wybrano obszaru wejściowego - przypisz obszar jako wejście w menu maszyny (Y)" />
+        <text name="ml_noInputArea" text="nie wybrano obszaru wejściowego - przypisz obszar jako wejście w menu maszyny (Y) albo włącz cel „Wszędzie” w menu w sekcji Warstwy" />
         <text name="ml_hudMoveHint" text="LPM: chwyć/upuść - PPM: pozycja domyślna - klawisz ponownie: gotowe" />
         <text name="ml_hudMoveSample" text="przykładowy widok - w grze tutaj są informacje o warstwach" />
 
@@ -53,6 +60,7 @@
         <!-- ===================== Tab 4: layer editor ===================== -->
         <text name="ml_edSummarySection" text="Wynikowy profil" />
         <text name="ml_edScope" text="Edytujesz standard: obowiązuje dla wszystkich obszarów bez własnych warstw, także tych już narysowanych. Aby dać własne warstwy pojedynczemu wyrobisku, po prostu wybierz ten obszar powyżej pod Dotyczy." />
+        <text name="ml_edScopeGlobal" text="Edytujesz warstwy dla „Wszędzie”: obowiązują na całej mapie, bez rysowania obszaru. Obszar przypisany do maszyny ma pierwszeństwo — a tam, gdzie w obszarze wpisano materiał, działa normalny TerraFarm." />
         <text name="ml_helpManEditor4" text="Standard i wyjątki: to, co zapiszesz z Wszystkie obszary, jest standardem — obowiązuje dla każdego obszaru bez własnych warstw, wstecznie także dla istniejących. Jeśli jedno wyrobisko ma się różnić, wybierz je powyżej pod Dotyczy i zapisz jego warstwy — bezpośrednio w edytorze, bez grzebania w plikach." />
         <text name="ml_edTargetSection" text="Dotyczy" />
         <text name="ml_edTarget" text="Obszar" />
@@ -131,8 +139,8 @@
         <text name="ml_helpManEditor2" text="PAYDIRT nie może być nadkładem - materiał, który przynosi pieniądze, leży zawsze POD nadkładem. Jako pokład (ostatni wiersz edytora) możesz oprócz PAYDIRT wybrać COAL, LIMESTONE, STONE, GRAVEL, SAND, DIRT lub SOIL: dla żwirowni i zagłębia węglowego. Lita skała pod spodem pozostaje stała." />
 
         <text name="ml_helpManFloorTitle" text="Dno wyrobiska" />
-        <text name="ml_helpManFloor1" text="Mod automatycznie ustawia wysokość docelową obszaru na spód twojej najgłębszej warstwy, żeby niwelacja nie kopała w nicość. Powiększ obszar, a dno podąża w tej samej sesji. Po wczytaniu zapisu gry już nie." />
-        <text name="ml_helpManFloor2" text="Dlatego też nie możesz kopać w nieskończoność nad wodą: poniżej najgłębszej warstwy koniec. Bez obszaru tego limitu brakuje, a wysokością docelową staje się poziom morza." />
+        <text name="ml_helpManFloor1" text="Dopóki sam nie ruszysz wysokości docelowej obszaru, mod ustawia ją automatycznie pod twoją najgłębszą warstwą - inaczej wykop kończy się tam, gdzie zostawił ją edytor podczas rysowania: na poziomie terenu. Powiększ obszar, a dno podąży za nim." />
+        <text name="ml_helpManFloor2" text="Gdy ustawisz wysokość docelową sam (wpisując ją albo góra/dół w edytorze obszaru), od tej chwili należy do ciebie: mod już jej nie tknie. Tak niwelujesz plac, półkę lub rampę. Co obowiązuje, widać na wyświetlaczu - &quot;ustawiona przez ciebie&quot; albo &quot;automatycznie&quot;." />
 
         <text name="ml_helpManConfigTitle" text="Konfiguracja ręczna" />
         <text name="ml_helpManConfig1" text="Wszystko mieszka w modSettings/FS25_MiningLayers/miningLayers.xml. Plik powstaje przy pierwszym starcie i przeżywa aktualizacje moda. Zanim kreator zapisze po raz pierwszy, mod kładzie obok .bak, raz na sesję." />
@@ -176,10 +184,17 @@
         <text name="ml_mapSection" text="Co potrafi ta mapa" />
         <text name="ml_mapNoData" text="Raport mapy będzie dostępny po jej wczytaniu." />
         <text name="ml_mapUsable" text="Dostępne na tej mapie: %s — możesz je kopać, przewozić, sprzedawać i wysypywać z powrotem na ziemię." />
-        <text name="ml_mapNoTipList" text="Tylko kopanie i sprzedaż: %s. Wysypanie ich z powrotem na ziemię tu nie zadziała — zabrakło dla nich miejsca w systemie terenu." />
+        <text name="ml_mapNoTipList" text="Tylko kopanie i sprzedaż: %s. Wysypywanie z powrotem na ziemię tu nie działa — w systemie terenu nie ma już wolnych miejsc." />
         <text name="ml_mapMissingList" text="W ogóle nieobecne: %s. Ani mapa, ani mody ich nie dostarczają." />
         <text name="ml_mapAdvice" text="Ile materiałów terenu się zmieści, decyduje twoja MAPA: to ona ustala szerokość kanału, a podstawowa gra zajmuje już 48 miejsc. Ile z nich jest zajętych, decyduje twoja LISTA MODÓW — kto pierwszy się wczyta, dostaje miejsce. Czyli: mniej modów zwalnia miejsca, a mapa zbudowana z większą liczbą kanałów ma ich od początku więcej." />
         <text name="ml_mapManyOwn" text="Ta mapa sama wnosi bardzo dużo materiałów terenu, więc miejsca kończą się szybko. To typowe dla map przeniesionych z FS19 lub FS22." />
         <text name="ml_helpTipsAbout2" text="Ten mod jest na razie darmowy." />
+        <text name="ml_edTargetGlobal" text="Wszędzie (bez obszaru)" />
+        <text name="ml_edSavedGlobalOn" text="Warstwy obowiązują teraz wszędzie, bez narysowanego obszaru. Obszar przypisany do maszyny nadal ma pierwszeństwo." />
+        <text name="ml_edSavedGlobalOff" text="Warstwy obowiązują tylko w narysowanych obszarach. Twoja konfiguracja zostaje zachowana." />
+        <text name="ml_slotReport" text="Miejsca gruntowe: %d z %d materiałów w tej instalacji ma typ terenu." />
+        <text name="ml_noSurfaceYet" text="Wysokość odniesienia jeszcze nieustalona - powstaje przy pierwszym kopaniu w tym miejscu" />
+        <text name="ml_globalHint" text="Warstwy wszędzie, bez obszaru: zakładka Warstwy, cel &quot;Wszędzie&quot;, przełącz na Mining Layers, zapisz." />
+        <text name="ml_slotMap" text="Ta mapa ma %d miejsc gruntowych (%d kanałów) — %d zajętych." />
     </texts>
 </l10n>

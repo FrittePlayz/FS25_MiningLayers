@@ -95,15 +95,15 @@ function MiningLayers:buildMaterialPool()
 
     self.materialPool = pool
 
-    MiningLayers.log('Material-Pool dieser Karte: %d nutzbar, %d ohne Abkippen, %d fehlen.',
+    MiningLayers.log('Material pool of this map: %d usable, %d not dumpable, %d missing.',
         #pool.ok, #pool.noTip, #pool.missing)
 
     if #pool.noTip > 0 then
-        MiningLayers.log('  Nur graben/verkaufen (kein Gelaende-Typ): %s', table.concat(pool.noTip, ', '))
+        MiningLayers.log('  Dig and sell only (no terrain type): %s', table.concat(pool.noTip, ', '))
     end
 
     if #pool.missing > 0 then
-        MiningLayers.log('  Kennt diese Karte nicht: %s', table.concat(pool.missing, ', '))
+        MiningLayers.log('  This map does not know: %s', table.concat(pool.missing, ', '))
     end
 
     return pool
@@ -232,21 +232,21 @@ function MiningLayers:buildMapReport(checkedCount, blockedCount)
         missingCount = #pool.missing,
     }
 
-    MiningLayers.log('Kartenbericht: %d von %d Bergbau-Materialien ohne Gelaende-Typ; Schichten-Materialien %d nutzbar / %d nur graben / %d fehlen.',
+    MiningLayers.log('Map report: %d of %d mining materials without a terrain type; layer materials %d usable / %d dig-only / %d missing.',
         blockedCount, checkedCount, #pool.ok, #pool.noTip, #pool.missing)
 
     -- Im LOG darf es deutlich stehen - hier liest niemand zufaellig mit.
     if rating == MiningLayers.MAP_RATING_GOOD and #pool.missing > 0 then
-        MiningLayers.log('  -> Kein Platzproblem: alles, was diese Karte kennt, laesst sich auch abkippen.')
-        MiningLayers.log('     Fehlend ist nur, was weder Karte noch Mods liefern (%s) - das hat mit den Bodenplaetzen nichts zu tun.',
+        MiningLayers.log('  -> No slot problem: everything this map knows can be dumped as well.')
+        MiningLayers.log('     Missing is only what neither the map nor the mods provide (%s) - that has nothing to do with ground slots.',
             table.concat(pool.missing, ', '))
     elseif rating == MiningLayers.MAP_RATING_GOOD then
-        MiningLayers.log('  -> Voll geeignet: alle Schicht-Materialien lassen sich hier auch abkippen.')
+        MiningLayers.log('  -> Fully suitable: every layer material can be dumped here as well.')
     elseif rating == MiningLayers.MAP_RATING_LIMITED then
-        MiningLayers.log('  -> Eingeschraenkt: Karte und Mods zusammen wollen mehr Bodenmaterialien, als diese Karte Plaetze hat (48 davon belegt das Basisspiel).')
+        MiningLayers.log('  -> Limited: map and mods together want more ground materials than this map has slots (48 of them taken by the base game).')
     else
-        MiningLayers.log('  -> Deutlich eingeschraenkt: diese Karte bringt sehr viele eigene Bodenmaterialien mit.')
-        MiningLayers.log('     Typisch fuer Portierungen aus FS19/FS22. Weniger Mods macht Plaetze frei - eine breiter gebaute Karte hat von vornherein mehr.')
+        MiningLayers.log('  -> Severely limited: this map brings a great many ground materials of its own.')
+        MiningLayers.log('     Typical for maps carried over from FS19/FS22. Fewer mods frees slots - a map built with more channels has more to begin with.')
     end
 end
 
@@ -267,6 +267,33 @@ function MiningLayers:getMapReportText()
     local usable = MiningLayers.getText('ml_mapUsable', '')
     local okU, usableText = pcall(string.format, usable, table.concat(pool.ok, ', '))
     table.insert(lines, okU and usableText or usable)
+
+    -- Die Slot-Zeile gehoert in BEIDE Pfade, auch in den kurzen: auf einer guten
+    -- Karte ist die Zahl kein Problembericht, sondern die interessanteste
+    -- Auskunft der Seite.
+    local slots = self.slotReport
+
+    if slots ~= nil and slots.fillTypeCount ~= nil then
+        local t = MiningLayers.getText('ml_slotReport', '')
+        local okS, text = pcall(string.format, t, slots.withHeightType, slots.fillTypeCount)
+        table.insert(lines, okS and text or t)
+
+        -- ⚠️ Die zweite Decke (255 Fill-Types) steht hier NICHT mehr. Die Formel
+        -- aus der Community-LUADOC (2^SEND_NUM_BITS - 1) ergibt auf Tommys
+        -- Installation 1023, waehrend die Engine auf Oreos Server woertlich
+        -- "Only 255 fill types are supported" gemeldet hat - und Tommy hat 328.
+        -- Zwei Messungen, die sich widersprechen, also behaupten wir nichts.
+        -- Was messbar IST, sind die Bodenplaetze dieser Karte:
+        if slots.mapSlots ~= nil then
+            local c = MiningLayers.getText('ml_slotMap', '')
+            -- ⚠️ Reihenfolge muss zum Text passen: Plaetze, Kanaele, belegt.
+            -- Lua kennt KEINE Positionsargumente (%1$d) - die Uebersetzungen
+            -- muessen dieselbe Reihenfolge einhalten.
+            local okC, ctext = pcall(string.format, c, slots.mapSlots,
+                slots.mapChannels or 0, slots.slotsUsed or 0)
+            table.insert(lines, okC and ctext or c)
+        end
+    end
 
     -- Ist alles in Ordnung, bleibt es bei dieser einen Zeile. Kein Kasten,
     -- keine Belehrung.
@@ -310,7 +337,7 @@ function MiningLayers:runMaterialCheck()
     local modSettings = MiningLayers.tf('g_modSettings')
 
     if type(modSettings) ~= 'table' or type(modSettings.materials) ~= 'table' then
-        MiningLayers.log('Materialcheck: TerraFarms Materialliste nicht lesbar - uebersprungen.')
+        MiningLayers.log('Material check: the TerraFarm material list is not readable - skipped.')
         return
     end
 
@@ -337,23 +364,110 @@ function MiningLayers:runMaterialCheck()
     end
 
     if undetermined then
-        MiningLayers.log('Materialcheck: Pruefung auf dieser Spielfassung nicht moeglich - uebersprungen.')
+        MiningLayers.log('Material check: not possible on this game version - skipped.')
         return
     end
 
-    MiningLayers.log('Materialcheck: %d Materialien geprueft, %d ohne Gelaende-Typ.', checked, #blocked)
+    MiningLayers.log('Material check: %d materials checked, %d without a terrain type.', checked, #blocked)
 
     if #blocked > 0 then
-        MiningLayers.log('  Diese lassen sich auf dieser Karte NICHT auf den Boden ablegen:')
+        MiningLayers.log('  These CANNOT be placed on the ground on this map:')
         MiningLayers.log('  %s', table.concat(blocked, ', '))
-        MiningLayers.log('  Sie funktionieren weiterhin in Anhaenger, Silo und Brecher.')
-        MiningLayers.log('  Ursache: dieser Karte sind die Plaetze fuer Gelaende-Materialien ausgegangen.')
-        MiningLayers.log('  Pruefen mit: grep addDensityMapHeightType log.txt')
+        MiningLayers.log('  They still work in trailers, silos and crushers.')
+        MiningLayers.log('  Cause: this map has run out of slots for terrain materials.')
+        MiningLayers.log('  Check with: grep addDensityMapHeightType log.txt')
     end
 
+    self:buildSlotReport()
     self:checkConfiguredMaterials(blocked)
     self:buildMapReport(checked, #blocked)
 end
+
+---Zaehlt zur Laufzeit, was DIESE Installation an Materialien und Bodenplaetzen hat.
+---
+---Der Unterschied zum Materialcheck darueber, damit sich die beiden Zahlen im Log
+---nicht zu widersprechen scheinen:
+---  Materialcheck  redet ueber die BERGBAU-Materialien (eine feste Liste)
+---  Slot-Bericht   redet ueber die ganze INSTALLATION (alle Fill-Types)
+---Beide zaehlen ausserdem verschieden: hier zaehlt nur ein hartes `true`, ein
+---"nicht feststellbar" faellt raus. buildMaterialPool behandelt genau das als
+---nutzbar, weil eine leere Auswahl schlimmer waere als eine fehlende Warnung.
+---
+---Die Platzzahl der Karte wird NICHT gerechnet, sondern aus dem Manager gelesen
+---(`numHeightTypes`, `heightTypeNumChannels`) - am 15.08. gemessen. Die frueher
+---geplante Formel `2 ^ SEND_NUM_BITS - 1` fuer die Fill-Type-Decke ist raus: sie
+---ergab 1023, die Engine meldete auf einem anderen Rechner 255, und diese
+---Installation hat 328. Widerspruechliche Messungen behauptet der Mod nicht.
+function MiningLayers:buildSlotReport()
+    self.slotReport = nil
+
+    if g_fillTypeManager == nil or type(g_fillTypeManager.fillTypes) ~= 'table' then
+        MiningLayers.log('Ground slots: fill type list not readable - skipped.')
+        return
+    end
+
+    local report = { withHeightType = 0 }
+
+    report.fillTypeCount = #g_fillTypeManager.fillTypes
+
+    -- ★ Gemessen am 15.08. auf zwei Karten, nicht abgeschrieben. Der Manager traegt
+    -- die Kanalbreite der KARTE selbst: `heightTypeNumChannels`.
+    --
+    -- ⚠️ `numHeightTypes` ist NICHT die Kapazitaet, sondern die Zahl der BELEGTEN
+    -- Plaetze - der Name legt das Gegenteil nahe. Auf einer randvollen 6-Bit-Karte
+    -- fallen beide Zahlen zusammen (63 = 63) und die Verwechslung faellt nicht auf;
+    -- auf Keno City (7 Kanaele) stehen 83 belegte gegen 127 moegliche. Waere die
+    -- Annahme durchgerutscht, haette der Mod dort "voll" gemeldet - ausgerechnet
+    -- auf der Karte mit dem meisten Platz.
+    --
+    -- Kapazitaet also aus der Kanalbreite: 2^n - 1. Fuer 6 Bit ist die 63 durch die
+    -- Engine-Fehlermeldung selbst belegt ("maximum number (63) of height types");
+    -- fuer 7 Bit ist die 127 gerechnet, passt aber zu den 83 belegten ohne eine
+    -- einzige Ablehnung.
+    local manager = g_densityMapHeightManager
+
+    if manager ~= nil then
+        if type(manager.heightTypeNumChannels) == 'number' then
+            report.mapChannels = manager.heightTypeNumChannels
+            report.mapSlots = 2 ^ report.mapChannels - 1
+        end
+
+        if type(manager.numHeightTypes) == 'number' then
+            report.slotsUsed = manager.numHeightTypes
+        elseif type(manager.heightTypes) == 'table' then
+            report.slotsUsed = #manager.heightTypes
+        end
+    end
+
+    for index = 1, report.fillTypeCount do
+        if self:getIsFillTypeTippable(index) == true then
+            report.withHeightType = report.withHeightType + 1
+        end
+    end
+
+    -- Voll heisst voll: ab hier lehnt die Engine jedes weitere Material ab, und
+    -- genau das war Oreos GRAVEL-Fall.
+    report.slotsFull = report.mapSlots ~= nil and report.slotsUsed ~= nil
+        and report.slotsUsed >= report.mapSlots
+
+    self.slotReport = report
+
+    MiningLayers.log('Ground slots: %d of %d materials on this installation have a terrain type.',
+        report.withHeightType, report.fillTypeCount)
+
+    if report.mapSlots ~= nil then
+        MiningLayers.log('  This map has %d slots (%d channels) - %s in use.',
+            report.mapSlots, report.mapChannels or 0,
+            report.slotsUsed ~= nil and tostring(report.slotsUsed) or '?')
+
+        if report.slotsFull then
+            MiningLayers.log('  They are full. Further materials get no slot at all:')
+            MiningLayers.log('  digging and selling works, dumping does not. Fewer mods with their own')
+            MiningLayers.log('  ground materials frees slots, a map built with more channels has more.')
+        end
+    end
+end
+
 
 ---Warnt, wenn ein Schichtmaterial gar nicht abgelegt werden kann. Sonst sitzt man
 ---mit vollem Loeffel da und wird ihn nirgends los.
@@ -379,7 +493,7 @@ function MiningLayers:checkConfiguredMaterials(blocked)
 
         for _, layer in ipairs(zone.layers) do
             if isBlocked[layer.fillTypeName] then
-                MiningLayers.log('WARNUNG %s: Schichtmaterial "%s" laesst sich nicht ablegen.',
+                MiningLayers.log('WARNING %s: layer material "%s" cannot be placed on the ground.',
                     label, layer.fillTypeName)
             end
         end

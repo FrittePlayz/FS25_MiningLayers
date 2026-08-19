@@ -168,7 +168,7 @@ function MiningLayers:ensureGuiButton()
     end
 
     self.guiButtonInstalled = true
-    MiningLayers.log('Schichten-Editor eingehaengt: Knopf "Schichten" im TerraFarm-Maschinen-Menue.')
+    MiningLayers.log('Layer editor hooked in: button "Layers" in the TerraFarm machine menu.')
 end
 
 --------------------------------------------------------------------------------
@@ -182,7 +182,7 @@ function MiningLayers:startLayerWizard()
 
     if type(selectDialog) ~= 'table' or type(numberDialog) ~= 'table'
         or YesNoDialog == nil or not MiningLayers.isCallable(YesNoDialog.show) then
-        MiningLayers.log('Schichten-Editor: Dialoge nicht verfuegbar - Abbruch.')
+        MiningLayers.log('Layer editor: dialogs not available - aborting.')
         return
     end
 
@@ -493,7 +493,7 @@ function MiningLayers:finishLayerWizard()
         local fallback = MiningLayers:getFallbackSeamMaterial()
 
         if fallback ~= nil then
-            MiningLayers.log('Schichten-Editor: fillType "%s" kennt diese Karte nicht - Floez wird %s.',
+            MiningLayers.log('Layer editor: this map does not know fill type "%s" - the pay seam becomes %s.',
                 seamName, fallback)
 
             seamName = fallback
@@ -541,8 +541,8 @@ function MiningLayers:finishLayerWizard()
 
     local summary = self:describeZone(zone)
 
-    MiningLayers.log('Schichten-Editor: neue Standard-Schichten: %s (gespeichert: %s)',
-        summary, ok and 'ja' or 'NEIN - nur fuer diese Sitzung')
+    MiningLayers.log('Layer editor: new default layers: %s (saved: %s)',
+        summary, ok and 'yes' or 'NO - for this session only')
 
     if InfoDialog ~= nil and MiningLayers.isCallable(InfoDialog.show) then
         InfoDialog.show(string.format(
@@ -615,7 +615,16 @@ local function writeZone(xmlId, zoneKey, zone)
 
     if zone.disabled then
         setXMLString(xmlId, zoneKey .. '#enabled', 'false')
-        return
+
+        -- Abgeschaltet, aber MIT Schichten: sie werden mitgeschrieben, damit der
+        -- Schalter sie unveraendert wieder einschalten kann. Gilt seit 1.6 fuer
+        -- benannte Bereiche genauso wie fuer die globalZone - vorher verlor der
+        -- Nutzer beim Ausschalten eines Bereichs seine Konfiguration.
+        -- Nur der Alt-Marker aus 1.5.0 (<zone area="..." enabled="false"/>, keine
+        -- Schichten im Speicher) endet hier.
+        if type(zone.layers) ~= 'table' or #zone.layers == 0 then
+            return
+        end
     end
 
     if zone.surfaceY ~= nil then
@@ -674,6 +683,13 @@ function MiningLayers:saveConfigFile()
     setXMLString(xmlId, 'miningLayers#checkMaterials', bool(self.checkMaterials))
     setXMLString(xmlId, 'miningLayers#matchOutputTexture', bool(self.matchOutputTexture))
     setXMLString(xmlId, 'miningLayers#autoTargetHeight', bool(self.autoTargetHeight))
+    -- Marke der einmaligen 1.6-Korrektur (siehe loadConfig): ohne sie wuerde der
+    -- Schalter bei jedem Start erneut auf false gezogen, auch wenn ihn jemand
+    -- bewusst eingeschaltet hat.
+    setXMLString(xmlId, 'miningLayers#autoTargetHeightReviewed', bool(self.autoTargetHeightReviewed))
+    -- Marke der 1.6.1-Rueckkehr: ohne sie wuerde die Automatik bei jedem Start erneut
+    -- eingeschaltet, auch wenn sie jemand bewusst abgeschaltet hat.
+    setXMLString(xmlId, 'miningLayers#autoTargetHeightRestored', bool(self.autoTargetHeightRestored))
     setXMLString(xmlId, 'miningLayers#showDepthLines', bool(self.showDepthLines))
     setXMLString(xmlId, 'miningLayers#syncVehicleMaterial', bool(self.syncVehicleMaterial))
     setXMLString(xmlId, 'miningLayers#freeDumpHeight', bool(self.freeDumpHeight))
@@ -697,8 +713,14 @@ function MiningLayers:saveConfigFile()
         i = i + 1
     end
 
-    if self.globalZone ~= nil then
-        writeZone(xmlId, 'miningLayers.globalZone', self.globalZone)
+    -- ⚠️ Auch die ABGESCHALTETE globalZone gehoert hierher. Bis 1.5.0 lag sie gar
+    -- nicht im Speicher (loadConfig verwarf sie), also verschwand sie beim ersten
+    -- Speichern still aus der Datei - der Nutzer hatte den Block danach nicht mehr,
+    -- ohne dass ihm jemand etwas gesagt haette.
+    local globalZone = self.globalZone or self.globalZoneOff
+
+    if globalZone ~= nil then
+        writeZone(xmlId, 'miningLayers.globalZone', globalZone)
         written['global'] = true
     end
 
@@ -729,5 +751,5 @@ function MiningLayers:saveConfigFile()
     saveXMLFile(xmlId)
     delete(xmlId)
 
-    MiningLayers.log('Konfiguration gespeichert: %s', path)
+    MiningLayers.log('Configuration saved: %s', path)
 end

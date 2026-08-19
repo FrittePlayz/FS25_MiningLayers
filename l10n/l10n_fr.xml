@@ -4,12 +4,19 @@
         <text name="ml_decimalSeparator" text="," />
         <text name="ml_heightHere" text="Hauteur ici" />
         <text name="ml_zone" text="Zone" />
+        <text name="ml_zoneEverywhere" text="Partout" />
         <text name="ml_layer" text="Couche" />
+        <text name="ml_targetHeight" text="Hauteur cible" />
+        <text name="ml_targetManual" text="par toi" />
+        <text name="ml_targetAuto" text="automatique" />
+        <text name="ml_targetCut" text="la fosse se termine au-dessus de la couche la plus profonde (%s m) - abaisse la hauteur cible dans l'éditeur de zone" />
+        <text name="ml_digBlocked" text="la carte bloque les modifications du terrain à cet endroit - ce n'est pas le mod" />
+        <text name="ml_digNoEffect" text="creuser ne déplace rien ici - blocage de la carte ou hauteur cible atteinte" />
         <text name="ml_depth" text="Profondeur" />
         <text name="ml_until" text="à" />
         <text name="ml_stillNeeded" text="encore" />
         <text name="ml_noLayers" text="pas de couches à cet endroit" />
-        <text name="ml_mapResourceTakesOver" text="TerraFarm décide : le matériau de la carte à cet endroit - identique à toute profondeur" />
+        <text name="ml_mapResourceTakesOver" text="TerraFarm décide : le matériau de ta machine - ou celui de la carte, si les ressources de la carte sont activées" />
         <text name="ml_above" text="soit" />
         <text name="ml_aboveRef" text="au-dessus de la hauteur de référence" />
         <text name="ml_overrideHint" text="Le matériau TerraFarm %s est sans effet ici - la couche décide" />
@@ -28,7 +35,7 @@
 
         <text name="input_ML_TOGGLE_HUD" text="Mining Layers : affichage act./désact." />
         <text name="input_ML_HUD_MOVE" text="Mining Layers : déplacer l'affichage (curseur souris)" />
-        <text name="ml_noInputArea" text="aucune zone d'entrée choisie - assigne la zone comme entrée dans le menu machine (Y)" />
+        <text name="ml_noInputArea" text="aucune zone d'entrée choisie - assigne la zone comme entrée dans le menu machine (Y), ou active la cible « Partout » sous Couches dans le menu" />
         <text name="ml_hudMoveHint" text="clic gauche : saisir/déposer - clic droit : position par défaut - touche à nouveau : terminé" />
         <text name="ml_hudMoveSample" text="affichage d'exemple - en jeu, les infos de couches s'affichent ici" />
 
@@ -53,6 +60,7 @@
         <!-- ===================== Tab 4: layer editor ===================== -->
         <text name="ml_edSummarySection" text="Profil obtenu" />
         <text name="ml_edScope" text="Tu édites le standard : il s'applique à toutes les zones sans couches propres, y compris celles déjà tracées. Pour donner ses propres couches à une seule fosse, choisis simplement cette zone sous S'applique à ci-dessus." />
+        <text name="ml_edScopeGlobal" text="Tu édites les couches pour « Partout » : elles s'appliquent sur toute la carte, sans avoir à tracer de zone. Une zone que tu as assignée à une machine est prioritaire — et là où un matériau est indiqué dans la zone, c'est TerraFarm normal qui s'applique." />
         <text name="ml_helpManEditor4" text="Standard et exceptions : ce que tu sauvegardes avec Toutes les zones est le standard — il s'applique à toute zone sans couches propres, rétroactivement aussi aux zones existantes. Si une seule fosse doit différer, choisis-la sous S'applique à et sauvegarde ses couches — directement dans l'éditeur, sans toucher aux fichiers." />
         <text name="ml_edTargetSection" text="S'applique à" />
         <text name="ml_edTarget" text="Zone" />
@@ -131,8 +139,8 @@
         <text name="ml_helpManEditor2" text="Tu ne peux pas mettre PAYDIRT dans les morts-terrains - le matériau qui rapporte se trouve toujours SOUS les morts-terrains. Comme filon (dernière ligne de l'éditeur) tu peux choisir COAL, LIMESTONE, STONE, GRAVEL, SAND, DIRT ou SOIL en plus de PAYDIRT : pour les gravières et le pays du charbon. Le socle rocheux en dessous reste fixe." />
 
         <text name="ml_helpManFloorTitle" text="Le fond de fosse" />
-        <text name="ml_helpManFloor1" text="Le mod règle automatiquement la hauteur cible de la zone au bas de ta couche la plus profonde, pour que le nivellement ne creuse pas dans le vide. Agrandis la zone et le fond suit dans la même session. Après rechargement d'une sauvegarde, il ne suit plus." />
-        <text name="ml_helpManFloor2" text="C'est aussi pourquoi tu ne peux pas creuser sans fin au bord de l'eau : sous la couche la plus profonde, ça s'arrête. Sans zone cette limite manque, et la hauteur cible devient le niveau de la mer." />
+        <text name="ml_helpManFloor1" text="Tant que tu ne touches pas toi-même à la hauteur cible d'une zone, le mod la place automatiquement sous ta couche la plus profonde - sinon la fosse s'arrête là où l'éditeur l'a posée pendant le tracé : au niveau du sol. Agrandis la zone et le fond suit." />
+        <text name="ml_helpManFloor2" text="Si tu règles la hauteur cible toi-même (saisie ou haut/bas dans l'éditeur de zone), elle t'appartient : le mod n'y touche plus jamais. C'est ainsi que tu nivelles une plateforme, une banquette ou une rampe. L'affichage indique ce qui s'applique - &quot;par toi&quot; ou &quot;automatique&quot;." />
 
         <text name="ml_helpManConfigTitle" text="Configurer à la main" />
         <text name="ml_helpManConfig1" text="Tout vit dans modSettings/FS25_MiningLayers/miningLayers.xml. Le fichier est créé au premier démarrage et survit aux mises à jour du mod. Avant la première sauvegarde de l'assistant, le mod pose un .bak à côté, une fois par session." />
@@ -176,10 +184,17 @@
         <text name="ml_mapSection" text="Ce que cette carte permet" />
         <text name="ml_mapNoData" text="Le rapport de carte est disponible une fois la carte chargée." />
         <text name="ml_mapUsable" text="Utilisables sur cette carte : %s — vous pouvez les creuser, transporter, vendre et redéverser au sol." />
-        <text name="ml_mapNoTipList" text="Creuser et vendre uniquement : %s. Les redéverser au sol ne fonctionne pas ici — il ne restait plus de place dans le système de terrain." />
+        <text name="ml_mapNoTipList" text="Creuser et vendre uniquement : %s. Redéverser au sol ne fonctionne pas ici — plus aucune place libre dans le système de terrain." />
         <text name="ml_mapMissingList" text="Totalement absents : %s. Ni la carte ni vos mods ne les fournissent." />
         <text name="ml_mapAdvice" text="Combien de matériaux de sol peuvent tenir, c'est votre CARTE qui le décide : elle fixe la largeur de canal, et le jeu de base occupe déjà 48 places. Combien sont occupées, c'est votre LISTE DE MODS — le premier chargé obtient une place. Donc : moins de mods libère des places, et une carte construite avec plus de canaux en a davantage dès le départ." />
         <text name="ml_mapManyOwn" text="Cette carte apporte elle-même un grand nombre de matériaux de sol, les places partent donc très vite. C'est typique des cartes reprises de FS19 ou FS22." />
         <text name="ml_helpTipsAbout2" text="Ce mod est gratuit jusqu'ici." />
+        <text name="ml_edTargetGlobal" text="Partout (sans zone dessinée)" />
+        <text name="ml_edSavedGlobalOn" text="Les couches s&apos;appliquent désormais partout, sans zone dessinée. Une zone attribuée à une machine reste prioritaire." />
+        <text name="ml_edSavedGlobalOff" text="Les couches ne s&apos;appliquent que dans les zones dessinées. Votre configuration est conservée." />
+        <text name="ml_slotReport" text="Emplacements de sol : %d matériaux sur %d disposent d&apos;un type de terrain sur cette installation." />
+        <text name="ml_noSurfaceYet" text="Hauteur de référence pas encore définie - elle est prise au premier creusement ici" />
+        <text name="ml_globalHint" text="Couches partout, sans zone : onglet Couches, cible &quot;Partout&quot;, passer sur Mining Layers, enregistrer." />
+        <text name="ml_slotMap" text="Cette carte dispose de %d emplacements de sol (%d canaux) — %d utilisés." />
     </texts>
 </l10n>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <modDesc descVersion="97">
     <author>Tommy Honold - Farmersingles.de - FrittePlayz</author>
-    <version>1.5.0.0</version>
+    <version>1.6.0.0</version>
 
     <title>
         <en>Mining Layers</en>
@@ -9,6 +9,8 @@
         <fr>Mining Layers</fr>
         <pl>Mining Layers</pl>
         <it>Mining Layers</it>
+        <pt>Mining Layers</pt>
+        <br>Mining Layers</br>
     </title>
 
     <description>
@@ -114,6 +116,50 @@ Traduzione italiana: marcols13.
 
 Impostazioni: modSettings/FS25_MiningLayers/miningLayers.xml]]>
         </it>
+        <pt>
+            <![CDATA[PARA TERRAFARM E MAPAS DE MINERAÇÃO (Yukon Back Country e outros mapas RGC).
+Addon não oficial para TerraFarm por scfmod.
+
+No FS25 padrão você escolhe o material manualmente, não importa a profundidade. Este addon adiciona camadas ao solo: camada superficial primeiro, depois cascalho e paydirt mais abaixo. As profundidades são definidas em metros abaixo da superfície, por área do TerraFarm.
+
+Configuração em um passo: desenhe uma área do TerraFarm ao redor da mina. A altura de referência é obtida automaticamente do contorno da área — nada para ler, nada para digitar. Funciona em qualquer mapa, sem necessidade de edição.
+
+Também inclui:
+- Memória de pilhas: você recolhe o que despejou — SEM limite de pilhas (o material vira terreno real, não uma pilha do jogo base)
+- Exibição de altura e profundidade com máquina ativa (Numpad / alterna ativado/desativado, reconfigurável nas opções)
+- Verificação na inicialização que relata materiais que não podem ser despejados no mapa (mapa sem slots de solo)
+
+Requer TerraFarm por scfmod: github.com/scfmod/FS25_TerraFarm
+Sem afiliação com scfmod. Nenhum arquivo do TerraFarm é enviado com este mod.
+
+Mining Layers por Tommy Honold, Farmersingles.de. Um projeto FrittePlayz (YouTube).
+
+Tradução para o português: Alicopower.
+
+Configurações: modSettings/FS25_MiningLayers/miningLayers.xml]]>
+        </pt>
+        <br>
+            <![CDATA[PARA TERRAFARM E MAPAS DE MINERAÇÃO (Yukon Back Country e outros mapas RGC).
+Addon não oficial para TerraFarm por scfmod.
+
+No FS25 padrão você escolhe o material manualmente, não importa a profundidade. Este addon adiciona camadas ao solo: camada superficial primeiro, depois cascalho e paydirt mais abaixo. As profundidades são definidas em metros abaixo da superfície, por área do TerraFarm.
+
+Configuração em um passo: desenhe uma área do TerraFarm ao redor da mina. A altura de referência é obtida automaticamente do contorno da área — nada para ler, nada para digitar. Funciona em qualquer mapa, sem necessidade de edição.
+
+Também inclui:
+- Memória de pilhas: você recolhe o que despejou — SEM limite de pilhas (o material vira terreno real, não uma pilha do jogo base)
+- Exibição de altura e profundidade com máquina ativa (Numpad / alterna ativado/desativado, reconfigurável nas opções)
+- Verificação na inicialização que relata materiais que não podem ser despejados no mapa (mapa sem slots de solo)
+
+Requer TerraFarm por scfmod: github.com/scfmod/FS25_TerraFarm
+Sem afiliação com scfmod. Nenhum arquivo do TerraFarm é enviado com este mod.
+
+Mining Layers por Tommy Honold, Farmersingles.de. Um projeto FrittePlayz (YouTube).
+
+Tradução para o português: Alicopower.
+
+Configurações: modSettings/FS25_MiningLayers/miningLayers.xml]]>
+        </br>
     </description>
 
     <iconFilename>icon_miningLayers.png</iconFilename>

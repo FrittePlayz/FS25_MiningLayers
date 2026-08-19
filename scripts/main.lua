@@ -15,7 +15,7 @@
 
 MiningLayers = {}
 
-MiningLayers.VERSION = '1.5.0.0'
+MiningLayers.VERSION = '1.6.0.0'
 MiningLayers.LOG_PREFIX = '[MiningLayers] '
 
 MiningLayers.MOD_NAME = g_currentModName
@@ -60,7 +60,7 @@ function MiningLayers.protectedCall(context, fn, ...)
     local ok, result = pcall(fn, ...)
 
     if not ok then
-        MiningLayers.log('FEHLER in %s: %s', context, tostring(result))
+        MiningLayers.log('ERROR in %s: %s', context, tostring(result))
     end
 
     return ok, result
@@ -105,7 +105,7 @@ function MiningLayers.getTerraFarmAvailable()
 
             if isTerraFarmEnv(env) then
                 MiningLayers.TF = env
-                MiningLayers.log('TerraFarm gefunden als "%s".', modName)
+                MiningLayers.log('TerraFarm found as "%s".', modName)
                 return true, ''
             end
         end
@@ -116,17 +116,17 @@ function MiningLayers.getTerraFarmAvailable()
         for modName, loaded in pairs(g_modIsLoaded) do
             if loaded and isTerraFarmEnv(_G[modName]) then
                 MiningLayers.TF = _G[modName]
-                MiningLayers.log('TerraFarm gefunden als "%s" (abweichender Ordnername).', modName)
+                MiningLayers.log('TerraFarm found as "%s" (different folder name).', modName)
                 return true, ''
             end
         end
     end
 
     if g_modIsLoaded == nil then
-        return false, 'g_modIsLoaded nicht verfuegbar'
+        return false, 'g_modIsLoaded not available'
     end
 
-    return false, 'keine Mod-Umgebung mit g_modSettings und LandscapingInputFlatten'
+    return false, 'no mod environment with g_modSettings and LandscapingInputFlatten'
 end
 
 source(g_currentModDirectory .. 'scripts/MiningLayersConfig.lua')
@@ -155,7 +155,7 @@ local function installInputSpecialization(typeManager)
             MiningLayers.MOD_DIRECTORY .. 'scripts/MiningLayersSpec.lua', nil)
 
         if g_specializationManager:getSpecializationByName('miningLayersInput') == nil then
-            MiningLayers.log('WARNUNG: Eingabe-Spezialisierung nicht angenommen - Anzeige-Taste bleibt aus.')
+            MiningLayers.log('WARNING: input specialization not accepted - the display key stays off.')
             return
         end
 
@@ -174,15 +174,15 @@ local function installInputSpecialization(typeManager)
     end)
 
     if not ok then
-        MiningLayers.log('FEHLER bei der Eingabe-Spezialisierung: %s', tostring(err))
-        MiningLayers.log('  Anzeige-Taste bleibt aus, alles andere laeuft normal weiter.')
+        MiningLayers.log('ERROR in the input specialization: %s', tostring(err))
+        MiningLayers.log('  The display key stays off, everything else keeps running normally.')
     end
 end
 
 if TypeManager ~= nil and Utils ~= nil and type(Utils.prependedFunction) == 'function' then
     TypeManager.validateTypes = Utils.prependedFunction(TypeManager.validateTypes, installInputSpecialization)
 else
-    print(MiningLayers.LOG_PREFIX .. 'WARNUNG: TypeManager/Utils fehlen beim Laden - Anzeige-Taste bleibt aus.')
+    print(MiningLayers.LOG_PREFIX .. 'WARNING: TypeManager/Utils missing at load time - the display key stays off.')
 end
 
 ---Wird vom Basisspiel aufgerufen, nachdem die Karte geladen ist.
@@ -191,12 +191,12 @@ function MiningLayers:loadMap(filename)
     local available, reason = MiningLayers.getTerraFarmAvailable()
 
     if not available then
-        MiningLayers.log('TerraFarm nicht gefunden (%s) - Addon bleibt inaktiv.', reason)
+        MiningLayers.log('TerraFarm not found (%s) - the add-on stays inactive.', reason)
         return
     end
 
     MiningLayers.active = true
-    MiningLayers.log('%s geladen - TerraFarm erkannt.', MiningLayers.VERSION)
+    MiningLayers.log('%s loaded - TerraFarm detected.', MiningLayers.VERSION)
 
     MiningLayers.protectedCall('loadConfig', function()
         MiningLayers:loadConfig()
@@ -223,6 +223,13 @@ function MiningLayers:loadMap(filename)
     -- verhaelt sich das Graben exakt wie ohne Addon.
     MiningLayers.protectedCall('installHooks', function()
         MiningLayers:installHooks()
+    end)
+
+    -- Beobachtet den Bereichseditor: welche Zielhoehe hat der SPIELER gesetzt?
+    -- Muss stehen, bevor der erste Bereich bearbeitet werden kann - danach richtet
+    -- sich, ob der Mod den Grubenboden nachzieht oder die Finger davon laesst.
+    MiningLayers.protectedCall('installTargetHeightWatch', function()
+        MiningLayers:installTargetHeightWatch()
     end)
 
     -- Material-Pool VOR der Materialpruefung: die Schichten-Auswahl baut darauf
@@ -325,7 +332,11 @@ function MiningLayers:deleteMap()
     MiningLayers.hudMoveHintLogged = false
     MiningLayers.freeDumpLogged = false
     MiningLayers.freeHeightLogged = false
+    -- Hinweis "Zielhoehe schneidet die unterste Schicht ab", einmal je Bereich.
+    MiningLayers.floorHintByArea = {}
+    MiningLayers.freeHeightInGroundLogged = false
     MiningLayers.freeHeightBlockedLogged = {}
+    MiningLayers.sideLogged = false
     MiningLayers.diagLastTimes = {}
     MiningLayers.mapReport = nil
     -- Sonst schweigt die "keine Schicht"-Diagnose beim zweiten Kartenstart derselben
@@ -463,7 +474,7 @@ function MiningLayers.resolveFallbackKeys()
 
     if key == nil and not MiningLayers.fallbackDisarmedLogged then
         MiningLayers.fallbackDisarmedLogged = true
-        MiningLayers.log('Anzeige-Taste: keine Tastatur-Belegung gefunden (Gamepad/Maus?) - Direkt-Fallback aus, es zaehlt nur das Action-System.')
+        MiningLayers.log('Display key: no keyboard binding found (gamepad/mouse?) - direct fallback off, only the action system counts.')
     end
 
     local moveKey, moveKeyName = MiningLayers.resolveActionKey('ML_HUD_MOVE', 'KEY_KP_multiply')
@@ -474,7 +485,7 @@ function MiningLayers.resolveFallbackKeys()
 
     if moveKey == nil and not MiningLayers.moveFallbackDisarmedLogged then
         MiningLayers.moveFallbackDisarmedLogged = true
-        MiningLayers.log('Move-Taste: keine Tastatur-Belegung gefunden - Direkt-Fallback aus, es zaehlt nur das Action-System.')
+        MiningLayers.log('Move key: no keyboard binding found - direct fallback off, only the action system counts.')
     end
 
     MiningLayers.fallbackResolved = true
@@ -507,7 +518,7 @@ function MiningLayers.updateToggleFallback(guiOpen)
         if not handled and not guiOpen then
             if not MiningLayers.fallbackToggleLogged then
                 MiningLayers.fallbackToggleLogged = true
-                MiningLayers.log('Anzeige-Taste laeuft ueber den Direkt-Fallback (Action-Binding griff nicht, Taste: %s).',
+                MiningLayers.log('Display key runs through the direct fallback (the action binding did not take, key: %s).',
                     MiningLayers.fallbackKeyName)
             end
 
@@ -542,7 +553,7 @@ function MiningLayers.updateMoveFallback(guiOpen)
         if not handled and not guiOpen then
             if not MiningLayers.moveFallbackLogged then
                 MiningLayers.moveFallbackLogged = true
-                MiningLayers.log('Move-Taste laeuft ueber den Direkt-Fallback (Taste: %s).',
+                MiningLayers.log('Move key runs through the direct fallback (key: %s).',
                     MiningLayers.moveFallbackKeyName)
             end
 
@@ -574,7 +585,7 @@ function MiningLayers:update(dt)
             and MiningLayers.isCallable(Input.isKeyPressed)
 
         if not MiningLayers.fallbackCapable then
-            MiningLayers.log('Direkt-Fallback aus: Eingabe-API nicht nutzbar (Dedicated Server oder Engine ohne isKeyPressed).')
+            MiningLayers.log('Direct fallback off: input API not usable (dedicated server, or an engine without isKeyPressed).')
         end
     end
 

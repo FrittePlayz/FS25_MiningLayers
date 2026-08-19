@@ -4,12 +4,19 @@
         <text name="ml_decimalSeparator" text="," />
         <text name="ml_heightHere" text="Höhe hier" />
         <text name="ml_zone" text="Zone" />
+        <text name="ml_zoneEverywhere" text="Überall" />
         <text name="ml_layer" text="Schicht" />
+        <text name="ml_targetHeight" text="Zielhöhe" />
+        <text name="ml_targetManual" text="von dir" />
+        <text name="ml_targetAuto" text="automatisch" />
+        <text name="ml_targetCut" text="Grube endet über der tiefsten Schicht (%s m) - Zielhöhe im Bereichseditor tiefer setzen" />
+        <text name="ml_digBlocked" text="Karte blockiert Geländeänderung an dieser Stelle - kein Mod-Stopp" />
+        <text name="ml_digNoEffect" text="Graben bewegt hier nichts - Kartensperre oder Zielhöhe erreicht" />
         <text name="ml_depth" text="Tiefe" />
         <text name="ml_until" text="bis" />
         <text name="ml_stillNeeded" text="noch" />
         <text name="ml_noLayers" text="keine Schichten an dieser Stelle" />
-        <text name="ml_mapResourceTakesOver" text="TerraFarm entscheidet: Material der Karte an dieser Stelle - in jeder Tiefe gleich" />
+        <text name="ml_mapResourceTakesOver" text="TerraFarm entscheidet: Material deiner Maschine - oder das der Karte, wenn Kartenressourcen eingeschaltet sind" />
         <text name="ml_above" text="liegt" />
         <text name="ml_aboveRef" text="über der Bezugshöhe" />
         <text name="ml_overrideHint" text="TerraFarm-Material %s gilt hier nicht - die Schicht bestimmt" />
@@ -28,7 +35,7 @@
 
         <text name="input_ML_TOGGLE_HUD" text="Mining Layers: Anzeige ein/aus" />
         <text name="input_ML_HUD_MOVE" text="Mining Layers: Anzeige verschieben (Mauszeiger)" />
-        <text name="ml_noInputArea" text="kein Eingabe-Bereich gewählt - im Maschinen-Menü (Y) den Bereich als Eingabe zuweisen" />
+        <text name="ml_noInputArea" text="kein Eingabe-Bereich gewählt - im Maschinen-Menü (Y) den Bereich als Eingabe zuweisen, oder im Menü unter Schichten das Ziel „Überall“ einschalten" />
         <text name="ml_hudMoveHint" text="Linksklick: greifen/ablegen - Rechtsklick: Standardposition - Taste erneut: fertig" />
         <text name="ml_hudMoveSample" text="Beispielanzeige - im Spiel stehen hier die Schicht-Infos" />
 
@@ -53,6 +60,7 @@
         <!-- ===================== Reiter 4: Schichten-Editor ===================== -->
         <text name="ml_edSummarySection" text="Ergibt dieses Profil" />
         <text name="ml_edScope" text="Du bearbeitest den Standard: Er gilt für alle Bereiche ohne eigene Schichten — auch für die, die schon stehen. Eine einzelne Grube mit eigenen Schichten stellst du direkt hier ein: oben unter Gilt für den Bereich wählen." />
+        <text name="ml_edScopeGlobal" text="Du bearbeitest die Schichten für „Überall“: Sie gelten auf der ganzen Karte, ohne dass du einen Bereich zeichnen musst. Ein Bereich, den du einer Maschine zugewiesen hast, geht vor — und wo im Bereich ein Material eingetragen ist, bleibt es bei normalem TerraFarm." />
         <text name="ml_helpManEditor4" text="Standard und Ausnahmen: Was du mit Alle Bereiche speicherst, ist der Standard — er gilt für jeden Bereich ohne eigene Schichten, rückwirkend auch für die bestehenden. Soll eine einzelne Grube anders aufgebaut sein, wähle sie oben unter Gilt für aus und speichere ihre Schichten — direkt im Editor, ohne Umweg über eine Datei." />
         <text name="ml_edTargetSection" text="Gilt für" />
         <text name="ml_edTarget" text="Bereich" />
@@ -100,7 +108,7 @@
         <text name="ml_mapSection" text="Was diese Karte kann" />
         <text name="ml_mapNoData" text="Der Kartenbericht steht erst nach dem Laden bereit." />
         <text name="ml_mapUsable" text="Auf dieser Karte nutzbar: %s — diese Materialien kannst du graben, fahren, verkaufen und wieder auf den Boden kippen." />
-        <text name="ml_mapNoTipList" text="Nur graben und verkaufen: %s. Auf den Boden zurückkippen geht damit hier nicht — sie haben keinen Platz mehr in der Bodenverwaltung bekommen." />
+        <text name="ml_mapNoTipList" text="Nur graben und verkaufen: %s. Auf den Boden zurückkippen geht hier nicht — in der Bodenverwaltung ist kein Platz mehr frei." />
         <text name="ml_mapMissingList" text="Gar nicht vorhanden: %s. Weder Karte noch Mods bringen diese Materialien mit." />
         <text name="ml_mapAdvice" text="Wie viele Bodenmaterialien hineinpassen, entscheidet deine KARTE: sie legt die Kanalbreite fest, und das Basisspiel belegt davon schon 48 Plätze. Wie viele davon belegt sind, entscheidet deine MODLISTE — wer zuerst lädt, bekommt einen Platz. Also: weniger Mods macht Plätze frei, und eine Karte mit mehr Kanälen hat von vornherein mehr davon." />
         <text name="ml_mapManyOwn" text="Diese Karte bringt selbst sehr viele Bodenmaterialien mit, deshalb sind die Plätze früh vergeben. Das ist typisch für Karten, die aus FS19 oder FS22 übernommen wurden." />
@@ -146,8 +154,8 @@
         <text name="ml_helpManEditor2" text="PAYDIRT kannst du nicht als Abraum setzen - Geld-Material liegt immer UNTER dem Abraum. Als Nutzschicht (letzte Zeile im Editor) sind neben PAYDIRT auch COAL, LIMESTONE, STONE, GRAVEL, SAND, DIRT und SOIL erlaubt: für Kiesgruben und Kohlereviere. Der Fels darunter bleibt fest." />
 
         <text name="ml_helpManFloorTitle" text="Der Grubenboden" />
-        <text name="ml_helpManFloor1" text="Der Mod setzt die Zielhöhe des Bereichs automatisch auf die Unterkante deiner tiefsten Schicht, damit du beim Ebnen nicht ins Bodenlose gräbst. Vergrößerst du den Bereich, zieht der Boden in derselben Sitzung nach. Nach einem Neuladen des Spielstands passiert das nicht mehr." />
-        <text name="ml_helpManFloor2" text="Deshalb gräbst du dich auch am Wasser nicht endlos nach unten: unter der tiefsten Schicht ist Schluss. Ohne Bereich fehlt diese Grenze - dann ist die Zielhöhe der Meeresspiegel." />
+        <text name="ml_helpManFloor1" text="Solange du die Zielhöhe eines Bereichs nicht selbst anfasst, setzt der Mod sie automatisch unter deine tiefste Schicht - sonst endet die Grube dort, wo der Editor sie beim Zeichnen abgelegt hat: auf Geländehöhe. Vergrößerst du den Bereich, zieht der Boden nach." />
+        <text name="ml_helpManFloor2" text="Trägst du die Zielhöhe selbst ein (Texteingabe oder Hoch/Runter im Bereichseditor), gehört sie ab da dir: der Mod fasst sie nie wieder an. Genau so planierst du eine Ebene, eine Berme oder eine Rampe. Was gerade gilt, steht in der Anzeige - &quot;von dir&quot; oder &quot;automatisch&quot;." />
 
         <text name="ml_helpManConfigTitle" text="Konfiguration von Hand" />
         <text name="ml_helpManConfig1" text="Alles steht in modSettings/FS25_MiningLayers/miningLayers.xml. Die Datei wird beim ersten Start angelegt und überlebt Mod-Updates. Vor dem ersten Speichern durch den Assistenten legt der Mod einmal je Sitzung eine .bak daneben." />
@@ -181,5 +189,12 @@
         <text name="ml_helpTipsAboutTitle" text="Über diesen Mod" />
         <text name="ml_helpTipsAbout1" text="Mining Layers ist ein inoffizielles Addon für TerraFarm von scfmod. Es besteht keine Verbindung zu scfmod, und es werden keine TerraFarm-Dateien mitgeliefert. TerraFarm gibt es auf GitHub, nicht im ModHub." />
         <text name="ml_helpTipsAbout2" text="Der Mod ist bisher kostenlos." />
+        <text name="ml_edTargetGlobal" text="Überall (ohne Bereich)" />
+        <text name="ml_edSavedGlobalOn" text="Die Schichten gelten jetzt überall, ohne gezeichneten Bereich. Ein Bereich, den du einer Maschine zugewiesen hast, geht weiterhin vor." />
+        <text name="ml_edSavedGlobalOff" text="Die Schichten gelten nur in gezeichneten Bereichen. Deine Schichten bleiben gespeichert." />
+        <text name="ml_slotReport" text="Bodenplätze: %d von %d Materialien dieser Installation haben einen Geländetyp." />
+        <text name="ml_noSurfaceYet" text="Bezugshöhe noch nicht gesetzt - sie entsteht beim ersten Grabkontakt hier" />
+        <text name="ml_globalHint" text="Schichten überall, ohne Bereich: Reiter Schichten, Ziel &quot;Überall&quot;, auf Mining Layers stellen, speichern." />
+        <text name="ml_slotMap" text="Diese Karte hat %d Bodenplätze (%d Kanäle) — %d belegt." />
     </texts>
 </l10n>
