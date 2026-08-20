@@ -102,6 +102,10 @@ end
 ---Sammelt die Zeilen fuer die Anzeige.
 ---@return string[]? lines
 function MiningLayers:buildDisplayLines()
+    -- T13: pro Zeile eine optionale Materialfarbe (Index = Zeilen-Index). Bei
+    -- jedem Aufruf zuruecksetzen, damit kein Stand vom Vorframe haengen bleibt.
+    self.displayLineColors = {}
+
     local machineManager = MiningLayers.tf('g_machineManager')
 
     if type(machineManager) ~= 'table' then
@@ -260,6 +264,9 @@ function MiningLayers:buildDisplayLines()
             entry.fillTypeName))
     end
 
+    -- T13: die aktuelle Schicht-Zeile in ihrer Materialfarbe faerben.
+    self.displayLineColors[#lines] = MiningLayers.hudMaterialColor(entry.fillTypeName)
+
     -- ★ Zielhoehe des Bereichs - die Auskunft, die bis 1.6.0 nur im Log stand.
     --
     -- Ohne sie merkt niemand, dass ein frisch gezeichneter Bereich seine Zielhoehe vom
@@ -368,6 +375,15 @@ function MiningLayers:buildDisplayLines()
 
     if line ~= '' then
         table.insert(lines, line)
+
+        -- T13 + Grenzwarnung: die "noch X m bis GRAVEL"-Zeile traegt die Farbe
+        -- der naechsten Schicht (Wiedererkennung) und faerbt sich mit sinkendem
+        -- Abstand zur Warnfarbe - der Wechsel springt ins Auge, BEVOR die Schaufel
+        -- im neuen Material steckt.
+        if nextEntry ~= nil then
+            local remaining = (boundary ~= nil) and (terrainY - boundary) or nil
+            self.displayLineColors[#lines] = MiningLayers.hudBoundaryColor(nextEntry.fillTypeName, remaining)
+        end
     end
 
     self:appendTip(lines)
@@ -736,9 +752,13 @@ function MiningLayers:drawHeightDisplay()
         local pad = size * 0.6
         local maxTextWidth = nil
 
+        -- T13: Materialfarben je Zeile (aus buildDisplayLines). Beim Umbruch
+        -- muss die Farbe mitwandern, sonst faerbt sie nach dem Wrap die falsche Zeile.
+        local lineColors = self.displayLineColors
+
         if canMeasure then
             maxTextWidth = MiningLayers.getHudMaxWidth() - pad * 2
-            lines = MiningLayers.wrapLines(lines, size, maxTextWidth)
+            lines, lineColors = MiningLayers.wrapLines(lines, size, maxTextWidth, self.displayLineColors)
         end
 
         -- Balken-Hintergrund wie bei TerraFarms HUD, defensiv: fehlt eine der
@@ -805,11 +825,20 @@ function MiningLayers:drawHeightDisplay()
             -- Erste Zeile ist die Ueberschrift: fett.
             setTextBold(i == 1)
 
-            -- Schatten fuer Lesbarkeit auf hellem Gelaende
+            -- Schatten fuer Lesbarkeit auf hellem Gelaende (bleibt schwarz,
+            -- traegt zusaetzlich die aufgehellten Materialfarben auf dunklem Grund).
             setTextColor(0, 0, 0, 0.75)
             renderText(self.displayPosX + 0.0015, posY - 0.0015, size, lines[i])
 
-            setTextColor(1, 1, 1, 1)
+            -- T13: Materialfarbe der Zeile, sonst Weiss.
+            local col = (lineColors ~= nil) and lineColors[i] or nil
+
+            if col ~= nil then
+                setTextColor(col[1], col[2], col[3], 1)
+            else
+                setTextColor(1, 1, 1, 1)
+            end
+
             renderText(self.displayPosX, posY, size, lines[i])
 
             posY = posY - size * 1.25
@@ -853,14 +882,23 @@ end
 ---@param size number
 ---@param maxWidth number
 ---@return string[]
-function MiningLayers.wrapLines(lines, size, maxWidth)
+---@param lines string[]
+---@param size number
+---@param maxWidth number
+---@param colors table[]? T13: optionale Farbe je Zeile (Index = lines-Index)
+---@return string[] wrapped
+---@return table[] wrappedColors jede Umbruch-Zeile erbt die Farbe ihrer Quellzeile
+function MiningLayers.wrapLines(lines, size, maxWidth, colors)
     local wrapped = {}
+    local wrappedColors = {}
 
-    for _, line in ipairs(lines) do
+    for idx, line in ipairs(lines) do
+        local col = (colors ~= nil) and colors[idx] or nil
         local w = getTextWidth(size, line)
 
         if line == '' or w == nil or w <= maxWidth then
             table.insert(wrapped, line)
+            wrappedColors[#wrapped] = col
         else
             local current = ''
             local isTip = line:sub(1, 2) == '\194\187' -- '»'
@@ -870,6 +908,7 @@ function MiningLayers.wrapLines(lines, size, maxWidth)
 
                 if current ~= '' and getTextWidth(size, candidate) > maxWidth then
                     table.insert(wrapped, current)
+                    wrappedColors[#wrapped] = col
                     current = (isTip and '   ' or '') .. word
                 else
                     current = candidate
@@ -878,11 +917,12 @@ function MiningLayers.wrapLines(lines, size, maxWidth)
 
             if current ~= '' then
                 table.insert(wrapped, current)
+                wrappedColors[#wrapped] = col
             end
         end
     end
 
-    return wrapped
+    return wrapped, wrappedColors
 end
 
 ---Farben der Tiefenlinien je Material (RGB 0-1). DEFAULT fuer Unbekanntes.
@@ -898,6 +938,89 @@ MiningLayers.DEPTH_LINE_COLORS = {
 }
 
 MiningLayers.depthLinesErrorReported = false
+
+---T13: Materialfarbe fuer eine HUD-Zeile. Quelle sind die EDITOR-Farben
+---(`InGameMenuMiningLayersFrame.MATERIAL_COLORS`) - dieselben, die der Spieler
+---im Schichten-Editor sieht, damit die Farbe im HUD wiedererkannt wird. Fehlt
+---die GUI-Klasse (Ladereihenfolge), faellt es auf die Tiefenlinien-Farben zurueck.
+---
+---⚠️ Dunkle Materialien (COAL 0.12, STONE, SOIL) verschwinden sonst auf dem
+---dunklen HUD-Kasten. Deshalb eine Helligkeits-Untergrenze: liegt die
+---wahrgenommene Helligkeit (Rec. 601) unter MIN, wird die Farbe zum Weiss hin
+---aufgehellt, bis sie lesbar ist - der Farbton bleibt erhalten, nur heller.
+---@param fillTypeName string?
+---@return table? rgb {r,g,b} 0-1, oder nil fuer Standard (weiss)
+MiningLayers.HUD_MATERIAL_MIN_LUMA = 0.55
+
+function MiningLayers.hudMaterialColor(fillTypeName)
+    if fillTypeName == nil then
+        return nil
+    end
+
+    local map = (InGameMenuMiningLayersFrame ~= nil and InGameMenuMiningLayersFrame.MATERIAL_COLORS)
+        or MiningLayers.DEPTH_LINE_COLORS
+    local c = map[fillTypeName]
+
+    if type(c) ~= 'table' then
+        return nil -- unbekanntes Material -> Standard (weiss) im Render
+    end
+
+    local r, g, b = c[1], c[2], c[3]
+    local luma = 0.299 * r + 0.587 * g + 0.114 * b
+
+    if luma < MiningLayers.HUD_MATERIAL_MIN_LUMA then
+        -- zum Weiss mischen, bis die Untergrenze erreicht ist:
+        -- neu = c + (1-c)*t  =>  Luma(neu) = luma + (1-luma)*t = MIN
+        local t = (MiningLayers.HUD_MATERIAL_MIN_LUMA - luma) / (1 - luma)
+        r = r + (1 - r) * t
+        g = g + (1 - g) * t
+        b = b + (1 - b) * t
+    end
+
+    return { r, g, b }
+end
+
+---Grenzwarnung (1.6.1): Farbe der "noch X m bis <Material>"-Zeile. Weit von der
+---Kante = reine Materialfarbe (Wiedererkennung, T13); je naeher die Schaufel der
+---naechsten Schichtgrenze kommt, desto mehr faerbt sie sich zur Warnfarbe. Reine
+---Anzeige - aendert nichts am Graben, macht die Grenze nur SICHTBAR, bevor das
+---falsche Material im Kipper landet.
+---@param fillTypeName string?
+---@param remaining number? Meter bis zur naechsten Schicht darunter (nil = keine Warnung)
+---@return table rgb
+MiningLayers.HUD_WARN_NEAR = 0.5   -- m: ab hier volle Warnfarbe
+MiningLayers.HUD_WARN_FAR = 2.0    -- m: ab hier reine Materialfarbe
+MiningLayers.HUD_WARN_COLOR = { 1.0, 0.30, 0.22 }
+
+function MiningLayers.hudBoundaryColor(fillTypeName, remaining)
+    local base = MiningLayers.hudMaterialColor(fillTypeName) or { 1, 1, 1 }
+
+    if type(remaining) ~= 'number' then
+        return base
+    end
+
+    local near = MiningLayers.HUD_WARN_NEAR
+    local far = MiningLayers.HUD_WARN_FAR
+    local t = 0
+
+    if remaining <= near then
+        t = 1
+    elseif remaining < far then
+        t = (far - remaining) / (far - near)
+    end
+
+    if t <= 0 then
+        return base
+    end
+
+    local warn = MiningLayers.HUD_WARN_COLOR
+
+    return {
+        base[1] + (warn[1] - base[1]) * t,
+        base[2] + (warn[2] - base[2]) * t,
+        base[3] + (warn[3] - base[3]) * t,
+    }
+end
 
 ---Zeichnet die Schichtgrenzen als farbige Linien entlang der Bereichs-Umrandung,
 ---dazu den Grubenboden in Rot. So sieht man IM GELAENDE, ab wo Gravel und Paydirt
