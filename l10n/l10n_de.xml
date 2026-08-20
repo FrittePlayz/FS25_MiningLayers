@@ -29,12 +29,17 @@
         <text name="ml_tip2" text="Material im Bereich eintragen = normales TerraFarm ohne Schichten (Baustellen)" />
         <text name="ml_tip3" text="Löffel vor dem Schichtwechsel leeren - ein Löffel, ein Material" />
         <text name="ml_tip4" text="Halden merkt sich der Mod - aufgenommen wird, was abgekippt wurde" />
+        <text name="ml_spoilModeOn" text="Abraum-Modus AN - Abraum wird als %s gegraben, nur die unterste Schicht bleibt echt" />
+        <text name="ml_slotFullHint" text="Die Plaetze sind voll. Eine Filltype-Mod wie Nonnus' &quot;63 Alternative Filltypes&quot; (ModHub/KingMods) schafft Platz - am besten auf einem frischen Mining-Spielstand, denn sie schaltet das Abkippen von Basisspiel-Material ab." />
+        <text name="ml_helpQsMapSlotsTitle" text="Keine Plaetze mehr?" />
+        <text name="ml_helpQsMapSlots" text="Jede Karte hat eine feste Zahl an Bodenmaterial-Plaetzen. Sind sie voll, lassen sich weitere Materialien graben und verkaufen, aber nicht abkippen. Eine Filltype-Mod wie Nonnus' &quot;63 Alternative Filltypes&quot; macht Plaetze frei, indem sie die Basisspiel-Feldfruechte abschaltet. Auf einem frischen Mining-Spielstand nutzen." />
         <text name="ml_tip5" text="Linienfarbe = Material, das ab dort beginnt; rot = Grubenboden" />
         <text name="ml_tip6" text="Die Anzeige zeigt, wie weit es noch bis zur nächsten Schicht ist" />
         <text name="ml_tip7" text="Welche Materialien es gibt, entscheidet deine Karte samt Modliste — (!) heißt: graben ja, abkippen nein" />
 
         <text name="input_ML_TOGGLE_HUD" text="Mining Layers: Anzeige ein/aus" />
         <text name="input_ML_HUD_MOVE" text="Mining Layers: Anzeige verschieben (Mauszeiger)" />
+        <text name="input_ML_SPOIL_MODE" text="Mining Layers: Abraum-Modus ein/aus" />
         <text name="ml_noInputArea" text="kein Eingabe-Bereich gewählt - im Maschinen-Menü (Y) den Bereich als Eingabe zuweisen, oder im Menü unter Schichten das Ziel „Überall“ einschalten" />
         <text name="ml_hudMoveHint" text="Linksklick: greifen/ablegen - Rechtsklick: Standardposition - Taste erneut: fertig" />
         <text name="ml_hudMoveSample" text="Beispielanzeige - im Spiel stehen hier die Schicht-Infos" />

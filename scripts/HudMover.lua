@@ -292,9 +292,21 @@ function MiningLayers.registerGlobalActionEvents()
         end
     end
 
+    -- 3) T14 Spoil-Taste. Gleiches Muster wie ML_TOGGLE_HUD: global unsichtbar,
+    --    den F1-Text liefert die Fahrzeug-Spez; bewusst OHNE
+    --    disableConflictingBindings (Percys Review R1 gilt hier genauso).
+    if InputAction.ML_SPOIL_MODE ~= nil then
+        local _, eventId = g_inputBinding:registerActionEvent(InputAction.ML_SPOIL_MODE,
+            MiningLayers, MiningLayers.actionSpoilGlobal, false, true, false, true)
+
+        if eventId ~= nil then
+            g_inputBinding:setActionEventTextVisibility(eventId, false)
+        end
+    end
+
     if not MiningLayers.globalRegisterLogged then
         MiningLayers.globalRegisterLogged = true
-        MiningLayers.log('Global key registration active (display + move display, HL pattern).')
+        MiningLayers.log('Global key registration active (display + move display + spoil mode, HL pattern).')
     end
 end
 

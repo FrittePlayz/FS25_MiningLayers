@@ -185,6 +185,7 @@ Configurações: modSettings/FS25_MiningLayers/miningLayers.xml]]>
     <actions>
         <action name="ML_TOGGLE_HUD" />
         <action name="ML_HUD_MOVE" />
+        <action name="ML_SPOIL_MODE" />
     </actions>
 
     <inputBinding>
@@ -193,6 +194,11 @@ Configurações: modSettings/FS25_MiningLayers/miningLayers.xml]]>
         </actionBinding>
         <actionBinding action="ML_HUD_MOVE">
             <binding device="KB_MOUSE_DEFAULT" input="KEY_KP_multiply" index="1" />
+        </actionBinding>
+        <!-- T14 Abraum-Modus. KP_5 ist frei: TerraFarm belegt KP 0/4/8/9/Komma,
+             wir selbst KP / und KP * (gegen beide modDescs geprueft, 20.08.). -->
+        <actionBinding action="ML_SPOIL_MODE">
+            <binding device="KB_MOUSE_DEFAULT" input="KEY_KP_5" index="1" />
         </actionBinding>
     </inputBinding>
 

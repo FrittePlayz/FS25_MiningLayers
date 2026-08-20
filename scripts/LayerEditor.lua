@@ -679,6 +679,9 @@ function MiningLayers:saveConfigFile()
     end
 
     setXMLString(xmlId, 'miningLayers#enabled', bool(self.enabled))
+    -- T14 Abraum-Modus: Schalter + Material ueberleben den Neustart.
+    setXMLString(xmlId, 'miningLayers#spoilMode', bool(self.spoilMode))
+    setXMLString(xmlId, 'miningLayers#spoilMaterial', tostring(self.spoilMaterial or 'DIRT'))
     setXMLString(xmlId, 'miningLayers#showHeightDisplay', bool(self.showHeightDisplay))
     setXMLString(xmlId, 'miningLayers#checkMaterials', bool(self.checkMaterials))
     setXMLString(xmlId, 'miningLayers#matchOutputTexture', bool(self.matchOutputTexture))

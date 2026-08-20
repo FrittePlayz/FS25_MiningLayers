@@ -267,6 +267,21 @@ function MiningLayers:buildDisplayLines()
     -- T13: die aktuelle Schicht-Zeile in ihrer Materialfarbe faerben.
     self.displayLineColors[#lines] = MiningLayers.hudMaterialColor(entry.fillTypeName)
 
+    -- T14: Abraum-Modus sichtbar machen. Sonst steht hier GRAVEL, in die Schaufel
+    -- kommt DIRT, und der Modus wirkt wie ein Fehler. Halden sind ausgenommen
+    -- (isMound), dort gilt weiter das Gedaechtnis - das sagt die Halden-Zeile unten.
+    if self.spoilMode then
+        local spoilEntry = self:getSpoilModeEntry()
+
+        if spoilEntry ~= nil then
+            local template = MiningLayers.getText('ml_spoilModeOn',
+                'Abraum-Modus AN - Abraum wird als %s gegraben, nur die unterste Schicht bleibt echt')
+            local ok, text = pcall(string.format, template, spoilEntry.fillTypeName)
+
+            table.insert(lines, '! ' .. (ok and text or template))
+        end
+    end
+
     -- ★ Zielhoehe des Bereichs - die Auskunft, die bis 1.6.0 nur im Log stand.
     --
     -- Ohne sie merkt niemand, dass ein frisch gezeichneter Bereich seine Zielhoehe vom
@@ -513,6 +528,10 @@ MiningLayers.toggleVehicleApiMissingLogged = false
 MiningLayers.toggleSourceLogged = {}
 MiningLayers.toggleDupLogged = false
 
+-- T14 Spoil-Toggle: eigene Pfad-Forschung + Dedupe-Stempel.
+MiningLayers.spoilSourceLogged = {}
+MiningLayers.lastActionSpoilTime = nil
+
 ---Maximal so viele Registrierungs-Zeilen ins Log (Diagnose ja, Flut nein).
 MiningLayers.TOGGLE_LOG_LIMIT = 25
 
@@ -587,6 +606,59 @@ end
 ---Callback der globalen Registrierung (HudMover.lua).
 function MiningLayers.actionToggleHudGlobal()
     MiningLayers.onToggleActionInput('global')
+end
+
+---T14: Abraum-Modus umschalten - gemeinsamer Kern beider Action-Pfade und des
+---Direkt-Fallbacks. Schaltet, sagt es im Log und schreibt die Config sofort:
+---der Schalter soll den Neustart auch dann ueberleben, wenn danach nie das
+---Menue gespeichert wird.
+function MiningLayers.actionToggleSpoilMode()
+    MiningLayers.spoilMode = not MiningLayers.spoilMode
+
+    local spoilEntry = MiningLayers.spoilMode and MiningLayers:getSpoilModeEntry() or nil
+
+    -- Seltene, bewusste Aktion - kein Flut-Risiko, deshalb ohne Log-Cap.
+    MiningLayers.log('Spoil mode: %s%s.',
+        MiningLayers.spoilMode and 'ON' or 'OFF',
+        spoilEntry ~= nil and (' - overburden digs as ' .. tostring(spoilEntry.fillTypeName)) or '')
+
+    -- Das Einmal-Log im Grabpfad darf nach jedem Umschalten wieder sprechen.
+    MiningLayers.spoilModeLogged = false
+
+    pcall(MiningLayers.saveConfigFile, MiningLayers)
+end
+
+---Dedupe wie onToggleActionInput: Fahrzeug-Spez UND globaler Pfad koennen
+---denselben Druck melden; der zweite Callback binnen 50 ms ist ein Duplikat.
+---Stempelt lastActionSpoilTime fuer den Handshake mit dem Direkt-Fallback.
+---@param sourceName string 'Fahrzeug-Spez' oder 'global'
+function MiningLayers.onSpoilActionInput(sourceName)
+    local now = g_time or 0
+
+    if MiningLayers.lastActionSpoilTime ~= nil
+        and (now - MiningLayers.lastActionSpoilTime) < 50 then
+        MiningLayers.lastActionSpoilTime = now
+        return
+    end
+
+    MiningLayers.lastActionSpoilTime = now
+
+    if not MiningLayers.spoilSourceLogged[sourceName] then
+        MiningLayers.spoilSourceLogged[sourceName] = true
+        MiningLayers.log('Spoil key: callback through path "%s".', sourceName)
+    end
+
+    MiningLayers.actionToggleSpoilMode()
+end
+
+---Fahrzeug-Spez-Callback (Target ist das Fahrzeug, kein self).
+function MiningLayers.actionSpoilVehicle()
+    MiningLayers.onSpoilActionInput('Fahrzeug-Spez')
+end
+
+---Globaler Callback (HudMover.lua).
+function MiningLayers.actionSpoilGlobal()
+    MiningLayers.onSpoilActionInput('global')
 end
 
 ---Registriert das Action-Event ueber die FAHRZEUG-API (TerraFarm-Muster,
@@ -678,6 +750,25 @@ function MiningLayers:registerToggleActionEvent(vehicle, isActiveForInput)
         end
 
         g_inputBinding:setActionEventTextVisibility(eventId, true)
+    end
+
+    -- T14 Spoil-Taste: gleiche Fahrzeug-Registrierung, gleicher Rebuild-Takt.
+    -- Kein eigener Registrierungs-Zaehler - die Diagnose oben zeigt den Takt
+    -- bereits, eine zweite Zaehlspur waere Log-Rauschen.
+    if InputAction.ML_SPOIL_MODE ~= nil then
+        local _, spoilEventId = vehicle:addActionEvent(vehicle.miningLayersActionEvents,
+            InputAction.ML_SPOIL_MODE, vehicle, MiningLayers.actionSpoilVehicle, false, true, false, true)
+
+        if spoilEventId ~= nil then
+            g_inputBinding:setActionEventText(spoilEventId,
+                MiningLayers.getText('input_ML_SPOIL_MODE', 'Mining Layers: spoil mode on/off'))
+
+            if GS_PRIO_LOW ~= nil then
+                g_inputBinding:setActionEventTextPriority(spoilEventId, GS_PRIO_LOW)
+            end
+
+            g_inputBinding:setActionEventTextVisibility(spoilEventId, true)
+        end
     end
 end
 

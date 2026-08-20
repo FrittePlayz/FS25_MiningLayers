@@ -29,12 +29,17 @@
         <text name="ml_tip2" text="Renseigner un matériau dans une zone = TerraFarm classique sans couches (chantier)" />
         <text name="ml_tip3" text="vide le godet avant un changement de couche - un godet, un matériau" />
         <text name="ml_tip4" text="le mod mémorise les tas - tu reprends ce qui a été déversé" />
+        <text name="ml_spoilModeOn" text="Mode steriles ACTIF - les morts-terrains s'extraient comme %s, seule la couche la plus profonde reste reelle" />
+        <text name="ml_slotFullHint" text='Les emplacements sont pleins. Un mod de filltypes comme "63 Alternative Filltypes" de Nonnus (ModHub/KingMods) libere de la place - ideal sur une nouvelle sauvegarde miniere, car il desactive le dechargement des materiaux de base.' />
+        <text name="ml_helpQsMapSlotsTitle" text="Plus d'emplacements ?" />
+        <text name="ml_helpQsMapSlots" text="Chaque carte a un nombre fixe d'emplacements de materiaux au sol. Une fois pleins, les materiaux supplementaires se creusent et se vendent mais ne se dechargent pas. Un mod de filltypes comme &quot;63 Alternative Filltypes&quot; de Nonnus libere des emplacements en desactivant les cultures du jeu de base. A utiliser sur une nouvelle sauvegarde miniere." />
         <text name="ml_tip5" text="couleur de ligne = matériau qui commence là ; rouge = fond de fosse" />
         <text name="ml_tip6" text="l'affichage indique la distance jusqu'à la prochaine couche" />
         <text name="ml_tip7" text="Les matériaux disponibles dépendent de votre carte et de vos mods — (!) signifie : creuser oui, déverser non" />
 
         <text name="input_ML_TOGGLE_HUD" text="Mining Layers : affichage act./désact." />
         <text name="input_ML_HUD_MOVE" text="Mining Layers : déplacer l'affichage (curseur souris)" />
+        <text name="input_ML_SPOIL_MODE" text="Mining Layers : mode steriles oui/non" />
         <text name="ml_noInputArea" text="aucune zone d'entrée choisie - assigne la zone comme entrée dans le menu machine (Y), ou active la cible « Partout » sous Couches dans le menu" />
         <text name="ml_hudMoveHint" text="clic gauche : saisir/déposer - clic droit : position par défaut - touche à nouveau : terminé" />
         <text name="ml_hudMoveSample" text="affichage d'exemple - en jeu, les infos de couches s'affichent ici" />

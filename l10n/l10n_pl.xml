@@ -29,12 +29,17 @@
         <text name="ml_tip2" text="Wpisanie materiału w obszarze = zwykły TerraFarm bez warstw (budowa)" />
         <text name="ml_tip3" text="opróżnij łyżkę przed zmianą warstwy - jedna łyżka, jeden materiał" />
         <text name="ml_tip4" text="mod pamięta hałdy - podnosisz to, co wysypano" />
+        <text name="ml_spoilModeOn" text="Tryb nadkladu WL. - nadklad kopie sie jako %s, tylko najglebsza warstwa pozostaje prawdziwa" />
+        <text name="ml_slotFullHint" text='Sloty sa pelne. Mod filltype, np. "63 Alternative Filltypes" od Nonnusa (ModHub/KingMods), zwalnia miejsce - najlepiej na swiezym zapisie gorniczym, bo wylacza wysypywanie materialow z gry podstawowej.' />
+        <text name="ml_helpQsMapSlotsTitle" text="Zabraklo slotow?" />
+        <text name="ml_helpQsMapSlots" text='Kazda mapa ma stala liczbe slotow materialow podloza. Gdy sa pelne, kolejne materialy mozna kopac i sprzedawac, ale nie wysypywac. Mod filltype, taki jak "63 Alternative Filltypes" od Nonnusa, zwalnia sloty, wylaczajac uprawy z gry podstawowej. Uzywaj na swiezym zapisie gorniczym.' />
         <text name="ml_tip5" text="kolor linii = materiał zaczynający się od tego miejsca; czerwony = dno wyrobiska" />
         <text name="ml_tip6" text="wskaźnik pokazuje, ile zostało do następnej warstwy" />
         <text name="ml_tip7" text="To, jakie materiały istnieją, zależy od twojej mapy i listy modów — (!) znaczy: kopać tak, wysypywać nie" />
 
         <text name="input_ML_TOGGLE_HUD" text="Mining Layers: wskaźnik wł./wył." />
         <text name="input_ML_HUD_MOVE" text="Mining Layers: przesuń wskaźnik (kursor myszy)" />
+        <text name="input_ML_SPOIL_MODE" text="Mining Layers: tryb nadkladu wl./wyl." />
         <text name="ml_noInputArea" text="nie wybrano obszaru wejściowego - przypisz obszar jako wejście w menu maszyny (Y) albo włącz cel „Wszędzie” w menu w sekcji Warstwy" />
         <text name="ml_hudMoveHint" text="LPM: chwyć/upuść - PPM: pozycja domyślna - klawisz ponownie: gotowe" />
         <text name="ml_hudMoveSample" text="przykładowy widok - w grze tutaj są informacje o warstwach" />

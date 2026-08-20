@@ -327,6 +327,13 @@ function MiningLayers:deleteMap()
     MiningLayers.toggleLogCount = 0
     MiningLayers.toggleSourceLogged = {}
     MiningLayers.toggleDupLogged = false
+    MiningLayers.spoilSourceLogged = {}
+    MiningLayers.lastActionSpoilTime = nil
+    MiningLayers.spoilKeyWasDown = false
+    MiningLayers.spoilDownTime = nil
+    MiningLayers.spoilFallbackKey = nil
+    MiningLayers.spoilFallbackLogged = false
+    MiningLayers.spoilFallbackDisarmedLogged = false
     MiningLayers.toggleVehicleApiMissingLogged = false
     MiningLayers.globalRegisterLogged = false
     MiningLayers.hudMoveHintLogged = false
@@ -394,6 +401,15 @@ MiningLayers.moveFallbackKey = nil
 MiningLayers.moveFallbackKeyName = 'KEY_KP_multiply'
 MiningLayers.moveFallbackArmed = false
 MiningLayers.moveDownTime = nil
+
+-- T14 Spoil-Toggle: dritte Taste, gleiche Zustandsmaschine.
+MiningLayers.spoilKeyWasDown = false
+MiningLayers.spoilFallbackLogged = false
+MiningLayers.spoilFallbackDisarmedLogged = false
+MiningLayers.spoilFallbackKey = nil
+MiningLayers.spoilFallbackKeyName = 'KEY_KP_5'
+MiningLayers.spoilFallbackArmed = false
+MiningLayers.spoilDownTime = nil
 
 ---Modifier duerfen nie die Fallback-Taste werden: bei einer Kombi wie LCtrl+X
 ---stuende sonst der MODIFIER als Taste im Fallback (Review-Punkt B5).
@@ -488,6 +504,17 @@ function MiningLayers.resolveFallbackKeys()
         MiningLayers.log('Move key: no keyboard binding found - direct fallback off, only the action system counts.')
     end
 
+    local spoilKey, spoilKeyName = MiningLayers.resolveActionKey('ML_SPOIL_MODE', 'KEY_KP_5')
+
+    MiningLayers.spoilFallbackKey = spoilKey
+    MiningLayers.spoilFallbackKeyName = spoilKeyName
+    MiningLayers.spoilFallbackArmed = spoilKey ~= nil
+
+    if spoilKey == nil and not MiningLayers.spoilFallbackDisarmedLogged then
+        MiningLayers.spoilFallbackDisarmedLogged = true
+        MiningLayers.log('Spoil key: no keyboard binding found - direct fallback off, only the action system counts.')
+    end
+
     MiningLayers.fallbackResolved = true
 end
 
@@ -527,6 +554,41 @@ function MiningLayers.updateToggleFallback(guiOpen)
     end
 
     MiningLayers.kp5WasDown = down
+end
+
+---Direkt-Fallback der Spoil-Taste (T14 Abraum-Modus) - gleiche Zustandsmaschine.
+---@param guiOpen boolean
+function MiningLayers.updateSpoilFallback(guiOpen)
+    if not MiningLayers.spoilFallbackArmed then
+        return
+    end
+
+    local down = Input.isKeyPressed(MiningLayers.spoilFallbackKey) == true
+
+    if down and not MiningLayers.spoilKeyWasDown then
+        MiningLayers.spoilDownTime = (not guiOpen) and (g_time or 0) or nil
+    end
+
+    if not down and MiningLayers.spoilKeyWasDown then
+        local downTime = MiningLayers.spoilDownTime
+        MiningLayers.spoilDownTime = nil
+
+        local handled = downTime == nil
+            or (MiningLayers.lastActionSpoilTime ~= nil
+                and MiningLayers.lastActionSpoilTime >= downTime)
+
+        if not handled and not guiOpen then
+            if not MiningLayers.spoilFallbackLogged then
+                MiningLayers.spoilFallbackLogged = true
+                MiningLayers.log('Spoil key runs through the direct fallback (the action binding did not take, key: %s).',
+                    MiningLayers.spoilFallbackKeyName)
+            end
+
+            MiningLayers.actionToggleSpoilMode()
+        end
+    end
+
+    MiningLayers.spoilKeyWasDown = down
 end
 
 ---Direkt-Fallback der Move-Taste (HUD verschieben) - gleiche Zustandsmaschine.
@@ -605,6 +667,7 @@ function MiningLayers:update(dt)
 
     MiningLayers.updateToggleFallback(guiOpen)
     MiningLayers.updateMoveFallback(guiOpen)
+    MiningLayers.updateSpoilFallback(guiOpen)
 end
 
 ---Wird vom Basisspiel jeden Frame aufgerufen.

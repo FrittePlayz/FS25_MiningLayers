@@ -12,6 +12,14 @@ MiningLayers.CONFIG_FILENAME = 'miningLayers.xml'
 MiningLayers.enabled = true
 MiningLayers.showHeightDisplay = true
 MiningLayers.checkMaterials = true
+-- T14 Abraum-Modus: alles OBERHALB des Floezes (= unterste Schicht) graebt als EIN
+-- Material (spoilMaterial, Standard DIRT) - nur das Floez bleibt echt. Loest das
+-- Kipper-Problem (eine Fracht pro Mulde; Oreo/RGC 19.08.). Erkannte Halden sind
+-- ausgenommen: das Halden-Gedaechtnis verspricht, dass zurueckkommt, was abgekippt
+-- wurde. Phase 1 = reiner Config-Schalter (kein Keybind, bewusst - erst Verhalten
+-- testen, dann Ergonomie).
+MiningLayers.spoilMode = false
+MiningLayers.spoilMaterial = 'DIRT'
 -- Beim Abladen die Bodentextur zum Material aus der Schaufel setzen.
 MiningLayers.matchOutputTexture = true
 -- Grubenboden (targetY) automatisch tief genug setzen. ⚠️ VORGABE SEIT 1.6: AUS.
@@ -374,6 +382,20 @@ function MiningLayers:loadConfig()
     end
 
     self.enabled = MiningLayers.getXmlBool(xmlFile, 'miningLayers#enabled', true)
+    self.spoilMode = MiningLayers.getXmlBool(xmlFile, 'miningLayers#spoilMode', false)
+
+    -- Abraum-Material: Name muss aufloesbar sein, sonst Rueckfall DIRT. Der Cache-
+    -- Eintrag (getSpoilModeEntry) haengt am Namen und wird hier mit entwertet.
+    local spoilMaterial = xmlFile:getString('miningLayers#spoilMaterial')
+
+    if spoilMaterial ~= nil and spoilMaterial ~= '' then
+        self.spoilMaterial = spoilMaterial:upper()
+    else
+        self.spoilMaterial = 'DIRT'
+    end
+
+    self.spoilModeEntry = nil
+
     self.showHeightDisplay = MiningLayers.getXmlBool(xmlFile, 'miningLayers#showHeightDisplay', true)
     self.checkMaterials = MiningLayers.getXmlBool(xmlFile, 'miningLayers#checkMaterials', true)
     self.matchOutputTexture = MiningLayers.getXmlBool(xmlFile, 'miningLayers#matchOutputTexture', true)
@@ -2003,6 +2025,47 @@ function MiningLayers:getSpoilEntry(fillTypeName)
         }
         self.spoilEntries[fillTypeName] = entry
     end
+
+    return entry
+end
+
+---T14: Ueberschreib-Eintrag fuer den Abraum-Modus - EIN gecachtes Objekt, damit
+---getTerrainLayerFor seine Texturaufloesung daran cachen kann (ein frisches Table
+---je Grabvorgang wuerde die Aufloesung jeden Tick neu bezahlen). Kein isMound:
+---dieser Eintrag IST eine Schichtentscheidung, keine Halde. Der Cache haengt am
+---Materialnamen und wird in loadConfig entwertet (spoilModeEntry = nil).
+---@return table? entry
+function MiningLayers:getSpoilModeEntry()
+    local entry = self.spoilModeEntry
+
+    if entry ~= nil and entry.fillTypeName == self.spoilMaterial then
+        return entry
+    end
+
+    local fillType = g_fillTypeManager:getFillTypeByName(self.spoilMaterial)
+
+    if fillType == nil and self.spoilMaterial ~= 'DIRT' then
+        -- Unbekanntes Material aus der XML: einmal melden, dann DIRT.
+        if not self.spoilMaterialWarned then
+            self.spoilMaterialWarned = true
+            MiningLayers.log('Spoil mode: material "%s" unknown on this map - falling back to DIRT.',
+                tostring(self.spoilMaterial))
+        end
+
+        fillType = g_fillTypeManager:getFillTypeByName('DIRT')
+    end
+
+    if fillType == nil then
+        return nil
+    end
+
+    entry = {
+        fillTypeName = fillType.name,
+        fillTypeIndex = fillType.index,
+        boundary = nil,
+        terrainLayerResolved = false
+    }
+    self.spoilModeEntry = entry
 
     return entry
 end

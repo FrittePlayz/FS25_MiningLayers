@@ -29,12 +29,17 @@
         <text name="ml_tip2" text="Inserir um material em uma área = TerraFarm simples sem camadas (construção)" />
         <text name="ml_tip3" text="esvazie a caçamba antes de mudar de camada — uma caçamba, um material" />
         <text name="ml_tip4" text="o mod lembra das pilhas — você recolhe o que foi despejado" />
+        <text name="ml_spoilModeOn" text="Modo esteril LIGADO - o esteril e escavado como %s, apenas a camada mais profunda permanece real" />
+        <text name="ml_slotFullHint" text='Os slots estao cheios. Um mod de filltypes como "63 Alternative Filltypes" do Nonnus (ModHub/KingMods) libera espaco - melhor em um save de mineracao novo, pois desativa o descarregamento dos materiais do jogo base.' />
+        <text name="ml_helpQsMapSlotsTitle" text="Ficou sem slots?" />
+        <text name="ml_helpQsMapSlots" text='Cada mapa tem um numero fixo de slots de materiais de solo. Quando estao cheios, novos materiais podem ser escavados e vendidos, mas nao despejados. Um mod de filltypes como "63 Alternative Filltypes" do Nonnus libera slots desativando as culturas do jogo base. Use em um save de mineracao novo.' />
         <text name="ml_tip5" text="cor da linha = material iniciando ali; vermelho = fundo da mina" />
         <text name="ml_tip6" text="a tela mostra a distância até a próxima camada" />
         <text name="ml_tip7" text="Quais materiais existem é decidido pelo seu mapa + lista de mods — (!) significa: escavar sim, despejar não" />
 
         <text name="input_ML_TOGGLE_HUD" text="Mining Layers: alternar exibição" />
         <text name="input_ML_HUD_MOVE" text="Mining Layers: mover exibição (cursor do mouse)" />
+        <text name="input_ML_SPOIL_MODE" text="Mining Layers: modo esteril lig./desl." />
         <text name="ml_noInputArea" text="nenhuma área de entrada atribuída — atribua sua área no menu da máquina (Y), ou na aba Camadas escolha &quot;Em todo lugar&quot; em Aplica-se a" />
         <text name="ml_hudMoveHint" text="clique esquerdo: pegar/soltar — clique direito: posição padrão — pressione a tecla novamente: pronto" />
         <text name="ml_hudMoveSample" text="exibição de exemplo — no jogo as informações da camada aparecem aqui" />

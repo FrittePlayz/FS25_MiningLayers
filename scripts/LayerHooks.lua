@@ -286,7 +286,33 @@ function MiningLayers:applyLayer(op)
         return
     end
 
-    local fillType = g_fillTypeManager:getFillTypeByIndex(entry.fillTypeIndex)
+    -- T14 Abraum-Modus: liegt unter der getroffenen Schicht noch eine weitere,
+    -- ist sie Abraum und graebt als spoilMaterial (Standard DIRT); nur die
+    -- unterste Schicht (das Floez) bleibt echt - Fels darunter ist kein Layer
+    -- und liefert nil. Erkannte Halden (isMound) sind ausgenommen: das
+    -- Gedaechtnis verspricht, dass zurueckkommt, was abgekippt wurde.
+    -- NIE entry mutieren (geteilter Config-Eintrag) - deshalb effEntry.
+    local effEntry = entry
+
+    if self.spoilMode and entry.isMound ~= true then
+        local below = self:getNextLayerBelow(op.vehicle, terrainY, zoneName, worldPosX, worldPosZ)
+
+        if below ~= nil then
+            local spoilEntry = self:getSpoilModeEntry()
+
+            if spoilEntry ~= nil then
+                effEntry = spoilEntry
+
+                if not self.spoilModeLogged then
+                    self.spoilModeLogged = true
+                    MiningLayers.log('Spoil mode ON: overburden digs as %s, only the deepest layer stays real.',
+                        tostring(spoilEntry.fillTypeName))
+                end
+            end
+        end
+    end
+
+    local fillType = g_fillTypeManager:getFillTypeByIndex(effEntry.fillTypeIndex)
 
     if fillType ~= nil then
         op.fillType = fillType
@@ -302,8 +328,8 @@ function MiningLayers:applyLayer(op)
             if machineVehicle ~= nil
                 and MiningLayers.isCallable(machineVehicle.getMachineFillTypeIndex)
                 and MiningLayers.isCallable(machineVehicle.setMachineFillTypeIndex)
-                and machineVehicle:getMachineFillTypeIndex() ~= entry.fillTypeIndex then
-                self:syncStable('fill', entry.fillTypeIndex, function(value)
+                and machineVehicle:getMachineFillTypeIndex() ~= effEntry.fillTypeIndex then
+                self:syncStable('fill', effEntry.fillTypeIndex, function(value)
                     pcall(machineVehicle.setMachineFillTypeIndex, machineVehicle, value)
                 end)
             end
@@ -327,7 +353,7 @@ function MiningLayers:applyLayer(op)
     end
 
     if forcedInputLayer == nil then
-        local terrainLayerId = self:getTerrainLayerFor(entry)
+        local terrainLayerId = self:getTerrainLayerFor(effEntry)
 
         if terrainLayerId ~= nil then
             op.terrainLayerId = terrainLayerId

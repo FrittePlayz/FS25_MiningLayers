@@ -29,12 +29,17 @@
         <text name="ml_tip2" text="Enter a material in an area = plain TerraFarm without layers (construction)" />
         <text name="ml_tip3" text="empty the bucket before a layer change - one bucket, one material" />
         <text name="ml_tip4" text="the mod remembers piles - you pick up what was dumped" />
+        <text name="ml_spoilModeOn" text="Spoil mode ON - overburden digs as %s, only the deepest layer stays real" />
+        <text name="ml_slotFullHint" text="Slots are full. A fill-type mod like Nonnus' &quot;63 Alternative Filltypes&quot; (ModHub/KingMods) frees room - best on a fresh mining save, as it stops base crops from being dumped." />
+        <text name="ml_helpQsMapSlotsTitle" text="Ran out of slots?" />
+        <text name="ml_helpQsMapSlots" text="Every map has a fixed number of ground-material slots. Once they're full, extra materials dig and sell but won't dump. A fill-type mod such as Nonnus' &quot;63 Alternative Filltypes&quot; frees slots by turning off the base-game crop materials. Use it on a fresh mining save." />
         <text name="ml_tip5" text="line colour = material starting there; red = pit floor" />
         <text name="ml_tip6" text="the display shows how far it is to the next layer" />
         <text name="ml_tip7" text="Which materials exist is decided by your map plus your mod list — (!) means: digging yes, dumping no" />
 
         <text name="input_ML_TOGGLE_HUD" text="Mining Layers: display on/off" />
         <text name="input_ML_HUD_MOVE" text="Mining Layers: move display (mouse cursor)" />
+        <text name="input_ML_SPOIL_MODE" text="Mining Layers: spoil mode on/off" />
         <text name="ml_noInputArea" text="no input area assigned - assign your area as input in the machine menu (Y), or switch the target “Everywhere” on under Layers in the menu" />
         <text name="ml_hudMoveHint" text="left click: pick up/drop - right click: default position - press the key again: done" />
         <text name="ml_hudMoveSample" text="sample display - in game the layer info shows here" />
