@@ -167,6 +167,6 @@ Ta strona i polskie teksty w grze są tłumaczone maszynowo — poprawki od nati
 
 ## Sponsor
 
-Ten mod wspiera [farmersingles.de](https://www.farmersingles.de), portal randkowy dla rolników — stąd mała tablica przy rogu każdego obszaru. `sponsorSign="false"` w `miningLayers.xml` i znika; nic innego się nie zmienia.
+Ten mod wspiera [farmersingles.de](https://www.farmersingles.de), portal randkowy dla rolników. Tablicy przy rogu obszaru nie ma już od wersji 1.6.1.
 
 *Mining Layers — Tommy Honold, Farmersingles.de. Projekt [FrittePlayz](https://www.youtube.com/@FrittePlayz). Na razie darmowy.*

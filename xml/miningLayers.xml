@@ -83,14 +83,6 @@
     nur der Startzustand. / In game, Numpad 5 toggles the display (rebindable
     in the options); showHeightDisplay is just the state at startup.
 
-    sponsorSign: Stellt an einem Eckpunkt jedes Bereichs ein kleines Schild mit dem
-    Logo von farmersingles.de auf - dem Sponsor, der die Arbeit an diesem Mod
-    moeglich macht. Das Schild steht immer AUSSERHALB des Abbaubereichs und
-    blockiert keine Maschine. Auf sponsorSign="false" verschwindet es sofort;
-    der Mod funktioniert dadurch in keiner Weise anders. Kein Zwang, kein Nachhaken.
-    / places a small farmersingles.de sign at one corner of each area, always
-    OUTSIDE the digging area. Set to "false" and it is gone right away - nothing
-    else about the mod changes.
 -->
 
 <miningLayers enabled="true"
@@ -102,7 +94,6 @@
               syncVehicleMaterial="true"
               freeDumpHeight="true"
               dumpDiagnostics="false"
-              sponsorSign="true"
               displayPosX="0.012"
               displayPosY="0.55">
 

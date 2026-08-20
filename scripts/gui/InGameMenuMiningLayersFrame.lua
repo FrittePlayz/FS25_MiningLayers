@@ -175,11 +175,6 @@ InGameMenuMiningLayersFrame.CONTENT = {
         { type = 'image',     file = 'ml_help_08_riverbed' },
         { type = 'spacer' },
 
-        { type = 'section',   text = 'ml_helpSponsorTitle' },
-        { type = 'paragraph', text = 'ml_helpSponsor1' },
-        { type = 'paragraph', text = 'ml_helpSponsor2' },
-        { type = 'spacer' },
-
         { type = 'section',   text = 'ml_helpTipsAboutTitle' },
         { type = 'paragraph', text = 'ml_helpTipsAbout1' },
         { type = 'paragraph', text = 'ml_credits' },

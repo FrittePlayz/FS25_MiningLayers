@@ -4,6 +4,9 @@ All notable changes to Mining Layers. Newest first.
 
 ## [Unreleased]
 
+### Removed
+- **The sponsor sign at the pit edge is gone.** Until now every drawn area got a small farmersingles.de sign at one corner, switchable only per player via `sponsorSign="false"` in the local `miningLayers.xml` — a server admin could not turn it off for everyone, and the switch needed a savegame reload despite the docs saying "immediately". Asked for by TacticalOreo (RGC). Decision: the sign goes, the sponsor line in the credits stays. The `sponsorSign` attribute in existing config files is ignored and drops out the next time the editor saves; `signCompany01.i3d` from the base game is no longer loaded, the two logo textures have left the mod.
+
 ### Changed
 - **Roadmap: mixed bucket loads** added to the Director's Cut — a per-material ledger in the bucket across a layer boundary, dumped as a mixed material that a screening plant separates. Community suggestion, too large for a point release (a fill unit holds one material, the mixed material needs its own ground slot, and dumping proportionally runs into the same engine limit scfmod flagged in TerraFarm #123).
 

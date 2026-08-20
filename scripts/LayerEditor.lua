@@ -697,7 +697,6 @@ function MiningLayers:saveConfigFile()
     setXMLString(xmlId, 'miningLayers#syncVehicleMaterial', bool(self.syncVehicleMaterial))
     setXMLString(xmlId, 'miningLayers#freeDumpHeight', bool(self.freeDumpHeight))
     setXMLString(xmlId, 'miningLayers#dumpDiagnostics', bool(self.dumpDiagnostics))
-    setXMLString(xmlId, 'miningLayers#sponsorSign', bool(self.sponsorSign))
     setXMLString(xmlId, 'miningLayers#displayPosX', string.format('%.4f', self.displayPosX))
     setXMLString(xmlId, 'miningLayers#displayPosY', string.format('%.4f', self.displayPosY))
 

@@ -119,7 +119,6 @@ Das ist **kein Defekt und kein Mod-Konflikt — es ist die vorgesehene Umschaltu
 - **Tiefenanzeige & Tiefenlinien** — du weißt immer, wie tief du bist und was als Nächstes kommt; **Numpad /** schaltet die Anzeige ein/aus (im Spiel umbelegbar)
 - **Material-Check beim Start** — sagt dir, wie viele Bodenplätze diese Karte bietet und welche Materialien leer ausgingen
 - **Berg-Bonus** — am Steilhang liegt Paydirt oberflächennah: Wer die Anfahrt auf sich nimmt, wird belohnt
-- Multiplayer-freundliches Sponsorschild (siehe unten), kein Sync-Verkehr
 
 ## Fallstricke, die man kennen sollte
 
@@ -131,7 +130,7 @@ Das ist **kein Defekt und kein Mod-Konflikt — es ist die vorgesehene Umschaltu
 
 ## Konfiguration
 
-`modSettings/FS25_MiningLayers/miningLayers.xml` — wird beim ersten Start aus der Vorlage angelegt und überlebt Mod-Updates. Schichtaufbau (Material + Tiefe, pro Bereich), Anzeige-Optionen und der Sponsorschild-Schalter stehen hier. Alles auch über das Ingame-Menü editierbar.
+`modSettings/FS25_MiningLayers/miningLayers.xml` — wird beim ersten Start aus der Vorlage angelegt und überlebt Mod-Updates. Schichtaufbau (Material + Tiefe, pro Bereich) und Anzeige-Optionen stehen hier. Alles auch über das Ingame-Menü editierbar.
 
 ### Eigene Geologie — Kiesgrube, Kohlerevier
 
@@ -316,7 +315,7 @@ Andere Meinung zur Reihenfolge oder eine Idee, die fehlt? [Diskussion oder Issue
 ## Sponsor
 
 Mining Layers wird unterstützt von **[farmersingles.de](https://farmersingles.de)** — der Singlebörse für Landwirte. 🚜❤️
-Im Spiel zeigt sich das als kleines Schild am Grubenrand. Nicht gewünscht? `sponsorSign="false"` in der Config — das Schild verschwindet sofort, ohne Neustart.
+Das Sponsorschild am Grubenrand gibt es seit 1.6.1 nicht mehr — nichts mehr abzuschalten.
 
 ## Fehler & Fragen
 

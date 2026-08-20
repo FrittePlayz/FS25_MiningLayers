@@ -167,6 +167,6 @@ Cette page et les textes en jeu FR sont traduits automatiquement — les correct
 
 ## Sponsor
 
-Ce mod est soutenu par [farmersingles.de](https://www.farmersingles.de), un site de rencontre pour agriculteurs — d'où le petit panneau au coin de chaque zone. `sponsorSign="false"` dans `miningLayers.xml` et il disparaît ; rien d'autre ne change.
+Ce mod est soutenu par [farmersingles.de](https://www.farmersingles.de), un site de rencontre pour agriculteurs. Le panneau au coin de chaque zone n'existe plus depuis la 1.6.1.
 
 *Mining Layers par Tommy Honold, Farmersingles.de. Un projet [FrittePlayz](https://www.youtube.com/@FrittePlayz). Gratuit jusqu'ici.*

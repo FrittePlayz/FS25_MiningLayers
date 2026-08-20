@@ -173,9 +173,6 @@
         <text name="ml_helpTipsMapB4" text="Mod działa na każdej mapie: dla tekstur warstw automatycznie wybiera najbliższe podłoże, jakie mapa oferuje (standardowe nazwy jak GRAVEL, MOUNTAINROCK, MOSS_STONES). Jeśli mapa nie ma nic pasującego, po prostu zostaje aktywny twój własny wybór tekstury - materiały, warstwy i hałdy nadal działają." />
         <text name="ml_helpTipsMapB3" text="Niektóre mapy blokują koryta rzek przed deformacją. To block mapa samej mapy i nie ma nic wspólnego z własnością ani z tym modem." />
 
-        <text name="ml_helpSponsorTitle" text="Wspierane przez farmersingles.de" />
-        <text name="ml_helpSponsor1" text="Ten mod jest wspierany przez farmersingles.de, portal randkowy dla rolników. Dlatego przy jednym narożniku każdego obszaru stoi mała tablica z ich logo. Mówimy to otwarcie, zamiast ukrywać." />
-        <text name="ml_helpSponsor2" text="Tablica stoi zawsze POZA obszarem kopania i nie blokuje żadnej maszyny. Jeśli wolisz bez niej: ustaw sponsorSign=false w miningLayers.xml i znika od razu. Nic innego w modzie się nie zmienia, i nie będziemy pytać ponownie." />
         <text name="ml_helpTipsAboutTitle" text="O tym modzie" />
         <text name="ml_helpTipsAbout1" text="Mining Layers to nieoficjalny dodatek do TerraFarm od scfmod. Nie ma żadnego powiązania ze scfmod i żadne pliki TerraFarm nie są dołączane. TerraFarm jest dostępny na GitHubie, nie w ModHubie." />
         <text name="ml_pageTitle" text="Mining Layers" />

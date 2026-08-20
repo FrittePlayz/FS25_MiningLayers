@@ -161,9 +161,6 @@
         <text name="ml_helpTipsMapB4" text="La mod funziona su qualsiasi mappa: per le texture dei layer, seleziona automaticamente il terreno più simile disponibile sulla mappa (nomi standard come GRAVEL, MOUNTAINROCK, MOSS_STONES). Se una mappa non offre nulla di adatto, la tua selezione di texture personalizzata rimane attiva: materiali, layer e cumuli continuano a funzionare." />
         <text name="ml_helpTipsMapB3" text="Alcune mappe bloccano i letti dei fiumi impedendone la deformazione. Questa è una caratteristica della mappa stessa e non ha nulla a che vedere con la proprietà o con questa mod." />
 
-        <text name="ml_helpSponsorTitle" text="Con il supporto di farmersingles.de" />
-        <text name="ml_helpSponsor1" text="Questa mod è supportata da farmersingles.de, un sito di incontri per agricoltori. Per questo motivo, un piccolo cartello con il loro logo si trova in un angolo di ogni area. Lo diciamo apertamente, invece di nasconderlo." />
-        <text name="ml_helpSponsor2" text="Il cartello si trova sempre all'esterno dell'area di scavo e non blocca alcuna macchina. Se preferisci non averlo: imposta sponsorSign=false in miningLayers.xml e sparirà subito. Nient'altro riguardo alle modifiche alla mod e non lo chiederemo di nuovo." />
         <text name="ml_helpTipsAboutTitle" text="Informazioni su questa mod" />
         <text name="ml_helpTipsAbout1" text="Mining Layers è un componente aggiuntivo non ufficiale per TerraFarm creato da scfmod. Non esiste alcuna affiliazione con scfmod e non vengono distribuiti file di TerraFarm. TerraFarm è disponibile su GitHub, non su ModHub." />
         <text name="ml_pageTitle" text="Mining Layers" />

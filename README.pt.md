@@ -83,6 +83,6 @@ O português no jogo (pt e br) é uma contribuição do **Alicopower** ([Issue #
 
 ## Patrocínio
 
-Este mod é apoiado pelo [farmersingles.de](https://www.farmersingles.de), um site de relacionamento para quem é do campo — daí a plaquinha no canto de cada área. `sponsorSign="false"` no `miningLayers.xml` e ela some; nada mais muda.
+Este mod é apoiado pelo [farmersingles.de](https://www.farmersingles.de), um site de relacionamento para quem é do campo. A plaquinha no canto de cada área não existe mais desde a 1.6.1.
 
 *Mining Layers de Tommy Honold, Farmersingles.de. Um projeto [FrittePlayz](https://www.youtube.com/@FrittePlayz). Gratuito até aqui.*

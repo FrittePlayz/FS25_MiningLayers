@@ -135,7 +135,6 @@ source(g_currentModDirectory .. 'scripts/MaterialCheck.lua')
 source(g_currentModDirectory .. 'scripts/HeightDisplay.lua')
 source(g_currentModDirectory .. 'scripts/LayerEditor.lua')
 source(g_currentModDirectory .. 'scripts/MiningLayersGui.lua')
-source(g_currentModDirectory .. 'scripts/SponsorSign.lua')
 source(g_currentModDirectory .. 'scripts/MiningLayersSpec.lua')
 source(g_currentModDirectory .. 'scripts/HudMover.lua')
 
@@ -260,10 +259,6 @@ function MiningLayers:loadMap(filename)
         MiningLayers:subscribeAreaUpdates()
     end)
 
-    MiningLayers.protectedCall('spawnSignsForAllAreas', function()
-        MiningLayers:spawnSignsForAllAreas()
-    end)
-
     -- Anzeige-Taste (Standard Num /): registriert sich ueber die eigene
     -- Fahrzeug-Spezialisierung (MiningLayersSpec) und zusaetzlich global via
     -- PlayerInputComponent (HudMover.lua). Greift beides nicht, toggelt der
@@ -296,11 +291,6 @@ function MiningLayers:deleteMap()
     -- Das Ingame-Menue wird ohnehin mit abgebaut; TerraFarm laesst seine Seite
     -- aus demselben Grund stehen. Beim naechsten loadMap erkennt
     -- ensureMenuPage die vorhandene Seite und laesst sie in Ruhe.
-    --
-    -- Schilder ebenso: die Szenenknoten gehoeren zur Karte und werden mit ihr
-    -- abgeraeumt. Ein delete() auf einen schon zerstoerten Knoten waere ein
-    -- Risiko ohne Gegenwert - wir vergessen sie nur.
-    MiningLayers.signNodes = {}
 
     -- Eingabe-/Fallback-Zustand komplett zuruecksetzen: sonst kann beim
     -- naechsten Kartenstart ein Geister-Zustand aus dem alten Spielstand

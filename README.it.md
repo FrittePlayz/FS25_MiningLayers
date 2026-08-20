@@ -75,6 +75,6 @@ L'italiano in gioco è un contributo di **marcols13** ([Discussion #1](https://g
 
 ## Sponsor
 
-Questa mod è sostenuta da [farmersingles.de](https://www.farmersingles.de), un sito di incontri per agricoltori — da lì il piccolo cartello all'angolo di ogni area. `sponsorSign="false"` in `miningLayers.xml` e sparisce; nient'altro cambia.
+Questa mod è sostenuta da [farmersingles.de](https://www.farmersingles.de), un sito di incontri per agricoltori. Il cartello all'angolo di ogni area non c'è più dalla 1.6.1.
 
 *Mining Layers di Tommy Honold, Farmersingles.de. Un progetto [FrittePlayz](https://www.youtube.com/@FrittePlayz). Gratis finora.*

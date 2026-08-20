@@ -188,9 +188,6 @@
         <text name="ml_helpTipsMapB4" text="Der Mod läuft auf jeder Karte: Für die Schicht-Texturen sucht er sich automatisch den passendsten Boden, den die Karte anbietet (Standardnamen wie GRAVEL, MOUNTAINROCK, MOSS_STONES). Hat eine Karte nichts Passendes, bleibt einfach deine eigene Texturwahl aktiv - Material, Schichten und Halden funktionieren trotzdem." />
         <text name="ml_helpTipsMapB3" text="Manche Karten sperren Flussbetten gegen Verformung. Das ist eine Sperrkarte der Karte selbst und hat nichts mit Besitz oder mit diesem Mod zu tun." />
 
-        <text name="ml_helpSponsorTitle" text="Unterstützt von farmersingles.de" />
-        <text name="ml_helpSponsor1" text="Dieser Mod wird von farmersingles.de unterstützt, der Singlebörse für Landwirte. Deshalb steht an einer Ecke jedes Bereichs ein kleines Schild mit deren Logo. Das sagen wir offen, statt es zu verstecken." />
-        <text name="ml_helpSponsor2" text="Das Schild steht immer außerhalb des Abbaubereichs und blockiert keine Maschine. Wenn du es nicht willst: sponsorSign=false in der miningLayers.xml, dann ist es sofort weg. Am Mod ändert sich dadurch nichts, und wir fragen auch nicht nach." />
         <text name="ml_helpTipsAboutTitle" text="Über diesen Mod" />
         <text name="ml_helpTipsAbout1" text="Mining Layers ist ein inoffizielles Addon für TerraFarm von scfmod. Es besteht keine Verbindung zu scfmod, und es werden keine TerraFarm-Dateien mitgeliefert. TerraFarm gibt es auf GitHub, nicht im ModHub." />
         <text name="ml_helpTipsAbout2" text="Der Mod ist bisher kostenlos." />

@@ -118,7 +118,6 @@ This is **not a defect and not a mod conflict — it's the intended switch.** If
 - **Depth display & depth lines** — always know how deep you are and what comes next; **Numpad /** toggles the display, **Numpad ✱** moves it (both rebindable in the game options). ⚠️ Upgrading from an older version? A changed default only reaches profiles that do not know the action yet — if a key is missing, assign it once under Options → Controls → Mining Layers.
 - **Material check at startup** — tells you how many ground slots this map offers and which materials missed out
 - **Mountain bonus** — on steep slopes paydirt sits near the surface: hauling up the mountain gets rewarded
-- Multiplayer-friendly sponsor sign (see below), no sync traffic
 
 ## Pitfalls worth knowing
 
@@ -130,7 +129,7 @@ This is **not a defect and not a mod conflict — it's the intended switch.** If
 
 ## Configuration
 
-`modSettings/FS25_MiningLayers/miningLayers.xml` — created from the template on first start, survives mod updates. Layer stacks (material + depth, per area), display options, and the sponsor sign toggle live here. Everything can also be edited from the in-game menu.
+`modSettings/FS25_MiningLayers/miningLayers.xml` — created from the template on first start, survives mod updates. Layer stacks (material + depth, per area) and display options live here. Everything can also be edited from the in-game menu.
 
 ### Custom geology — gravel pit, coal mine
 
@@ -315,7 +314,7 @@ Got an opinion on the order, or an idea that's missing? [Open a discussion or is
 ## Sponsor
 
 Mining Layers is supported by **[farmersingles.de](https://farmersingles.de)** — the dating site for farmers. 🚜❤️
-In game this shows as a small sign at the pit edge. Don't want it? Set `sponsorSign="false"` in the config — it disappears immediately, no restart needed.
+The sponsor sign at the pit edge is gone since 1.6.1 — nothing to switch off any more.
 
 ## Bugs & questions
 

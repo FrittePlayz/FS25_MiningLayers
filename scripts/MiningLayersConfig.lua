@@ -438,7 +438,6 @@ function MiningLayers:loadConfig()
     self.syncVehicleMaterial = MiningLayers.getXmlBool(xmlFile, 'miningLayers#syncVehicleMaterial', true)
     self.freeDumpHeight = MiningLayers.getXmlBool(xmlFile, 'miningLayers#freeDumpHeight', true)
     self.dumpDiagnostics = MiningLayers.getXmlBool(xmlFile, 'miningLayers#dumpDiagnostics', false)
-    self.sponsorSign = MiningLayers.getXmlBool(xmlFile, 'miningLayers#sponsorSign', true)
     self.displayPosX = MiningLayers.getXmlNumber(xmlFile, 'miningLayers#displayPosX') or self.displayPosX
     self.displayPosY = MiningLayers.getXmlNumber(xmlFile, 'miningLayers#displayPosY') or self.displayPosY
 
@@ -1097,16 +1096,6 @@ function MiningLayers:getResolvedForArea(area)
         MiningLayers:maybeSetPitFloor(area, resolved, surfaceY, label, plane)
     end)
 
-    -- Zweites Netz fuers Sponsorschild (Percys Vorschlag): spaetestens wenn ein
-    -- Bereich wirklich aufgeloest wird, existiert er samt Ecken. Falls das
-    -- REGISTER-Ereignis zu frueh kam und kein UPDATE folgte, greift es hier.
-    -- spawnSign steigt sofort aus, wenn fuer den Bereich schon ein Schild steht.
-    if MiningLayers.isCallable(MiningLayers.spawnSign) then
-        MiningLayers.protectedCall('spawnSignOnResolve', function()
-            MiningLayers:spawnSign(area)
-        end)
-    end
-
     return resolved, surfaceY, nil, plane
 end
 
@@ -1639,6 +1628,28 @@ function MiningLayers:resolveAllAreas()
     end
 end
 
+---Alle Landscaping-Bereiche von TerraFarm (fuer die Ziel-Liste im Editor).
+---⚠️ Der Manager heisst g_landscapingManager, nicht g_landscapingAreaManager -
+---mit dem falschen Namen kam beim Kartenstart still eine leere Liste.
+---@return table
+function MiningLayers.getLandscapingAreas()
+    local manager = MiningLayers.tf('g_landscapingManager')
+
+    if manager == nil then
+        return {}
+    end
+
+    if MiningLayers.isCallable(manager.getAreas) then
+        local ok, areas = pcall(manager.getAreas, manager)
+
+        if ok and type(areas) == 'table' then
+            return areas
+        end
+    end
+
+    return type(manager.areas) == 'table' and manager.areas or {}
+end
+
 ---Verwirft den Cache eines Bereichs, wenn er im Editor geaendert wurde.
 function MiningLayers:subscribeAreaUpdates()
     local ModMessageType = MiningLayers.tf('ModMessageType')
@@ -1649,8 +1660,8 @@ function MiningLayers:subscribeAreaUpdates()
 
     ---★★ g_messageCenter ruft den Empfaenger als callback(target, ...) auf.
     ---Mit MiningLayers als target kam bisher die Mod-Tabelle als erstes Argument
-    ---an, nicht der Bereich - die Cache-Invalidierung lief also nie, und das
-    ---Sponsorschild wurde nie gesetzt. TerraFarm uebergibt darum ueberall
+    ---an, nicht der Bereich - die Cache-Invalidierung lief also nie.
+    ---TerraFarm uebergibt darum ueberall
     ---Methode + self (z.B. MachineSettingsAreaFrame.lua:90).
     ---Wir nehmen den Bereich aus den Argumenten heraus, egal an welcher Stelle
     ---er steht - das haelt auch, falls sich die Aufrufform je aendert.
@@ -1680,24 +1691,13 @@ function MiningLayers:subscribeAreaUpdates()
         end
     end
 
-    -- Bereich neu angelegt oder verschoben: Schild setzen bzw. neu setzen.
-    -- ⚠️ Ohne dieses Abo kam beim Anlegen einer Area gar kein Schild - es wurde
-    -- nur beim Kartenstart fuer bereits bestehende Bereiche aufgestellt.
+    -- Bereich neu angelegt oder verschoben: Cache des Bereichs verwerfen.
     local function onAreaChanged(...)
-        local area, id = pickArea(...)
+        local _, id = pickArea(...)
 
         if id ~= nil then
             MiningLayers.resolvedByArea[id] = nil
         end
-
-        if area == nil then
-            return
-        end
-
-        MiningLayers.protectedCall('refreshSign', function()
-            MiningLayers:removeSign(area.uniqueId)
-            MiningLayers:spawnSign(area)
-        end)
     end
 
     if ModMessageType.LANDSCAPING_AREA_REGISTER ~= nil then
@@ -1708,7 +1708,7 @@ function MiningLayers:subscribeAreaUpdates()
         g_messageCenter:subscribe(ModMessageType.LANDSCAPING_AREA_UPDATE, onAreaChanged, MiningLayers)
     end
 
-    -- Bereich geloescht: Schild sofort mit entfernen, nicht erst beim Neuladen.
+    -- Bereich geloescht: Cache des Bereichs verwerfen.
     local function onAreaDeleted(...)
         local _, id = pickArea(...)
 
@@ -1717,10 +1717,6 @@ function MiningLayers:subscribeAreaUpdates()
         end
 
         MiningLayers.resolvedByArea[id] = nil
-
-        MiningLayers.protectedCall('removeSign', function()
-            MiningLayers:removeSign(id)
-        end)
     end
 
     if ModMessageType.LANDSCAPING_AREA_DELETE ~= nil then
