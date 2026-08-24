@@ -86,3 +86,7 @@ O português no jogo (pt e br) é uma contribuição do **Alicopower** ([Issue #
 Este mod é apoiado pelo [farmersingles.de](https://www.farmersingles.de), um site de relacionamento para quem é do campo — daí a plaquinha no canto de cada área. `sponsorSign="false"` no `miningLayers.xml` e ela some; nada mais muda.
 
 *Mining Layers de Tommy Honold, Farmersingles.de. Um projeto [FrittePlayz](https://www.youtube.com/@FrittePlayz). Gratuito até aqui.*
+
+## Licença
+
+O Mining Layers é gratuito para baixar e jogar, mas **não é livre para redistribuição** — fsmodworks.com é o único local de download. Espelhos, forks e pacotes de mods não são permitidos; quase tudo o resto é, e o que não estiver coberto costuma ser autorizado se você perguntar antes. Condições completas em [LICENSE](LICENSE).

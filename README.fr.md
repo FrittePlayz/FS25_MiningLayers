@@ -170,3 +170,7 @@ Cette page et les textes en jeu FR sont traduits automatiquement — les correct
 Ce mod est soutenu par [farmersingles.de](https://www.farmersingles.de), un site de rencontre pour agriculteurs — d'où le petit panneau au coin de chaque zone. `sponsorSign="false"` dans `miningLayers.xml` et il disparaît ; rien d'autre ne change.
 
 *Mining Layers par Tommy Honold, Farmersingles.de. Un projet [FrittePlayz](https://www.youtube.com/@FrittePlayz). Gratuit jusqu'ici.*
+
+## Licence
+
+Mining Layers est gratuit à télécharger et à jouer, mais **pas libre de redistribution** — fsmodworks.com est le seul lieu de téléchargement. Les miroirs, les forks et les packs de mods ne sont pas autorisés ; presque tout le reste l'est, et ce qui n'est pas couvert est généralement accordé si vous demandez d'abord. Conditions complètes dans [LICENSE](LICENSE).
