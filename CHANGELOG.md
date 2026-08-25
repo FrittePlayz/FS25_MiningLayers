@@ -2,6 +2,12 @@
 
 All notable changes to Mining Layers. Newest first.
 
+## [1.6.2.0] — 2026-08-25 (in-game test pending)
+
+### Added
+- **Grade lock** (Num 2, off by default): the dig stops at the layer boundary instead of cutting through two materials in one pass — the next pass picks up the next layer with its material. Asked for by the RGC mining crew ("digging less confusing"). Works in the lower/flatten path; a target height you set by hand yourself always wins, piles are exempt, and the deepest layer digs free as before. Also switchable via `holdGrade` in `miningLayers.xml`. Note: Num 2 doubles with a base-game light binding — rebindable under Options > Controls > Mining Layers.
+- **Download Key check (report mode).** Mining Layers stays free — the Download Key from fsmodworks.com costs nothing and marks your copy against re-uploads. This build looks for the key file (`modSettings/FSMW/`, or a file with "key" in its name in the mods folder), verifies it offline and reports the result in log and height display. **It does not block anything yet**: this build measures the key path first; enforcement comes with a later release once the read path is proven in-game.
+
 ## [1.6.1.0] — 2026-08-25 (tester build for the RGC circle, in-game test pending)
 
 ### Added

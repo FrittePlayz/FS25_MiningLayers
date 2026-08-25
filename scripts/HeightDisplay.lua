@@ -289,6 +289,15 @@ function MiningLayers:buildDisplayLines()
             'Grade-Sperre AN - der Grabzug stoppt an der Schichtgrenze'))
     end
 
+    -- 1.6.2 Aktivierung: Key-Status sichtbar machen. Im 'report'-Testbuild ist
+    -- diese Zeile das Messergebnis; im 'enforce'-Build kommt man ohne Key gar
+    -- nicht bis hierher (Mod inaktiv). Der Text kommt aus dem Lizenzmodul
+    -- (DE/EN), nicht aus l10n - eine Quelle fuer alle FSMW-Mods.
+    if MiningLayersGate ~= nil and MiningLayersGate.result ~= nil
+        and not MiningLayersGate.isLicensed() then
+        table.insert(lines, '! ' .. MiningLayersGate.getMessage())
+    end
+
     -- ★ Zielhoehe des Bereichs - die Auskunft, die bis 1.6.0 nur im Log stand.
     --
     -- Ohne sie merkt niemand, dass ein frisch gezeichneter Bereich seine Zielhoehe vom

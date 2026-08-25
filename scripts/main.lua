@@ -15,7 +15,7 @@
 
 MiningLayers = {}
 
-MiningLayers.VERSION = '1.6.1.0'
+MiningLayers.VERSION = '1.6.2.0'
 MiningLayers.LOG_PREFIX = '[MiningLayers] '
 
 MiningLayers.MOD_NAME = g_currentModName
@@ -137,6 +137,11 @@ source(g_currentModDirectory .. 'scripts/LayerEditor.lua')
 source(g_currentModDirectory .. 'scripts/MiningLayersGui.lua')
 source(g_currentModDirectory .. 'scripts/MiningLayersSpec.lua')
 source(g_currentModDirectory .. 'scripts/HudMover.lua')
+-- 1.6.2 Aktivierung (Download Key, fsmodworks): Reihenfolge ist Vertrag -
+-- FsmwLicense liest FsmwCrypto beim Laden, das Gate braucht beide.
+source(g_currentModDirectory .. 'scripts/license/FsmwCrypto.lua')
+source(g_currentModDirectory .. 'scripts/license/FsmwLicense.lua')
+source(g_currentModDirectory .. 'scripts/license/MiningLayersGate.lua')
 
 ---Anzahl Fahrzeugtypen mit unserer Eingabe-Spezialisierung (fuer das Log).
 MiningLayers.inputSpecCount = 0
@@ -200,6 +205,22 @@ function MiningLayers:loadMap(filename)
     MiningLayers.protectedCall('loadConfig', function()
         MiningLayers:loadConfig()
     end)
+
+    -- 1.6.2 Aktivierung: Download Key suchen und pruefen. Im 'report'-Modus
+    -- (Testbuild) faellt hier nur die Messung an; 'enforce' schaltet den Mod
+    -- ohne gueltigen Key ab, BEVOR Hooks und Menueseite installiert werden.
+    MiningLayers.protectedCall('licenseCheck', function()
+        MiningLayersGate.run()
+    end)
+
+    if MiningLayersGate ~= nil and MiningLayersGate.MODE == 'enforce'
+        and not MiningLayersGate.isLicensed() then
+        MiningLayers.log('Download Key missing or invalid - Mining Layers stays INACTIVE (gate mode "enforce").')
+        MiningLayers.log('  %s', MiningLayersGate.getMessage())
+        MiningLayers.active = false
+
+        return
+    end
 
     -- HUD-Position aus modSettings/hud.xml (falls der Spieler die Anzeige
     -- schon einmal verschoben hat) - NACH loadConfig, damit der Stand aus der

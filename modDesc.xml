@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <modDesc descVersion="97">
     <author>Tommy Honold - Farmersingles.de - FrittePlayz</author>
-    <version>1.6.1.0</version>
+    <version>1.6.2.0</version>
 
     <title>
         <en>Mining Layers</en>
@@ -201,8 +201,14 @@ Configurações: modSettings/FS25_MiningLayers/miningLayers.xml]]>
         <actionBinding action="ML_SPOIL_MODE">
             <binding device="KB_MOUSE_DEFAULT" input="KEY_KP_5" index="1" />
         </actionBinding>
-        <!-- 1.6.2 Grade-Sperre. KP_2 ist frei: gleiche Pruefliste wie oben,
-             dazu inzwischen KP 5 (Abraum-Modus) von uns selbst. -->
+        <!-- 1.6.2 Grade-Sperre. ⚠️ KP_2 ist NICHT frei: laut Messung vom 12.08.
+             (siehe Kommentar unten) nimmt das Basisspiel Num 1/2/3 fuer die
+             Blinker. Vom Numpad sind nur / und * konfliktfrei, beide belegen
+             wir selbst. Konflikt bewusst akzeptiert - Praezedenz: TerraFarm
+             ueberlagert Num 9 (Gruppen), unser Abraum-Modus Num 5 (Arbeits-
+             licht). Umbelegen unter Optionen > Steuerung > Mining Layers;
+             beim Testtag pruefen, ob der Blinker-Doppelbeleg im Fahrzeug
+             stoert. -->
         <actionBinding action="ML_HOLD_GRADE">
             <binding device="KB_MOUSE_DEFAULT" input="KEY_KP_2" index="1" />
         </actionBinding>
