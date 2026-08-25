@@ -32,8 +32,22 @@ FsmwLicense.MARK_END   = "--- DOWNLOAD KEY ENDE ---"
 FsmwLicense.PUBKEY_MODULUS = "dad6f4d5ccb573e71119aedefad687fe9262968a051a07f47d8bf1c56cf67b665b393096c81ac83d14f8bdd0da30637fa1958ad51ed635290e0b945b43c41ebcbe9d7370e9675ec66fc42596a97cfe4b972cc02ea9f12d70ced2e82ad143a2b45ca1daa9e06d93a8feeeb44041dc0561ae68a6ff42a21867d40ac179663bc8c583203c0d4f865c9922d6cfab40cb6da6f720a103472cff03b2d73eb229c6a2bb55841313fb60a0ada26a1cf48943248084ee74e0061047904e540e54a986b836ba637c1f5f1296c47e7e5a35e0f5a1fc6e063d9eff068304d7972927f654be3485a324329e6a3c508bf8a450c8eda0c9bbc73f2d13887d2526a50ce7922712d3"
 FsmwLicense.PUBKEY_FINGERPRINT = "cd81f4f425184280"
 
--- Sperrliste: je Zeile "<wm>  <memberId>  <product>" (aus /admin/licenses in den Build gebacken).
--- Match auf wm ODER memberId (je Produkt).
+-- Sperrliste: je Zeile "<wm>  <memberId>  [<product>]  [<issued>]" (aus
+-- /admin/licenses in den Build gebacken).
+--
+-- ⚠️ Konstruktionsfehler-Fix (Percys Fund, 25.08.): wm UND memberId sind pro
+-- Konto KONSTANT (wm ist absichtlich deterministisch aus der Konto-ID, damit
+-- dieselbe Person bei Neuausstellung ihr Zeichen behaelt). Ein Match nur auf
+-- wm/memberId sperrt darum bei jedem "Key neu ausstellen" (das den alten Key
+-- widerruft) den RECHTMAESSIGEN Besitzer dauerhaft aus - auch jeden neuen Key.
+-- Deshalb unterscheidet die Liste jetzt zwei Faelle ueber `issued` (steht
+-- bereits im Payload und ist pro Ausstellung verschieden, Token-Format bleibt):
+--   Zeile MIT issued  -> sperrt genau DIESE Ausstellung (Normalfall: alter
+--                        Key nach Neuausstellung).
+--   Zeile OHNE issued -> bewusste KONTOSPERRE (echter Missbrauch), trifft
+--                        jeden Key des Kontos.
+-- `product` (Spalte 3) wird mitgeprueft, wenn vorhanden: eine Sperre fuer ein
+-- anderes Produkt trifft diesen Mod nicht.
 FsmwLicense.REVOKED = {}   -- wird per FsmwLicense.loadRevoked(text) gefüllt
 
 ---Sperrliste aus dem Build-Textblock laden.
@@ -41,9 +55,14 @@ function FsmwLicense.loadRevoked(text)
     FsmwLicense.REVOKED = {}
     if type(text) ~= "string" then return end
     for line in (text .. "\n"):gmatch("(.-)\n") do
-        local wm, member = line:match("^%s*(%x+)%s+(%S+)")
+        local wm, member, product, issued = line:match("^%s*(%x+)%s+(%S+)%s*(%S*)%s*(%S*)")
         if wm ~= nil then
-            FsmwLicense.REVOKED[#FsmwLicense.REVOKED + 1] = { wm = wm, memberId = member }
+            FsmwLicense.REVOKED[#FsmwLicense.REVOKED + 1] = {
+                wm = wm,
+                memberId = member,
+                product = (product ~= nil and product ~= "") and product or nil,
+                issued = (issued ~= nil and issued ~= "") and issued or nil,
+            }
         end
     end
 end
@@ -87,9 +106,14 @@ function FsmwLicense.check(content, expectedProduct)
     if expectedProduct ~= nil and p.product ~= expectedProduct then
         return { ok = false, reason = "wrongProduct", payload = p }
     end
-    -- Sperrliste
+    -- Sperrliste. Kontotreffer allein reicht NICHT: eine Zeile mit `issued`
+    -- sperrt nur genau diese Ausstellung (siehe Blockkommentar bei REVOKED).
     for _, r in ipairs(FsmwLicense.REVOKED) do
-        if (p.wm ~= nil and r.wm == p.wm) or (r.memberId == p.memberId) then
+        local accountHit = (p.wm ~= nil and r.wm == p.wm) or (r.memberId == p.memberId)
+        local productHit = r.product == nil or r.product == p.product
+        local issuedHit = r.issued == nil or tostring(r.issued) == tostring(p.issued)
+
+        if accountHit and productHit and issuedHit then
             return { ok = false, reason = "revoked", payload = p }
         end
     end
