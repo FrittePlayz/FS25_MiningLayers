@@ -72,6 +72,15 @@
     a metre below the bucket - which on flat ground is almost always. Set to "false"
     for TerraFarm's original behaviour.
 
+    holdGrade: Grade-Sperre (Numpad 2 im Spiel). Der Grabzug stoppt an der
+    Schichtgrenze, statt in einem Zug durch zwei Materialien zu gehen - erst der
+    naechste Zug greift die naechste Schicht samt Material. Wirkt im LOWER/Flatten-
+    Pfad; eine von Hand flacher gesetzte Zielhoehe bleibt stehen, Halden sind
+    ausgenommen. VORGABE: false. / grade lock (Numpad 2 in game): the dig stops at
+    the layer boundary instead of cutting through two materials in one pass. The
+    next pass picks up the next layer with its material. Works in the LOWER/flatten
+    path; a hand-set shallower target height wins, piles are exempt. DEFAULT: false.
+
     dumpDiagnostics: schreibt bei jedem Abkippversuch eine DIAG-Zeile ins log.txt
     (Betriebsart, Liter rein/raus, Zustand der Pruefpunkte). Nur zur Fehlersuche -
     im Alltag "false". / writes a DIAG line to log.txt on every dump attempt.
@@ -93,6 +102,7 @@
               showDepthLines="true"
               syncVehicleMaterial="true"
               freeDumpHeight="true"
+              holdGrade="false"
               dumpDiagnostics="false"
               displayPosX="0.012"
               displayPosY="0.55">

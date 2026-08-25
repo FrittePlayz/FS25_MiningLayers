@@ -312,6 +312,35 @@ function MiningLayers:applyLayer(op)
         end
     end
 
+    -- 1.6.2 Grade-Sperre: targetY der laufenden Operation auf die Unterkante der
+    -- getroffenen Schicht klemmen - der Zug stoppt an der Grenze, statt in einem
+    -- Zug durch zwei Materialien zu gehen. Steht das Gelaende auf der Grenze,
+    -- liefert findLayer beim naechsten Zug die naechste Schicht samt Material.
+    --
+    -- Drei bewusste Einschraenkungen:
+    --   1. NUR anheben (boundary > op.targetY): eine von Hand flacher gesetzte
+    --      Zielhoehe ist Nutzerwille und bleibt stehen.
+    --   2. NUR wenn op.targetY eine Zahl ist: das ist der Flatten-Pfad (LOWER).
+    --      Slope kennt minY, Smooth gar keine Zielhoehe - dort keine Wirkung
+    --      erzwingen, die wir nicht am Quelltext belegt haben.
+    --   3. NUR am op, NIE an area.targetY: die Bereichs-Zielhoehe schlaegt in die
+    --      AUSGABE durch (Befund 2026-08-11, Ebnen wurde Absenken).
+    -- Halden sind ausgenommen (Gedaechtnis-Vertrag), das Floez hat keine Grenze
+    -- darunter (getNextLayerBelow liefert nil) und graebt frei wie bisher.
+    if self.holdGrade and entry.isMound ~= true and type(op.targetY) == 'number' then
+        local _, layerFloor = self:getNextLayerBelow(op.vehicle, terrainY, zoneName, worldPosX, worldPosZ)
+
+        if layerFloor ~= nil and layerFloor > op.targetY then
+            op.targetY = layerFloor
+
+            if not self.holdGradeLogged then
+                self.holdGradeLogged = true
+                MiningLayers.log('Grade lock ON: the dig stops at the layer boundary (%.2f m) - one pass, one material.',
+                    layerFloor)
+            end
+        end
+    end
+
     local fillType = g_fillTypeManager:getFillTypeByIndex(effEntry.fillTypeIndex)
 
     if fillType ~= nil then

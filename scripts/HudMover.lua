@@ -304,9 +304,19 @@ function MiningLayers.registerGlobalActionEvents()
         end
     end
 
+    -- 4) 1.6.2 Grade-Sperre. Gleiches Muster.
+    if InputAction.ML_HOLD_GRADE ~= nil then
+        local _, eventId = g_inputBinding:registerActionEvent(InputAction.ML_HOLD_GRADE,
+            MiningLayers, MiningLayers.actionHoldGradeGlobal, false, true, false, true)
+
+        if eventId ~= nil then
+            g_inputBinding:setActionEventTextVisibility(eventId, false)
+        end
+    end
+
     if not MiningLayers.globalRegisterLogged then
         MiningLayers.globalRegisterLogged = true
-        MiningLayers.log('Global key registration active (display + move display + spoil mode, HL pattern).')
+        MiningLayers.log('Global key registration active (display + move display + spoil mode + grade lock, HL pattern).')
     end
 end
 

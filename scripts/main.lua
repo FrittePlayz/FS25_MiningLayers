@@ -505,6 +505,17 @@ function MiningLayers.resolveFallbackKeys()
         MiningLayers.log('Spoil key: no keyboard binding found - direct fallback off, only the action system counts.')
     end
 
+    local holdGradeKey, holdGradeKeyName = MiningLayers.resolveActionKey('ML_HOLD_GRADE', 'KEY_KP_2')
+
+    MiningLayers.holdGradeFallbackKey = holdGradeKey
+    MiningLayers.holdGradeFallbackKeyName = holdGradeKeyName
+    MiningLayers.holdGradeFallbackArmed = holdGradeKey ~= nil
+
+    if holdGradeKey == nil and not MiningLayers.holdGradeFallbackDisarmedLogged then
+        MiningLayers.holdGradeFallbackDisarmedLogged = true
+        MiningLayers.log('Grade-lock key: no keyboard binding found - direct fallback off, only the action system counts.')
+    end
+
     MiningLayers.fallbackResolved = true
 end
 
@@ -579,6 +590,41 @@ function MiningLayers.updateSpoilFallback(guiOpen)
     end
 
     MiningLayers.spoilKeyWasDown = down
+end
+
+---Direkt-Fallback der Grade-Sperren-Taste (1.6.2) - gleiche Zustandsmaschine.
+---@param guiOpen boolean
+function MiningLayers.updateHoldGradeFallback(guiOpen)
+    if not MiningLayers.holdGradeFallbackArmed then
+        return
+    end
+
+    local down = Input.isKeyPressed(MiningLayers.holdGradeFallbackKey) == true
+
+    if down and not MiningLayers.holdGradeKeyWasDown then
+        MiningLayers.holdGradeDownTime = (not guiOpen) and (g_time or 0) or nil
+    end
+
+    if not down and MiningLayers.holdGradeKeyWasDown then
+        local downTime = MiningLayers.holdGradeDownTime
+        MiningLayers.holdGradeDownTime = nil
+
+        local handled = downTime == nil
+            or (MiningLayers.lastActionHoldGradeTime ~= nil
+                and MiningLayers.lastActionHoldGradeTime >= downTime)
+
+        if not handled and not guiOpen then
+            if not MiningLayers.holdGradeFallbackLogged then
+                MiningLayers.holdGradeFallbackLogged = true
+                MiningLayers.log('Grade-lock key runs through the direct fallback (the action binding did not take, key: %s).',
+                    MiningLayers.holdGradeFallbackKeyName)
+            end
+
+            MiningLayers.actionToggleHoldGrade()
+        end
+    end
+
+    MiningLayers.holdGradeKeyWasDown = down
 end
 
 ---Direkt-Fallback der Move-Taste (HUD verschieben) - gleiche Zustandsmaschine.
@@ -658,6 +704,7 @@ function MiningLayers:update(dt)
     MiningLayers.updateToggleFallback(guiOpen)
     MiningLayers.updateMoveFallback(guiOpen)
     MiningLayers.updateSpoilFallback(guiOpen)
+    MiningLayers.updateHoldGradeFallback(guiOpen)
 end
 
 ---Wird vom Basisspiel jeden Frame aufgerufen.

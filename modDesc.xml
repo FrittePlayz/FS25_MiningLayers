@@ -186,6 +186,7 @@ Configurações: modSettings/FS25_MiningLayers/miningLayers.xml]]>
         <action name="ML_TOGGLE_HUD" />
         <action name="ML_HUD_MOVE" />
         <action name="ML_SPOIL_MODE" />
+        <action name="ML_HOLD_GRADE" />
     </actions>
 
     <inputBinding>
@@ -199,6 +200,11 @@ Configurações: modSettings/FS25_MiningLayers/miningLayers.xml]]>
              wir selbst KP / und KP * (gegen beide modDescs geprueft, 20.08.). -->
         <actionBinding action="ML_SPOIL_MODE">
             <binding device="KB_MOUSE_DEFAULT" input="KEY_KP_5" index="1" />
+        </actionBinding>
+        <!-- 1.6.2 Grade-Sperre. KP_2 ist frei: gleiche Pruefliste wie oben,
+             dazu inzwischen KP 5 (Abraum-Modus) von uns selbst. -->
+        <actionBinding action="ML_HOLD_GRADE">
+            <binding device="KB_MOUSE_DEFAULT" input="KEY_KP_2" index="1" />
         </actionBinding>
     </inputBinding>
 

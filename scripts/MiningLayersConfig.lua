@@ -20,6 +20,16 @@ MiningLayers.checkMaterials = true
 -- testen, dann Ergonomie).
 MiningLayers.spoilMode = false
 MiningLayers.spoilMaterial = 'DIRT'
+-- 1.6.2 Grade-Sperre (Oreo/RGC, Option 1 vom 25.08.): der Grabzug stoppt an der
+-- Schichtgrenze, statt in einem Zug durch zwei Materialien zu gehen. Mechanik:
+-- op.targetY wird auf die Unterkante der GETROFFENEN Schicht geklemmt - TerraFarms
+-- LOWER ist ein Flatten auf targetY (harte Klemme setHeightTarget), die Grenze
+-- wirkt also im selben Pfad wie der Grubenboden. NUR anheben, nie absenken, NUR
+-- an der laufenden Input-Operation (op), nie am Bereich - die Bereichs-Zielhoehe
+-- hat 2026-08-11 bewiesen, dass sie in die AUSGABE durchschlaegt (Ebnen wurde
+-- Absenken). Halden (isMound) sind ausgenommen, das Floez sowieso (keine Grenze
+-- darunter). Opt-in, Vorgabe AUS.
+MiningLayers.holdGrade = false
 -- Beim Abladen die Bodentextur zum Material aus der Schaufel setzen.
 MiningLayers.matchOutputTexture = true
 -- Grubenboden (targetY) automatisch tief genug setzen. ⚠️ VORGABE SEIT 1.6: AUS.
@@ -383,6 +393,7 @@ function MiningLayers:loadConfig()
 
     self.enabled = MiningLayers.getXmlBool(xmlFile, 'miningLayers#enabled', true)
     self.spoilMode = MiningLayers.getXmlBool(xmlFile, 'miningLayers#spoilMode', false)
+    self.holdGrade = MiningLayers.getXmlBool(xmlFile, 'miningLayers#holdGrade', false)
 
     -- Abraum-Material: Name muss aufloesbar sein, sonst Rueckfall DIRT. Der Cache-
     -- Eintrag (getSpoilModeEntry) haengt am Namen und wird hier mit entwertet.

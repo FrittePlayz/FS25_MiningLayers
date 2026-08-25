@@ -282,6 +282,13 @@ function MiningLayers:buildDisplayLines()
         end
     end
 
+    -- 1.6.2: Grade-Sperre sichtbar machen - sonst stoppt der Loeffel scheinbar
+    -- grundlos an der Grenze und der Modus wirkt wie ein Grab-Bug.
+    if self.holdGrade then
+        table.insert(lines, '! ' .. MiningLayers.getText('ml_holdGradeOn',
+            'Grade-Sperre AN - der Grabzug stoppt an der Schichtgrenze'))
+    end
+
     -- ★ Zielhoehe des Bereichs - die Auskunft, die bis 1.6.0 nur im Log stand.
     --
     -- Ohne sie merkt niemand, dass ein frisch gezeichneter Bereich seine Zielhoehe vom
@@ -532,6 +539,10 @@ MiningLayers.toggleDupLogged = false
 MiningLayers.spoilSourceLogged = {}
 MiningLayers.lastActionSpoilTime = nil
 
+-- 1.6.2 Grade-Sperre: gleiche Struktur.
+MiningLayers.holdGradeSourceLogged = {}
+MiningLayers.lastActionHoldGradeTime = nil
+
 ---Maximal so viele Registrierungs-Zeilen ins Log (Diagnose ja, Flut nein).
 MiningLayers.TOGGLE_LOG_LIMIT = 25
 
@@ -661,6 +672,54 @@ function MiningLayers.actionSpoilGlobal()
     MiningLayers.onSpoilActionInput('global')
 end
 
+---1.6.2: Grade-Sperre umschalten - gemeinsamer Kern beider Action-Pfade und des
+---Direkt-Fallbacks, gleicher Vertrag wie actionToggleSpoilMode (Log + Config
+---sofort schreiben, damit der Schalter den Neustart ueberlebt).
+function MiningLayers.actionToggleHoldGrade()
+    MiningLayers.holdGrade = not MiningLayers.holdGrade
+
+    -- Seltene, bewusste Aktion - kein Flut-Risiko, deshalb ohne Log-Cap.
+    MiningLayers.log('Grade lock: %s%s.',
+        MiningLayers.holdGrade and 'ON' or 'OFF',
+        MiningLayers.holdGrade and ' - the dig stops at the layer boundary' or '')
+
+    -- Das Einmal-Log im Grabpfad darf nach jedem Umschalten wieder sprechen.
+    MiningLayers.holdGradeLogged = false
+
+    pcall(MiningLayers.saveConfigFile, MiningLayers)
+end
+
+---Dedupe wie onSpoilActionInput: der zweite Callback binnen 50 ms ist ein Duplikat.
+---@param sourceName string 'Fahrzeug-Spez' oder 'global'
+function MiningLayers.onHoldGradeActionInput(sourceName)
+    local now = g_time or 0
+
+    if MiningLayers.lastActionHoldGradeTime ~= nil
+        and (now - MiningLayers.lastActionHoldGradeTime) < 50 then
+        MiningLayers.lastActionHoldGradeTime = now
+        return
+    end
+
+    MiningLayers.lastActionHoldGradeTime = now
+
+    if not MiningLayers.holdGradeSourceLogged[sourceName] then
+        MiningLayers.holdGradeSourceLogged[sourceName] = true
+        MiningLayers.log('Grade-lock key: callback through path "%s".', sourceName)
+    end
+
+    MiningLayers.actionToggleHoldGrade()
+end
+
+---Fahrzeug-Spez-Callback (Target ist das Fahrzeug, kein self).
+function MiningLayers.actionHoldGradeVehicle()
+    MiningLayers.onHoldGradeActionInput('Fahrzeug-Spez')
+end
+
+---Globaler Callback (HudMover.lua).
+function MiningLayers.actionHoldGradeGlobal()
+    MiningLayers.onHoldGradeActionInput('global')
+end
+
 ---Registriert das Action-Event ueber die FAHRZEUG-API (TerraFarm-Muster,
 ---Machine.lua:1561-1571). Wird von der Spezialisierung (MiningLayersSpec) bei
 ---jedem Input-Kontext-Rebuild aufgerufen: clearActionEventsTable leert die
@@ -768,6 +827,23 @@ function MiningLayers:registerToggleActionEvent(vehicle, isActiveForInput)
             end
 
             g_inputBinding:setActionEventTextVisibility(spoilEventId, true)
+        end
+    end
+
+    -- 1.6.2 Grade-Sperre: gleiche Fahrzeug-Registrierung, gleicher Rebuild-Takt.
+    if InputAction.ML_HOLD_GRADE ~= nil then
+        local _, holdGradeEventId = vehicle:addActionEvent(vehicle.miningLayersActionEvents,
+            InputAction.ML_HOLD_GRADE, vehicle, MiningLayers.actionHoldGradeVehicle, false, true, false, true)
+
+        if holdGradeEventId ~= nil then
+            g_inputBinding:setActionEventText(holdGradeEventId,
+                MiningLayers.getText('input_ML_HOLD_GRADE', 'Mining Layers: grade lock on/off'))
+
+            if GS_PRIO_LOW ~= nil then
+                g_inputBinding:setActionEventTextPriority(holdGradeEventId, GS_PRIO_LOW)
+            end
+
+            g_inputBinding:setActionEventTextVisibility(holdGradeEventId, true)
         end
     end
 end

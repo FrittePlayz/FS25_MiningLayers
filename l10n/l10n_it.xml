@@ -29,6 +29,7 @@
         <text name="ml_tip3" text="svuotare la benna prima di cambiare strato: una benna, un materiale" />
         <text name="ml_tip4" text="la mod ricorda i mucchi: tu raccogli ciò che è stato scaricato" />
         <text name="ml_spoilModeOn" text="Modalita sterile ATTIVA - lo sterile si scava come %s, solo lo strato piu profondo resta reale" />
+        <text name="ml_holdGradeOn" text="Blocco quota ATTIVO - lo scavo si ferma al confine dello strato" />
         <text name="ml_slotFullHint" text='Gli slot sono pieni. Una mod filltype come "63 Alternative Filltypes" di Nonnus (ModHub/KingMods) libera spazio - meglio su un salvataggio minerario nuovo, perche disattiva lo scarico dei materiali del gioco base.' />
         <text name="ml_helpQsMapSlotsTitle" text="Slot esauriti?" />
         <text name="ml_helpQsMapSlots" text='Ogni mappa ha un numero fisso di slot per i materiali del terreno. Quando sono pieni, gli altri materiali si scavano e si vendono ma non si scaricano. Una mod filltype come "63 Alternative Filltypes" di Nonnus libera slot disattivando le colture del gioco base. Da usare su un salvataggio minerario nuovo.' />
@@ -178,6 +179,7 @@
         <text name="ml_mapAdvice" text="Quanti materiali di terreno ci stanno lo decide la tua MAPPA: è lei a fissare la larghezza di canale, e il gioco base occupa già 48 posti. Quanti ne vengono occupati lo decide la tua LISTA DI MOD — il primo che si carica ottiene un posto. Quindi: meno mod libera posti, e una mappa costruita con più canali ne ha di più fin dall'inizio." />
         <text name="input_ML_HUD_MOVE" text="Mining Layers: sposta il display (cursore del mouse)" />
         <text name="input_ML_SPOIL_MODE" text="Mining Layers: modalita sterile si/no" />
+        <text name="input_ML_HOLD_GRADE" text="Mining Layers: blocco quota si/no" />
         <text name="ml_helpQsMap3" text="Due vie d'uscita se un materiale che ti serve porta un (!): togliere le mod che portano propri materiali di terreno, oppure giocare una mappa costruita con più canali. I 63 non sono una legge fissa del gioco — una mappa può essere costruita più larga, e alcune lo sono già. Quello che nessuna mod può fare è alzare il limite dall'esterno." />
         <text name="ml_mapNoTipList" text="Solo scavare e vendere: %s. Riscaricare a terra qui non funziona — nessun posto libero rimasto nel sistema del terreno." />
         <text name="ml_edPoolMissing" text="Non disponibili su questa mappa: %s. Né la mappa né le tue mod forniscono questi materiali, perciò non vengono proposti qui." />
