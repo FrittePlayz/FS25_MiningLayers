@@ -29,7 +29,7 @@
         <text name="ml_tip2" text="Material im Bereich eintragen = normales TerraFarm ohne Schichten (Baustellen)" />
         <text name="ml_tip3" text="Löffel vor dem Schichtwechsel leeren - ein Löffel, ein Material" />
         <text name="ml_tip4" text="Halden merkt sich der Mod - aufgenommen wird, was abgekippt wurde" />
-        <text name="ml_spoilModeOn" text="Abraum-Modus AN - Abraum wird als %s gegraben, nur die unterste Schicht bleibt echt" />
+        <text name="ml_spoilModeOn" text="Abraum-Modus AN - Abraum wird als %s gegraben, Floez und Sohle bleiben echt" />
         <text name="ml_holdGradeOn" text="Grade-Sperre AN - der Grabzug stoppt an der Schichtgrenze" />
         <text name="ml_modeSpoil" text="Abraum-Modus" />
         <text name="ml_modeGrade" text="Grade-Sperre" />

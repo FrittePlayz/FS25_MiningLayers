@@ -29,7 +29,7 @@
         <text name="ml_tip2" text="Inserir um material em uma área = TerraFarm simples sem camadas (construção)" />
         <text name="ml_tip3" text="esvazie a caçamba antes de mudar de camada — uma caçamba, um material" />
         <text name="ml_tip4" text="o mod lembra das pilhas — você recolhe o que foi despejado" />
-        <text name="ml_spoilModeOn" text="Modo esteril LIGADO - o esteril e escavado como %s, apenas a camada mais profunda permanece real" />
+        <text name="ml_spoilModeOn" text="Modo esteril LIGADO - o esteril e escavado como %s, a camada util e o fundo permanecem reais" />
         <text name="ml_holdGradeOn" text="Trava de nivel LIGADA - a escavacao para no limite da camada" />
         <text name="ml_modeSpoil" text="Modo esteril" />
         <text name="ml_modeGrade" text="Trava de nivel" />

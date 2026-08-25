@@ -29,7 +29,7 @@
         <text name="ml_tip2" text="Enter a material in an area = plain TerraFarm without layers (construction)" />
         <text name="ml_tip3" text="empty the bucket before a layer change - one bucket, one material" />
         <text name="ml_tip4" text="the mod remembers piles - you pick up what was dumped" />
-        <text name="ml_spoilModeOn" text="Spoil mode ON - overburden digs as %s, only the deepest layer stays real" />
+        <text name="ml_spoilModeOn" text="Spoil mode ON - overburden digs as %s, the seam and the floor stay real" />
         <text name="ml_holdGradeOn" text="Grade lock ON - the dig stops at the layer boundary" />
         <text name="ml_modeSpoil" text="Spoil mode" />
         <text name="ml_modeGrade" text="Grade lock" />

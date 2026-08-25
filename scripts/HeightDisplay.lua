@@ -275,7 +275,7 @@ function MiningLayers:buildDisplayLines()
 
         if spoilEntry ~= nil then
             local template = MiningLayers.getText('ml_spoilModeOn',
-                'Abraum-Modus AN - Abraum wird als %s gegraben, nur die unterste Schicht bleibt echt')
+                'Abraum-Modus AN - Abraum wird als %s gegraben, Floez und Sohle bleiben echt')
             local ok, text = pcall(string.format, template, spoilEntry.fillTypeName)
 
             table.insert(lines, '! ' .. (ok and text or template))

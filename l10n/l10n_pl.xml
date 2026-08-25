@@ -29,7 +29,7 @@
         <text name="ml_tip2" text="Wpisanie materiału w obszarze = zwykły TerraFarm bez warstw (budowa)" />
         <text name="ml_tip3" text="opróżnij łyżkę przed zmianą warstwy - jedna łyżka, jeden materiał" />
         <text name="ml_tip4" text="mod pamięta hałdy - podnosisz to, co wysypano" />
-        <text name="ml_spoilModeOn" text="Tryb nadkladu WL. - nadklad kopie sie jako %s, tylko najglebsza warstwa pozostaje prawdziwa" />
+        <text name="ml_spoilModeOn" text="Tryb nadkladu WL. - nadklad kopie sie jako %s, zloze i spag pozostaja prawdziwe" />
         <text name="ml_holdGradeOn" text="Blokada poziomu WL. - kopanie zatrzymuje sie na granicy warstwy" />
         <text name="ml_modeSpoil" text="Tryb nadkladu" />
         <text name="ml_modeGrade" text="Blokada poziomu" />

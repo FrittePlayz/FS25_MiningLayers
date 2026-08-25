@@ -286,15 +286,22 @@ function MiningLayers:applyLayer(op)
         return
     end
 
-    -- T14 Abraum-Modus: liegt unter der getroffenen Schicht noch eine weitere,
-    -- ist sie Abraum und graebt als spoilMaterial (Standard DIRT); nur die
-    -- unterste Schicht (das Floez) bleibt echt - Fels darunter ist kein Layer
-    -- und liefert nil. Erkannte Halden (isMound) sind ausgenommen: das
-    -- Gedaechtnis verspricht, dass zurueckkommt, was abgekippt wurde.
-    -- NIE entry mutieren (geteilter Config-Eintrag) - deshalb effEntry.
+    -- T14 Abraum-Modus: Abraum graebt als spoilMaterial (Standard DIRT), das
+    -- FLOEZ und die Sohle bleiben echt. Erkannte Halden (isMound) sind
+    -- ausgenommen: das Gedaechtnis verspricht, dass zurueckkommt, was
+    -- abgekippt wurde. NIE entry mutieren (geteilter Config-Eintrag).
+    --
+    -- ⚠️ Floez-Erkennung (Tommys Praxisfund 25.08., erster echter Spoil-Dig):
+    -- "liegt noch eine Schicht darunter" reicht NICHT - im Standard-Schema des
+    -- Mods (Abraum -> Floez -> Sohle) liegt unter dem Floez immer die Sohle
+    -- (STONE), damit graebt sonst auch COAL/PAYDIRT als DIRT. Das Floez traegt
+    -- seit 1.4.0 den seam-Marker (loadZone parst ihn, der Editor schreibt ihn);
+    -- Rueckfall fuer aeltere Configs ohne Marker: PAYDIRT gilt als Floez -
+    -- exakt die Regel, die auch der Editor benutzt (InGameMenuMiningLayersFrame).
     local effEntry = entry
 
-    if self.spoilMode and entry.isMound ~= true then
+    if self.spoilMode and entry.isMound ~= true
+        and entry.seam ~= true and entry.fillTypeName ~= 'PAYDIRT' then
         local below = self:getNextLayerBelow(op.vehicle, terrainY, zoneName, worldPosX, worldPosZ)
 
         if below ~= nil then
@@ -305,7 +312,7 @@ function MiningLayers:applyLayer(op)
 
                 if not self.spoilModeLogged then
                     self.spoilModeLogged = true
-                    MiningLayers.log('Spoil mode ON: overburden digs as %s, only the deepest layer stays real.',
+                    MiningLayers.log('Spoil mode ON: overburden digs as %s - the seam and the floor stay real.',
                         tostring(spoilEntry.fillTypeName))
                 end
             end

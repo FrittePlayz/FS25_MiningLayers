@@ -2,6 +2,11 @@
 
 All notable changes to Mining Layers. Newest first.
 
+## [1.6.3.1] — 2026-08-25 (in-game test pending)
+
+### Fixed
+- **Spoil mode no longer digs the seam as spoil.** Found by Tommy in the first real spoil-mode dig: the mode treated every layer with another layer below it as overburden — but in the mod's own standard scheme (overburden → seam → floor) the floor (STONE) always lies below the seam, so COAL and PAYDIRT dug as DIRT too. The seam has carried a `seam="true"` marker since 1.4.0 and the editor uses it; the spoil decision just never asked. Now the seam stays real (marker, or PAYDIRT as the fallback for older configs — the same rule the editor applies), the floor stays real as before, and the HUD line says "the seam and the floor stay real" in all seven languages.
+
 ## [1.6.3.0] — 2026-08-25 (in-game test pending)
 
 ### Changed

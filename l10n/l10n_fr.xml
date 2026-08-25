@@ -29,7 +29,7 @@
         <text name="ml_tip2" text="Renseigner un matériau dans une zone = TerraFarm classique sans couches (chantier)" />
         <text name="ml_tip3" text="vide le godet avant un changement de couche - un godet, un matériau" />
         <text name="ml_tip4" text="le mod mémorise les tas - tu reprends ce qui a été déversé" />
-        <text name="ml_spoilModeOn" text="Mode steriles ACTIF - les morts-terrains s'extraient comme %s, seule la couche la plus profonde reste reelle" />
+        <text name="ml_spoilModeOn" text="Mode steriles ACTIF - les morts-terrains s'extraient comme %s, la couche utile et le fond restent reels" />
         <text name="ml_holdGradeOn" text="Verrou de niveau ACTIF - le creusement s'arrete a la limite de couche" />
         <text name="ml_modeSpoil" text="Mode steriles" />
         <text name="ml_modeGrade" text="Verrou de niveau" />
