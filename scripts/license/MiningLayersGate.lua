@@ -13,13 +13,15 @@
     modSettings/FSMW/ uebernommen (ueberlebt dort Mod-Updates).
 
     ⚠️ MODE 'report' (Testbuild): prueft und MELDET nur (Log + HUD-Zeile),
-    blockt nicht. Zwei Dinge sind am lebenden Spiel unbewiesen und werden hier
-    zuerst gemessen, statt sie zu raten (Regel vom 11.08.):
-      1. ob die Engine io.open im Mod-Sandbox erlaubt (Weg 1) — sonst traegt
-         nur der XML-Weg (Weg 2) und Percys Key-Download muss als .xml kommen;
-      2. ob getFiles/copyFile sich wie im Korpus belegt verhalten.
-    Das Log beantwortet beides ('Key file read via ...'). Erst danach wird der
-    oeffentliche Build auf 'enforce' gestellt (ohne gueltigen Key Mod inaktiv).
+    blockt nicht. Messstand 25.08. (Tommys erster Start, 1.6.2.0):
+      - getUserProfileAppPath + createFolder + getFiles laufen (FSMW-Ordner
+        wurde angelegt, Discovery lief).
+      - io.open LEERT die Datei statt sie zu lesen -> entfernt, siehe readFile.
+        Die Key-Datei ist deshalb ein XML (<downloadKey>), gelesen ueber die
+        korpus-bewiesene XML-API.
+    Offen bleibt copyFile (Uebernahme nach FSMW/) - erst wenn auch das am
+    lebenden Spiel bewiesen ist, wird der oeffentliche Build auf 'enforce'
+    gestellt (ohne gueltigen Key Mod inaktiv).
 ]]
 
 ---@diagnostic disable: lowercase-global, undefined-global
@@ -58,35 +60,20 @@ function MiningLayersGate.getSettingsDir()
     return dir
 end
 
----Dateiinhalt lesen - zwei Wege, weil unbewiesen ist, was die Engine erlaubt.
+---Dateiinhalt lesen - NUR ueber die XML-API.
+---
+---⚠️ KEIN io.open. Gemessen am 25.08. (Tommys erster 1.6.2.0-Start): die
+---Engine STELLT ein io.open bereit, aber der Aufruf hat die Key-Datei auf
+---0 Bytes GELEERT (mtime exakt der loadMap-Zeitstempel, Datei vorher 1104
+---Bytes; einziger Code an der Datei war unser io.open(path, 'rb')). Die
+---Mode-Semantik ist also nicht Standard-Lua - Lesen ist dort Schreiben.
+---loadXMLFile dagegen ist korpus-bewiesen und read-only. Deshalb ist die
+---Download-Key-Datei ab jetzt ein XML mit Wurzelelement <downloadKey>,
+---dessen Text der bekannte Marker-Block ist (Marker/Token unveraendert).
 ---@param path string
 ---@return string? content
----@return string? how 'io' | 'xml'
+---@return string? how 'xml'
 function MiningLayersGate.readFile(path)
-    -- Weg 1: io.open. Standard-Lua, aber ob der Mod-Sandbox es durchlaesst,
-    -- ist am Korpus NICHT belegt (605 Zips: kein einziger Treffer, was Fehlen
-    -- ODER Nichtgebrauch heissen kann). pcall, damit ein fehlendes io kein
-    -- Fehler mitten im Ladepfad ist.
-    local okIo, content = pcall(function()
-        local handle = io.open(path, 'rb')
-
-        if handle == nil then
-            return nil
-        end
-
-        local data = handle:read('*a')
-        handle:close()
-
-        return data
-    end)
-
-    if okIo and type(content) == 'string' and content ~= '' then
-        return content, 'io'
-    end
-
-    -- Weg 2: XML. Traegt nur, wenn die Key-Datei ein XML mit <downloadKey>
-    -- ist - der Marker-Text darf dabei im Element stehen, extractToken
-    -- findet ihn in jedem String.
     if path:lower():sub(-4) == '.xml' and MiningLayers.isCallable(loadXMLFile) then
         local okXml, xmlContent = pcall(function()
             local xmlId = loadXMLFile('fsmwKey', path)
@@ -184,6 +171,15 @@ function MiningLayersGate.run()
     for _, path in ipairs(candidates) do
         local content, how = MiningLayersGate.readFile(path)
 
+        -- Text-Key gefunden, aber nur XML ist lesbar (io.open leert Dateien,
+        -- siehe readFile): dem Spieler den Ausweg nennen statt still noToken.
+        if content == nil and path:lower():sub(-4) ~= '.xml'
+            and not MiningLayersGate.textHintLogged then
+            MiningLayersGate.textHintLogged = true
+            MiningLayers.log('Download Key: found %s, but the engine can only read the .xml key file safely.', path)
+            MiningLayers.log('  Please download the key as .xml from fsmodworks.com and use that file instead.')
+        end
+
         if content ~= nil and FsmwLicense.extractToken(content) ~= nil then
             MiningLayers.log('Download Key: candidate %s (read via %s).', path, tostring(how))
 
@@ -220,7 +216,7 @@ function MiningLayersGate.run()
         if settingsDir ~= nil and bestPath ~= nil
             and bestPath:sub(1, #settingsDir) ~= settingsDir
             and MiningLayers.isCallable(copyFile) then
-            local target = settingsDir .. 'fsmodworks-download-key.txt'
+            local target = settingsDir .. 'fsmodworks-download-key.xml'
             local okCopy = pcall(copyFile, bestPath, target, true)
 
             MiningLayers.log('Download Key: copied to %s (%s).', target, okCopy and 'ok' or 'copy failed')

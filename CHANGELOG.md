@@ -2,7 +2,12 @@
 
 All notable changes to Mining Layers. Newest first.
 
-## [1.6.2.0] — 2026-08-25 (in-game test pending)
+## [1.6.2.1] — 2026-08-25 (in-game test pending)
+
+### Fixed
+- **The Download Key file is now an `.xml`** (root element `<downloadKey>`, same markers and token inside). Measured on the first 1.6.2.0 start: the engine's `io.open` does not read a file, it EMPTIES it (0 bytes, write-mode semantics) — so the plain-text read path is gone and the key is read through the game's own XML API, which is read-only and proven across the mod corpus. A leftover `.txt` key now gets a log hint pointing at the `.xml` download instead of a silent "no key found".
+
+## [1.6.2.0] — 2026-08-25 (superseded by 1.6.2.1 on the same evening, never shipped)
 
 ### Added
 - **Grade lock** (Num 2, off by default): the dig stops at the layer boundary instead of cutting through two materials in one pass — the next pass picks up the next layer with its material. Asked for by the RGC mining crew ("digging less confusing"). Works in the lower/flatten path; a target height you set by hand yourself always wins, piles are exempt, and the deepest layer digs free as before. Also switchable via `holdGrade` in `miningLayers.xml`. Note: Num 2 doubles with a base-game light binding — rebindable under Options > Controls > Mining Layers.
