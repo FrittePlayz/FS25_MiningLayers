@@ -64,9 +64,45 @@ MiningLayers.TIPS = {
 ---Tommy kalibriert das Tempo im Test (12 war zu hektisch, M8 aus dem 1.4.2-Paket).
 MiningLayers.TIP_SECONDS = 20
 
+---1.6.3: Modi-Status IMMER sichtbar (Tommys Erklaerbaer-Wunsch, 25.08.).
+---Vorher erschienen Abraum-Modus und Grade-Sperre nur bei AN und verschwanden
+---bei AUS - wer die Modi nicht kannte, erfuhr nie von ihnen. Zwei kompakte
+---Statuszeilen mit Tastenhinweis; Farbe traegt den Status (AN gruen, AUS
+---gedimmt), pro Zeile - deshalb zwei Zeilen statt einer kombinierten.
+---
+---⚠️ Sitzt bewusst in appendTip und NICHT am Ende von buildLines: die Anzeige
+---hat fruehe Ausstiege (kein Bereich, keine Bezugshoehe, Handbetrieb ...), und
+---appendTip ist die eine Stelle, durch die JEDER Pfad laeuft. Beim ersten Bau
+---hingen die Zeilen nur am Schicht-Pfad - auf einer frischen Stelle
+---('Bezugshoehe noch nicht gesetzt') fehlten sie, und die Tasten wirkten tot
+---(Tommys Fund, 26.08. nachts).
+---@param lines string[]
+function MiningLayers:appendModeStatus(lines)
+    table.insert(lines, '')
+
+    table.insert(lines, string.format('%s: %s (%s)',
+        MiningLayers.getText('ml_modeSpoil', 'Abraum-Modus'),
+        self.spoilMode and MiningLayers.getText('ml_modeOn', 'AN')
+            or MiningLayers.getText('ml_modeOff', 'AUS'),
+        MiningLayers.prettyKeyName(MiningLayers.spoilFallbackKeyName, 'Num 5')))
+    self.displayLineColors[#lines] = self.spoilMode
+        and MiningLayers.HUD_MODE_ON_COLOR or MiningLayers.HUD_MODE_OFF_COLOR
+
+    table.insert(lines, string.format('%s: %s (%s)',
+        MiningLayers.getText('ml_modeGrade', 'Grade-Sperre'),
+        self.holdGrade and MiningLayers.getText('ml_modeOn', 'AN')
+            or MiningLayers.getText('ml_modeOff', 'AUS'),
+        MiningLayers.prettyKeyName(MiningLayers.holdGradeFallbackKeyName, 'Num 2')))
+    self.displayLineColors[#lines] = self.holdGrade
+        and MiningLayers.HUD_MODE_ON_COLOR or MiningLayers.HUD_MODE_OFF_COLOR
+end
+
 ---Haengt den aktuellen Tipp ans Zeilenende. Ohne Zeitquelle bleibt der erste stehen.
 ---@param lines string[]
 function MiningLayers:appendTip(lines)
+    -- Modi-Status vor dem Tipp - siehe appendModeStatus, warum genau hier.
+    self:appendModeStatus(lines)
+
     local tips = MiningLayers.TIPS
 
     if #tips == 0 then
@@ -416,31 +452,6 @@ function MiningLayers:buildDisplayLines()
             self.displayLineColors[#lines] = MiningLayers.hudBoundaryColor(nextEntry.fillTypeName, remaining)
         end
     end
-
-    -- 1.6.3: Modi-Status IMMER sichtbar (Tommys Erklaerbaer-Wunsch, 25.08.).
-    -- Vorher erschienen Abraum-Modus und Grade-Sperre nur bei AN und
-    -- verschwanden bei AUS - wer die Modi nicht kannte, erfuhr nie von ihnen.
-    -- Jetzt: zwei kompakte Statuszeilen mit Tastenhinweis, AUS ist ein
-    -- bewusster Zustand. Farbe traegt den Status (AN gruen, AUS gedimmt) -
-    -- pro Zeile, deshalb zwei Zeilen statt einer kombinierten. Die
-    -- ausfuehrlichen '!'-Erklaerzeilen oben erscheinen weiterhin nur bei AN.
-    table.insert(lines, '')
-
-    table.insert(lines, string.format('%s: %s (%s)',
-        MiningLayers.getText('ml_modeSpoil', 'Abraum-Modus'),
-        self.spoilMode and MiningLayers.getText('ml_modeOn', 'AN')
-            or MiningLayers.getText('ml_modeOff', 'AUS'),
-        MiningLayers.prettyKeyName(MiningLayers.spoilFallbackKeyName, 'Num 5')))
-    self.displayLineColors[#lines] = self.spoilMode
-        and MiningLayers.HUD_MODE_ON_COLOR or MiningLayers.HUD_MODE_OFF_COLOR
-
-    table.insert(lines, string.format('%s: %s (%s)',
-        MiningLayers.getText('ml_modeGrade', 'Grade-Sperre'),
-        self.holdGrade and MiningLayers.getText('ml_modeOn', 'AN')
-            or MiningLayers.getText('ml_modeOff', 'AUS'),
-        MiningLayers.prettyKeyName(MiningLayers.holdGradeFallbackKeyName, 'Num 2')))
-    self.displayLineColors[#lines] = self.holdGrade
-        and MiningLayers.HUD_MODE_ON_COLOR or MiningLayers.HUD_MODE_OFF_COLOR
 
     self:appendTip(lines)
 

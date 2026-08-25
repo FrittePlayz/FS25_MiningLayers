@@ -2,6 +2,11 @@
 
 All notable changes to Mining Layers. Newest first.
 
+## [1.6.3.2] — 2026-08-26 (in-game test pending)
+
+### Fixed
+- **The mode status lines show on every display path now.** They were appended only on the layer path — on a fresh spot ("reference height not set yet"), in manual areas and other early exits they were missing, and the mode keys felt dead because nothing visible changed (found by Tommy the same night). The status block now lives in the one place every path runs through, right above the rotating tip.
+
 ## [1.6.3.1] — 2026-08-25 (in-game test pending)
 
 ### Fixed
