@@ -2,7 +2,12 @@
 
 All notable changes to Mining Layers. Newest first.
 
-## [Unreleased]
+## [1.6.1.0] — 2026-08-25 (tester build for the RGC circle, in-game test pending)
+
+### Added
+- **Spoil mode** (Num 5, off by default): while a layer still has another layer below it, it digs as the spoil material (default DIRT) — only the deepest layer (the seam) stays real. One keypress turns a pit into overburden-and-seam instead of a rainbow of materials. Recognised mounds are exempt: the mound memory keeps its promise that what was dumped comes back. Asked for by the RGC mining crew.
+- **Material colours in the height display.** The layer line and the next-layer line now carry the material's editor colour (dark materials are brightened so COAL stays readable on the dark HUD box), and the "another X m to <material>" line fades from the material colour to red as the bucket approaches the boundary — the layer change catches the eye before the bucket is in the new material. Display only, no change to digging.
+- **A slots-full hint with a way out.** When the map's ground-material slots are full, the map report now points at filltype mods like Nonnus' *63 Alternative Filltypes* and explains the trade-off (fresh mining savegame, base-game crops lose tipping), plus a matching FAQ entry in the in-game manual. All seven languages.
 
 ### Removed
 - **The sponsor sign at the pit edge is gone.** Until now every drawn area got a small farmersingles.de sign at one corner, switchable only per player via `sponsorSign="false"` in the local `miningLayers.xml` — a server admin could not turn it off for everyone, and the switch needed a savegame reload despite the docs saying "immediately". Asked for by TacticalOreo (RGC). Decision: the sign goes, the sponsor line in the credits stays. The `sponsorSign` attribute in existing config files is ignored and drops out the next time the editor saves; `signCompany01.i3d` from the base game is no longer loaded, the two logo textures have left the mod.
