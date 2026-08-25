@@ -2,6 +2,11 @@
 
 All notable changes to Mining Layers. Newest first.
 
+## [1.6.3.0] — 2026-08-25 (in-game test pending)
+
+### Changed
+- **The mode switches are always visible now.** Spoil mode and grade lock used to appear in the height display only while ON — anyone who did not know the modes existed never learned about them. The display now carries two compact status lines with the current state and the key hint ("Spoil mode: OFF (Num 5)" / "Grade lock: ON (Num 2)"), green when active, dimmed when off; the key hint follows your actual binding. The detailed explanation lines still appear only while a mode is active. Suggested by Tommy while testing 1.6.2.
+
 ## [1.6.2.1] — 2026-08-25 (in-game test pending)
 
 ### Fixed

@@ -31,6 +31,10 @@
         <text name="ml_tip4" text="the mod remembers piles - you pick up what was dumped" />
         <text name="ml_spoilModeOn" text="Spoil mode ON - overburden digs as %s, only the deepest layer stays real" />
         <text name="ml_holdGradeOn" text="Grade lock ON - the dig stops at the layer boundary" />
+        <text name="ml_modeSpoil" text="Spoil mode" />
+        <text name="ml_modeGrade" text="Grade lock" />
+        <text name="ml_modeOn" text="ON" />
+        <text name="ml_modeOff" text="OFF" />
         <text name="ml_slotFullHint" text="Slots are full. A fill-type mod like Nonnus' &quot;63 Alternative Filltypes&quot; (ModHub/KingMods) frees room - best on a fresh mining save, as it stops base crops from being dumped." />
         <text name="ml_helpQsMapSlotsTitle" text="Ran out of slots?" />
         <text name="ml_helpQsMapSlots" text="Every map has a fixed number of ground-material slots. Once they're full, extra materials dig and sell but won't dump. A fill-type mod such as Nonnus' &quot;63 Alternative Filltypes&quot; frees slots by turning off the base-game crop materials. Use it on a fresh mining save." />

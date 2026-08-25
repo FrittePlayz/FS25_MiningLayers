@@ -417,9 +417,57 @@ function MiningLayers:buildDisplayLines()
         end
     end
 
+    -- 1.6.3: Modi-Status IMMER sichtbar (Tommys Erklaerbaer-Wunsch, 25.08.).
+    -- Vorher erschienen Abraum-Modus und Grade-Sperre nur bei AN und
+    -- verschwanden bei AUS - wer die Modi nicht kannte, erfuhr nie von ihnen.
+    -- Jetzt: zwei kompakte Statuszeilen mit Tastenhinweis, AUS ist ein
+    -- bewusster Zustand. Farbe traegt den Status (AN gruen, AUS gedimmt) -
+    -- pro Zeile, deshalb zwei Zeilen statt einer kombinierten. Die
+    -- ausfuehrlichen '!'-Erklaerzeilen oben erscheinen weiterhin nur bei AN.
+    table.insert(lines, '')
+
+    table.insert(lines, string.format('%s: %s (%s)',
+        MiningLayers.getText('ml_modeSpoil', 'Abraum-Modus'),
+        self.spoilMode and MiningLayers.getText('ml_modeOn', 'AN')
+            or MiningLayers.getText('ml_modeOff', 'AUS'),
+        MiningLayers.prettyKeyName(MiningLayers.spoilFallbackKeyName, 'Num 5')))
+    self.displayLineColors[#lines] = self.spoilMode
+        and MiningLayers.HUD_MODE_ON_COLOR or MiningLayers.HUD_MODE_OFF_COLOR
+
+    table.insert(lines, string.format('%s: %s (%s)',
+        MiningLayers.getText('ml_modeGrade', 'Grade-Sperre'),
+        self.holdGrade and MiningLayers.getText('ml_modeOn', 'AN')
+            or MiningLayers.getText('ml_modeOff', 'AUS'),
+        MiningLayers.prettyKeyName(MiningLayers.holdGradeFallbackKeyName, 'Num 2')))
+    self.displayLineColors[#lines] = self.holdGrade
+        and MiningLayers.HUD_MODE_ON_COLOR or MiningLayers.HUD_MODE_OFF_COLOR
+
     self:appendTip(lines)
 
     return lines
+end
+
+---Statusfarben der Modi-Zeilen: AN springt ins Auge, AUS ist lesbar, aber
+---zurueckgenommen (Alpha ist im Renderer fix 1, gedimmt heisst also grau).
+MiningLayers.HUD_MODE_ON_COLOR = { 0.55, 0.95, 0.45 }
+MiningLayers.HUD_MODE_OFF_COLOR = { 0.55, 0.55, 0.55 }
+
+---Macht aus einem rohen Binding-Namen (KEY_KP_5) einen lesbaren Tastenhinweis
+---(Num 5). Faellt auf den Vorgabetext zurueck, wenn (noch) kein Binding
+---aufgeloest ist - resolveFallbackKeys laeuft erst nach dem ersten Update.
+---@param keyName string?
+---@param fallback string
+---@return string
+function MiningLayers.prettyKeyName(keyName, fallback)
+    if type(keyName) ~= 'string' or keyName == '' then
+        return fallback
+    end
+
+    local name = keyName:gsub('^KEY_', '')
+    name = name:gsub('^KP_', 'Num ')
+    name = name:gsub('_', ' ')
+
+    return name
 end
 
 ---Liefert die Schicht **unterhalb** der aktuell greifenden, plus deren Grenzhöhe.

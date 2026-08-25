@@ -31,6 +31,10 @@
         <text name="ml_tip4" text="Halden merkt sich der Mod - aufgenommen wird, was abgekippt wurde" />
         <text name="ml_spoilModeOn" text="Abraum-Modus AN - Abraum wird als %s gegraben, nur die unterste Schicht bleibt echt" />
         <text name="ml_holdGradeOn" text="Grade-Sperre AN - der Grabzug stoppt an der Schichtgrenze" />
+        <text name="ml_modeSpoil" text="Abraum-Modus" />
+        <text name="ml_modeGrade" text="Grade-Sperre" />
+        <text name="ml_modeOn" text="AN" />
+        <text name="ml_modeOff" text="AUS" />
         <text name="ml_slotFullHint" text="Die Plaetze sind voll. Eine Filltype-Mod wie Nonnus' &quot;63 Alternative Filltypes&quot; (ModHub/KingMods) schafft Platz - am besten auf einem frischen Mining-Spielstand, denn sie schaltet das Abkippen von Basisspiel-Material ab." />
         <text name="ml_helpQsMapSlotsTitle" text="Keine Plaetze mehr?" />
         <text name="ml_helpQsMapSlots" text="Jede Karte hat eine feste Zahl an Bodenmaterial-Plaetzen. Sind sie voll, lassen sich weitere Materialien graben und verkaufen, aber nicht abkippen. Eine Filltype-Mod wie Nonnus' &quot;63 Alternative Filltypes&quot; macht Plaetze frei, indem sie die Basisspiel-Feldfruechte abschaltet. Auf einem frischen Mining-Spielstand nutzen." />

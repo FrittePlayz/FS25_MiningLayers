@@ -30,6 +30,10 @@
         <text name="ml_tip4" text="la mod ricorda i mucchi: tu raccogli ciò che è stato scaricato" />
         <text name="ml_spoilModeOn" text="Modalita sterile ATTIVA - lo sterile si scava come %s, solo lo strato piu profondo resta reale" />
         <text name="ml_holdGradeOn" text="Blocco quota ATTIVO - lo scavo si ferma al confine dello strato" />
+        <text name="ml_modeSpoil" text="Modalita sterile" />
+        <text name="ml_modeGrade" text="Blocco quota" />
+        <text name="ml_modeOn" text="SI" />
+        <text name="ml_modeOff" text="NO" />
         <text name="ml_slotFullHint" text='Gli slot sono pieni. Una mod filltype come "63 Alternative Filltypes" di Nonnus (ModHub/KingMods) libera spazio - meglio su un salvataggio minerario nuovo, perche disattiva lo scarico dei materiali del gioco base.' />
         <text name="ml_helpQsMapSlotsTitle" text="Slot esauriti?" />
         <text name="ml_helpQsMapSlots" text='Ogni mappa ha un numero fisso di slot per i materiali del terreno. Quando sono pieni, gli altri materiali si scavano e si vendono ma non si scaricano. Una mod filltype come "63 Alternative Filltypes" di Nonnus libera slot disattivando le colture del gioco base. Da usare su un salvataggio minerario nuovo.' />
