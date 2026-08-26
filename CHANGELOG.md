@@ -2,6 +2,11 @@
 
 All notable changes to Mining Layers. Newest first.
 
+## [1.6.3.3] — 2026-08-26 (in-game test pending)
+
+### Fixed
+- **Grade lock: scoops no longer flip material at a layer boundary.** Found by Tommy ("another 0.0 m to GRAVEL" that never resolved) and independently by TacticalOreo ("every scoop is different instead of sticking to said layer"): the layer choice only flips once the terrain drops *below* the boundary, but the terrain deformation lands millimetres *above* it — so a spot could hang on the old layer forever while neighbouring spots in the same scoop had already flipped, and scoops seemed to change material at random. Grade lock now aims 5 cm below the boundary, so each spot crosses it decisively: one pass, one material, and the next pass reliably picks up the next layer. A manually set target height within 5 cm of a boundary is still respected.
+
 ## [1.6.3.2] — 2026-08-26 (in-game test pending)
 
 ### Fixed

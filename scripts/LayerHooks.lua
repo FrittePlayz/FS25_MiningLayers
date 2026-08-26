@@ -36,6 +36,9 @@ MiningLayers.OUTPUT_HOOK_CLASSES = {
 
 ---Millisekunden, die ein Sync-Wert stabil anliegen muss, bevor das HUD umschaltet.
 MiningLayers.SYNC_DEBOUNCE_MS = 750
+---Meter, die die Grade-Sperre UNTER die Schichtgrenze zielt, damit die
+---Schichtwahl an der Stelle sicher kippt (Kanten-Fix 1.6.3.3, Kommentar in applyLayer).
+MiningLayers.GRADE_LOCK_EPS = 0.05
 ---@type table<string, table> laufende Sync-Kandidaten je Feld
 MiningLayers.syncCandidates = {}
 
@@ -334,11 +337,26 @@ function MiningLayers:applyLayer(op)
     --      AUSGABE durch (Befund 2026-08-11, Ebnen wurde Absenken).
     -- Halden sind ausgenommen (Gedaechtnis-Vertrag), das Floez hat keine Grenze
     -- darunter (getNextLayerBelow liefert nil) und graebt frei wie bisher.
+    --
+    -- 1.6.3.3 Kanten-Fix (Befund Tommy 25./26.08. "another 0.0 m to GRAVEL",
+    -- unabhaengig bestaetigt von Oreo 26.08. "every scoop is different"):
+    -- Die Schichtwahl kippt erst, wenn das Gelaende die Grenze UNTERschreitet
+    -- (terrainY > boundary, HeightDisplay.lua getNextLayerBelow) - TerraFarms
+    -- Verformung landet aber millimeterweise DARUEBER. Die Stelle haengt dann
+    -- dauerhaft auf der alten Schicht, waehrend Nachbarstellen im selben Zug
+    -- schon gekippt sind: Zuege wechseln scheinbar zufaellig das Material.
+    -- Darum klemmt das Ziel 5 cm UNTER die Grenze: der Zug endet knapp in der
+    -- naechsten Schicht, die Wahl kippt an der Stelle sauber, der naechste Zug
+    -- ist verlaesslich die naechste Schicht. Die letzten 5 cm zaehlen noch als
+    -- altes Material (op.fillType kommt vom Oberflaechen-entry) - sortenrein.
+    -- Liegt eine von Hand gesetzte Zielhoehe naeher als 5 cm an der Grenze,
+    -- bleibt sie stehen (Einschraenkung 1 gilt unveraendert).
     if self.holdGrade and entry.isMound ~= true and type(op.targetY) == 'number' then
         local _, layerFloor = self:getNextLayerBelow(op.vehicle, terrainY, zoneName, worldPosX, worldPosZ)
+        local clampY = layerFloor ~= nil and (layerFloor - MiningLayers.GRADE_LOCK_EPS) or nil
 
-        if layerFloor ~= nil and layerFloor > op.targetY then
-            op.targetY = layerFloor
+        if clampY ~= nil and clampY > op.targetY then
+            op.targetY = clampY
 
             if not self.holdGradeLogged then
                 self.holdGradeLogged = true
