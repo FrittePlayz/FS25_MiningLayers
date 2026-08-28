@@ -2,6 +2,12 @@
 
 All notable changes to Mining Layers. Newest first.
 
+## [1.6.4.0] — 2026-08-28 (in-game test pending)
+
+### Changed
+- **The Download Key is now required (gate mode "enforce").** Mining Layers stays free — get your key at no cost from fsmodworks.com (account required), drop the downloaded .xml into your mods folder and restart. Without a valid key the mod stays inactive and says so clearly in the log. The key path itself has been proven in-game since 1.6.2.1.
+- A valid key found in the mods folder is now copied to `modSettings/FSMW/fsmodworks-download-key-mining-layers.xml` via the game's XML API (product-specific name, so keys of other FSModWorks mods are never overwritten).
+
 ## [1.6.3.3] — 2026-08-26 (in-game test pending)
 
 ### Fixed

@@ -1,5 +1,5 @@
 --[[
-    MiningLayersGate.lua — Aktivierung fuer Mining Layers (1.6.2).
+    MiningLayersGate.lua — Aktivierung fuer Mining Layers (1.6.4, enforce).
 
     Mining Layers bleibt GRATIS. Der Download Key kostet nichts (fsmodworks.com,
     Konto + Selbst-Abholen) und dient Herkunftsnachweis/Wasserzeichen gegen
@@ -9,19 +9,19 @@
     Ablauf: Key-Datei finden (modSettings/FSMW/ zuerst, dann mods-Ordner),
     Token zwischen den DOWNLOAD-KEY-Markern lesen, Signatur offline pruefen
     (RSA-2048, Public Key eingebaut, Fingerabdruck-Selbstcheck), Produkt +
-    Sperrliste pruefen. Gueltige Datei aus dem mods-Ordner wird nach
-    modSettings/FSMW/ uebernommen (ueberlebt dort Mod-Updates).
+    Sperrliste pruefen. Gueltige Datei aus dem mods-Ordner wird ueber die
+    XML-API nach modSettings/FSMW/ NEU GESCHRIEBEN (DWA-0.3.6-Muster;
+    copyFile blieb am lebenden Spiel unbewiesen und ist raus).
 
-    ⚠️ MODE 'report' (Testbuild): prueft und MELDET nur (Log + HUD-Zeile),
-    blockt nicht. Messstand 25.08. (Tommys erster Start, 1.6.2.0):
-      - getUserProfileAppPath + createFolder + getFiles laufen (FSMW-Ordner
-        wurde angelegt, Discovery lief).
-      - io.open LEERT die Datei statt sie zu lesen -> entfernt, siehe readFile.
-        Die Key-Datei ist deshalb ein XML (<downloadKey>), gelesen ueber die
-        korpus-bewiesene XML-API.
-    Offen bleibt copyFile (Uebernahme nach FSMW/) - erst wenn auch das am
-    lebenden Spiel bewiesen ist, wird der oeffentliche Build auf 'enforce'
-    gestellt (ohne gueltigen Key Mod inaktiv).
+    MODE 'enforce' (seit 1.6.4, Tommys Regel 28.08.: jedes FSMW-Release
+    mit Gate): ohne gueltigen Key bleibt der Mod inaktiv — mit klarer
+    Meldung im Log, kein stilles Nichtstun. Key-Pfad end-to-end bewiesen
+    25.08. (1.6.2.1, echter Key: `read via xml` -> VALID, ~115 ms).
+
+    ⚠️ io.open ist TABU: die Engine LEERT damit Dateien statt sie zu lesen
+    (Messung 25.08., 1104 -> 0 Bytes). Key-Dateien sind deshalb XML
+    (<downloadKey>Marker-Block</downloadKey>), gelesen/geschrieben ueber
+    die korpus-bewiesene XML-API.
 ]]
 
 ---@diagnostic disable: lowercase-global, undefined-global
@@ -34,10 +34,18 @@ MiningLayersGate.PRODUCT = 'mining-layers'
 
 ---'report' = pruefen + melden, nicht blocken (Testbuild).
 ---'enforce' = ohne gueltigen Key bleibt der Mod inaktiv (oeffentlicher Build).
-MiningLayersGate.MODE = 'report'
+MiningLayersGate.MODE = 'enforce'
 
----Sperrliste, je Build aus /admin/licenses eingebacken (Zeilen "<wm> <memberId>").
-MiningLayersGate.REVOKED_TEXT = ''
+---Sperrliste, je Build aus /admin/licenses eingebacken
+---(Zeilen "<wm> <memberId> [<product>] [<issued>]").
+---⚠️ Die drei MUSTER-Tokens (M1-Interop, 25.08.) sind mit dem ECHTEN
+---Produktionsschluessel signiert — ohne diese Kontosperren wuerde jeder
+---mit einem Muster-Token aktivieren. Bleiben in jedem Build drin.
+MiningLayersGate.REVOKED_TEXT = [[
+deadbeefcafe0000 MUSTER-A
+deadbeefcafe0001 MUSTER-BB
+deadbeefcafe0002 MUSTER-CCC
+]]
 
 ---@type table? Ergebnis von FsmwLicense.check() nach run()
 MiningLayersGate.result = nil
@@ -153,6 +161,34 @@ function MiningLayersGate.getMessage()
     return FsmwLicense.message(reason, lang)
 end
 
+---Gueltigen Marker-Block als Key-Datei nach modSettings/FSMW/ schreiben
+---(XML-API — DWA-0.3.6-Muster; copyFile ist am lebenden Spiel unbewiesen).
+---⚠️ produktspezifischer Name: der generische 'fsmodworks-download-key.xml'
+---wuerde mit anderen FSMW-Mods im selben Ordner kollidieren (DWA-Learning).
+---@param content string
+---@return boolean ok
+function MiningLayersGate.writeKeyFile(content)
+    local dir = MiningLayersGate.getSettingsDir()
+
+    if dir == nil or not MiningLayers.isCallable(createXMLFile) then
+        return false
+    end
+
+    local target = dir .. 'fsmodworks-download-key-' .. MiningLayersGate.PRODUCT .. '.xml'
+    local ok = pcall(function()
+        local xmlId = createXMLFile('fsmwKeyOut', target, 'downloadKey')
+        setXMLString(xmlId, 'downloadKey', content)
+        saveXMLFile(xmlId)
+        delete(xmlId)
+    end)
+
+    if ok then
+        MiningLayers.log('Download Key: written to %s', target)
+    end
+
+    return ok
+end
+
 ---Hauptlauf, einmal beim Kartenstart (protectedCall in main.lua).
 function MiningLayersGate.run()
     if FsmwLicense == nil or FsmwLicense.crypto == nil then
@@ -210,16 +246,15 @@ function MiningLayersGate.run()
             tostring(p ~= nil and p.memberId or '?'), tostring(p ~= nil and p.wm or '?'))
 
         -- Gueltige Datei aus dem mods-Ordner nach modSettings/FSMW/ uebernehmen:
-        -- dort ueberlebt sie Mod-Updates und liegt fuer alle FSMW-Mods bereit.
+        -- dort ueberlebt sie Mod-Updates (Neuschreiben ueber die XML-API).
         local settingsDir = MiningLayersGate.getSettingsDir()
 
         if settingsDir ~= nil and bestPath ~= nil
-            and bestPath:sub(1, #settingsDir) ~= settingsDir
-            and MiningLayers.isCallable(copyFile) then
-            local target = settingsDir .. 'fsmodworks-download-key.xml'
-            local okCopy = pcall(copyFile, bestPath, target, true)
-
-            MiningLayers.log('Download Key: copied to %s (%s).', target, okCopy and 'ok' or 'copy failed')
+            and bestPath:sub(1, #settingsDir) ~= settingsDir then
+            local content = MiningLayersGate.readFile(bestPath)
+            if content ~= nil then
+                MiningLayersGate.writeKeyFile(content)
+            end
         end
     else
         MiningLayers.log('Download Key: NOT valid (%s) - %s',
@@ -227,6 +262,9 @@ function MiningLayersGate.run()
 
         if MiningLayersGate.MODE == 'report' then
             MiningLayers.log('  Gate mode "report": the mod keeps working, this build only measures the key path.')
+        elseif MiningLayersGate.MODE == 'enforce' then
+            MiningLayers.log('  Gate mode "enforce": Mining Layers stays inactive until a valid Download Key is provided.')
+            MiningLayers.log('  Get your free key at fsmodworks.com (account required), save the .xml into the mods folder, then restart the game.')
         end
     end
 end
