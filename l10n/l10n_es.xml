@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<l10n>
+    <texts>
+        <text name="ml_decimalSeparator" text="," />
+        <text name="ml_heightHere" text="Altura aquí" />
+        <text name="ml_zone" text="Zona" />
+        <text name="ml_zoneEverywhere" text="En todas partes" />
+        <text name="ml_layer" text="Capa" />
+        <text name="ml_targetHeight" text="Altura objetivo" />
+        <text name="ml_targetManual" text="definida por ti" />
+        <text name="ml_targetAuto" text="automática" />
+        <text name="ml_targetCut" text="la excavación termina por encima de la capa más profunda (%s m) - baja la altura objetivo en el editor de áreas" />
+        <text name="ml_digBlocked" text="el mapa bloquea los cambios de terreno en este punto - no es el mod lo que te detiene" />
+        <text name="ml_digNoEffect" text="aquí excavar no mueve nada - bloqueo del mapa o altura objetivo alcanzada" />
+        <text name="ml_depth" text="Profundidad" />
+        <text name="ml_until" text="hasta" />
+        <text name="ml_stillNeeded" text="faltan" />
+        <text name="ml_noLayers" text="no hay capas en este punto" />
+        <text name="ml_mapResourceTakesOver" text="TerraFarm decide: el material de tu máquina - o el del mapa, si los recursos del mapa están activados" />
+        <text name="ml_above" text="está" />
+        <text name="ml_aboveRef" text="por encima de la altura de referencia" />
+        <text name="ml_overrideHint" text="el material %s de TerraFarm no tiene efecto aquí - manda la capa" />
+        <text name="ml_manualArea" text="Material definido en esta área = TerraFarm puro, esta área NO tiene capas" />
+        <text name="ml_zoneOff" text="capas desactivadas para esta área" />
+        <text name="ml_spoil" text="amontonado (por encima de la altura de referencia) - se aplica la selección de TerraFarm" />
+        <text name="ml_pathArea" text="Área de camino = TerraFarm puro, las capas solo funcionan en áreas poligonales" />
+        <text name="ml_moundKnown" text="montón reconocido - recoges lo que se descargó aquí" />
+        <text name="ml_tip1" text="dibuja un área y deja los campos vacíos - el mod fija el fondo de la excavación" />
+        <text name="ml_tip2" text="Introducir un material en un área = TerraFarm puro sin capas (construcción)" />
+        <text name="ml_tip3" text="vacía la cuchara antes de cambiar de capa - una cuchara, un material" />
+        <text name="ml_tip4" text="el mod recuerda los montones - recoges lo que se descargó" />
+        <text name="ml_spoilModeOn" text="Modo estéril ACTIVADO - el estéril se excava como %s, la veta y el fondo siguen siendo reales" />
+        <text name="ml_holdGradeOn" text="Bloqueo de nivel ACTIVADO - la excavación se detiene en el límite de la capa" />
+        <text name="ml_modeSpoil" text="Modo estéril" />
+        <text name="ml_modeGrade" text="Bloqueo de nivel" />
+        <text name="ml_modeOn" text="ACTIVADO" />
+        <text name="ml_modeOff" text="DESACTIVADO" />
+        <text name="ml_slotFullHint" text="Las ranuras están llenas. Un mod de tipos de relleno como &quot;63 Alternative Filltypes&quot; de Nonnus (ModHub/KingMods) libera sitio - mejor en una partida de minería nueva, ya que impide descargar los cultivos del juego base." />
+        <text name="ml_helpQsMapSlotsTitle" text="¿Te has quedado sin ranuras?" />
+        <text name="ml_helpQsMapSlots" text="Cada mapa tiene un número fijo de ranuras de material de terreno. Cuando se llenan, los materiales extra se pueden excavar y vender, pero no descargar. Un mod de tipos de relleno como &quot;63 Alternative Filltypes&quot; de Nonnus libera ranuras desactivando los materiales de cultivo del juego base. Úsalo en una partida de minería nueva." />
+        <text name="ml_tip5" text="el color de la línea = material que empieza ahí; rojo = fondo de la excavación" />
+        <text name="ml_tip6" text="la pantalla muestra cuánto falta hasta la siguiente capa" />
+        <text name="ml_tip7" text="Qué materiales existen lo deciden tu mapa y tu lista de mods — (!) significa: excavar sí, descargar no" />
+
+        <text name="input_ML_TOGGLE_HUD" text="Mining Layers: mostrar/ocultar pantalla" />
+        <text name="input_ML_HUD_MOVE" text="Mining Layers: mover la pantalla (cursor del ratón)" />
+        <text name="input_ML_SPOIL_MODE" text="Mining Layers: modo estéril activado/desactivado" />
+        <text name="input_ML_HOLD_GRADE" text="Mining Layers: bloqueo de nivel activado/desactivado" />
+        <text name="ml_noInputArea" text="no hay área de entrada asignada - asigna tu área como entrada en el menú de la máquina (Y), o activa el objetivo “En todas partes” en Capas dentro del menú" />
+        <text name="ml_hudMoveHint" text="clic izquierdo: coger/soltar - clic derecho: posición por defecto - pulsa la tecla otra vez: listo" />
+        <text name="ml_hudMoveSample" text="pantalla de ejemplo - en el juego aquí se muestra la información de capas" />
+
+        <text name="ml_uiLayers" text="Capas" />
+        <text name="ml_uiNoLayers" text="sin capas" />
+        <text name="ml_uiBelow" text="debajo" />
+        <text name="ml_uiIntro" text="¿Redefinir las capas? Actual: %s. El editor te pide, para cada capa de estéril, el material y el límite inferior en metros, y después la veta rentable que hay debajo (PAYDIRT por defecto, el carbón o la caliza también funcionan). El lecho rocoso del fondo queda fijo - ahí termina la excavación." />
+        <text name="ml_uiDepthTitle" text="%s: límite inferior en metros bajo la superficie" />
+        <text name="ml_uiDone" text="Capas nuevas: %s. Se aplican de inmediato a todas las áreas que no tengan su propia zona." />
+        <text name="ml_uiMore" text="¿Añadir otra capa de estéril debajo? No = pasamos a la veta rentable. El lecho rocoso lo pone el mod por sí solo." />
+        <text name="ml_uiNoPaydirt" text="PAYDIRT no va en el estéril, la veta queda debajo de él. La veta rentable es el último paso, ahí podrás elegirla." />
+        <text name="ml_uiNotAllowed" text="%s no es un material de estéril. Disponibles: DIRT, SOIL, GRAVEL, SAND, STONE, COAL, LIMESTONE." />
+        <text name="ml_uiSeamNext" text="Seis capas de estéril son de sobra. Ahora elige la veta rentable que va debajo - el lecho rocoso inferior queda fijo." />
+        <text name="ml_uiSeamNotAllowed" text="%s no funciona como veta rentable. Disponibles: PAYDIRT, COAL, LIMESTONE, STONE, GRAVEL, SAND, DIRT, SOIL." />
+
+        <!-- ===================== Menu page: tabs ===================== -->
+        <text name="ml_tabQuickstart" text="Inicio rápido" />
+        <text name="ml_tabManual" text="Manual" />
+        <text name="ml_tabTips" text="Consejos y vehículos" />
+        <text name="ml_tabEditor" text="Capas" />
+
+        <!-- ===================== Tab 4: layer editor ===================== -->
+        <text name="ml_edSummarySection" text="Perfil resultante" />
+        <text name="ml_edScope" text="Estás editando el estándar: se aplica a todas las áreas que no tengan capas propias, incluidas las ya dibujadas. Para dar capas propias a una sola excavación, elige esa área arriba en Se aplica a." />
+        <text name="ml_edScopeGlobal" text="Estás editando las capas de “En todas partes”: valen para todo el mapa, sin necesidad de dibujar un área. Un área que hayas asignado a una máquina tiene prioridad — y donde un área tenga un material introducido, se aplica TerraFarm normal." />
+        <text name="ml_helpManEditor4" text="Estándar y excepciones: lo que guardas con Todas las áreas es el estándar — se aplica a cada área sin capas propias, también con efecto retroactivo sobre las existentes. Si una excavación concreta debe ser distinta, elígela arriba en Se aplica a y guarda sus capas — desde el propio editor, sin tocar ningún archivo." />
+        <text name="ml_edTargetSection" text="Se aplica a" />
+        <text name="ml_edTarget" text="Área" />
+        <text name="ml_edTargetDefault" text="Todas las áreas (por defecto)" />
+        <text name="ml_edScopeArea" text="Estas capas se aplican solo a &quot;%s&quot;. Las demás áreas mantienen el valor por defecto. Vuelve arriba a Todas las áreas y estarás editando de nuevo el estándar." />
+        <text name="ml_edSavedArea" text="Capas guardadas para &quot;%s&quot;. Se aplican solo a esta área." />
+        <text name="ml_edActive" text="Esta área" />
+        <text name="ml_edActiveOn" text="Mining Layers (por capas)" />
+        <text name="ml_edActiveOff" text="TerraFarm puro (sin capas)" />
+        <text name="ml_edSavedOff" text="Las capas están desactivadas para &quot;%s&quot;. Allí vuelve a aplicarse TerraFarm puro." />
+        <text name="ml_helpQsBothWaysTitle" text="Dos caminos — tú decides por área" />
+        <text name="ml_helpQsBothWays1" text="Deja VACÍOS los campos de material del área de TerraFarm y Mining Layers hace su trabajo: lo que acaba en la cuchara depende de lo hondo que excaves. Ese es el caso normal de una excavación." />
+        <text name="ml_helpQsBothWays2" text="Si en cambio introduces un material en el área, obtienes TerraFarm puro sin capas. Justo lo que quieres para obras, carreteras y nivelaciones — donde solo mueves tierra y siempre necesitas el mismo material." />
+        <text name="ml_helpQsBothWays3" text="Consigues el mismo resultado desde la pestaña Capas: elige allí un área y ponla en &quot;TerraFarm puro&quot;. Los dos caminos llevan al mismo sitio, usa el que prefieras." />
+        <text name="ml_edForeign" text="⚠ Esta zona se escribió a mano en miningLayers.xml y aquí solo puede mostrarse de forma simplificada. Al guardar se reescribe con el esquema propio del editor; una altura de referencia fija se pierde. Las texturas de suelo propias (paintLayer) se conservan." />
+        <text name="ml_edLayerSection" text="Capas" />
+        <text name="ml_edLayer" text="Capa" />
+        <text name="ml_edMaterial" text="Material" />
+        <text name="ml_edThickness" text="Espesor" />
+        <text name="ml_edSave" text="Guardar" />
+        <text name="ml_edAdd" text="Añadir capa" />
+        <text name="ml_edRemove" text="Quitar capa" />
+        <text name="ml_edSaved" text="Capas guardadas. Se aplican de inmediato a todas las áreas que no tengan su propia zona." />
+        <text name="ml_edHint" text="El contorno luminoso marca la capa que estás editando. La veta rentable es la última fila fija: material seleccionable (PAYDIRT por defecto, el carbón o la caliza también funcionan), espesor y posición fijos. La roca de debajo se coloca sola. Espesor mínimo: 1 m para la capa superior, 1,5 m para cada capa inferior — con máquinas grandes, mejor 2 m. No olvides guardar: con ESC o Atrás sales de la página y se descarta todo lo hecho desde el último guardado." />
+        <text name="ml_edSeamEntry" text="Veta rentable: %s" />
+        <!-- Material-Pool dieser Karte (1.4.3) -->
+        <text name="ml_edPoolNoTipHere" text="⚠ (!) %s no se puede descargar de nuevo sobre el suelo en ESTE mapa. Excavar, transportar y vender funcionan con normalidad. A este mapa no le queda ninguna ranura de terreno para ello — es cosa del mapa y de tu lista de mods, no de este mod." />
+        <text name="ml_edPoolNoTipMark" text="(!) = no se puede descargar en este mapa. El mapa se ha quedado sin ranuras de terreno — excavar y vender siguen funcionando." />
+        <text name="ml_edPoolMissing" text="No disponible en este mapa: %s. Ni el mapa ni tus mods aportan estos materiales, por eso no se ofrecen aquí." />
+        <text name="ml_edPoolHint" text="Regla general: menos mods = más ranuras libres = más materiales que puedes descargar." />
+
+        <!-- ===================== Tab 1: quick start ===================== -->
+        <text name="ml_helpQsSetupTitle" text="Listo en un solo paso" />
+        <text name="ml_helpQsSetup1" text="Dibuja un área de TerraFarm alrededor de tu excavación y deja vacíos los campos que hay dentro. Esa es toda la configuración. Excava en cualquier punto de esa área y el material vendrá de la profundidad en lugar del ajuste del vehículo. Importante: asigna el área a tu máquina como ÁREA DE ENTRADA (menú de la máquina, por defecto Y) - TerraFarm vincula las áreas a la máquina, no a tu posición." />
+        <text name="ml_helpQsSetup2" text="El mod calcula solo la altura de referencia: lee las alturas del terreno en las esquinas de tu área y deduce de ahí la superficie. Nada que consultar, nada que teclear. Si sí introduces un material en el área, obtienes TerraFarm puro sin capas. Práctico para obras." />
+
+        <text name="ml_helpQsStockNote" text="Todas las imágenes de aquí muestran el mod tal como viene: tierra vegetal, grava, paydirt y roca, sin que nadie haya configurado una sola capa a mano. Eso es lo que obtienes en cuanto dibujas el área. Tus propias capas son una opción, no una obligación." />
+        <text name="ml_helpQsDisplayTitle" text="La información de la izquierda" />
+        <text name="ml_helpQsDisplay1" text="Mientras una máquina está activa, la parte izquierda de la pantalla te dice dónde estás: altura actual, en qué capa trabajas y cuántos metros faltan hasta la siguiente." />
+        <text name="ml_helpQsDisplayB1" text="Lo que cuenta es esa información, no el campo de material de TerraFarm. El vehículo sigue mostrando su propio ajuste y solo queda anulado en el momento de excavar." />
+        <text name="ml_helpQsDisplayB2" text="Muévela en el juego: Num * (reasignable) activa el modo de movimiento con cursor del ratón - coger, soltar, listo. Desactívala con Num / o con showHeightDisplay en miningLayers.xml." />
+
+        <text name="ml_helpQsLayersTitle" text="Definir tus propias capas" />
+        <text name="ml_helpQsLayers1" text="De fábrica: tierra vegetal, grava debajo, después paydirt y roca al fondo. Eso encaja en casi cualquier excavación, así que no hay nada que tengas que configurar." />
+        <text name="ml_helpQsWizardButton" text="Configurar capas" />
+        <text name="ml_helpQsWizardHint" text="Pero no tienes por qué. Si no haces nada se aplica nuestro valor por defecto, que encaja en casi cualquier excavación. ¿Lo quieres distinto? Ve a la pestaña Capas, construye allí tu propio perfil y míralo tomar forma sobre la marcha." />
+        <text name="ml_helpQsLayersScope" text="Editas las capas de estéril y la veta rentable que hay debajo (PAYDIRT por defecto, el carbón o la caliza también funcionan). Su posición queda fija: quien quiera el mineral tiene que excavar el estéril — minería de verdad en lugar de material con solo pulsar un botón. La roca del fondo la coloca el propio mod." />
+
+        <text name="ml_helpQsMistakesTitle" text="Los tres errores al dibujar un área" />
+        <text name="ml_helpQsWarnWater" text="Lago u orilla: las esquinas dentro del agua miden el fondo. El plano de referencia se inclina y en la orilla te topas con roca. Mantén el área sobre tierra firme en su mayor parte." />
+        <text name="ml_helpQsWarnRidge" text="Cresta de montaña: un área dibujada a través de la cresta convierte el plano de referencia en una cuerda y empuja el paydirt cerca de la superficie. En una ladera empinada y apartada ese es el bonus de montaña buscado; en la colina detrás de tu granja, no. Dibuja las áreas de ladera en UNA sola vertiente." />
+        <text name="ml_helpQsRidgeCaption" text="En una ladera empinada se lee así: capa GRAVEL a 15,7 m, solo 2,3 m hasta el paydirt. Si haces el viaje montaña arriba, llegas antes. Ese caso es intencionado." />
+        <text name="ml_helpQsWarnRiver" text="Cruce de río: con esquinas en ambas orillas, el lecho del centro queda muy por debajo del plano de referencia y el fondo de la excavación acaba por debajo del lecho, así que la excavación se inunda. Dibuja las áreas a lo largo del río, nunca cruzándolo." />
+
+        <!-- ===================== Tab 2: manual ===================== -->
+        <text name="ml_helpManWhatTitle" text="Qué cambia el mod" />
+        <text name="ml_helpManWhat1" text="En FS25 defines en el vehículo lo que recoge tu cuchara, da igual lo hondo que excaves. Este mod le da capas al suelo: lo que obtienes depende de a qué profundidad bajo la superficie esté tu punto de excavación." />
+        <text name="ml_helpManWhat2" text="Es un complemento puramente en tiempo de ejecución sobre TerraFarm. No se modifica ningún archivo de TerraFarm ni se distribuye código de terceros. Sin TerraFarm el mod se queda callado." />
+
+        <text name="ml_helpManLayersTitle" text="Las capas" />
+        <text name="ml_helpManLayers1" text="Por defecto, de arriba abajo: DIRT, luego GRAVEL, luego PAYDIRT, luego STONE. La roca es el final del camino. Es intencionado, no una función que falte." />
+        <text name="ml_helpManLayersB1" text="Las profundidades son límites inferiores en metros bajo la superficie, no alturas absolutas sobre el nivel del mar." />
+        <text name="ml_helpManLayersB2" text="La capa inferior no necesita límite, continúa hacia abajo sin fin." />
+        <text name="ml_helpManLayersB3" text="Cada capa recibe una textura de suelo acorde para que veas dónde estás dentro del hoyo. Con paintLayer puedes definirla tú mismo por capa." />
+        <text name="ml_helpManLayers2" text="Las capas se aplican por área. Un área sin zona propia hereda las capas por defecto; un área con un material introducido no recibe ninguna." />
+
+        <text name="ml_helpManMoundTitle" text="Escombreras y relleno" />
+        <text name="ml_helpManMound1" text="El mod recuerda qué descargaste y dónde. Vuelve a recoger un montón y obtienes exactamente lo que hay en él, no la geología de debajo. Eso vale en cualquier punto del mapa mientras el montón exista." />
+        <text name="ml_helpManMoundB1" text="Si rellenas tu hoyo, primero vuelves a sacar el relleno. Solo por debajo de él se aplican de nuevo las capas." />
+        <text name="ml_helpManMoundB2" text="Si excavas por debajo de la base de un montón, el montón se acaba en ese punto y vuelve la geología. Así se evita sacar material infinito de un cráter." />
+        <text name="ml_helpManMoundB3" text="Vacía la cuchara antes de cambiar de capa. Un contenedor solo admite un tipo de material y, con la carga vieja todavía dentro, la cuchara no aceptará el material nuevo." />
+
+        <text name="ml_helpManEditorTitle" text="Definir tus propias capas" />
+        <text name="ml_helpManEditor1" text="La pestaña Capas es donde construyes tu propio perfil. La sección transversal está a la izquierda; capa, material y espesor a la derecha. Como máximo seis capas de estéril; disponibles: DIRT, SOIL, GRAVEL, SAND, STONE, COAL y LIMESTONE. Espesor mínimo: 1 m para la capa superior, 1,5 m para cada capa inferior — con capas más finas se rompe la recogida de escombreras. Con máquinas grandes, 2 m es la mejor elección." />
+        <text name="ml_helpManEditor3" text="Sales de la página con ESC o con el botón Atrás. Cuidado: cambiado no es guardado. Solo el botón Guardar escribe las capas y las aplica de inmediato al objetivo elegido arriba - el estándar o el área concreta. Si sales antes, la próxima vez tendrás de vuelta el estado anterior." />
+        <text name="ml_helpManEditor2" text="No puedes elegir PAYDIRT como estéril - el material que da dinero siempre está DEBAJO del estéril. Como veta rentable (última fila del editor) puedes elegir, además de PAYDIRT, entre COAL, LIMESTONE, STONE, GRAVEL, SAND, DIRT o SOIL: para graveras y para zonas carboneras. El lecho rocoso de debajo queda fijo." />
+
+        <text name="ml_helpManFloorTitle" text="El fondo de la excavación" />
+        <text name="ml_helpManFloor1" text="Mientras no toques tú mismo la altura objetivo de un área, el mod la fija automáticamente por debajo de tu capa más profunda - si no, la excavación termina donde el editor la dejó mientras dibujabas: a ras de suelo. Si amplías el área, el fondo la sigue." />
+        <text name="ml_helpManFloor2" text="Si defines tú la altura objetivo (tecleándola o con arriba/abajo en el editor de áreas), a partir de ahí es tuya: el mod no vuelve a tocarla. Así se nivela una plataforma, un talud o una rampa. La pantalla te dice cuál se aplica - &quot;definida por ti&quot; o &quot;automática&quot;." />
+
+        <text name="ml_helpManConfigTitle" text="Configurar a mano" />
+        <text name="ml_helpManConfig1" text="Todo está en modSettings/FS25_MiningLayers/miningLayers.xml. El archivo se crea en el primer arranque y sobrevive a las actualizaciones del mod. Antes de que el asistente guarde por primera vez, el mod deja un .bak junto a él una vez por sesión." />
+        <text name="ml_helpManConfig2" text="Ahí también activas o desactivas la pantalla, las líneas de profundidad, el fondo automático de la excavación y la textura de suelo al descargar. Las zonas se pueden desactivar por separado o recibir capas propias por área." />
+
+        <!-- ===================== Tab 3: tips and vehicles ===================== -->
+        <text name="ml_helpTipsTfTitle" text="Trampas de TerraFarm" />
+        <text name="ml_helpTipsTfB1" text="Desactiva defaultEnabled, si no cada vehículo de TerraFarm te destroza el patio con solo circular." />
+        <text name="ml_helpTipsTfB2" text="Rebajar solo funciona dentro del polígono cuando está activo Restringir área. Nivelar funciona también fuera. Si no pasa nada, normalmente estás al lado equivocado de la línea. O el suelo ya está a la altura objetivo." />
+        <text name="ml_helpTipsTfB3" text="Una cargadora de ruedas apenas saca unos 30 o 40 centímetros por pasada. Construye una rampa. La herramienta para la profundidad es la excavadora." />
+        <text name="ml_helpTipsTfB4" text="Las teclas están en el teclado numérico, Num 9 abre los ajustes globales. Después de cambiarlas puede hacer falta salir limpiamente y reiniciar para que surtan efecto." />
+        <text name="ml_helpTipsTfB6" text="Un bulldozer también atraviesa las capas: baja la hoja, modo Aplanar, y haz la pasada lo bastante larga - cuanto más larga, más profundo llegas cada vez. La imagen muestra la segunda capa (grava) alcanzada solo con la hoja - sin ningún ripper trasero. En el límite: gasta primero los montones viejos y vacía la hoja, hasta entonces el material antiguo se queda dentro." />
+        <text name="ml_helpTipsTfB5" text="Sin un área, rebajar no tiene límite inferior, porque la altura objetivo es el nivel del mar. El hoyo solo llega hasta donde excaves, pero un área te da un fondo definido." />
+
+        <text name="ml_helpTipsVehTitle" text="Cuando un vehículo no excava" />
+        <text name="ml_helpTipsVeh1" text="Para que un vehículo excave siquiera, TerraFarm necesita una configuración de máquina para él. Sin ella no pasa nada, y eso no depende ni de TerraFarm ni de este mod." />
+        <text name="ml_helpTipsVehB1" text="Instala una configuración de máquinas, por ejemplo el oficial FS25_TerraFarmMachines de scfmod." />
+        <text name="ml_helpTipsVehB2" text="Muchos packs de vehículos de minería traen sus propias entradas de máquina. Las entradas duplicadas no mejoran nada, lo empeoran. Quédate con una." />
+        <text name="ml_helpTipsVehB3" text="Si una cuchara muestra las flechas pero no quita nada, es esa cuchara. Prueba otra en la misma excavadora: si esa funciona, la culpa es de la entrada del apero, no de tu configuración." />
+        <text name="ml_helpTipsVeh2" text="Hay un pack de configuraciones para las máquinas de minería más habituales en preparación. Se publicará por separado de este mod." />
+
+        <text name="ml_helpTipsMapTitle" text="Particularidades del mapa" />
+        <text name="ml_helpTipsMapB1" text="Cuántos materiales de terreno son posibles lo decide el mapa, no el mod — muchos permiten 63, los más amplios más, y el juego base ya usa 48. Con muchos mods el resto se agota rápido y los últimos ya no se pueden descargar. El mod lo comprueba al arrancar y escribe en el log los materiales afectados." />
+        <text name="ml_helpTipsMapB2" text="Los nombres de las texturas de suelo son distintos en cada mapa. En tu primera excavación el mod escribe en el log la lista de tu mapa. Saca de ahí los valores de paintLayer." />
+        <text name="ml_helpTipsMapB4" text="El mod funciona en cualquier mapa: para las texturas de capa elige automáticamente el suelo más parecido que ofrezca el mapa (nombres estándar como GRAVEL, MOUNTAINROCK, MOSS_STONES). Si un mapa no tiene nada adecuado, simplemente sigue activa tu propia selección de texturas - los materiales, las capas y los montones siguen funcionando." />
+        <text name="ml_helpTipsMapB3" text="Algunos mapas bloquean los lechos de los ríos contra la deformación. Ese es el mapa de bloqueo del propio mapa y no tiene nada que ver con la propiedad ni con este mod." />
+
+        <text name="ml_helpTipsAboutTitle" text="Sobre este mod" />
+        <text name="ml_helpTipsAbout1" text="Mining Layers es un complemento no oficial para TerraFarm de scfmod. No existe ninguna vinculación con scfmod y no se distribuye ningún archivo de TerraFarm. TerraFarm está disponible en GitHub, no en ModHub." />
+        <text name="ml_pageTitle" text="Mining Layers" />
+        <text name="ml_credits" text="Mining Layers de Tommy Honold. Un proyecto de FrittePlayz." />
+        <!-- Reiter 1, ganz vorn: Materialien haengen an Karte + Modliste (1.4.3) -->
+        <text name="ml_helpQsMapTitle" text="Primero: ¿qué materiales tiene TU mapa?" />
+        <text name="ml_helpQsMap1" text="Que un material exista siquiera, y que puedas volver a descargarlo sobre el suelo, no lo decide este mod, sino tu mapa junto con tu lista de mods. De los materiales de minería el juego base solo conoce STONE — DIRT, GRAVEL, SAND, COAL, LIMESTONE o PAYDIRT vienen siempre de mapas o de mods. Además, cada mapa tiene un número limitado de ranuras de terreno: el juego base ya usa 48 de ellas, y cuántas hay en total lo fija el propio mapa — muchos tienen 63, los más amplios tienen más. Cuando un mapa se queda sin ellas, todavía puedes excavar, transportar y vender un material, pero ya no descargarlo." />
+        <text name="ml_helpQsMap2" text="Por eso Mining Layers toma un camino intermedio, para seguir siendo jugable en cualquier mapa: al cargar el mapa comprueba una vez qué ofrece realmente TU mapa y solo eso aparece en el selector de capas. Un (!) detrás de un nombre significa: excavar, transportar y vender funcionan; descargar, en este mapa no. Lo que falte por completo se indica debajo de la sección transversal. Así nunca tienes que probar antes un mapa ni consultar nada — si falta algo, es el mapa, no el mod." />
+        <text name="ml_helpQsMap3" text="Dos salidas si un material que necesitas lleva un (!): quita mods que traigan sus propios materiales de terreno, o juega en un mapa construido con más canales. Los 63 no son una ley fija del juego — un mapa se puede construir más amplio, y algunos ya lo están. Lo que ningún mod puede hacer es ampliarlo desde fuera." />
+        <!-- Kartenbericht (1.4.3) -->
+        <text name="ml_mapSection" text="Lo que puede este mapa" />
+        <text name="ml_mapNoData" text="El informe del mapa estará disponible en cuanto el mapa se haya cargado." />
+        <text name="ml_mapUsable" text="Utilizables en este mapa: %s — puedes excavarlos, transportarlos, venderlos y volver a descargarlos sobre el suelo." />
+        <text name="ml_mapNoTipList" text="Solo excavar y vender: %s. Volver a descargarlos sobre el suelo no funciona aquí — no queda ninguna ranura de terreno en el sistema." />
+        <text name="ml_mapMissingList" text="No están presentes en absoluto: %s. Ni el mapa ni tus mods los aportan." />
+        <text name="ml_mapAdvice" text="Cuántos materiales de terreno caben lo decide tu MAPA: él fija el ancho de canal, y el juego base ya usa 48 ranuras. Cuántas se gastan lo decide tu LISTA DE MODS — el primero en cargarse se queda con una ranura. Así que: menos mods libera ranuras, y un mapa construido con más canales tiene más desde el principio." />
+        <text name="ml_mapManyOwn" text="Este mapa trae una gran cantidad de materiales de terreno propios, por eso las ranuras se agotan pronto. Es típico de los mapas heredados de FS19 o FS22." />
+        <text name="ml_helpTipsAbout2" text="Este mod es gratuito por ahora." />
+        <text name="ml_edTargetGlobal" text="En todas partes (sin necesidad de área)" />
+        <text name="ml_edSavedGlobalOn" text="Las capas se aplican ahora en todas partes, sin necesidad de dibujar un área. Un área que hayas asignado a una máquina sigue teniendo prioridad." />
+        <text name="ml_edSavedGlobalOff" text="Las capas se aplican solo dentro de las áreas dibujadas. Tu configuración de capas se conserva." />
+        <text name="ml_slotReport" text="Ranuras de terreno: %d de %d materiales de esta instalación tienen un tipo de terreno." />
+        <text name="ml_noSurfaceYet" text="La altura de referencia aún no está fijada - se toma la primera vez que excaves aquí" />
+        <text name="ml_globalHint" text="Capas en todas partes, sin necesidad de área: pestaña Capas, objetivo &quot;En todas partes&quot;, cambia a Mining Layers y guarda." />
+        <text name="ml_slotMap" text="Este mapa tiene %d ranuras de terreno (%d canales) — %d en uso." />
+    </texts>
+</l10n>

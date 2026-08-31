@@ -2,7 +2,7 @@
 
 [![Download](https://img.shields.io/badge/⬇%20Download-latest%20release-2d8a4e?style=for-the-badge&logo=github&logoColor=white)](https://github.com/FrittePlayz/FS25_MiningLayers/releases/latest)
 [![Latest release](https://img.shields.io/github/v/release/FrittePlayz/FS25_MiningLayers?style=for-the-badge&color=2d8a4e)](https://github.com/FrittePlayz/FS25_MiningLayers/releases)
-[![Languages](https://img.shields.io/badge/in--game-EN%20·%20DE%20·%20FR%20·%20PL%20·%20IT%20·%20PT-2d8a4e?style=for-the-badge)](#)
+[![Languages](https://img.shields.io/badge/in--game-EN%20·%20DE%20·%20FR%20·%20PL%20·%20IT%20·%20PT%20·%20ES-2d8a4e?style=for-the-badge)](#)
 [![Buy me fries](https://img.shields.io/badge/Buy%20me%20fries-FFDD00?style=for-the-badge&logo=buymeacoffee&logoColor=black)](https://buymeacoffee.com/fritteplayz)
 
 ![Mining Layers — material by digging depth, a TerraFarm add-on](docs/images/00_header.jpg)
@@ -12,7 +12,7 @@ Material is determined by digging depth, not by hand selection: topsoil first, t
 
 Mining Layers builds on **[TerraFarm](https://github.com/scfmod/FS25_TerraFarm)** by scfmod, which it requires to run. Unofficial add-on, not affiliated with scfmod.
 
-🇩🇪 [Deutsch](README.de.md) · 🇫🇷 [Français](README.fr.md) · 🇵🇱 [Polski](README.pl.md) · 🇮🇹 [Italiano](README.it.md) · 🇵🇹 [Português](README.pt.md)
+🇩🇪 [Deutsch](README.de.md) · 🇫🇷 [Français](README.fr.md) · 🇵🇱 [Polski](README.pl.md) · 🇮🇹 [Italiano](README.it.md) · 🇵🇹 [Português](README.pt.md) · 🇪🇸 [Español](README.es.md)
 
 **[Video](#video-tutorial) · [Requirements](#requirements--read-this-first) · [Installation](#installation) · [First pit](#step-by-step-your-first-pit) · [FAQ](#faq) · [Changelog](#changelog) · [Roadmap](#roadmap)**
 

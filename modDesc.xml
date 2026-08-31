@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <modDesc descVersion="97">
     <author>Tommy Honold - Farmersingles.de - FrittePlayz</author>
-    <version>1.6.4.0</version>
+    <version>1.6.5.0</version>
 
     <title>
         <en>Mining Layers</en>
@@ -11,6 +11,7 @@
         <it>Mining Layers</it>
         <pt>Mining Layers</pt>
         <br>Mining Layers</br>
+        <es>Mining Layers</es>
     </title>
 
     <description>
@@ -160,6 +161,26 @@ Tradução para o português: Alicopower.
 
 Configurações: modSettings/FS25_MiningLayers/miningLayers.xml]]>
         </br>
+        <es>
+            <![CDATA[PARA TERRAFARM Y MAPAS DE MINERÍA (Yukon Back Country y otros mapas RGC).
+Addon no oficial para TerraFarm de scfmod.
+
+En el FS25 normal eliges tú mismo el material, da igual lo hondo que excaves. Este addon le da capas al suelo: primero tierra vegetal, después grava y más abajo paydirt. Las profundidades se indican en metros bajo la superficie, por cada área de paisajismo de TerraFarm.
+
+La configuración es un solo paso: dibuja un área de TerraFarm alrededor de la excavación. La altura de referencia se toma automáticamente del contorno del área - nada que consultar, nada que teclear. Funciona en cualquier mapa, sin editar el mapa.
+
+También incluye:
+- Memoria de escombreras: recoges lo que descargaste - SIN límite de montones (el material descargado se convierte en terreno real, no en un montón del juego base)
+- Indicador de altura y profundidad mientras una máquina está activa (Numpad / lo activa y desactiva, reasignable en las opciones del juego)
+- Comprobación al arrancar que informa de los materiales que no se pueden descargar en este mapa (al mapa se le acabaron las ranuras de terreno)
+
+Requiere TerraFarm de scfmod: github.com/scfmod/FS25_TerraFarm
+Sin vinculación con scfmod. Este mod no incluye ningún archivo de TerraFarm.
+
+Mining Layers de Tommy Honold, Farmersingles.de. Un proyecto de FrittePlayz (YouTube).
+
+Ajustes: modSettings/FS25_MiningLayers/miningLayers.xml]]>
+        </es>
     </description>
 
     <iconFilename>icon_miningLayers.png</iconFilename>

@@ -2,14 +2,14 @@
 
 [![Buy me fries](https://img.shields.io/badge/Buy%20me%20fries-FFDD00?style=for-the-badge&logo=buymeacoffee&logoColor=black)](https://buymeacoffee.com/fritteplayz)
 [![Latest release](https://img.shields.io/github/v/release/FrittePlayz/FS25_MiningLayers?style=for-the-badge&color=2d8a4e)](https://github.com/FrittePlayz/FS25_MiningLayers/releases)
-[![Idiomas](https://img.shields.io/badge/no--jogo-PT%20·%20EN%20·%20DE%20·%20FR%20·%20PL%20·%20IT-2d8a4e?style=for-the-badge)](#)
+[![Idiomas](https://img.shields.io/badge/no--jogo-PT%20·%20EN%20·%20DE%20·%20FR%20·%20PL%20·%20IT%20·%20ES-2d8a4e?style=for-the-badge)](#)
 
 ![Mining Layers — o material depende da profundidade da escavação, um add-on do TerraFarm](docs/images/00_header.jpg)
 
 **Mineração de verdade no Farming Simulator 25 — escave através de camadas geológicas, ou faça a sua própria cascalheira no FS25.**
 O material na caçamba depende de quanto você escava, não de um menu suspenso: primeiro a terra vegetal, depois o cascalho, depois o minério, rocha no fundo. Desde a 1.4.0 o minério é selecionável — mina de carvão, cascalheira ou pedreira de calcário, em qualquer mapa, sem editar o mapa. **O mod e o seu manual dentro do jogo existem por inteiro em português (pt e br)**, traduzidos por **Alicopower**.
 
-🇬🇧 [English](README.md) · 🇩🇪 [Deutsch](README.de.md) · 🇫🇷 [Français](README.fr.md) · 🇵🇱 [Polski](README.pl.md) · 🇮🇹 [Italiano](README.it.md) — *página PT compacta; a documentação completa está na versão em inglês, o manual integral está no jogo, em português.*
+🇬🇧 [English](README.md) · 🇩🇪 [Deutsch](README.de.md) · 🇫🇷 [Français](README.fr.md) · 🇵🇱 [Polski](README.pl.md) · 🇮🇹 [Italiano](README.it.md) · 🇪🇸 [Español](README.es.md) — *página PT compacta; a documentação completa está na versão em inglês, o manual integral está no jogo, em português.*
 
 ---
 

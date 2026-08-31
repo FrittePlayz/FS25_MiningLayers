@@ -2,6 +2,31 @@
 
 All notable changes to Mining Layers. Newest first.
 
+## [1.6.5.0] — 2026-08-31 (in-game test pending)
+
+### Added
+- **Spanish (`es`), complete.** All 177 entries, so the in-game manual, the layer editor and
+  every message speak Spanish. Checked against `l10n_en.xml`: no missing keys, no placeholder
+  mismatches, no empty values.
+  The reason was [Trakatrukis](https://www.youtube.com/watch?v=2h5MmHTxUwU), who presented the
+  mod in Spanish on 30.08. and said at 12:38 that his English "isn't particularly perfect" —
+  he was guessing at features for his audience. The mod is `<multiplayer supported="true" />`,
+  and on a Spanish server everyone has to read the menus, not just one player.
+- `README.es.md`, and the Spanish page is linked from all six other README languages.
+- **`tools/l10n_check.py`** — checks every language file against `l10n_en.xml`: missing keys,
+  placeholder mismatches (`%s`/`%d`), and translated material tokens. Exit 0 means clean.
+
+### Notes
+- ⚠️ **Material names stay English in every language.** `DIRT`, `GRAVEL`, `PAYDIRT` and the
+  others are fill-type names that the editor displays as-is. The new checker found that
+  `l10n_it.xml` translates them in 36 places (`TERRA`, `GHIAIA`, `PIETRA`) and `l10n_pt.xml` /
+  `l10n_br.xml` in one each (`CASCALHO` in `ml_helpQsRidgeCaption`) — an Italian player reads
+  "Disponibile: TERRA, GHIAIA" and then hunts for a material the menu does not have.
+  **Not fixed here**, because those are contributed translations: fixing them is a call for
+  Tommy, not a silent edit of somebody else's work.
+- The Spanish files follow `pt`/`br` in using full accents in `modDesc.xml`; `de`, `fr`, `pl`
+  and `it` are still ASCII-transliterated there, which is legacy, not a technical constraint.
+
 ## [1.6.4.0] — 2026-08-28 (in-game test pending)
 
 ### Changed
