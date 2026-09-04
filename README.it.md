@@ -78,7 +78,3 @@ L'italiano in gioco è un contributo di **marcols13** ([Discussion #1](https://g
 Questa mod è sostenuta da [farmersingles.de](https://www.farmersingles.de), un sito di incontri per agricoltori. Il cartello all'angolo di ogni area non c'è più dalla 1.6.1.
 
 *Mining Layers di Tommy Honold, Farmersingles.de. Un progetto [FrittePlayz](https://www.youtube.com/@FrittePlayz). Gratis finora.*
-
-## Licenza
-
-Mining Layers è gratuito da scaricare e da giocare, ma **non è libero di essere ridistribuito** — fsmodworks.com è l'unico luogo di download. Mirror, fork e mod pack non sono consentiti; quasi tutto il resto sì, e ciò che non è coperto viene di norma concesso se lo chiedi prima. Condizioni complete in [LICENSE](LICENSE).

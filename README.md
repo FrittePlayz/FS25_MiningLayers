@@ -341,7 +341,3 @@ Not your thing? A ⭐ on this repo, a bug report, or telling a friend about the 
 - A **[FrittePlayz](https://www.youtube.com/@FrittePlayz)** project (YouTube)
 - Built on **[TerraFarm](https://github.com/scfmod/FS25_TerraFarm)** by scfmod (required, install separately) — unofficial add-on, no affiliation with scfmod or GIANTS Software.
 - HUD drag&drop mechanics inspired by **HappyLooser's HL Hud System** (as seen in FS25_ProductionInfoHud) — own implementation, no code copied. Thanks for openly sharing the system!
-
-## Licence
-
-Mining Layers is free to download and free to play, but **not free to redistribute** — fsmodworks.com is the only download location. Mirrors, forks and mod packs are not permitted; almost everything else is, and anything not covered is usually granted if you ask first. Full terms in [LICENSE](LICENSE).

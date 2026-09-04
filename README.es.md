@@ -89,7 +89,3 @@ Un apunte sobre los nombres de material: `DIRT`, `GRAVEL`, `PAYDIRT`, `COAL` y l
 Este mod está patrocinado por [farmersingles.de](https://www.farmersingles.de), una web de citas para gente del campo. El cartelito en la esquina de cada área ya no existe desde la 1.6.1.
 
 *Mining Layers de Tommy Honold, Farmersingles.de. Un proyecto de [FrittePlayz](https://www.youtube.com/@FrittePlayz). Gratuito hasta ahora.*
-
-## Licencia
-
-Mining Layers es gratuito para descargar y jugar, pero **no es libre para redistribuir** — fsmodworks.com es el único sitio de descarga. No se permiten espejos, forks ni packs de mods; casi todo lo demás sí, y lo que no esté cubierto suele autorizarse si preguntas antes. Condiciones completas en [LICENSE](LICENSE).
