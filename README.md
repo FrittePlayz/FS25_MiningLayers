@@ -1,5 +1,7 @@
 # Mining Layers (FS25)
 
+> **FS25 patch 1.24:** update to **1.7.4.0**. It works again with the new game version. **No new Download Key needed.** [Release notes](../../releases/tag/1.7.4.0)
+
 [![Download](https://img.shields.io/badge/⬇%20Download-fsmodworks.com-2d8a4e?style=for-the-badge)](https://fsmodworks.com/en/mods/mining-layers)
 [![Languages](https://img.shields.io/badge/in--game-EN%20·%20DE%20·%20FR%20·%20PL%20·%20IT%20·%20PT%20·%20ES-2d8a4e?style=for-the-badge)](#)
 [![Buy me fries](https://img.shields.io/badge/Buy%20me%20fries-FFDD00?style=for-the-badge&logo=buymeacoffee&logoColor=black)](https://buymeacoffee.com/fritteplayz)
