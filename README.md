@@ -31,6 +31,8 @@ Mining Layers builds on **[TerraFarm](https://github.com/scfmod/FS25_TerraFarm)*
 
 ## Requirements — read this first
 
+New to TerraFarm? Install guide: https://fsmodworks.com/en/guides/terrafarm
+
 1. **TerraFarm** — available **only on GitHub**: [scfmod/FS25_TerraFarm](https://github.com/scfmod/FS25_TerraFarm).
    ⚠️ Do **not** rename its folder — it must stay `FS25_0_TerraFarm` (load order).
 2. **At least one machine with a TerraFarm config** — TerraFarm only works with machines that have a machine configuration.
